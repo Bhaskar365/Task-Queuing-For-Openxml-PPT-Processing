@@ -1,0 +1,868 @@
+﻿@page "/charts"
+
+@inject ISnackbar Snackbar
+
+@using ExcelChartsBlazorOpenxml.Services
+@using SharedModels
+
+@using ClassLibrary1;
+
+
+@using DocumentFormat.OpenXml;
+@using DocumentFormat.OpenXml.Drawing.Charts;
+@using DocumentFormat.OpenXml.Drawing.Diagrams;
+@using DocumentFormat.OpenXml.Packaging;
+@using DocumentFormat.OpenXml.Presentation;
+@using System.Diagnostics;
+@using System.IO.Packaging;
+@using System.Linq;
+@using System.Xml.Linq;
+@using WebApplicationAPI.Models
+
+
+@inject IFitToConceptService fitToConceptService;
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<br />
+
+@if (!isDataLoaded)
+{
+    <h2>loading.............</h2>
+}
+else
+{
+
+    <button type="button" class="btn btn-primary buttonload" @onclick="Process" disabled="@hasProcessStarted">
+        @if (currentState == ProcessState.Generating)
+        {
+            <i class="fas fa-spinner fa-spin"></i>
+
+            <span> Generating...</span>
+            Snackbar.Add("Generation Started", Severity.Info);
+        }
+        else if (currentState == ProcessState.Done)
+        {
+            <i class="fas fa-check"></i>
+
+            <span> Done</span>
+            Snackbar.Add("Generation Successful", Severity.Success);
+        }
+        else
+        {
+            <span>Generate Report</span>
+        }
+    </button>
+
+    <br />
+
+    @if (isErrorPresent)
+    {
+        <p class="text-danger">@emptyMessage</p>
+        Snackbar.Add("An error occured", Severity.Error);
+    }
+    else if (hasProcessStarted && string.IsNullOrEmpty(doneMsg))
+    {
+        <br />
+        <p class="alert alert-primary" role="alert">Processing...................</p>
+
+    }
+    else if (!string.IsNullOrEmpty(doneMsg))
+    {
+        <br />
+        <p class="alert alert-success" role="alert">@doneMsg</p>
+    }
+}
+
+
+@code {
+    ProcessState currentState = ProcessState.Idle;
+
+    public string emptyMessage = "";
+
+    public bool isErrorPresent = false;
+
+    public string doneMsg = "";
+    public bool hasProcessStarted = false;
+
+    string sourcePath1;
+
+    bool isDataLoaded = false;
+
+    string project = "";
+    public string currentProjectTaskName = "";
+
+    List<FitToConceptModel> fitToConceptsData;
+    List<OverallImpressionsModel> OverallImpressionsData;
+    List<Aev1> Attribute1Data;
+    List<Aev2> Attribute2Data;
+    List<Aev3> AttributeAggregrateData;
+    List<Memorability> MemorabilityData;
+    List<PersonalPreference> PersonalPreferenceData;
+    List<Suffix> SuffixData;
+    List<VerbalUnderstanding> VerbalUnderstandingData;
+    List<WrittenUnderstanding> WrittenUnderstandingData;
+    List<Likeability> Exagg;
+    List<Sala> Salas;
+    List<Sala> Salas154;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAPIData();
+        StateHasChanged();
+
+        isDataLoaded = true;
+    }
+
+    private async Task GetAPIData()
+    {
+        fitToConceptsData = await fitToConceptService.GetFitToConceptData();
+        OverallImpressionsData = await fitToConceptService.GetOverallImpressionsData();
+        Attribute1Data = await fitToConceptService.GetAtt1Data();
+        Attribute2Data = await fitToConceptService.GetAtt2Data();
+        AttributeAggregrateData = await fitToConceptService.GetAttrAggData();
+        MemorabilityData = await fitToConceptService.MemorabilityData();
+        PersonalPreferenceData = await fitToConceptService.PersonalPrefData();
+        SuffixData = await fitToConceptService.SuffixData();
+        VerbalUnderstandingData = await fitToConceptService.VerbalUnderData();
+        WrittenUnderstandingData = await fitToConceptService.WrittenUnderData();
+        Exagg = await fitToConceptService.ExaggData();
+        Salas = await fitToConceptService.SalaData();
+        Salas154 = await fitToConceptService.Sala154Data();
+
+        StateHasChanged();
+    }
+
+    public string CreateTargetPath(string myTemplate, string project)
+    {
+        string path = $"C:\\ExcelChartFiles\\{project}";
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+        path = $"C:\\Users\\bdas\\Downloads\\{project}_sample.pptx";
+        File.Copy(myTemplate, path, true);
+        return path;
+    }
+
+    DLLCls dllClass = new DLLCls();
+
+    public string destination = "C:\\ExcelChartFiles\\MRRxNaming.pptx";
+
+    string sourceFile1 = "C:\\Users\\bdas\\Downloads\\FittoConcept_sample.pptx";
+    string sourceFile2 = "C:\\Users\\bdas\\Downloads\\OverallImpressions_sample.pptx";
+    string sourceFile3 = "C:\\Users\\bdas\\Downloads\\PersonalPref_sample.pptx";
+    string sourceFile4 = "C:\\Users\\bdas\\Downloads\\VerbalUnder_sample.pptx";
+    string sourceFile5 = "C:\\Users\\bdas\\Downloads\\writtenUnd_sample.pptx";
+    string sourceFile6 = "C:\\Users\\bdas\\Downloads\\Att1_sample.pptx";
+    string sourceFile7 = "C:\\Users\\bdas\\Downloads\\Att2_sample.pptx";
+    string sourceFile8 = "C:\\Users\\bdas\\Downloads\\AttrAggr_sample.pptx";
+    string sourceFile9 = "C:\\Users\\bdas\\Downloads\\Memorability_sample.pptx";
+    string sourceFile10 = "C:\\Users\\bdas\\Downloads\\Exaggerative_sample.pptx";
+    string sourceFile11 = "C:\\Users\\bdas\\Downloads\\SALA_sample.pptx";
+
+    public async Task Process()
+    {
+        isErrorPresent = false;
+        emptyMessage = "";
+        doneMsg = "";
+        hasProcessStarted = true;
+
+        currentState = ProcessState.Generating;
+
+        StateHasChanged();
+
+        var FTCdata = fitToConceptsData;
+
+        if (!FTCdata.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (FTCdata == null || FTCdata.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+
+        if (FTCdata.Count != 0 || FTCdata.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\FittoConcept" + FTCdata.Count + ".pptx";
+
+
+
+            await Task.Run(() =>
+            {
+                // dllClass.FitToConceptMethod(CreateTargetPath(sourcePath1,FTCdata.First().ProjectTemplateType!), FTCdata);
+            });
+        }
+
+        var overallData = OverallImpressionsData;
+
+        if (overallData.Count != 0 || overallData.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\OverallImpressions" + overallData.Count + ".pptx";
+
+            await Task.Run(() =>
+           {
+               // dllClass.OverallImpressionsMethod(CreateTargetPath(sourcePath1, overallData.First().ProjectTemplateType!), overallData);
+           });
+        }
+
+        // Att 1
+        var att1data = Attribute1Data;
+
+        if (!att1data.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (att1data == null || att1data.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+
+        if (att1data.Count != 0 || att1data.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\AttributeEvaluation" + att1data.Count + ".pptx";
+
+            await Task.Run(() =>
+            {
+                // dllClass.Attribute1Method(CreateTargetPath(sourcePath1, att1data.First().ProjectTemplateType!), att1data);
+            });
+        }
+
+        // Att 2
+        var att2data = Attribute2Data;
+
+        if (!att2data.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (att2data == null || att2data.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+
+        if (att2data.Count != 0 || att2data.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\AttributeEvaluation" + att2data.Count + ".pptx";
+
+            await Task.Run(() =>
+            {
+                //dllClass.Attribute2Method(CreateTargetPath(sourcePath1, att2data.First().ProjectTemplateType!), att2data);
+            });
+        }
+
+        // Attribute Aggregrate
+        var attrAggrdata = AttributeAggregrateData;
+
+        if (!attrAggrdata.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (attrAggrdata == null || attrAggrdata.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+
+        if (attrAggrdata.Count != 0 || attrAggrdata.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\AttributeEvaluationAggregate" + attrAggrdata.Count + ".pptx";
+
+            await Task.Run(() =>
+            {
+                //  dllClass.AttributeMethodForAttributeEvalAggreg(CreateTargetPath(sourcePath1, attrAggrdata.First().ProjectTemplateType!), attrAggrdata);
+            });
+        }
+
+        //memorability
+        var memorabilitydata = MemorabilityData;
+
+        if (!memorabilitydata.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (memorabilitydata == null || memorabilitydata.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+
+        if (memorabilitydata.Count != 0 || memorabilitydata.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\Memorability" + memorabilitydata.Count + ".pptx";
+
+            await Task.Run(() =>
+            {
+                // dllClass.MemorabilityMethod(CreateTargetPath(sourcePath1, memorabilitydata.First().ProjectTemplateType!), memorabilitydata);
+            });
+        }
+
+
+        //personal preference
+        var personalPrefdata = PersonalPreferenceData;
+
+        if (!personalPrefdata.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (personalPrefdata == null || personalPrefdata.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+
+        if (personalPrefdata.Count != 0 || personalPrefdata.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\PersonalPreferences" + personalPrefdata.Count + ".pptx";
+
+            await Task.Run(() =>
+            {
+                //  dllClass.PersonalPreferencesMethod(CreateTargetPath(sourcePath1, personalPrefdata.First().ProjectTemplateType!), personalPrefdata);
+            });
+        }
+
+        //suffix
+        var suffixdata = SuffixData;
+
+        if (!suffixdata.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (suffixdata == null || suffixdata.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+
+        if (suffixdata.Count != 0 || suffixdata.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\Suffix" + suffixdata.Count + ".pptx";
+
+            await Task.Run(() =>
+            {
+                // dllClass.SuffixMethod(CreateTargetPath(sourcePath1, suffixdata.First().ProjectTemplateType!), suffixdata);
+            });
+        }
+
+
+        //verbal understanding
+        var verbalUnderdata = VerbalUnderstandingData;
+
+        if (!verbalUnderdata.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (verbalUnderdata == null || verbalUnderdata.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+
+        if (verbalUnderdata.Count != 0 || verbalUnderdata.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\VerbalUnderstanding-Bar" + verbalUnderdata.Count + ".pptx";
+
+            await Task.Run(() =>
+            {
+                // dllClass.VerbalUnderstandingBarMethod(CreateTargetPath(sourcePath1, verbalUnderdata.First().ProjectTemplateType!), verbalUnderdata);
+            });
+        }
+
+        //written understanding
+        var writtenUnderdata = WrittenUnderstandingData;
+
+        if (!writtenUnderdata.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (writtenUnderdata == null || writtenUnderdata.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+
+        if (writtenUnderdata.Count != 0 || writtenUnderdata.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\WrittenUnderstanding" + writtenUnderdata.Count + ".pptx";
+
+            await Task.Run(() =>
+            {
+                //  dllClass.WrittenUnderstandingMethod(CreateTargetPath(sourcePath1, writtenUnderdata.First().ProjectTemplateType!), writtenUnderdata);
+            });
+        }
+
+        //Exagg
+        var exaggdata = Exagg;
+
+        if (!exaggdata.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (exaggdata == null || exaggdata.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+
+        if (exaggdata.Count != 0 || exaggdata.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\Exaggerative" + exaggdata.Count + ".pptx";
+
+            await Task.Run(() =>
+            {
+                // dllClass.ExaggerativeMethod(CreateTargetPath(sourcePath1, exaggdata.First().ProjectTemplateType!), exaggdata);
+            });
+        }
+
+        //SALA
+        var saladata = Salas;
+        if (!saladata.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (saladata == null || saladata.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+
+        if (saladata.Count != 0 || saladata.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\SALAPlaceholder.pptx";
+
+            await Task.Run(() =>
+            {
+                //dllClass.SALANewMethod(CreateTargetPath(sourcePath1, saladata.First().ProjectTemplateType!), saladata);
+            });
+        }
+
+
+        //SALA 154
+        var sala154data = Salas154;
+
+        if (sala154data.Count != 0 || sala154data.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\SALAPlaceholder.pptx";
+
+            await Task.Run(() =>
+            {
+                dllClass.SALANewMethod(CreateTargetPath(sourcePath1, sala154data.First().ProjectTemplateType!), sala154data);
+            });
+        }
+
+
+
+        doneMsg = "Done";
+        hasProcessStarted = false;
+        currentState = ProcessState.Done;
+        StateHasChanged();
+
+
+        int[] sourceInput1 = { 38 };
+        int[] sourceInput2 = { 85 };
+        int[] sourceInput3 = { 40 };
+        int[] sourceInput4 = { 41 };
+        int[] sourceInput5 = { 44 };
+        int[] sourceInput6 = { 45 };
+        int[] sourceInput7 = { 46 };
+        int[] sourceInput8 = { 82 };
+        int[] sourceInput9 = { 83 };
+        int[] sourceInput10 = { 87 };
+        //int[] sourceInput11 = { 71,72,73,74 };
+        int[] sourceInput11 = { 66, 67, 68, 69 };
+        int[] sourceInput12 = { 66 };
+
+        // MergeSlideWithSlideArray(sourceFile1, destination, sourceInput1);
+
+        // DeleteSlide(destination, sourceInput1[0] - 1);
+
+        // MergeSlideWithSlideArray(sourceFile2, destination, sourceInput2);
+
+        // DeleteSlide(destination, sourceInput2[0] - 1);
+
+        // MergeSlideWithSlideArray(sourceFile6, destination, sourceInput3);
+
+        // DeleteSlide(destination, sourceInput3[0] - 1);
+
+        // MergeSlideWithSlideArray(sourceFile7, destination, sourceInput4);
+
+        // DeleteSlide(destination, sourceInput4[0] - 1);
+
+        // MergeSlideWithSlideArray(sourceFile8, destination, sourceInput5);
+
+        // DeleteSlide(destination, sourceInput5[0] - 1);
+
+        // MergeSlideWithSlideArray(sourceFile9, destination, sourceInput6);
+
+        // DeleteSlide(destination, sourceInput6[0] - 1);
+
+        // MergeSlideWithSlideArray(sourceFile3, destination, sourceInput7);
+
+        // DeleteSlide(destination, sourceInput7[0] - 1);
+
+        // MergeSlideWithSlideArray(sourceFile4, destination, sourceInput8);
+
+        // DeleteSlide(destination, sourceInput8[0] - 1);
+
+        // MergeSlideWithSlideArray(sourceFile5, destination, sourceInput9);
+
+        // DeleteSlide(destination, sourceInput9[0] - 1);
+
+        // MergeSlideWithSlideArray(sourceFile10, destination, sourceInput10);
+
+        // DeleteSlide(destination, sourceInput10[0] - 1);
+
+        //MergeSlideWithSlideArray(sourceFile11, destination, sourceInput11);
+
+        MergeSlideWithSlideArray(sourceFile11, destination, sourceInput12);
+
+        int count = CountSlides(sourceFile11);
+
+        if (count == 1)
+        {
+            int endIndex = 66 + count + 4;
+
+            DeleteSlide(destination, endIndex);
+            DeleteSlide(destination, endIndex - 1);
+            DeleteSlide(destination, endIndex - 2);
+            DeleteSlide(destination, endIndex - 3);
+            DeleteSlide(destination, endIndex - 4);
+        }
+
+        if(count == 4)
+        {
+            int endIndex = 66 + count + 4;
+
+             DeleteSlide(destination, endIndex);
+             DeleteSlide(destination, endIndex - 1);
+             DeleteSlide(destination, endIndex - 2);
+             DeleteSlide(destination, endIndex - 3);
+             DeleteSlide(destination, endIndex - 4);
+        }
+      
+
+      
+    }
+
+    public static int id = 20;
+
+    public static void MergeSlideWithSlideArray(string sourcePresentation, string destPresentation, int[] insertIndex)
+    {
+        using (PresentationDocument destinationDoc = PresentationDocument.Open(destPresentation, true))
+        {
+            PresentationPart destinationPresPart = destinationDoc.PresentationPart;
+
+            if (destinationPresPart.Presentation.SlideIdList == null)
+                destinationPresPart.Presentation.SlideIdList = new SlideIdList();
+
+            using (PresentationDocument sourceDoc = PresentationDocument.Open(sourcePresentation, true))
+            {
+                PresentationPart sourcePresPart = sourceDoc.PresentationPart;
+
+                uniqueId = GetMaxSlideMasterId(destinationPresPart.Presentation.SlideMasterIdList);
+                uint maxSlideId = GetMaxSlideId(destinationPresPart.Presentation.SlideIdList);
+
+                var sourceSlideIds = sourcePresPart.Presentation.SlideIdList.Elements<SlideId>().ToList();
+
+                if (insertIndex.Length > sourceSlideIds.Count)
+                    throw new ArgumentException("Not enough slides in source to match insert positions");
+
+                for (int i = 0; i < insertIndex.Length; i++)
+                {
+                    id++;
+                    SlideId sourceSlideId = sourceSlideIds[i];
+                    SlidePart sourceSlidePart = (SlidePart)sourcePresPart.GetPartById(sourceSlideId.RelationshipId);
+
+                    string relId = "rel" + id;
+
+                    //SlidePart destinationSlidePart = destinationPresPart?.AddPart<SlidePart>(sourceSlidePart, relId);
+
+                    SlidePart destinationSlidePart = destinationPresPart.AddPart<SlidePart>(sourceSlidePart, relId);
+                    //foreach (ChartPart chartPart in sourceSlidePart.ChartParts)
+                    //{
+                    //    ChartPart newChartPart = destinationSlidePart.AddPart(chartPart);
+                    //}
+
+                    SlideMasterPart destinationMasterPart = destinationSlidePart.SlideLayoutPart.SlideMasterPart;
+                    destinationPresPart.AddPart(destinationMasterPart);
+
+                    uniqueId++;
+
+                    var x = destinationPresPart.Presentation.SlideMasterIdList.Elements<SlideMasterId>().ToList();
+
+                    var y = destinationPresPart.SlideMasterParts;
+
+                    var z = destinationPresPart.Presentation.SlideIdList;
+
+                    SlideMasterId newSlideMasterId = new SlideMasterId
+                        {
+                            RelationshipId = destinationPresPart.GetIdOfPart(destinationMasterPart),
+                            Id = uniqueId
+                        };
+
+
+                    if (!destinationPresPart.Presentation.SlideMasterIdList.Elements<SlideMasterId>().Any(x => x.RelationshipId == newSlideMasterId.RelationshipId))
+                    {
+                        destinationPresPart.Presentation.SlideMasterIdList.Append(newSlideMasterId);
+                    }
+
+                    //if (!destinationPresPart.SlideMasterParts.Any(m => m.Uri == sourceSlidePart.SlideLayoutPart?.SlideMasterPart?.Uri))
+                    //{
+                    //    SlideMasterPart newMasterPart = destinationPresPart.AddPart(sourceSlidePart.SlideLayoutPart.SlideMasterPart);
+                    //}
+
+                    maxSlideId++;
+
+                    SlideId newSlideId = new SlideId
+                        {
+                            RelationshipId = relId,
+                            Id = maxSlideId
+                        };
+
+                    InsertSlideAtIndexArray(destinationPresPart.Presentation.SlideIdList, newSlideId, insertIndex[i]);
+                }
+                FixSlideLayoutIds(destinationPresPart);
+            }
+
+
+            destinationPresPart.Presentation.Save();
+        }
+    }
+
+
+    static uint uniqueId = 2647484033;
+
+    static void FixSlideLayoutIds(PresentationPart presPart)
+    {
+        foreach (SlideMasterPart slideMasterPart in presPart.SlideMasterParts)
+        {
+            foreach (SlideLayoutId slideLayoutId in slideMasterPart.SlideMaster.SlideLayoutIdList)
+            {
+                uniqueId++;
+                slideLayoutId.Id = (uint)uniqueId;
+            }
+
+            slideMasterPart.SlideMaster.Save();
+        }
+    }
+
+    public static uint GetMaxSlideMasterId(SlideMasterIdList slideMasterIdList)
+    {
+        uint max = 2147483648;
+
+        if (slideMasterIdList != null)
+        {
+            foreach (SlideMasterId child in slideMasterIdList.Elements<SlideMasterId>())
+            {
+                uint id = child.Id;
+
+                if (id > max) max = id;
+            }
+        }
+        return max;
+    }
+
+    public static uint GetMaxSlideId(SlideIdList slideIdList)
+    {
+        uint max = 256;
+        if (slideIdList != null)
+        {
+            foreach (SlideId child in slideIdList.Elements<SlideId>())
+            {
+                uint id = child.Id;
+
+                if (id > max)
+                    max = id;
+            }
+        }
+        return max;
+    }
+
+    public static void InsertSlideAtIndexArray(SlideIdList slideIdList, SlideId newSlideId, int index)
+    {
+        var slideIds = slideIdList.Elements<SlideId>().ToList();
+
+        if (index < 0 || index >= slideIds.Count)
+        {
+            slideIdList.Append(newSlideId); // Add to the end if index is out of range
+        }
+        else
+        {
+            var targetSlide = slideIds.ElementAt(index);
+            targetSlide.InsertBeforeSelf(newSlideId);
+        }
+
+        // // Sort slides based on their IDs to ensure correct order
+        // var sortedSlides = slideIdList.Elements<SlideId>()
+        //     .OrderBy(slide => slide.Id)
+        //     .ToList();
+
+        // slideIdList.RemoveAllChildren<SlideId>();
+        // foreach (var slide in sortedSlides)
+        // {
+        //     slideIdList.Append(slide);
+        // }
+    }
+
+
+    static int CountSlides(string presentationFile)
+    {
+        // Open the presentation as read-only.
+        using (PresentationDocument presentationDocument = PresentationDocument.Open(presentationFile, false))
+        {
+            // Pass the presentation to the next CountSlide method
+            // and return the slide count.
+            return CountSlides(presentationDocument);
+        }
+    }
+
+
+    static int CountSlides(PresentationDocument presentationDocument)
+    {
+        if (presentationDocument is null)
+        {
+            throw new ArgumentNullException("presentationDocument");
+        }
+
+        int slidesCount = 0;
+
+        // Get the presentation part of document.
+        PresentationPart? presentationPart = presentationDocument.PresentationPart;
+
+        // Get the slide count from the SlideParts.
+        if (presentationPart is not null)
+        {
+            slidesCount = presentationPart.SlideParts.Count();
+        }
+
+        // Return the slide count to the previous method.
+        return slidesCount;
+    }
+
+    static void DeleteSlide(string presentationFile, int slideIndex)
+    {
+        // Open the source document as read/write.
+        using (PresentationDocument presentationDocument = PresentationDocument.Open(presentationFile, true))
+        {
+            // Pass the source document and the index of the slide to be deleted to the next DeleteSlide method.
+            DeleteSlide(presentationDocument, slideIndex);
+        }
+    }
+
+    static void DeleteSlide(PresentationDocument presentationDocument, int slideIndex)
+    {
+        if (presentationDocument is null)
+        {
+            throw new ArgumentNullException(nameof(presentationDocument));
+        }
+
+        // Use the CountSlides sample to get the number of slides in the presentation.
+        int slidesCount = CountSlides(presentationDocument);
+
+        if (slideIndex < 0 || slideIndex >= slidesCount)
+        {
+            throw new ArgumentOutOfRangeException("slideIndex");
+        }
+
+        // Get the presentation part from the presentation document.
+        PresentationPart? presentationPart = presentationDocument.PresentationPart;
+
+        // Get the presentation from the presentation part.
+        Presentation? presentation = presentationPart?.Presentation;
+
+        // Get the list of slide IDs in the presentation.
+        SlideIdList? slideIdList = presentation?.SlideIdList;
+
+        // Get the slide ID of the specified slide
+        SlideId? slideId = slideIdList?.ChildElements[slideIndex] as SlideId;
+
+        // Get the relationship ID of the slide.
+        string? slideRelId = slideId?.RelationshipId;
+
+        // If there's no relationship ID, there's no slide to delete.
+        if (slideRelId is null)
+        {
+            return;
+        }
+
+        // Remove the slide from the slide list.
+        slideIdList!.RemoveChild(slideId);
+
+        // Remove references to the slide from all custom shows.
+        if (presentation!.CustomShowList is not null)
+        {
+            // Iterate through the list of custom shows.
+            foreach (var customShow in presentation.CustomShowList.Elements<CustomShow>())
+            {
+                if (customShow.SlideList is not null)
+                {
+                    // Declare a link list of slide list entries.
+                    LinkedList<SlideListEntry> slideListEntries = new LinkedList<SlideListEntry>();
+                    foreach (SlideListEntry slideListEntry in customShow.SlideList.Elements())
+                    {
+                        // Find the slide reference to remove from the custom show.
+                        if (slideListEntry.Id is not null && slideListEntry.Id == slideRelId)
+                        {
+                            slideListEntries.AddLast(slideListEntry);
+                        }
+                    }
+
+                    // Remove all references to the slide from the custom show.
+                    foreach (SlideListEntry slideListEntry in slideListEntries)
+                    {
+                        customShow.SlideList.RemoveChild(slideListEntry);
+                    }
+                }
+            }
+        }
+
+        // Get the slide part for the specified slide.
+        SlidePart slidePart = (SlidePart)presentationPart!.GetPartById(slideRelId);
+
+        // Remove the slide part.
+        presentationPart.DeletePart(slidePart);
+    }
+
+
+
+}

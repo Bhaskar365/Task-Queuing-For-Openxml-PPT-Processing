@@ -1,0 +1,168 @@
+﻿using ClassLibrary1;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using SharedModels.DTO;
+using WebApplication1.Repositories;
+using WebApplicationAPI.Queueing;
+using WebApplicationAPI.TaskTracking;
+
+namespace WebApplicationAPI.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ReportController : ControllerBase
+    {
+        private readonly IBackgroundTaskQueue _queue;
+        private readonly ITaskStatusTracker _tracker;
+        private readonly IServiceScopeFactory _scopeFactory;
+
+        public ReportController(IBackgroundTaskQueue queue,
+                                ITaskStatusTracker tracker,
+                                IServiceScopeFactory scopeFactory)
+        {
+            _queue = queue;
+            _tracker = tracker;
+            _scopeFactory = scopeFactory;
+        }
+
+
+        [HttpPost("generate")]
+        public async Task<IActionResult> GenerateReport([FromBody] ReportGenerationRequest request)
+        {
+            _tracker.SetStatus(request.TaskId, "Queued");
+
+            await _queue.EnqueueAsync(async token =>
+            {
+                try
+                {
+                    _tracker.SetStatus(request.TaskId, "Processing");
+
+                    using var scope = _scopeFactory.CreateScope();
+                    var repository = scope.ServiceProvider.GetRequiredService<IDataRepository>();
+                    var dll = new DLLCls();
+                    string sourcePath = "";
+
+                    switch (request.ProjectTemplateType)
+                    {
+                        case "FitToConcept":
+
+                            var fitToConceptdata = await repository.GetAllFitToConceptData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\FittoConcept{fitToConceptdata.Count()}.pptx";
+                            dll.FitToConceptMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), fitToConceptdata.ToList());
+                            break;
+
+                        case "OverallImpressions":
+                            var overallData = await repository.GetAllOverallImpressionsData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\OverallImpressions{overallData.Count()}.pptx";
+                            dll.OverallImpressionsMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), overallData.ToList());
+                            break;
+
+                        case "Att1":
+                            var att1Data = await repository.GetAtt1Data();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\AttributeEvaluation{att1Data.Count()}.pptx";
+                            dll.Attribute1Method(CreateTargetPath(sourcePath, request.ProjectTemplateType), att1Data.ToList());
+                            break;
+
+                        case "Att2":
+                            var att2Data = await repository.GetAtt2Data();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\AttributeEvaluation{att2Data.Count()}.pptx";
+                            dll.Attribute2Method(CreateTargetPath(sourcePath, request.ProjectTemplateType), att2Data.ToList());
+                            break;
+
+                        case "AttrAggr":
+                            var attAggData = await repository.GetAttrEvalAggregData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\AttributeEvaluationAggregate{attAggData.Count()}.pptx";
+                            dll.AttributeMethodForAttributeEvalAggreg(CreateTargetPath(sourcePath, request.ProjectTemplateType), attAggData.ToList());
+                            break;
+
+                        case "Memorability":
+                            var memoData = await repository.GetMemorabilityData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\Memorability{memoData.Count()}.pptx";
+                            dll.MemorabilityMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), memoData.ToList());
+                            break;
+
+                        case "PersonalPref":
+                            var persPrefData = await repository.GetPersonalPreferenceData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\PersonalPreferences{persPrefData.Count()}.pptx";
+                            dll.PersonalPreferencesMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), persPrefData.ToList());
+                            break;
+
+                        case "Suffix":
+                            var suffData = await repository.GetSuffixData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\Suffix{suffData.Count()}.pptx";
+                            dll.SuffixMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), suffData.ToList());
+                            break;
+
+                        case "VerbalUnder":
+                            var verbData = await repository.GetVerbalUnderstandingData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\VerbalUnderstanding-Bar{verbData.Count()}.pptx";
+                            dll.VerbalUnderstandingBarMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), verbData.ToList());
+                            break;
+
+                        case "writtenUnd":
+                            var writtData = await repository.GetWrittenUnderstandingData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\WrittenUnderstanding{writtData.Count()}.pptx";
+                            dll.WrittenUnderstandingMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), writtData.ToList());
+                            break;
+
+                        case "Exaggerative":
+                            var exagData = await repository.GetExagg();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\Exaggerative{exagData.Count()}.pptx";
+                            dll.ExaggerativeMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), exagData.ToList());
+                            break;
+
+
+                    }
+
+                    _tracker.SetStatus(request.TaskId, "Done");
+                }
+                catch (Exception ex)
+                {
+                    _tracker.SetStatus(request.TaskId, $"Error: {ex.Message}");
+                }
+            });
+
+            //await Task.Run(async () =>
+            //{
+            //    _tracker.SetStatus(request.TaskId, "Processing");
+            //    var data = await _repository.GetAllFitToConceptData();
+            //    var dll = new DLLCls();
+            //    string sourcePath = $"C:\\ExcelChartFiles\\Templates\\FittoConcept{data.Count()}.pptx";
+            //    dll.FitToConceptMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), data.ToList());
+            //    _tracker.SetStatus(request.TaskId, "Done");
+            //});
+
+            //return Ok(new ReportStatusDto { TaskId = request.TaskId, 
+            //    ProjectType = request.ProjectTemplateType, Status= "Done" });
+
+            return Ok(new ReportStatusDto
+            {
+                TaskId = request.TaskId,
+                ProjectType = request.ProjectTemplateType
+            });
+        }
+
+        [HttpGet("status/{taskId}")]
+        public IActionResult GetStatus(Guid taskId)
+        {
+            var status = _tracker.GetStatus(taskId);
+            //return Ok(new { taskId, status });
+
+            return Ok(new ReportStatusDto
+            {
+                TaskId = taskId,
+                Status = status ?? "Unknown",
+            });
+
+        }
+
+        private string CreateTargetPath(string template, string project)
+        {
+            string path = $"C:\\ExcelChartFiles\\{project}";
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            path = $"C:\\Users\\bdas\\Downloads\\{project}_sample.pptx";
+            System.IO.File.Copy(template, path, true);
+            return path;
+        }
+    }
+}

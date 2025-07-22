@@ -1,0 +1,298 @@
+﻿@page "/taskQueueChart"
+@using ClassLibrary1
+@using SharedModels
+@using SharedModels.DTO
+
+@inject HttpClient http
+@rendermode InteractiveServer
+
+@using ExcelChartsBlazorOpenxml.Services
+@using WebApplicationAPI.Models
+@inject IFitToConceptService fitToConceptService;
+
+@if (!isDataLoaded)
+{
+    <h2>loading.............</h2>
+}
+else
+{
+    <button type="button" class="btn btn-primary buttonload" @onclick="Process">
+        <span>Generate Report</span>
+    </button>
+
+    @if (hasProcessStarted)
+    {
+        <p>started....</p>
+    }
+
+    @if (reportStatuses == null)
+    {
+        <h4>Processing....</h4>
+    }
+    else if (reportStatuses.Count == 0)
+    {
+        @* <h6 class="text-center">No queued items yet</h6> *@
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>Task ID</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var task in reportStatuses)
+                {
+                    <tr>
+                        <td>@task.ProjectName</td>
+                        <td>@task.TaskId</td>
+
+                        @if (task.Status == "Queued")
+                        {
+                            <td class="statusTableEl">
+                                <div class="text-warning bg-dark statusText">@task.Status</div>
+                                <div class="spinner-border  spinner-border-sm text-info" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </td>
+
+                        }
+                        else if (task.Status == "Processing")
+                        {
+                            <td>@task.Status</td>
+                        }
+                        else if (task.Status == "Done")
+                        {
+                            <td class="text-info bg-dark">@task.Status</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+
+    bool isDataLoaded = false;
+
+    ProcessState currentState = ProcessState.Idle;
+
+    public bool hasProcessStarted = false;
+    List<FitToConceptModel> fitToConceptsData;
+    List<OverallImpressionsModel> OverallImpressionsData;
+    List<Aev1> Attribute1Data;
+    List<Aev2> Attribute2Data;
+    List<Aev3> AttributeAggregrateData;
+    List<Memorability> MemorabilityData;
+    List<PersonalPreference> PersonalPreferenceData;
+    List<Suffix> SuffixData;
+    List<VerbalUnderstanding> VerbalUnderstandingData;
+    List<WrittenUnderstanding> WrittenUnderstandingData;
+    List<Likeability> Exagg;
+
+    public class ReportStatus
+    {
+        public string ProjectName { get; set; } = string.Empty;
+        public Guid TaskId { get; set; }
+        public string Status { get; set; } = string.Empty;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        fitToConceptsData = await fitToConceptService.GetFitToConceptData();
+        OverallImpressionsData = await fitToConceptService.GetOverallImpressionsData();
+        Attribute1Data = await fitToConceptService.GetAtt1Data();
+        Attribute2Data = await fitToConceptService.GetAtt2Data();
+        AttributeAggregrateData = await fitToConceptService.GetAttrAggData();
+        MemorabilityData = await fitToConceptService.MemorabilityData();
+        PersonalPreferenceData = await fitToConceptService.PersonalPrefData();
+        SuffixData = await fitToConceptService.SuffixData();
+        VerbalUnderstandingData = await fitToConceptService.VerbalUnderData();
+        WrittenUnderstandingData = await fitToConceptService.WrittenUnderData();
+        Exagg = await fitToConceptService.ExaggData();
+        isDataLoaded = true;
+        StateHasChanged();
+    }
+
+    private List<ReportStatus> reportStatuses = new();
+
+    List<string> projectList = new List<string> {
+                                    "FitToConcept",
+                                    "OverallImpressions",
+                                    "Att1",
+                                    "Att2",
+                                    "AttrAggr",
+                                    "Memorability",
+                                    "PersonalPref",
+                                    "Suffix",
+                                    "VerbalUnder",
+                                    "writtenUnd",
+                                    "Exaggerative"
+                                };
+
+    // private async Task Process()
+    // {
+
+    //     // foreach(var proj in projectList)
+    //     // {
+    //     //     switch(proj)
+    //     //     {
+    //     //         case "FitToConcept":
+    //     //             await fitToConceptService.GetFitToConceptData();
+    //     //             new DLLCls().FitToConceptMethod(path, data.Cast<FitToConceptModel>().ToList()),
+    //     //             break;
+    //     //         default:
+    //     //             break;
+    //     //     }
+    //     // }
+
+    //     var definitions = new List<ReportDefinition>
+    //         {
+    //             new("FitToConcept", async () => (await fitToConceptService.GetFitToConceptData()).Cast<object>(),
+    //                 (path, data) => new DLLCls().FitToConceptMethod(path, data.Cast<FitToConceptModel>().ToList())),
+
+    //             new("OverallImpressions", async () => (await fitToConceptService.GetOverallImpressionsData()).Cast<object>(),
+    //                 (path, data) => new DLLCls().OverallImpressionsMethod(path, data.Cast<OverallImpressionsModel>().ToList())),
+
+    //             new("Att1", async () => (await fitToConceptService.GetAtt1Data()).Cast<object>(),
+    //                 (path, data) => new DLLCls().Attribute1Method(path, data.Cast<Aev1>().ToList())),
+
+    //             new("Att2", async () => (await fitToConceptService.GetAtt2Data()).Cast<object>(),
+    //                 (path, data) => new DLLCls().Attribute2Method(path, data.Cast<Aev2>().ToList())),
+
+    //             new("AttrAggr", async () => (await fitToConceptService.GetAttrAggData()).Cast<object>(),
+    //                 (path, data) => new DLLCls().AttributeMethodForAttributeEvalAggreg(path, data.Cast<Aev3>().ToList())),
+
+    //             new("Memorability", async () => (await fitToConceptService.MemorabilityData()).Cast<object>(),
+    //                 (path, data) => new DLLCls().MemorabilityMethod(path, data.Cast<Memorability>().ToList())),
+
+    //              new("PersonalPref", async () => (await fitToConceptService.PersonalPrefData()).Cast<object>(),
+    //                 (path, data) => new DLLCls().PersonalPreferencesMethod(path, data.Cast<PersonalPreference>().ToList())),
+
+    //             new("Suffix", async () => (await fitToConceptService.SuffixData()).Cast<object>(),
+    //                 (path, data) => new DLLCls().SuffixMethod(path, data.Cast<Suffix>().ToList())),
+
+    //              new("VerbalUnder", async () => (await fitToConceptService.VerbalUnderData()).Cast<object>(),
+    //                 (path, data) => new DLLCls().VerbalUnderstandingBarMethod(path, data.Cast<VerbalUnderstanding>().ToList())),
+
+    //             new("writtenUnd", async () => (await fitToConceptService.WrittenUnderData()).Cast<object>(),
+    //                 (path, data) => new DLLCls().WrittenUnderstandingMethod(path, data.Cast<WrittenUnderstanding>().ToList())),
+
+    //              new("Exaggerative", async () => (await fitToConceptService.ExaggData()).Cast<object>(),
+    //                 (path, data) => new DLLCls().ExaggerativeMethod(path, data.Cast<Likeability>().ToList())),
+
+    //         };
+
+    //     hasProcessStarted = true;
+    //     currentState = ProcessState.Generating;
+
+    //     try
+    //     {
+
+    //         foreach (var def in definitions)
+    //         {
+    //             var request = new ReportGenerationRequest
+    //                 {
+    //                     ProjectTemplateType = def.projectType,
+    //                     TaskId = Guid.NewGuid()
+    //                 };
+
+    //             var taskId = await fitToConceptService.GenerateReportAsync(request);
+
+    //             if (request != null)
+    //             {
+    //                 reportStatuses.Add(new ReportStatus
+    //                     {
+    //                         ProjectName = request.ProjectTemplateType!,
+    //                         TaskId = taskId,
+    //                         Status = "Queued"
+    //                     });
+    //             }
+
+    //             _ = PollStatusAsync(taskId);
+    //         }
+
+    //         // var request = new ReportGenerationRequest
+    //         //     {
+    //         //         ProjectTemplateType = fitToConceptsData?.First().ProjectTemplateType!,
+    //         //         TaskId = Guid.NewGuid()
+    //         //     };
+
+    //         // var taskId = await fitToConceptService.GenerateReportAsync(request);
+
+    //         // if (request != null)
+    //         // {
+    //         //     reportStatuses.Add(new ReportStatus
+    //         //         {
+    //         //             ProjectName = request.ProjectTemplateType!,
+    //         //             TaskId = taskId,
+    //         //             Status = "Queued"
+    //         //         });
+    //         // }
+
+    //         // _ = PollStatusAsync(taskId);
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         throw new Exception(ex.Message);
+    //     }
+    // }
+
+    private async Task Process()
+    {
+        hasProcessStarted = true;
+        currentState = ProcessState.Generating;
+
+        try
+        {
+            foreach (var project in projectList)
+            {
+                var request = new ReportGenerationRequest
+                    {
+                        ProjectTemplateType = project,
+                        TaskId = Guid.NewGuid()
+                    };
+
+                var taskId = await fitToConceptService.GenerateReportAsync(request);
+
+                reportStatuses.Add(new ReportStatus
+                    {
+                        ProjectName = request.ProjectTemplateType,
+                        TaskId = taskId,
+                        Status = "Queued"
+                    });
+
+                _ = PollStatusAsync(taskId);
+            }
+        }
+        catch (Exception ex)
+        {
+            // Log or handle exception
+            throw new Exception($"Failed to generate reports: {ex.Message}");
+        }
+    }
+
+    private async Task PollStatusAsync(Guid taskId)
+    {
+        while (true)
+        {
+            //var response = await http.GetFromJsonAsync<ReportStatus>($"api/report/status/{taskId}");
+            var status = await fitToConceptService.GetReportStatusAsync(taskId);
+
+            var task = reportStatuses.FirstOrDefault(x => x.TaskId == taskId);
+            if (task != null) task.Status = status;
+
+            if (status == "Done" || status.StartsWith("Error")) break;
+        }
+
+        currentState = ProcessState.Done;
+        hasProcessStarted = false;
+        StateHasChanged();
+    }
+
+
+}
