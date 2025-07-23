@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SharedModels.DTO
+{
+    public class TaskLog
+    {
+        [Key]
+        public int Id { get; set; }
+        public string ProjectType { get; set; } = string.Empty;
+        public string TaskId { get; set; } = string.Empty;
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+        public DateTime CompletedOn { get; set; }
+        public string CreatedBy { get; set; } = string.Empty;
+
+    }
+}

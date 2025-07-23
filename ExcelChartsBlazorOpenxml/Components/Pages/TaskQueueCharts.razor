@@ -29,7 +29,7 @@ else
 
     @if (reportStatuses == null)
     {
-        <h4>Processing....</h4>
+        <h4 class="text-secondary">Processing....</h4>
     }
     else if (reportStatuses.Count == 0)
     {
@@ -267,7 +267,7 @@ else
                         TaskId = taskId,
                         Status = "Queued"
                     });
-
+                hasProcessStarted = false;
                 _ = PollStatusAsync(taskId);
             }
         }
@@ -292,7 +292,7 @@ else
         }
 
         currentState = ProcessState.Done;
-        hasProcessStarted = false;
+        
         StateHasChanged();
     }
 

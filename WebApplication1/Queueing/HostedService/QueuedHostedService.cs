@@ -28,7 +28,17 @@ namespace WebApplicationAPI.Queueing.HostedService
 
                     if (workItem != null)
                     {
-                        // await workItem(stoppingToken);
+                        //slowest, queued processing
+                        //await workItem(stoppingToken);
+                        
+                        /*--similar-*/
+                        //same slow process await with task run
+                        //await Task.Run(async () => await workItem(stoppingToken));
+
+                        //parallel processing, faster but not fixed listwise processing
+                        //Task.Run(() => workItem(stoppingToken));    
+                        
+                        /*--similar-*/
                         _ = Task.Run(() => workItem(stoppingToken), stoppingToken);
 
                         _logger.LogInformation("Task completed.");

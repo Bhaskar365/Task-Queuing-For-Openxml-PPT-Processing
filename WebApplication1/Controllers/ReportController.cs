@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SharedModels.DTO;
 using WebApplication1.Repositories;
 using WebApplicationAPI.Queueing;
+using WebApplicationAPI.TaskLogging;
 using WebApplicationAPI.TaskTracking;
 
 namespace WebApplicationAPI.Controllers
@@ -15,20 +16,29 @@ namespace WebApplicationAPI.Controllers
         private readonly IBackgroundTaskQueue _queue;
         private readonly ITaskStatusTracker _tracker;
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly IConfiguration _configuration;
+        private readonly ITaskLogging _taskLogging;
 
         public ReportController(IBackgroundTaskQueue queue,
                                 ITaskStatusTracker tracker,
-                                IServiceScopeFactory scopeFactory)
+                                IServiceScopeFactory scopeFactory,
+                                IConfiguration configuration,
+                                ITaskLogging taskLogging)
         {
             _queue = queue;
             _tracker = tracker;
             _scopeFactory = scopeFactory;
+            _configuration = configuration;
+            _taskLogging = taskLogging;
         }
 
 
         [HttpPost("generate")]
         public async Task<IActionResult> GenerateReport([FromBody] ReportGenerationRequest request)
         {
+
+            var connectionString = _configuration.GetConnectionString("DBConnection");
+
             _tracker.SetStatus(request.TaskId, "Queued");
 
             await _queue.EnqueueAsync(async token =>
@@ -41,6 +51,16 @@ namespace WebApplicationAPI.Controllers
                     var repository = scope.ServiceProvider.GetRequiredService<IDataRepository>();
                     var dll = new DLLCls();
                     string sourcePath = "";
+
+                    TaskLog taskLog = new TaskLog
+                    {
+                        TaskId = request.TaskId.ToString(),
+                        CreatedOn = DateTime.UtcNow,
+                        ProjectType = request.ProjectTemplateType,
+                        CreatedBy = "testUser"
+                    };
+
+                    _taskLogging.InsertTask(taskLog, connectionString!);
 
                     switch (request.ProjectTemplateType)
                     {
@@ -110,11 +130,12 @@ namespace WebApplicationAPI.Controllers
                             sourcePath = $"C:\\ExcelChartFiles\\Templates\\Exaggerative{exagData.Count()}.pptx";
                             dll.ExaggerativeMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), exagData.ToList());
                             break;
-
-
                     }
 
                     _tracker.SetStatus(request.TaskId, "Done");
+
+                    taskLog.CompletedOn = DateTime.UtcNow;
+                    _taskLogging.MarkTaskAsCompleted(request.TaskId.ToString(), taskLog.CompletedOn, connectionString!);
                 }
                 catch (Exception ex)
                 {
@@ -138,7 +159,7 @@ namespace WebApplicationAPI.Controllers
             return Ok(new ReportStatusDto
             {
                 TaskId = request.TaskId,
-                ProjectType = request.ProjectTemplateType
+                ProjectType = request.ProjectTemplateType,
             });
         }
 

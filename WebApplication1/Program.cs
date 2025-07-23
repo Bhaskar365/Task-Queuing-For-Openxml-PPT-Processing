@@ -4,6 +4,7 @@ using WebApplication1.Repositories;
 using WebApplicationAPI.Queueing;
 using WebApplicationAPI.Queueing.HostedService;
 using WebApplicationAPI.Seeding;
+using WebApplicationAPI.TaskLogging;
 using WebApplicationAPI.TaskTracking;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDBContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DBConnection")));
 
 builder.Services.AddScoped<IDataRepository, DataRepository>();
+builder.Services.AddScoped<ITaskLogging, TaskLogging>();
 
 builder.Services.AddCors(option =>
 {
