@@ -1,4 +1,5 @@
 ﻿using SharedModels;
+using SharedModels.DTO;
 using WebApplicationAPI.Models;
 
 namespace WebApplication1.Repositories
@@ -31,7 +32,7 @@ namespace WebApplication1.Repositories
 
         Task<IEnumerable<Sala154>> GetSala154();
 
-        
+        Task<IEnumerable<TaskLog>> GetTaskLogs();
 
     }
 }

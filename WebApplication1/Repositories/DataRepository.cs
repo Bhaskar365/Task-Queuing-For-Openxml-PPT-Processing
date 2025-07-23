@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using SharedModels;
+using SharedModels.DTO;
 using WebApplication1.Context;
 using WebApplicationAPI.Models;
 
@@ -86,6 +87,19 @@ namespace WebApplication1.Repositories
             {
                 throw new Exception(ex.Message);
             }          
+        }
+
+        public async Task<IEnumerable<TaskLog>> GetTaskLogs()
+        {
+            try
+            {
+                var result = await _context.TaskLogs.ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<IEnumerable<VerbalUnderstanding>> GetVerbalUnderstandingData()

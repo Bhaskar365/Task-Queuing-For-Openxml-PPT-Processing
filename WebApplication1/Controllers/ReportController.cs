@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SharedModels.DTO;
+using System.Threading.Tasks;
 using WebApplication1.Repositories;
 using WebApplicationAPI.Queueing;
 using WebApplicationAPI.TaskLogging;
@@ -18,18 +19,21 @@ namespace WebApplicationAPI.Controllers
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IConfiguration _configuration;
         private readonly ITaskLogging _taskLogging;
+        private readonly IDataRepository _repository;
 
         public ReportController(IBackgroundTaskQueue queue,
                                 ITaskStatusTracker tracker,
                                 IServiceScopeFactory scopeFactory,
                                 IConfiguration configuration,
-                                ITaskLogging taskLogging)
+                                ITaskLogging taskLogging,
+                                IDataRepository repository)
         {
             _queue = queue;
             _tracker = tracker;
             _scopeFactory = scopeFactory;
             _configuration = configuration;
             _taskLogging = taskLogging;
+            _repository = repository;
         }
 
 
@@ -175,6 +179,13 @@ namespace WebApplicationAPI.Controllers
                 Status = status ?? "Unknown",
             });
 
+        }
+
+        [HttpGet("user/taskLogs")]
+        public async Task<IActionResult> GetTaskLogsDetails()
+        {
+            var logs = await _repository.GetTaskLogs();
+            return Ok(logs);
         }
 
         private string CreateTargetPath(string template, string project)

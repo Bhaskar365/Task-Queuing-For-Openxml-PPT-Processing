@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using SharedModels;
+using SharedModels.DTO;
 using WebApplicationAPI.Models;
 
 namespace WebApplication1.Context
@@ -48,6 +49,8 @@ namespace WebApplication1.Context
 
         public DbSet<Sala154> Sala154 { get; set; }
 
+        public DbSet<TaskLog> TaskLogs { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Aev1>(entity =>
@@ -61,6 +64,13 @@ namespace WebApplication1.Context
                 entity.Property(e => e.TestName).HasMaxLength(255);
                 entity.Property(e => e.TestNameColor).HasMaxLength(255);
                 entity.Property(e => e.ProjectTemplateType).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<TaskLog>(entity =>
+            {
+                entity.HasNoKey().ToTable("TaskLoggingTable");
+
+
             });
 
             modelBuilder.Entity<Aev2>(entity =>
