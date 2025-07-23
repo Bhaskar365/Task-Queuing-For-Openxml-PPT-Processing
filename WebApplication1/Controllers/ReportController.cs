@@ -58,7 +58,7 @@ namespace WebApplicationAPI.Controllers
 
                     TaskLog taskLog = new TaskLog
                     {
-                        TaskId = request.TaskId.ToString(),
+                        TaskId = request.TaskId,
                         CreatedOn = DateTime.UtcNow,
                         ProjectType = request.ProjectTemplateType,
                         CreatedBy = "testUser"

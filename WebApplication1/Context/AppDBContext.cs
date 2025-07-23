@@ -70,7 +70,6 @@ namespace WebApplication1.Context
             {
                 entity.HasNoKey().ToTable("TaskLoggingTable");
 
-
             });
 
             modelBuilder.Entity<Aev2>(entity =>

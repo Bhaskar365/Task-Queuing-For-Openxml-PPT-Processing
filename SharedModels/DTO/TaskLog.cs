@@ -12,7 +12,7 @@ namespace SharedModels.DTO
         [Key]
         public int Id { get; set; }
         public string ProjectType { get; set; } = string.Empty;
-        public string TaskId { get; set; } = string.Empty;
+        public Guid TaskId { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public DateTime CompletedOn { get; set; }
         public string CreatedBy { get; set; } = string.Empty;
