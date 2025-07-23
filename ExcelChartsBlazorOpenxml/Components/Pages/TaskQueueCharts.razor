@@ -20,6 +20,9 @@ else
         <span>Generate Report</span>
     </button>
 
+    <button type="button" class="btn btn-secondary ms-1" @onclick ="LoadLogs">Refresh</button>
+
+
     <div>
         <div class="card card-body">
             <table class="table  table-striped">
@@ -63,6 +66,8 @@ else
                 </tbody>
             </table>
         </div>
+
+
     </div>
 
     @if (hasProcessStarted)
@@ -128,6 +133,7 @@ else
 
     ProcessState currentState = ProcessState.Idle;
 
+
     public bool hasProcessStarted = false;
     List<FitToConceptModel> fitToConceptsData;
     List<OverallImpressionsModel> OverallImpressionsData;
@@ -151,6 +157,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        StateHasChanged();
         fitToConceptsData = await fitToConceptService.GetFitToConceptData();
         OverallImpressionsData = await fitToConceptService.GetOverallImpressionsData();
         Attribute1Data = await fitToConceptService.GetAtt1Data();
@@ -162,28 +169,34 @@ else
         VerbalUnderstandingData = await fitToConceptService.VerbalUnderData();
         WrittenUnderstandingData = await fitToConceptService.WrittenUnderData();
         Exagg = await fitToConceptService.ExaggData();
+
+        StateHasChanged();
         LogList = await fitToConceptService.GetLogs();
         StateHasChanged();
 
-        _ = RefreshTaskLogs();
-
         isDataLoaded = true;
         StateHasChanged();
+
+        StartHotReload();
+    }
+    
+    private void StartHotReload()
+    {
+        var timer = new System.Threading.Timer((_) =>
+       {
+
+           InvokeAsync(async () =>
+           {
+               await LoadLogs();
+               StateHasChanged();
+           });
+       }, null, 0, 10000);
     }
 
     private async Task LoadLogs()
     {
         LogList = await fitToConceptService.GetLogs();
         StateHasChanged();
-    }
-
-    private async Task RefreshTaskLogs()
-    {
-        while(true)
-        {
-            await Task.Delay(20);
-            await LoadLogs();
-        }
     }
 
     private List<ReportStatus> reportStatuses = new();
@@ -335,6 +348,7 @@ else
                     });
                 hasProcessStarted = false;
                 _ = PollStatusAsync(taskId);
+                StateHasChanged();
             }
         }
         catch (Exception ex)
@@ -355,6 +369,7 @@ else
             if (task != null) task.Status = status;
 
             if (status == "Done" || status.StartsWith("Error")) break;
+            StateHasChanged();
         }
 
         currentState = ProcessState.Done;
