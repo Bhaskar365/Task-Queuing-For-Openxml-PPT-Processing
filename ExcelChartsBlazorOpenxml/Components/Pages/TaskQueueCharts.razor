@@ -16,12 +16,7 @@
 }
 else
 {
-    <button type="button" class="btn btn-primary buttonload" @onclick="Process">
-        <span>Generate Report</span>
-    </button>
-
-    <button type="button" class="btn btn-secondary ms-1" @onclick ="LoadLogs">Refresh</button>
-
+    <button type="button" class="btn btn-primary buttonload" @onclick="Process">Generate Report</button>
 
     <div>
         <div class="card card-body">
@@ -184,13 +179,12 @@ else
     {
         var timer = new System.Threading.Timer((_) =>
        {
-
            InvokeAsync(async () =>
            {
                await LoadLogs();
                StateHasChanged();
            });
-       }, null, 0, 10000);
+       }, null, 0, 5000);
     }
 
     private async Task LoadLogs()

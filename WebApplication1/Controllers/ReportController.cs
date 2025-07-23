@@ -188,6 +188,22 @@ namespace WebApplicationAPI.Controllers
             return Ok(logs);
         }
 
+        [HttpGet("{user}/log")]
+        public async Task<ActionResult<IEnumerable<TaskLog>>> GetUserSpecificLogs(string user)
+        {
+            try
+            {
+                string conn = _configuration.GetConnectionString("DBConnection")!;
+
+                var userLogs = await _taskLogging.GetUnfinishedTasks(conn, user);
+                return Ok(userLogs);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         private string CreateTargetPath(string template, string project)
         {
             string path = $"C:\\ExcelChartFiles\\{project}";
