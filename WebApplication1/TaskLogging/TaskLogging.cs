@@ -47,19 +47,21 @@ namespace WebApplicationAPI.TaskLogging
             }
         }
 
-        public void SetTaskStatusState(string taskId,string status,string connectionString) 
+        public void SetTaskStatusState(Guid taskId,string status,string connectionString,string createdBy) 
         {
             using(SqlConnection conn = new SqlConnection(connectionString)) 
             {
                 string sql = @"UPDATE TaskLoggingTable
                                SET status = @CurrentStatus
                                WHERE TaskId = @TaskId
+                               AND CreatedBy=@CreatedBy
                               ";
 
                 using(SqlCommand cmd = new SqlCommand(sql,conn))
                 {
                     cmd.Parameters.AddWithValue("@CurrentStatus",status);
-                    cmd.Parameters.AddWithValue("@TaskId",Guid.Parse(taskId));
+                    cmd.Parameters.AddWithValue("@TaskId",taskId);
+                    cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();

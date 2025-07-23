@@ -42,6 +42,7 @@ namespace WebApplicationAPI.Controllers
         {
 
             var connectionString = _configuration.GetConnectionString("DBConnection");
+            string user = "testUser";
 
             _tracker.SetStatus(request.TaskId, "Queued");
 
@@ -61,8 +62,10 @@ namespace WebApplicationAPI.Controllers
                         TaskId = request.TaskId,
                         CreatedOn = DateTime.UtcNow,
                         ProjectType = request.ProjectTemplateType,
-                        CreatedBy = "testUser"
+                        CreatedBy = user
                     };
+
+                   // _taskLogging.SetTaskStatusState(request.TaskId, "Processing", connectionString!, user);
 
                     _taskLogging.InsertTask(taskLog, connectionString!);
 
@@ -188,7 +191,7 @@ namespace WebApplicationAPI.Controllers
             return Ok(logs);
         }
 
-        [HttpGet("{user}/log")]
+        [HttpGet("{user}/logs")]
         public async Task<ActionResult<IEnumerable<TaskLog>>> GetUserSpecificLogs(string user)
         {
             try

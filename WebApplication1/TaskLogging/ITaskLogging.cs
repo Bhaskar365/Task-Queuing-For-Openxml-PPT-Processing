@@ -8,7 +8,7 @@ namespace WebApplicationAPI.TaskLogging
 
         void MarkTaskAsCompleted(string taskId, DateTime completedTime, string connectionString);
 
-        void SetTaskStatusState(string taskId, string status, string connectionString);
+        void SetTaskStatusState(Guid taskId, string status, string connectionString, string createdBy);
 
         Task<IEnumerable<TaskLog>> GetUnfinishedTasks(string connectionString, string createdBy);
     }
