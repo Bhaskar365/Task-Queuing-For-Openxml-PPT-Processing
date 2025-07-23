@@ -89,5 +89,10 @@ namespace ExcelChartsBlazorOpenxml.Services
         {
             return await _httpClient.GetFromJsonAsync<List<Sala>>($"api/data/Sala154");
         }
+
+        public async Task<List<TaskLog>> GetLogs()
+        {
+            return await _httpClient.GetFromJsonAsync<List<TaskLog>>($"api/report/user/taskLogs");
+        }
     }
 }

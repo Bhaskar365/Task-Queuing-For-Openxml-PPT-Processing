@@ -35,5 +35,7 @@ namespace ExcelChartsBlazorOpenxml.Services
         Task<Guid> GenerateReportAsync(ReportGenerationRequest request);
         Task<string> GetReportStatusAsync(Guid taskId);
 
+        Task<List<TaskLog>> GetLogs();
+
     }
 }

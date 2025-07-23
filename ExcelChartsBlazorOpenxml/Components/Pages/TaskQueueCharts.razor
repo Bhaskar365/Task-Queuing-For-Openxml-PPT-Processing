@@ -20,6 +20,51 @@ else
         <span>Generate Report</span>
     </button>
 
+    <div>
+        <div class="card card-body">
+            <table class="table  table-striped">
+                <thead>
+                    <tr style="font-size: xx-small;">
+                        <th scope="col">Task ID</th>
+                        <th scope="col">Project Type</th>
+                        <th scope="col">Created On</th>
+                        <th scope="col">Completed On</th>
+                        <th scope="col">Generation Time</th>
+                        <th scope="col">Created By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (LogList == null || LogList.Count == 0)
+                    {
+                        <tr style="font-size: xx-small;">
+                            <td colspan="6" class="text-center">No data</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var data in LogList)
+                        {
+                            <tr style="font-size: xx-small;">
+                                <td>@data.TaskId</td>
+                                <td>@data.ProjectType</td>
+                                <td>@data.CreatedOn.ToString("dddd, dd MMMM yyyy HH:mm:ss")</td>
+                                <td>@data.CompletedOn.ToString("dddd, dd MMMM yyyy HH:mm:ss")</td>
+                                <td>
+                                    @{
+                                        var duration = data.CompletedOn - data.CreatedOn;
+                                        string formattedDuration = string.Format("{0:%m}m {0:%s}s", duration);
+                                    }
+                                    @formattedDuration
+                                </td>
+                                <td>@data.CreatedBy</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     @if (hasProcessStarted)
     {
         <p class="text-center">
@@ -95,6 +140,7 @@ else
     List<VerbalUnderstanding> VerbalUnderstandingData;
     List<WrittenUnderstanding> WrittenUnderstandingData;
     List<Likeability> Exagg;
+    List<TaskLog> LogList;
 
     public class ReportStatus
     {
@@ -116,8 +162,28 @@ else
         VerbalUnderstandingData = await fitToConceptService.VerbalUnderData();
         WrittenUnderstandingData = await fitToConceptService.WrittenUnderData();
         Exagg = await fitToConceptService.ExaggData();
+        LogList = await fitToConceptService.GetLogs();
+        StateHasChanged();
+
+        _ = RefreshTaskLogs();
+
         isDataLoaded = true;
         StateHasChanged();
+    }
+
+    private async Task LoadLogs()
+    {
+        LogList = await fitToConceptService.GetLogs();
+        StateHasChanged();
+    }
+
+    private async Task RefreshTaskLogs()
+    {
+        while(true)
+        {
+            await Task.Delay(20);
+            await LoadLogs();
+        }
     }
 
     private List<ReportStatus> reportStatuses = new();
@@ -292,7 +358,7 @@ else
         }
 
         currentState = ProcessState.Done;
-        
+
         StateHasChanged();
     }
 
