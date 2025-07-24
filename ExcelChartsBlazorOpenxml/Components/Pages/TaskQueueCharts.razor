@@ -92,7 +92,9 @@ else
                     <tr style="font-size: xx-small;">
                         <td>@task.ProjectType</td>
                         <td>@task.TaskId</td>
-                        <td>@task.CurrentStatus</td>
+                        <td class="@GetStatusClass(task.CurrentStatus)">
+                            @task.CurrentStatus
+                        </td>
                         <td>@task.CreatedBy</td>
                     </tr>
                 }
