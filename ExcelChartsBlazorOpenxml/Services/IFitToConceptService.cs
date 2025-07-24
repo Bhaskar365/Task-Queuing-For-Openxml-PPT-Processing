@@ -37,5 +37,7 @@ namespace ExcelChartsBlazorOpenxml.Services
 
         Task<List<TaskLog>> GetLogs();
 
+        Task<List<TaskLog>> GetUnfinishedLogs(string user);
+
     }
 }

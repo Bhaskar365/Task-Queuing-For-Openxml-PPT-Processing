@@ -65,9 +65,40 @@ else
                 </tbody>
             </table>
         </div>
-
-
     </div>
+
+    //unfinished
+    <table class="table table-striped">
+        <thead>
+            <tr style="font-size: xx-small;">
+                <th>ProjectType</th>
+                <th>Task ID</th>
+                <th>Status</th>
+                <th>Created By</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (UndoneQueueList == null || UndoneQueueList.Count == 0)
+            {
+                <tr style="font-size: xx-small;">
+                    <td colspan="4" class="text-center">No data</td>
+                </tr>
+            }
+            else
+            { 
+                @foreach (var task in UndoneQueueList)
+                {
+
+                    <tr style="font-size: xx-small;">
+                        <td>@task.ProjectType</td>
+                        <td>@task.TaskId</td>
+                        <td>@task.CurrentStatus</td>
+                        <td>@task.CreatedBy</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
 
     @if (hasProcessStarted)
     {
@@ -92,6 +123,7 @@ else
                     <th>Project</th>
                     <th>Task ID</th>
                     <th>Status</th>
+                    <th>Created By</th>
                 </tr>
             </thead>
             <tbody>
@@ -119,6 +151,7 @@ else
                         {
                             <td class="text-info bg-dark">@task.Status</td>
                         }
+
                     </tr>
                 }
             </tbody>
@@ -186,7 +219,7 @@ else
         LogList = await fitToConceptService.GetLogs();
         StateHasChanged();
 
-        // UndoneQueueList = await 
+        UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
 
         isDataLoaded = true;
         StateHasChanged();
@@ -209,6 +242,7 @@ else
     private async Task LoadLogs()
     {
         LogList = await fitToConceptService.GetLogs();
+        UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
         StateHasChanged();
     }
 

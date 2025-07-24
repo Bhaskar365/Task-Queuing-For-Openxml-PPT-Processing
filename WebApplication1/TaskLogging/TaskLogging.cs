@@ -98,6 +98,7 @@ namespace WebApplicationAPI.TaskLogging
                                 ProjectType = reader["ProjectType"].ToString()!,
                                 CreatedBy = reader["CreatedBy"].ToString()!,
                                 CreatedOn = reader.GetDateTime(reader.GetOrdinal("CreatedOn")),
+                                CurrentStatus = reader["CurrentStatus"].ToString()!,
                                 CompletedOn = reader["CompletedOn"] == DBNull.Value ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("CompletedOn"))
                             });
                         }
