@@ -7,6 +7,7 @@ namespace WebApplicationAPI.Queueing.HostedService
     {
         private readonly IBackgroundTaskQueue _taskQueue;
         private readonly ILogger<QueuedHostedService> _logger;
+        
 
         public QueuedHostedService(IBackgroundTaskQueue taskQueue, ILogger<QueuedHostedService> logger)
         {
