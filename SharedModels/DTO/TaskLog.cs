@@ -16,6 +16,7 @@ namespace SharedModels.DTO
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public DateTime CompletedOn { get; set; }
         public string CreatedBy { get; set; } = string.Empty;
+        public string CurrentStatus { get; set; } = string.Empty;
 
     }
 }

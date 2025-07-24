@@ -141,6 +141,8 @@ namespace WebApplicationAPI.Controllers
 
                     _tracker.SetStatus(request.TaskId, "Done");
 
+                    // _taskLogging.SetTaskStatusState(request.TaskId, "Done", connectionString!, user);
+
                     taskLog.CompletedOn = DateTime.UtcNow;
                     _taskLogging.MarkTaskAsCompleted(request.TaskId.ToString(), taskLog.CompletedOn, connectionString!);
                 }
