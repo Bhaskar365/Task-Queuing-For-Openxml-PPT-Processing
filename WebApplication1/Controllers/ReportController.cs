@@ -66,9 +66,9 @@ namespace WebApplicationAPI.Controllers
                         CurrentStatus = "Processing"
                     };
 
-                    _taskLogging.SetTaskStatusState(request.TaskId, "Processing", connectionString!, user);
 
                     _taskLogging.InsertTask(taskLog, connectionString!);
+                    _taskLogging.SetTaskStatusState(request.TaskId, "Processing", connectionString!, user);
 
                     switch (request.ProjectTemplateType)
                     {
@@ -140,12 +140,13 @@ namespace WebApplicationAPI.Controllers
                             break;
                     }
 
+                    taskLog.CompletedOn = DateTime.UtcNow;
+                    _taskLogging.MarkTaskAsCompleted(request.TaskId.ToString(), taskLog.CompletedOn, connectionString!,"Done");
+
                     _tracker.SetStatus(request.TaskId, "Done");
 
                      _taskLogging.SetTaskStatusState(request.TaskId, "Done", connectionString!, user);
 
-                    taskLog.CompletedOn = DateTime.UtcNow;
-                    _taskLogging.MarkTaskAsCompleted(request.TaskId.ToString(), taskLog.CompletedOn, connectionString!,"Done");
                 }
                 catch (Exception ex)
                 {
