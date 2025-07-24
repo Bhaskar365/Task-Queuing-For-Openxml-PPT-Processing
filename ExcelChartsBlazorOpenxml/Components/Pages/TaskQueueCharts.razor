@@ -67,12 +67,8 @@ else
         </div>
 
         @* unfinished reports *@
-        @*    @if (UndoneQueueList.Count==0)
-        {
 
-        }
-        else
-        {
+
             <table class="table table-striped">
                 <thead>
                     <tr style="font-size: xx-small;">
@@ -113,7 +109,7 @@ else
                     }
                 </tbody>
             </table>
-        } *@
+        
 
     </div>
 
@@ -241,7 +237,7 @@ else
         StateHasChanged();
 
         StartHotReload();
-        // UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
+        UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
     }
 
     private void RetryAgain(TaskLog report)

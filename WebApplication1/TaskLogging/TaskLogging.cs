@@ -79,8 +79,8 @@ namespace WebApplicationAPI.TaskLogging
             using (SqlConnection conn = new SqlConnection(connectionString)) 
             {
                 string sql = @"SELECT * FROM TaskLoggingTable 
-                               WHERE (CurrentStatus = 'Queued' OR CurrentStatus = 'Processing' OR CurrentStatus = 'Fail') 
-                               AND CompletedOn IS NULL AND CreatedBy=@CreatedBy"; 
+                               WHERE (CurrentStatus = 'Fail') 
+                               AND CompletedOn IS NOT NULL AND CreatedBy=@CreatedBy"; 
 
                 using(SqlCommand cmd = new SqlCommand(sql,conn))
                 {

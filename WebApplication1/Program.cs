@@ -32,6 +32,8 @@ builder.Services.AddSingleton<ITaskStatusTracker, TaskStatusTracker>();
 
 builder.Services.AddHostedService<QueuedHostedService>();
 
+builder.Services.AddHostedService<StuckTaskMonitor>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

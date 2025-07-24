@@ -30,7 +30,7 @@ namespace WebApplicationAPI.Queueing.HostedService
                     if (workItem != null)
                     {
                         //slowest, queued processing
-                        //await workItem(stoppingToken);
+                        await workItem(stoppingToken);
                         
                         /*--similar-*/
                         //same slow process await with task run
@@ -40,7 +40,7 @@ namespace WebApplicationAPI.Queueing.HostedService
                         //Task.Run(() => workItem(stoppingToken));    
                         
                         /*--similar-*/
-                        _ = Task.Run(() => workItem(stoppingToken), stoppingToken);
+                        //_ = Task.Run(() => workItem(stoppingToken), stoppingToken);
 
                         _logger.LogInformation("Task completed.");
                     }

@@ -20,7 +20,7 @@ namespace WebApplicationAPI.Queueing.HostedService
         {
             while(!stoppingToken.IsCancellationRequested)
             {
-                await Task.Delay(TimeSpan.FromMinutes(5),stoppingToken);
+                await Task.Delay(TimeSpan.FromMinutes(1),stoppingToken);
 
                 using var scope = _serviceProvider.CreateScope();
                 var connectionString = _configuration.GetConnectionString("DBConnection");
@@ -29,8 +29,18 @@ namespace WebApplicationAPI.Queueing.HostedService
 
                 await conn.OpenAsync();
 
-                string sql = @" UPDATE 
-                              ";
+                string sql = @"UPDATE 
+                                TaskLoggingTable SET 
+                                CurrentStatus = 'Fail',
+                                CompletedOn= GETUTCDATE()
+                             WHERE
+                                CurrentStatus = 'Processing'
+                                AND CompletedOn IS NULL
+                                AND DATEDIFF(MINUTE,CreatedOn,GETUTCDATE())>=10
+                            ";
+
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                await cmd.ExecuteNonQueryAsync();
             }
 
             throw new NotImplementedException();
