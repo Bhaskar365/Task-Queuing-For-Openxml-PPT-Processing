@@ -66,47 +66,55 @@ else
             </table>
         </div>
 
-        @* unfinished *@
-        <table class="table table-striped">
-            <thead>
-                <tr style="font-size: xx-small;">
-                    <th>ProjectType</th>
-                    <th>Task ID</th>
-                    <th>Status</th>
-                    <th>Created By</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (UndoneQueueList == null || UndoneQueueList.Count == 0)
-                {
+        @* unfinished reports *@
+        @*    @if (UndoneQueueList.Count==0)
+        {
+
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
                     <tr style="font-size: xx-small;">
-                        <td colspan="4" class="text-center">No data</td>
+                        <th>ProjectType</th>
+                        <th>Task ID</th>
+                        <th>Status</th>
+                        <th>Created By</th>
+                        <th></th>
                     </tr>
-                }
-                else
-                {
-                    @foreach (var task in UndoneQueueList)
+                </thead>
+                <tbody>
+                    @if (UndoneQueueList == null || UndoneQueueList.Count == 0)
                     {
                         <tr style="font-size: xx-small;">
-                            <td>@task.ProjectType</td>
-                            <td>@task.TaskId</td>
-                            <td class="@GetStatusClass(task.CurrentStatus)">
-                                @task.CurrentStatus
-                            </td>
-                            <td>@task.CreatedBy</td>
-                            <td class="p-0">
-                                <button class="btn btn-info btn-sm"
-                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                                        @onclick="@(()=>RetryAgain(task))">
-                                    Retry
-                                </button>
-                            </td>
+                            <td colspan="4" class="text-center">No data</td>
                         </tr>
                     }
-                }
-            </tbody>
-        </table>
+                    else
+                    {
+                        @foreach (var task in UndoneQueueList)
+                        {
+                            <tr style="font-size: xx-small;">
+                                <td>@task.ProjectType</td>
+                                <td>@task.TaskId</td>
+                                <td class="@GetStatusClass(task.CurrentStatus)">
+                                    @task.CurrentStatus
+                                </td>
+                                <td>@task.CreatedBy</td>
+                                <td class="p-0">
+                                    <button class="btn btn-info btn-sm"
+                                            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                                            @onclick="@(()=>RetryAgain(task))">
+                                        Retry
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        } *@
+
     </div>
 
 
@@ -134,7 +142,6 @@ else
                     <th>Project</th>
                     <th>Task ID</th>
                     <th>Status</th>
-                    <th>Created By</th>
                 </tr>
             </thead>
             <tbody>
@@ -162,7 +169,6 @@ else
                         {
                             <td class="text-info bg-dark">@task.Status</td>
                         }
-
                     </tr>
                 }
             </tbody>
@@ -230,17 +236,20 @@ else
         LogList = await fitToConceptService.GetLogs();
         StateHasChanged();
 
-        UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
 
         isDataLoaded = true;
         StateHasChanged();
 
         StartHotReload();
+        // UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
     }
 
     private void RetryAgain(TaskLog report)
     {
-        var x = report;
+        var data = report;
+
+
+
     }
 
     private void StartHotReload()
@@ -409,6 +418,7 @@ else
                         TaskId = taskId,
                         Status = "Queued"
                     });
+
                 hasProcessStarted = false;
                 _ = PollStatusAsync(taskId);
                 StateHasChanged();

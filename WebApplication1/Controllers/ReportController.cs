@@ -1,4 +1,6 @@
-﻿using ClassLibrary1;
+﻿using Azure.Core;
+using ClassLibrary1;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SharedModels.DTO;
@@ -210,6 +212,119 @@ namespace WebApplicationAPI.Controllers
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        [HttpPost("retry")]
+        public async Task<IActionResult> RetryReport([FromBody] TaskLog task) 
+        {
+            var connectionString = _configuration.GetConnectionString("DBConnection");
+            
+            string user = task.CreatedBy;
+            Guid taskId = task.TaskId;
+
+            _tracker.SetStatus(task.TaskId, "Queued");
+            _taskLogging.SetTaskStatusState(taskId, "Queued", connectionString!, user);
+
+            await _queue.EnqueueAsync(async token => 
+            {
+                try
+                {
+                    _taskLogging.SetTaskStatusState(taskId, "Processing", connectionString!, user);
+                    _tracker.SetStatus(task.TaskId,"Processing");
+
+                    using var scope = _scopeFactory.CreateScope();
+                    var repository = scope.ServiceProvider.GetRequiredService<IDataRepository>();
+                    var dll = new DLLCls();
+                    string sourcePath = "";
+
+                    switch (task.ProjectType)
+                    {
+                        case "FitToConcept":
+
+                            var fitToConceptdata = await repository.GetAllFitToConceptData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\FittoConcept{fitToConceptdata.Count()}.pptx";
+                            dll.FitToConceptMethod(CreateTargetPath(sourcePath, task.ProjectType), fitToConceptdata.ToList());
+                            break;
+
+                        case "OverallImpressions":
+                            var overallData = await repository.GetAllOverallImpressionsData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\OverallImpressions{overallData.Count()}.pptx";
+                            dll.OverallImpressionsMethod(CreateTargetPath(sourcePath, task.ProjectType), overallData.ToList());
+                            break;
+
+                        case "Att1":
+                            var att1Data = await repository.GetAtt1Data();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\AttributeEvaluation{att1Data.Count()}.pptx";
+                            dll.Attribute1Method(CreateTargetPath(sourcePath, task.ProjectType), att1Data.ToList());
+                            break;
+
+                        case "Att2":
+                            var att2Data = await repository.GetAtt2Data();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\AttributeEvaluation{att2Data.Count()}.pptx";
+                            dll.Attribute2Method(CreateTargetPath(sourcePath, task.ProjectType), att2Data.ToList());
+                            break;
+
+                        case "AttrAggr":
+                            var attAggData = await repository.GetAttrEvalAggregData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\AttributeEvaluationAggregate{attAggData.Count()}.pptx";
+                            dll.AttributeMethodForAttributeEvalAggreg(CreateTargetPath(sourcePath, task.ProjectType), attAggData.ToList());
+                            break;
+
+                        case "Memorability":
+                            var memoData = await repository.GetMemorabilityData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\Memorability{memoData.Count()}.pptx";
+                            dll.MemorabilityMethod(CreateTargetPath(sourcePath, task.ProjectType), memoData.ToList());
+                            break;
+
+                        case "PersonalPref":
+                            var persPrefData = await repository.GetPersonalPreferenceData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\PersonalPreferences{persPrefData.Count()}.pptx";
+                            dll.PersonalPreferencesMethod(CreateTargetPath(sourcePath, task.ProjectType), persPrefData.ToList());
+                            break;
+
+                        case "Suffix":
+                            var suffData = await repository.GetSuffixData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\Suffix{suffData.Count()}.pptx";
+                            dll.SuffixMethod(CreateTargetPath(sourcePath, task.ProjectType), suffData.ToList());
+                            break;
+
+                        case "VerbalUnder":
+                            var verbData = await repository.GetVerbalUnderstandingData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\VerbalUnderstanding-Bar{verbData.Count()}.pptx";
+                            dll.VerbalUnderstandingBarMethod(CreateTargetPath(sourcePath, task.ProjectType), verbData.ToList());
+                            break;
+
+                        case "writtenUnd":
+                            var writtData = await repository.GetWrittenUnderstandingData();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\WrittenUnderstanding{writtData.Count()}.pptx";
+                            dll.WrittenUnderstandingMethod(CreateTargetPath(sourcePath, task.ProjectType), writtData.ToList());
+                            break;
+
+                        case "Exaggerative":
+                            var exagData = await repository.GetExagg();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\Exaggerative{exagData.Count()}.pptx";
+                            dll.ExaggerativeMethod(CreateTargetPath(sourcePath, task.ProjectType), exagData.ToList());
+                            break;
+                    }
+
+                    task.CompletedOn = DateTime.UtcNow;
+                    _taskLogging.MarkTaskAsCompleted(task.TaskId.ToString(), (DateTime)task.CompletedOn, connectionString!, "Done");
+                    
+                    _taskLogging.SetTaskStatusState(taskId, "Done", connectionString!, user);
+
+                    _tracker.SetStatus(taskId, "Done");
+
+
+                }
+                catch (Exception ex)
+                {
+                    _taskLogging.SetTaskStatusState(taskId, "Fail", connectionString!, user);
+                    _tracker.SetStatus(taskId, $"Fail: {ex.Message}");
+                }
+            });
+
+
+            return Ok(task);
         }
 
         private string CreateTargetPath(string template, string project)
