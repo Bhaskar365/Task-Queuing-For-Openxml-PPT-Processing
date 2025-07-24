@@ -88,7 +88,7 @@ namespace WebApplicationAPI.TaskLogging
 
                     await conn.OpenAsync();
 
-                    using (var reader = await cmd.ExecuteReaderAsync()) 
+                    using (var reader = cmd.ExecuteReader()) 
                     {
                         while(await reader.ReadAsync())
                         {

@@ -29,13 +29,14 @@ else
                         <th scope="col">Completed On</th>
                         <th scope="col">Generation Time</th>
                         <th scope="col">Created By</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if (LogList == null || LogList.Count == 0)
                     {
                         <tr style="font-size: xx-small;">
-                            <td colspan="6" class="text-center">No data</td>
+                            <td colspan="7" class="text-center">No data</td>
                         </tr>
                     }
                     else
@@ -46,7 +47,7 @@ else
                                 <td>@data.TaskId</td>
                                 <td>@data.ProjectType</td>
                                 <td>@data.CreatedOn.ToString("dddd, dd MMMM yyyy HH:mm:ss")</td>
-                                <td>@data.CompletedOn.ToString("dddd, dd MMMM yyyy HH:mm:ss")</td>
+                                <td>@data.CompletedOn</td>
                                 <td>
                                     @{
                                         var duration = data.CompletedOn - data.CreatedOn;
@@ -55,6 +56,9 @@ else
                                     @formattedDuration
                                 </td>
                                 <td>@data.CreatedBy</td>
+                                <td class="@GetStatusClass(data.CurrentStatus)">
+                                    @data.CurrentStatus
+                                </td>
                             </tr>
                         }
                     }
@@ -128,6 +132,17 @@ else
 
     ProcessState currentState = ProcessState.Idle;
 
+    public string GetStatusClass(string status)
+    {
+        return status switch
+        {
+            "Done" => "text-info bg-dark",
+            "Processing" => "text-warning bg-dark",
+            "Fail" => "text-danger bg-dark",
+            "Queued" => "text-primary-emphasis bg-dark",
+            _ => "text-info-emphasis bg-dark"
+        };
+    }
 
     public bool hasProcessStarted = false;
     List<FitToConceptModel> fitToConceptsData;
@@ -142,6 +157,8 @@ else
     List<WrittenUnderstanding> WrittenUnderstandingData;
     List<Likeability> Exagg;
     List<TaskLog> LogList;
+
+    List<TaskLog> UndoneQueueList;
 
     public class ReportStatus
     {
@@ -168,6 +185,8 @@ else
         StateHasChanged();
         LogList = await fitToConceptService.GetLogs();
         StateHasChanged();
+
+        // UndoneQueueList = await 
 
         isDataLoaded = true;
         StateHasChanged();
