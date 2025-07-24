@@ -10,8 +10,8 @@ namespace WebApplicationAPI.TaskLogging
         {
             using (SqlConnection conn = new SqlConnection(connectionString)) 
             {
-                string sql = @"INSERT INTO TaskLoggingTable (ProjectType, TaskId, CreatedOn, CreatedBy) 
-                              VALUES(@ProjectType, @TaskId, @CreatedOn, @CreatedBy)";
+                string sql = @"INSERT INTO TaskLoggingTable (ProjectType, TaskId, CreatedOn, CreatedBy, CurrentStatus) 
+                              VALUES(@ProjectType, @TaskId, @CreatedOn, @CreatedBy, @CurrentStatus)";
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn)) 
                 {
@@ -19,6 +19,7 @@ namespace WebApplicationAPI.TaskLogging
                     cmd.Parameters.AddWithValue("@TaskId", task.TaskId);
                     cmd.Parameters.AddWithValue("@CreatedOn", task.CreatedOn);
                     cmd.Parameters.AddWithValue("@CreatedBy", task.CreatedBy);
+                    cmd.Parameters.AddWithValue("@CurrentStatus",task.CurrentStatus);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -27,12 +28,13 @@ namespace WebApplicationAPI.TaskLogging
             };
         }
 
-        public void MarkTaskAsCompleted(string taskId, DateTime completedTime, string connectionString)
+        public void MarkTaskAsCompleted(string taskId, DateTime completedTime, string connectionString, string status)
         {
             using(SqlConnection conn = new SqlConnection(connectionString))
             {
                 string sql = @"UPDATE TaskLoggingTable 
-                               SET CompletedOn = @CompletedOn
+                               SET CompletedOn = @CompletedOn,
+                                   CurrentStatus = @CurrentStatus
                                WHERE TaskId = @TaskId;
                               ";
 
@@ -40,6 +42,7 @@ namespace WebApplicationAPI.TaskLogging
                 {
                     cmd.Parameters.AddWithValue("@CompletedOn", completedTime);
                     cmd.Parameters.AddWithValue("@TaskId", Guid.Parse(taskId));
+                    cmd.Parameters.AddWithValue("@CurrentStatus", status);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -52,7 +55,7 @@ namespace WebApplicationAPI.TaskLogging
             using(SqlConnection conn = new SqlConnection(connectionString)) 
             {
                 string sql = @"UPDATE TaskLoggingTable
-                               SET status = @CurrentStatus
+                               SET CurrentStatus = @CurrentStatus
                                WHERE TaskId = @TaskId
                                AND CreatedBy=@CreatedBy
                               ";
@@ -76,7 +79,7 @@ namespace WebApplicationAPI.TaskLogging
             using (SqlConnection conn = new SqlConnection(connectionString)) 
             {
                 string sql = @"SELECT * FROM TaskLoggingTable 
-                               WHERE (Status = 'Queued' OR Status = 'Processing') 
+                               WHERE (CurrentStatus = 'Queued' OR CurrentStatus = 'Processing') 
                                AND CompletedOn IS NULL AND CreatedBy=@CreatedBy"; 
 
                 using(SqlCommand cmd = new SqlCommand(sql,conn))

@@ -6,7 +6,7 @@ namespace WebApplicationAPI.TaskLogging
     {
         void InsertTask(TaskLog task, string connectionString);
 
-        void MarkTaskAsCompleted(string taskId, DateTime completedTime, string connectionString);
+        void MarkTaskAsCompleted(string taskId, DateTime completedTime, string connectionString,string status);
 
         void SetTaskStatusState(Guid taskId, string status, string connectionString, string createdBy);
 
