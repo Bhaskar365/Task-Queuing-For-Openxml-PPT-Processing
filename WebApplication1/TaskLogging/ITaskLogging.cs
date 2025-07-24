@@ -11,6 +11,8 @@ namespace WebApplicationAPI.TaskLogging
         void SetTaskStatusState(Guid taskId, string status, string connectionString, string createdBy);
 
         Task<IEnumerable<TaskLog>> GetUnfinishedTasks(string connectionString, string createdBy);
+
+        Task<IEnumerable<TaskLog>> GetAllData(string connectionString);
     }
 }
 

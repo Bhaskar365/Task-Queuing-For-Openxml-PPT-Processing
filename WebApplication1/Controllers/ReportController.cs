@@ -39,6 +39,8 @@ namespace WebApplicationAPI.Controllers
         }
 
 
+
+
         [HttpPost("generate")]
         public async Task<IActionResult> GenerateReport([FromBody] ReportGenerationRequest request)
         {
@@ -326,6 +328,23 @@ namespace WebApplicationAPI.Controllers
 
             return Ok(task);
         }
+
+        [HttpPost("remove")]
+        public async Task<IActionResult> RemoveFailedTask([FromBody] TaskLog task)
+        {
+            var connectionString = _configuration.GetConnectionString("DBConnection");
+
+            var getAllTaskIds = await _taskLogging.GetAllData(connectionString!);
+
+            List<TaskLog> taskLogs = new List<TaskLog>();
+
+            if(getAllTaskIds!=null)
+            {
+                taskLogs = getAllTaskIds.Where(x => x.TaskId == task.TaskId).ToList();
+            }
+            return Ok(taskLogs);
+        }
+
 
         private string CreateTargetPath(string template, string project)
         {
