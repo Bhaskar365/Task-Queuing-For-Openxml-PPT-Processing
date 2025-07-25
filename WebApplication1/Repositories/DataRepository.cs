@@ -63,6 +63,12 @@ namespace WebApplication1.Repositories
             return result;
         }
 
+        public async Task<IEnumerable<QTCModel>> GetQTC()
+        {
+            var data = await _context.Qtc.ToListAsync();
+            return data;
+        }
+
         public async Task<IEnumerable<Sala>> GetSala()
         {
             var result = await _context.Salas.ToListAsync();

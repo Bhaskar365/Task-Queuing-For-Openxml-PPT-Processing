@@ -195,11 +195,9 @@ else
         {
             sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\FittoConcept" + FTCdata.Count + ".pptx";
 
-
-
             await Task.Run(() =>
             {
-                // dllClass.FitToConceptMethod(CreateTargetPath(sourcePath1,FTCdata.First().ProjectTemplateType!), FTCdata);
+                dllClass.FitToConceptMethod(CreateTargetPath(sourcePath1,FTCdata.First().ProjectTemplateType!), FTCdata);
             });
         }
 
@@ -211,7 +209,7 @@ else
 
             await Task.Run(() =>
            {
-               // dllClass.OverallImpressionsMethod(CreateTargetPath(sourcePath1, overallData.First().ProjectTemplateType!), overallData);
+               dllClass.OverallImpressionsMethod(CreateTargetPath(sourcePath1, overallData.First().ProjectTemplateType!), overallData);
            });
         }
 
@@ -237,7 +235,7 @@ else
 
             await Task.Run(() =>
             {
-                // dllClass.Attribute1Method(CreateTargetPath(sourcePath1, att1data.First().ProjectTemplateType!), att1data);
+                dllClass.Attribute1Method(CreateTargetPath(sourcePath1, att1data.First().ProjectTemplateType!), att1data);
             });
         }
 
@@ -263,7 +261,7 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.Attribute2Method(CreateTargetPath(sourcePath1, att2data.First().ProjectTemplateType!), att2data);
+                dllClass.Attribute2Method(CreateTargetPath(sourcePath1, att2data.First().ProjectTemplateType!), att2data);
             });
         }
 
@@ -289,7 +287,7 @@ else
 
             await Task.Run(() =>
             {
-                //  dllClass.AttributeMethodForAttributeEvalAggreg(CreateTargetPath(sourcePath1, attrAggrdata.First().ProjectTemplateType!), attrAggrdata);
+                dllClass.AttributeMethodForAttributeEvalAggreg(CreateTargetPath(sourcePath1, attrAggrdata.First().ProjectTemplateType!), attrAggrdata);
             });
         }
 
@@ -315,7 +313,7 @@ else
 
             await Task.Run(() =>
             {
-                // dllClass.MemorabilityMethod(CreateTargetPath(sourcePath1, memorabilitydata.First().ProjectTemplateType!), memorabilitydata);
+                dllClass.MemorabilityMethod(CreateTargetPath(sourcePath1, memorabilitydata.First().ProjectTemplateType!), memorabilitydata);
             });
         }
 
@@ -342,7 +340,7 @@ else
 
             await Task.Run(() =>
             {
-                //  dllClass.PersonalPreferencesMethod(CreateTargetPath(sourcePath1, personalPrefdata.First().ProjectTemplateType!), personalPrefdata);
+                dllClass.PersonalPreferencesMethod(CreateTargetPath(sourcePath1, personalPrefdata.First().ProjectTemplateType!), personalPrefdata);
             });
         }
 
@@ -368,7 +366,7 @@ else
 
             await Task.Run(() =>
             {
-                // dllClass.SuffixMethod(CreateTargetPath(sourcePath1, suffixdata.First().ProjectTemplateType!), suffixdata);
+                dllClass.SuffixMethod(CreateTargetPath(sourcePath1, suffixdata.First().ProjectTemplateType!), suffixdata);
             });
         }
 
@@ -395,7 +393,7 @@ else
 
             await Task.Run(() =>
             {
-                // dllClass.VerbalUnderstandingBarMethod(CreateTargetPath(sourcePath1, verbalUnderdata.First().ProjectTemplateType!), verbalUnderdata);
+                dllClass.VerbalUnderstandingBarMethod(CreateTargetPath(sourcePath1, verbalUnderdata.First().ProjectTemplateType!), verbalUnderdata);
             });
         }
 
@@ -421,7 +419,7 @@ else
 
             await Task.Run(() =>
             {
-                //  dllClass.WrittenUnderstandingMethod(CreateTargetPath(sourcePath1, writtenUnderdata.First().ProjectTemplateType!), writtenUnderdata);
+                  dllClass.WrittenUnderstandingMethod(CreateTargetPath(sourcePath1, writtenUnderdata.First().ProjectTemplateType!), writtenUnderdata);
             });
         }
 
@@ -447,7 +445,7 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.ExaggerativeMethod(CreateTargetPath(sourcePath1, exaggdata.First().ProjectTemplateType!), exaggdata);
+                dllClass.ExaggerativeMethod(CreateTargetPath(sourcePath1, exaggdata.First().ProjectTemplateType!), exaggdata);
             });
         }
 
@@ -495,7 +493,6 @@ else
         int[] sourceInput8 = { 82 };
         int[] sourceInput9 = { 83 };
         int[] sourceInput10 = { 87 };
-        //int[] sourceInput11 = { 71,72,73,74 };
         int[] sourceInput11 = { 66, 67, 68, 69 };
         int[] sourceInput12 = { 66 };
         int[] sourceInput13 = { 66,67 };

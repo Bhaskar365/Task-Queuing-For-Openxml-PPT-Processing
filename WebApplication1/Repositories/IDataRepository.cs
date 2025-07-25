@@ -34,5 +34,7 @@ namespace WebApplication1.Repositories
 
         Task<IEnumerable<TaskLog>> GetTaskLogs();
 
+        Task<IEnumerable<QTCModel>> GetQTC();
+
     }
 }

@@ -51,8 +51,11 @@ namespace WebApplication1.Context
 
         public DbSet<TaskLog> TaskLogs { get; set; }
 
+        public DbSet<QTCModel> Qtc { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // attribute 1
             modelBuilder.Entity<Aev1>(entity =>
             {
                 entity
@@ -66,10 +69,17 @@ namespace WebApplication1.Context
                 entity.Property(e => e.ProjectTemplateType).HasMaxLength(255);
             });
 
+            // Logging Table
             modelBuilder.Entity<TaskLog>(entity =>
             {
                 entity.HasNoKey().ToTable("TaskLoggingTable");
 
+            });
+
+            // QTC
+            modelBuilder.Entity<QTCModel>(entity =>
+            {
+                entity.HasNoKey().ToTable("QTC$");
             });
 
             modelBuilder.Entity<Aev2>(entity =>
@@ -85,6 +95,7 @@ namespace WebApplication1.Context
                 entity.Property(e => e.ProjectTemplateType).HasMaxLength(255);
             });
 
+            // sala proj:154
             modelBuilder.Entity<Sala154>(entity =>
             {
                 entity
@@ -196,6 +207,7 @@ namespace WebApplication1.Context
                     .HasColumnName("strTestNameTranslation");
             });
 
+            // Attribute Evaluation Aggregrate
             modelBuilder.Entity<Aev3>(entity =>
             {
                 entity
@@ -210,7 +222,7 @@ namespace WebApplication1.Context
             });
 
 
-
+            // Memorability
             modelBuilder.Entity<Memorability>(entity =>
             {
                 entity
@@ -225,7 +237,7 @@ namespace WebApplication1.Context
             });
 
 
-
+            // Personal Preference
             modelBuilder.Entity<PersonalPreference>(entity =>
             {
                 entity
@@ -239,6 +251,7 @@ namespace WebApplication1.Context
                 entity.Property(e => e.ProjectTemplateType).HasMaxLength(255);
             });
 
+            // Suffix
             modelBuilder.Entity<Suffix>(entity =>
             {
                 entity
@@ -252,6 +265,7 @@ namespace WebApplication1.Context
                 entity.Property(e => e.ProjectTemplateType).HasMaxLength(255);
             });
 
+            // Verbal Understanding
             modelBuilder.Entity<VerbalUnderstanding>(entity =>
             {
                 entity
@@ -265,6 +279,8 @@ namespace WebApplication1.Context
                 entity.Property(e => e.ProjectTemplateType).HasMaxLength(255);
             });
 
+
+            // Written Understanding
             modelBuilder.Entity<WrittenUnderstanding>(entity =>
             {
                 entity
@@ -278,6 +294,7 @@ namespace WebApplication1.Context
                 entity.Property(e => e.ProjectTemplateType).HasMaxLength(255);
             });
 
+            // Likeability
             modelBuilder.Entity<Likeability>(entity =>
             {
                 entity
@@ -289,6 +306,7 @@ namespace WebApplication1.Context
                 entity.Property(e => e.TestNameColor).HasMaxLength(255);
             });
 
+            // SALA
             modelBuilder.Entity<Sala>(entity =>
             {
                 entity
