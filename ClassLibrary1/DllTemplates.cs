@@ -22243,28 +22243,28 @@ namespace ClassLibrary1
                                 {
                                     testname = api.strTestNamePage1;
                                     isBold = (bool)api.boolBoldPage1;
-                                    color = $"#{api.intRedPage1:X2}{api.intGreenPage1:X2}{api.intBluePage1:X2}";
+                                    color = $"#{(int)api.intRedPage1:X2}{(int)api.intGreenPage1:X2}{(int)api.intBluePage1:X2}";
                                     ChangeSlidePartFillACell(slidePart, testname, row, cell, color, isBold);
                                 }
                                 else if (cell == 2)
                                 {
                                     isBold = (bool)api.boolBoldPage1;
                                     chartValue = Math.Round(Convert.ToDouble(api.dblAveragePage1), 2);
-                                    color = $"#{api.intRedPage1:X2}{api.intGreenPage1:X2}{api.intBluePage1:X2}";
+                                    color = $"#{(int)api.intRedPage1:X2}{(int)api.intGreenPage1:X2}{(int)api.intBluePage1:X2}";
                                     ChangeSlidePartFillACellForInteger(slidePart, chartValue, row, cell, color, isBold);
                                 }
                                 else if (cell == 3)
                                 {
                                     testname = api.strTestNamePage2;
                                     isBold = (bool)api.boolBoldPage2;
-                                    color = $"#{api.intRedPage2:X2}{api.intGreenPage2:X2}{api.intBluePage2:X2}";
+                                    color = $"#{(int)api.intRedPage2:X2}{(int)api.intGreenPage2:X2}{(int)api.intBluePage2:X2}";
                                     ChangeSlidePartFillACell(slidePart, testname, row, cell, color, isBold);
                                 }
                                 else if (cell == 4)
                                 {
                                     isBold = (bool)api.boolBoldPage2;
                                     chartValue = Math.Round(Convert.ToDouble(api.dblAveragePage2), 2);
-                                    color = $"#{api.intRedPage2:X2}{api.intGreenPage2:X2}{api.intBluePage2:X2}";
+                                    color = $"#{(int)api.intRedPage2:X2}{(int)api.intGreenPage2:X2}{(int)api.intBluePage2:X2}";
                                     ChangeSlidePartFillACellForInteger(slidePart, chartValue, row, cell, color, isBold);
                                 }
                                 else if (cell == 5)
@@ -22272,7 +22272,7 @@ namespace ClassLibrary1
                                     //memorability
                                     testname = api.strTestNamePage3;
                                     isBold = (bool)api.boolBoldPage3;
-                                    color = $"#{api.intRedPage3:X2}{api.intGreenPage3:X2}{api.intBluePage3:X2}";
+                                    color = $"#{(int)api.intRedPage3:X2}{(int)api.intGreenPage3:X2}{(int)api.intBluePage3:X2}";
                                     ChangeSlidePartFillACell(slidePart, testname, row, cell, color, isBold);
                                 }
 
@@ -22280,7 +22280,7 @@ namespace ClassLibrary1
                                 {
                                     isBold = (bool)api.boolBoldPage3;
                                     chartValue = Math.Round(Convert.ToDouble(api.dblPercentagePage3), 2);
-                                    color = $"#{api.intRedPage3:X2}{api.intGreenPage3:X2}{api.intBluePage3:X2}";
+                                    color = $"#{(int)api.intRedPage3:X2}{(int)api.intGreenPage3:X2}{(int)api.intBluePage3:X2}";
                                     FillBrandexSafetyValuesForMemorability(slidePart, chartValue, row, cell, color, isBold);
                                 }
 
@@ -22288,7 +22288,7 @@ namespace ClassLibrary1
                                 {
                                     testname = api.strTestNamePage4;
                                     isBold = (bool)api.boolBoldPage4;
-                                    color = $"#{api.intRedPage4:X2}{api.intGreenPage4:X2}{api.intBluePage4:X2}";
+                                    color = $"#{(int)api.intRedPage4:X2}{(int)api.intGreenPage4:X2}{(int)api.intBluePage4:X2}";
                                     ChangeSlidePartFillACell(slidePart, testname, row, cell, color, isBold);
                                 }
 
@@ -22296,7 +22296,7 @@ namespace ClassLibrary1
                                 {
                                     isBold = (bool)api.boolBoldPage4;
                                     chartValue = Math.Round(Convert.ToDouble(api.dblAveragePage4), 2);
-                                    color = $"#{api.intRedPage4:X2}{api.intGreenPage4:X2}{api.intBluePage4:X2}";
+                                    color = $"#{(int)api.intRedPage4:X2}{(int)api.intGreenPage4:X2}{(int)api.intBluePage4:X2}";
                                     ChangeSlidePartFillACellForInteger(slidePart, chartValue, row, cell, color, isBold);
                                 }
 
@@ -22304,7 +22304,7 @@ namespace ClassLibrary1
                                 {
                                     testname = api.strTestNamePage5;
                                     isBold = (bool)api.boolBoldPage5;
-                                    color = $"#{api.intRedPage5:X2}{api.intGreenPage5:X2}{api.intBluePage5:X2}";
+                                    color = $"#{(int)api.intRedPage5:X2}{(int)api.intGreenPage5:X2}{(int)api.intBluePage5:X2}";
                                     ChangeSlidePartFillACell(slidePart, testname, row, cell, color, isBold);
                                 }
 
@@ -22312,7 +22312,7 @@ namespace ClassLibrary1
                                 {
                                     isBold = (bool)api.boolBoldPage5;
                                     chartValue = Math.Round(Convert.ToDouble(api.dblAveragePage5), 2);
-                                    color = $"#{api.intRedPage5:X2}{api.intGreenPage5:X2}{api.intBluePage5:X2}";
+                                    color = $"#{(int)api.intRedPage5:X2}{(int)api.intGreenPage5:X2}{(int)api.intBluePage5:X2}";
                                     ChangeSlidePartFillACellForInteger(slidePart, chartValue, row, cell, color, isBold);
                                 }
                             }

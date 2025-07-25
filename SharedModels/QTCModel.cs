@@ -56,5 +56,7 @@ namespace SharedModels
         public double? intGreenPage5 { get; set; }
         public double? intBluePage5 { get; set; }
         public bool? boolBoldPage5 { get; set; }
+
+        public string? ProjectTemplateType { get; set; }
     }
 }

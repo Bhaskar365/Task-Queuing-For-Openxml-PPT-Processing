@@ -134,7 +134,7 @@ else
         Exagg = await fitToConceptService.ExaggData();
         Salas = await fitToConceptService.SalaData();
         Salas154 = await fitToConceptService.Sala154Data();
-        
+        Qtc = await fitToConceptService.QtcData();
 
         StateHasChanged();
     }
@@ -166,6 +166,7 @@ else
     string sourceFile9 = "C:\\Users\\bdas\\Downloads\\Memorability_sample.pptx";
     string sourceFile10 = "C:\\Users\\bdas\\Downloads\\Exaggerative_sample.pptx";
     string sourceFile11 = "C:\\Users\\bdas\\Downloads\\SALA_sample.pptx";
+    string sourceFile12 = "C:\\Users\\bdas\\Downloads\\QTC_sample.pptx";
 
     public async Task Process()
     {
@@ -421,7 +422,7 @@ else
 
             await Task.Run(() =>
             {
-                  dllClass.WrittenUnderstandingMethod(CreateTargetPath(sourcePath1, writtenUnderdata.First().ProjectTemplateType!), writtenUnderdata);
+                dllClass.WrittenUnderstandingMethod(CreateTargetPath(sourcePath1, writtenUnderdata.First().ProjectTemplateType!), writtenUnderdata);
             });
         }
 
@@ -477,6 +478,30 @@ else
         }
 
 
+        //qtc
+        var qtcDataEl = Qtc;
+        if (!qtcDataEl.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (qtcDataEl == null || qtcDataEl.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+
+        if (qtcDataEl.Count != 0 || qtcDataEl.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\QTC.pptx";
+
+            await Task.Run(() =>
+            {
+                dllClass.QTCMethod(CreateTargetPath(sourcePath1, qtcDataEl.First().ProjectTemplateType!), qtcDataEl);
+            });
+        }
 
 
         doneMsg = "Done";
@@ -499,6 +524,7 @@ else
         int[] sourceInput12 = { 66 };
         int[] sourceInput13 = { 66,67 };
         int[] sourceInput14 = { 66,67,68 };
+        int[] sourceInput15 = { 20 };
 
         if (!File.Exists(sourceFile1))
         {
@@ -670,8 +696,16 @@ else
             }
         }
 
-
-
+        //qtc
+        if (!File.Exists(sourceFile12))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile12, destination, sourceInput15);
+            DeleteSlide(destination, sourceInput15[0] - 1);
+        }
         
       
 
