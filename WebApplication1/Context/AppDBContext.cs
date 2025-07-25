@@ -53,6 +53,8 @@ namespace WebApplication1.Context
 
         public DbSet<QTCModel> Qtc { get; set; }
 
+        public DbSet<BrandexSafetyModel> BrandexSafety { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // attribute 1
@@ -73,13 +75,20 @@ namespace WebApplication1.Context
             modelBuilder.Entity<TaskLog>(entity =>
             {
                 entity.HasNoKey().ToTable("TaskLoggingTable");
-
             });
+
 
             // QTC
             modelBuilder.Entity<QTCModel>(entity =>
             {
                 entity.HasNoKey().ToTable("QTC$");
+            });
+
+
+            //Brandex Safety
+            modelBuilder.Entity<BrandexSafetyModel>(entity =>
+            {
+                entity.HasNoKey().ToTable("BrandExSafety$");
             });
 
             modelBuilder.Entity<Aev2>(entity =>

@@ -45,6 +45,11 @@ namespace WebApplication1.Repositories
             return result;
         }
 
+        public Task<IEnumerable<BrandexSafetyModel>> GetBrandexSafety()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<Likeability>> GetExagg()
         {
             var result = await _context.Likeabilities.ToListAsync();

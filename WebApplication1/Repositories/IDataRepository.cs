@@ -36,5 +36,7 @@ namespace WebApplication1.Repositories
 
         Task<IEnumerable<QTCModel>> GetQTC();
 
+        Task<IEnumerable<BrandexSafetyModel>> GetBrandexSafety();
+
     }
 }
