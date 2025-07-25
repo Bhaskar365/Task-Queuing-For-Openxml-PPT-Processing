@@ -75,7 +75,7 @@ namespace ClassLibrary1
             template.SALANewModelTemplateSpecial2(destination, apiData);
         }
 
-        public async void QTCMethod(string destination, List<QTCModel> apiData)
+        public void QTCMethod(string destination, List<QTCModel> apiData)
         {
             template.QTCTemplate(destination, apiData);
         }

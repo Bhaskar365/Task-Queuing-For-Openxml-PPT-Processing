@@ -32,6 +32,8 @@ namespace ExcelChartsBlazorOpenxml.Services
 
         Task<List<Sala>> Sala154Data();
 
+        Task<List<QTCModel>> QtcData();
+
         Task<Guid> GenerateReportAsync(ReportGenerationRequest request);
         Task<string> GetReportStatusAsync(Guid taskId);
 

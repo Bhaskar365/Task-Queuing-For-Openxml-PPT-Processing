@@ -142,6 +142,12 @@ namespace WebApplicationAPI.Controllers
                             sourcePath = $"C:\\ExcelChartFiles\\Templates\\Exaggerative{exagData.Count()}.pptx";
                             dll.ExaggerativeMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), exagData.ToList());
                             break;
+
+                        case "QTC":
+                            var qtcData = await repository.GetQTC();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\QTC.pptx";
+                            dll.QTCMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), qtcData.ToList());
+                            break;
                     }
 
                     taskLog.CompletedOn = DateTime.UtcNow;

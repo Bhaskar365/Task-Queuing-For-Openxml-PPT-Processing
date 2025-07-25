@@ -72,6 +72,13 @@ namespace ExcelChartsBlazorOpenxml.Services
             return await _httpClient.GetFromJsonAsync<List<Sala>>($"api/data/Sala");
         }
 
+        public async Task<List<QTCModel>> QtcData()
+        {
+            return await _httpClient.GetFromJsonAsync<List<QTCModel>>($"api/data/QTC");
+        }
+
+
+
         public async Task<Guid> GenerateReportAsync(ReportGenerationRequest request)
         {
             var response = await _httpClient.PostAsJsonAsync("api/report/generate", request);

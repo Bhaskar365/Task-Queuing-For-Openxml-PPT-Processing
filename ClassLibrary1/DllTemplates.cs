@@ -22219,7 +22219,7 @@ namespace ClassLibrary1
         }
 
         // QTC 
-        public async void QTCTemplate(string destination, List<QTCModel> apiData)
+        public void QTCTemplate(string destination, List<QTCModel> apiData)
         {
             try
             {

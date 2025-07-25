@@ -109,6 +109,7 @@ else
     List<Likeability> Exagg;
     List<Sala> Salas;
     List<Sala> Salas154;
+    List<QTCModel> Qtc;
 
     protected override async Task OnInitializedAsync()
     {
@@ -133,6 +134,7 @@ else
         Exagg = await fitToConceptService.ExaggData();
         Salas = await fitToConceptService.SalaData();
         Salas154 = await fitToConceptService.Sala154Data();
+        
 
         StateHasChanged();
     }
