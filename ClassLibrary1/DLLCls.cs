@@ -80,7 +80,10 @@ namespace ClassLibrary1
             template.QTCTemplate(destination, apiData);
         }
 
-
+        public async void BrandexSafetyMethod(string destination, List<BrandexSafetyShortModel> apiData)
+        {
+            template.BrandexSafetyTemplate(destination, apiData);
+        }
 
 
     }
