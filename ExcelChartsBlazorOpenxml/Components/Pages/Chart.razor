@@ -447,7 +447,7 @@ else
 
             await Task.Run(() =>
             {
-                // dllClass.ExaggerativeMethod(CreateTargetPath(sourcePath1, exaggdata.First().ProjectTemplateType!), exaggdata);
+                //dllClass.ExaggerativeMethod(CreateTargetPath(sourcePath1, exaggdata.First().ProjectTemplateType!), exaggdata);
             });
         }
 
@@ -472,23 +472,10 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.SALANewMethod(CreateTargetPath(sourcePath1, saladata.First().ProjectTemplateType!), saladata);
+                dllClass.SALANewMethod(CreateTargetPath(sourcePath1, saladata.First().ProjectTemplateType!), saladata);
             });
         }
 
-
-        //SALA 154
-        var sala154data = Salas154;
-
-        if (sala154data.Count != 0 || sala154data.Any())
-        {
-            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\SALAPlaceholder.pptx";
-
-            await Task.Run(() =>
-            {
-                dllClass.SALANewMethod(CreateTargetPath(sourcePath1, sala154data.First().ProjectTemplateType!), sala154data);
-            });
-        }
 
 
 
@@ -511,74 +498,182 @@ else
         //int[] sourceInput11 = { 71,72,73,74 };
         int[] sourceInput11 = { 66, 67, 68, 69 };
         int[] sourceInput12 = { 66 };
+        int[] sourceInput13 = { 66,67 };
+        int[] sourceInput14 = { 66,67,68 };
 
-        // MergeSlideWithSlideArray(sourceFile1, destination, sourceInput1);
-
-        // DeleteSlide(destination, sourceInput1[0] - 1);
-
-        // MergeSlideWithSlideArray(sourceFile2, destination, sourceInput2);
-
-        // DeleteSlide(destination, sourceInput2[0] - 1);
-
-        // MergeSlideWithSlideArray(sourceFile6, destination, sourceInput3);
-
-        // DeleteSlide(destination, sourceInput3[0] - 1);
-
-        // MergeSlideWithSlideArray(sourceFile7, destination, sourceInput4);
-
-        // DeleteSlide(destination, sourceInput4[0] - 1);
-
-        // MergeSlideWithSlideArray(sourceFile8, destination, sourceInput5);
-
-        // DeleteSlide(destination, sourceInput5[0] - 1);
-
-        // MergeSlideWithSlideArray(sourceFile9, destination, sourceInput6);
-
-        // DeleteSlide(destination, sourceInput6[0] - 1);
-
-        // MergeSlideWithSlideArray(sourceFile3, destination, sourceInput7);
-
-        // DeleteSlide(destination, sourceInput7[0] - 1);
-
-        // MergeSlideWithSlideArray(sourceFile4, destination, sourceInput8);
-
-        // DeleteSlide(destination, sourceInput8[0] - 1);
-
-        // MergeSlideWithSlideArray(sourceFile5, destination, sourceInput9);
-
-        // DeleteSlide(destination, sourceInput9[0] - 1);
-
-        // MergeSlideWithSlideArray(sourceFile10, destination, sourceInput10);
-
-        // DeleteSlide(destination, sourceInput10[0] - 1);
-
-        //MergeSlideWithSlideArray(sourceFile11, destination, sourceInput11);
-
-        MergeSlideWithSlideArray(sourceFile11, destination, sourceInput12);
-
-        int count = CountSlides(sourceFile11);
-
-        if (count == 1)
+        if (!File.Exists(sourceFile1))
         {
-            int endIndex = 66 + count + 4;
-
-            DeleteSlide(destination, endIndex);
-            DeleteSlide(destination, endIndex - 1);
-            DeleteSlide(destination, endIndex - 2);
-            DeleteSlide(destination, endIndex - 3);
-            DeleteSlide(destination, endIndex - 4);
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile1, destination, sourceInput1);
+            DeleteSlide(destination, sourceInput1[0] - 1);
         }
 
-        if(count == 4)
-        {
-            int endIndex = 66 + count + 4;
 
-             DeleteSlide(destination, endIndex);
-             DeleteSlide(destination, endIndex - 1);
-             DeleteSlide(destination, endIndex - 2);
-             DeleteSlide(destination, endIndex - 3);
-             DeleteSlide(destination, endIndex - 4);
+        if (!File.Exists(sourceFile2))
+        {
+            //skip
         }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile2, destination, sourceInput2);
+            DeleteSlide(destination, sourceInput2[0] - 1);
+        }
+
+        if (!File.Exists(sourceFile6))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile6, destination, sourceInput3);
+            DeleteSlide(destination, sourceInput3[0] - 1);
+        }
+
+        if (!File.Exists(sourceFile7))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile7, destination, sourceInput4);
+            DeleteSlide(destination, sourceInput4[0] - 1);
+        }
+      
+        if (!File.Exists(sourceFile8))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile8, destination, sourceInput5);
+            DeleteSlide(destination, sourceInput5[0] - 1);
+        }
+
+        if (!File.Exists(sourceFile9))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile9, destination, sourceInput6);
+            DeleteSlide(destination, sourceInput6[0] - 1);
+        }
+
+      
+        if (!File.Exists(sourceFile3))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile3, destination, sourceInput7);
+            DeleteSlide(destination, sourceInput7[0] - 1);
+        }
+     
+        if (!File.Exists(sourceFile4))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile4, destination, sourceInput8);
+            DeleteSlide(destination, sourceInput8[0] - 1);
+        }
+      
+
+        if (!File.Exists(sourceFile5))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile5, destination, sourceInput9);
+            DeleteSlide(destination, sourceInput9[0] - 1);
+        }
+
+       
+        if (!File.Exists(sourceFile10))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile10, destination, sourceInput10);
+            DeleteSlide(destination, sourceInput10[0] - 1);
+        }
+
+       
+        if (!File.Exists(sourceFile11))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile11, destination, sourceInput11);
+            int count = CountSlides(sourceFile11);
+
+            if (count == 1)
+            {
+                int endIndex = 66 + count + 4;
+
+                DeleteSlide(destination, endIndex);
+                // DeleteSlide(destination, endIndex - 1);
+                // DeleteSlide(destination, endIndex - 2);
+                // DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
+
+            if (count == 2)
+            {
+                int endIndex = 66 + count + 4;
+
+                DeleteSlide(destination, endIndex);
+                DeleteSlide(destination, endIndex - 1);
+                // DeleteSlide(destination, endIndex - 2);
+                // DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
+
+            if (count == 3)
+            {
+                int endIndex = 66 + count + 4;
+
+                DeleteSlide(destination, endIndex);
+                DeleteSlide(destination, endIndex - 1);
+                DeleteSlide(destination, endIndex - 2);
+                // DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
+
+            if (count == 4)
+            {
+                int endIndex = 66 + count + 4;
+
+                DeleteSlide(destination, endIndex);
+                DeleteSlide(destination, endIndex - 1);
+                DeleteSlide(destination, endIndex - 2);
+                DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
+
+            if (count == 5)
+            {
+                int endIndex = 66 + count + 4;
+
+                DeleteSlide(destination, endIndex);
+                DeleteSlide(destination, endIndex - 1);
+                DeleteSlide(destination, endIndex - 2);
+                DeleteSlide(destination, endIndex - 3);
+                DeleteSlide(destination, endIndex - 4);
+            }
+        }
+
+
+
+        
       
 
       
