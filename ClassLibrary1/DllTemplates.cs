@@ -22218,11 +22218,379 @@ namespace ClassLibrary1
             }
         }
 
+        // QTC 
+        public async void QTCTemplate(string destination, List<QTCModel> apiData)
+        {
+            try
+            {
+                using (PresentationDocument presentationDocument = PresentationDocument.Open(destination, true))
+                {
+                    SlidePart slidePart = presentationDocument?.PresentationPart.SlideParts.FirstOrDefault();
+                    if (slidePart != null)
+                    {
+                        for (int row = 1; row <= apiData.Count; row++)
+                        {
+                            for (int cell = 1; cell < 11; cell++)
+                            {
+                                var testname = string.Empty;
+                                bool isBold = false;
+                                var chartValue = 0.00;
+                                var color = string.Empty;
+
+                                var api = apiData[row - 1];
+
+                                if (cell == 1)
+                                {
+                                    testname = api.strTestNamePage1;
+                                    isBold = (bool)api.boolBoldPage1;
+                                    color = $"#{api.intRedPage1:X2}{api.intGreenPage1:X2}{api.intBluePage1:X2}";
+                                    ChangeSlidePartFillACell(slidePart, testname, row, cell, color, isBold);
+                                }
+                                else if (cell == 2)
+                                {
+                                    isBold = (bool)api.boolBoldPage1;
+                                    chartValue = Math.Round(Convert.ToDouble(api.dblAveragePage1), 2);
+                                    color = $"#{api.intRedPage1:X2}{api.intGreenPage1:X2}{api.intBluePage1:X2}";
+                                    ChangeSlidePartFillACellForInteger(slidePart, chartValue, row, cell, color, isBold);
+                                }
+                                else if (cell == 3)
+                                {
+                                    testname = api.strTestNamePage2;
+                                    isBold = (bool)api.boolBoldPage2;
+                                    color = $"#{api.intRedPage2:X2}{api.intGreenPage2:X2}{api.intBluePage2:X2}";
+                                    ChangeSlidePartFillACell(slidePart, testname, row, cell, color, isBold);
+                                }
+                                else if (cell == 4)
+                                {
+                                    isBold = (bool)api.boolBoldPage2;
+                                    chartValue = Math.Round(Convert.ToDouble(api.dblAveragePage2), 2);
+                                    color = $"#{api.intRedPage2:X2}{api.intGreenPage2:X2}{api.intBluePage2:X2}";
+                                    ChangeSlidePartFillACellForInteger(slidePart, chartValue, row, cell, color, isBold);
+                                }
+                                else if (cell == 5)
+                                {
+                                    //memorability
+                                    testname = api.strTestNamePage3;
+                                    isBold = (bool)api.boolBoldPage3;
+                                    color = $"#{api.intRedPage3:X2}{api.intGreenPage3:X2}{api.intBluePage3:X2}";
+                                    ChangeSlidePartFillACell(slidePart, testname, row, cell, color, isBold);
+                                }
+
+                                else if (cell == 6)
+                                {
+                                    isBold = (bool)api.boolBoldPage3;
+                                    chartValue = Math.Round(Convert.ToDouble(api.dblPercentagePage3), 2);
+                                    color = $"#{api.intRedPage3:X2}{api.intGreenPage3:X2}{api.intBluePage3:X2}";
+                                    FillBrandexSafetyValuesForMemorability(slidePart, chartValue, row, cell, color, isBold);
+                                }
+
+                                else if (cell == 7)
+                                {
+                                    testname = api.strTestNamePage4;
+                                    isBold = (bool)api.boolBoldPage4;
+                                    color = $"#{api.intRedPage4:X2}{api.intGreenPage4:X2}{api.intBluePage4:X2}";
+                                    ChangeSlidePartFillACell(slidePart, testname, row, cell, color, isBold);
+                                }
+
+                                else if (cell == 8)
+                                {
+                                    isBold = (bool)api.boolBoldPage4;
+                                    chartValue = Math.Round(Convert.ToDouble(api.dblAveragePage4), 2);
+                                    color = $"#{api.intRedPage4:X2}{api.intGreenPage4:X2}{api.intBluePage4:X2}";
+                                    ChangeSlidePartFillACellForInteger(slidePart, chartValue, row, cell, color, isBold);
+                                }
+
+                                else if (cell == 9)
+                                {
+                                    testname = api.strTestNamePage5;
+                                    isBold = (bool)api.boolBoldPage5;
+                                    color = $"#{api.intRedPage5:X2}{api.intGreenPage5:X2}{api.intBluePage5:X2}";
+                                    ChangeSlidePartFillACell(slidePart, testname, row, cell, color, isBold);
+                                }
+
+                                else if (cell == 10)
+                                {
+                                    isBold = (bool)api.boolBoldPage5;
+                                    chartValue = Math.Round(Convert.ToDouble(api.dblAveragePage5), 2);
+                                    color = $"#{api.intRedPage5:X2}{api.intGreenPage5:X2}{api.intBluePage5:X2}";
+                                    ChangeSlidePartFillACellForInteger(slidePart, chartValue, row, cell, color, isBold);
+                                }
+                            }
+                        }
+
+                        Slide slide1 = slidePart.Slide;
+                        if (slide1 != null)
+                        {
+                            CommonSlideData commonSlideData1 = slide1?.GetFirstChild<CommonSlideData>();
+                            if (commonSlideData1 != null)
+                            {
+                                ShapeTree shapeTree1 = commonSlideData1?.GetFirstChild<ShapeTree>();
+                                if (shapeTree1 != null)
+                                {
+                                    var firstShape = shapeTree1?.GetFirstChild<P.Shape>();
+                                    if (firstShape != null)
+                                    {
+                                        var firstShapeTextBody = firstShape?.GetFirstChild<P.TextBody>();
+                                        if (firstShapeTextBody != null)
+                                        {
+                                            var firstParagraph = firstShapeTextBody?.GetFirstChild<A.Paragraph>();
+                                            if (firstParagraph != null)
+                                            {
+                                                foreach (var run in firstParagraph.Elements<A.Run>())
+                                                {
+                                                    if (run != null)
+                                                    {
+                                                        A.Text text2 = run?.GetFirstChild<A.Text>();
+                                                        if (text2 != null)
+                                                        {
+                                                            if (text2.Text.Contains("Quantitative Topline Chart - Marketing "))
+                                                            {
+                                                                continue;
+                                                            }
+
+                                                            else if (text2.Text.Contains("Results (<<Breakdown>>)"))
+                                                            {
+                                                                text2.Text = $"Results (Overall Text)";
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                P.GraphicFrame graphicFrame1 = shapeTree1?.GetFirstChild<P.GraphicFrame>();
+                                if (graphicFrame1 != null)
+                                {
+                                    A.Graphic graphic1 = graphicFrame1?.GetFirstChild<A.Graphic>();
+                                    if (graphic1 != null)
+                                    {
+                                        A.GraphicData graphicData1 = graphic1?.GetFirstChild<A.GraphicData>();
+                                        if (graphicData1 != null)
+                                        {
+                                            A.Table table1 = graphicData1?.GetFirstChild<A.Table>();
+                                            if (table1 != null)
+                                            {
+                                                var tableRows = table1.Elements<A.TableRow>().ToList();
+                                                if (tableRows.Count > 0)
+                                                {
+                                                    for (int rowIndex = apiData.Count + 1; rowIndex < tableRows.Count; rowIndex++)
+                                                    {
+                                                        tableRows[rowIndex].Remove();
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+
         public string formulaChanges(char cell, int length)
         {
             var f = $"Sheet1!${cell.ToString()}$2:${cell.ToString()}${length.ToString()}";
             return f;
         }
+
+
+        public void ChangeSlidePartFillACell(SlidePart slidePart1, string celltext, int row, int cell, string color, bool isBold)
+        {
+            Slide slide1 = slidePart1.Slide;
+
+            CommonSlideData commonSlideData1 = slide1.GetFirstChild<CommonSlideData>();
+
+            ShapeTree shapeTree1 = commonSlideData1.GetFirstChild<ShapeTree>();
+
+            P.GraphicFrame graphicFrame1 = shapeTree1.GetFirstChild<P.GraphicFrame>();
+
+            P.NonVisualGraphicFrameProperties nonVisualGraphicFrameProperties1 = graphicFrame1.GetFirstChild<P.NonVisualGraphicFrameProperties>();
+
+            A.Graphic graphic1 = graphicFrame1.GetFirstChild<A.Graphic>();
+
+            A.GraphicData graphicData1 = graphic1.GetFirstChild<A.GraphicData>();
+
+            A.Table table1 = graphicData1.GetFirstChild<A.Table>();
+
+            A.TableRow tableRow1 = table1.Elements<A.TableRow>().ElementAt(row);
+
+            A.TableCell tableCell1 = tableRow1.Elements<A.TableCell>().ElementAt(cell);
+
+            A.TextBody textBody1 = tableCell1.GetFirstChild<A.TextBody>();
+
+            A.Paragraph paragraph1 = textBody1.GetFirstChild<A.Paragraph>();
+
+            A.EndParagraphRunProperties endParagraphRunProperties1 = paragraph1.GetFirstChild<A.EndParagraphRunProperties>();
+
+            A.Run run1 = new A.Run();
+
+            A.RunProperties runProperties1 = new A.RunProperties() { Language = "en-US", FontSize = 1400, Bold = isBold, Italic = false, Underline = A.TextUnderlineValues.None, Strike = A.TextStrikeValues.NoStrike, Dirty = false };
+
+            A.SolidFill solidFill1 = new A.SolidFill();
+
+            A.RgbColorModelHex rgbColorModelHex1 = new A.RgbColorModelHex() { Val = color.TrimStart('#') };
+
+            solidFill1.Append(rgbColorModelHex1);
+
+            A.EffectList effectList1 = new A.EffectList();
+
+            A.LatinFont latinFont1 = new A.LatinFont() { Typeface = "+mn-lt" };
+
+            runProperties1.Append(solidFill1);
+
+            runProperties1.Append(effectList1);
+
+            runProperties1.Append(latinFont1);
+
+            A.Text text1 = new A.Text();
+
+            text1.Text = celltext;
+
+            run1.Append(runProperties1);
+
+            run1.Append(text1);
+
+            paragraph1.InsertBefore(run1, endParagraphRunProperties1);
+
+            // endParagraphRunProperties1.Remove();
+
+        }
+
+        public void ChangeSlidePartFillACellForInteger(SlidePart slidePart1, double chartValue, int row, int cell, string color, bool isBold)
+        {
+            Slide slide1 = slidePart1.Slide;
+
+            CommonSlideData commonSlideData1 = slide1.GetFirstChild<CommonSlideData>();
+
+            ShapeTree shapeTree1 = commonSlideData1.GetFirstChild<ShapeTree>();
+
+            P.GraphicFrame graphicFrame1 = shapeTree1.GetFirstChild<P.GraphicFrame>();
+
+            P.NonVisualGraphicFrameProperties nonVisualGraphicFrameProperties1 = graphicFrame1.GetFirstChild<P.NonVisualGraphicFrameProperties>();
+
+            A.Graphic graphic1 = graphicFrame1.GetFirstChild<A.Graphic>();
+
+            A.GraphicData graphicData1 = graphic1.GetFirstChild<A.GraphicData>();
+
+            A.Table table1 = graphicData1.GetFirstChild<A.Table>();
+
+            A.TableRow tableRow1 = table1.Elements<A.TableRow>().ElementAt(row);
+
+            A.TableCell tableCell1 = tableRow1.Elements<A.TableCell>().ElementAt(cell);
+
+            A.TextBody textBody1 = tableCell1.GetFirstChild<A.TextBody>();
+
+            A.Paragraph paragraph1 = textBody1.GetFirstChild<A.Paragraph>();
+
+            A.EndParagraphRunProperties endParagraphRunProperties1 = paragraph1.GetFirstChild<A.EndParagraphRunProperties>();
+
+            A.Run run1 = new A.Run();
+
+            A.RunProperties runProperties1 = new A.RunProperties() { Language = "en-US", FontSize = 1400, Bold = isBold, Italic = false, Underline = A.TextUnderlineValues.None, Strike = A.TextStrikeValues.NoStrike, Dirty = false };
+
+            A.SolidFill solidFill1 = new A.SolidFill();
+
+            A.RgbColorModelHex rgbColorModelHex1 = new A.RgbColorModelHex() { Val = color.TrimStart('#') };
+
+            solidFill1.Append(rgbColorModelHex1);
+
+            A.EffectList effectList1 = new A.EffectList();
+
+            A.LatinFont latinFont1 = new A.LatinFont() { Typeface = "+mn-lt" };
+
+            runProperties1.Append(solidFill1);
+
+            runProperties1.Append(effectList1);
+
+            runProperties1.Append(latinFont1);
+
+            A.Text text1 = new A.Text();
+
+            text1.Text = chartValue.ToString("F2");
+
+            run1.Append(runProperties1);
+
+            run1.Append(text1);
+
+            paragraph1.InsertBefore(run1, endParagraphRunProperties1);
+
+
+
+
+            // endParagraphRunProperties1.Remove();
+
+        }
+
+
+        public void FillBrandexSafetyValuesForMemorability(SlidePart slidePart1, double chartValue, int row, int cell, string color, bool isBold)
+        {
+            Slide slide1 = slidePart1.Slide;
+
+            CommonSlideData commonSlideData1 = slide1.GetFirstChild<CommonSlideData>();
+
+            ShapeTree shapeTree1 = commonSlideData1.GetFirstChild<ShapeTree>();
+
+            P.GraphicFrame graphicFrame1 = shapeTree1.GetFirstChild<P.GraphicFrame>();
+
+            P.NonVisualGraphicFrameProperties nonVisualGraphicFrameProperties1 = graphicFrame1.GetFirstChild<P.NonVisualGraphicFrameProperties>();
+
+            A.Graphic graphic1 = graphicFrame1.GetFirstChild<A.Graphic>();
+
+            A.GraphicData graphicData1 = graphic1.GetFirstChild<A.GraphicData>();
+
+            A.Table table1 = graphicData1.GetFirstChild<A.Table>();
+
+            A.TableRow tableRow1 = table1.Elements<A.TableRow>().ElementAt(row);
+
+            A.TableCell tableCell1 = tableRow1.Elements<A.TableCell>().ElementAt(cell);
+
+            A.TextBody textBody1 = tableCell1.GetFirstChild<A.TextBody>();
+
+            A.Paragraph paragraph1 = textBody1.GetFirstChild<A.Paragraph>();
+
+            A.EndParagraphRunProperties endParagraphRunProperties1 = paragraph1.GetFirstChild<A.EndParagraphRunProperties>();
+
+            A.Run run1 = new A.Run();
+
+            A.RunProperties runProperties1 = new A.RunProperties() { Language = "en-US", FontSize = 1200, Bold = isBold, Italic = false, Underline = A.TextUnderlineValues.None, Strike = A.TextStrikeValues.NoStrike, Dirty = false };
+
+            A.SolidFill solidFill1 = new A.SolidFill();
+
+            A.RgbColorModelHex rgbColorModelHex1 = new A.RgbColorModelHex() { Val = color.TrimStart('#') };
+
+            solidFill1.Append(rgbColorModelHex1);
+
+            A.EffectList effectList1 = new A.EffectList();
+
+            A.LatinFont latinFont1 = new A.LatinFont() { Typeface = "+mn-lt" };
+
+            runProperties1.Append(solidFill1);
+
+            runProperties1.Append(effectList1);
+
+            runProperties1.Append(latinFont1);
+
+            A.Text text1 = new A.Text();
+
+            text1.Text = chartValue.ToString("F1");
+
+            run1.Append(runProperties1);
+
+            run1.Append(text1);
+
+            paragraph1.InsertBefore(run1, endParagraphRunProperties1);
+        }
+
 
         private void RemoveSlide(PresentationDocument presentationDocument, SlidePart slidePart)
         {
