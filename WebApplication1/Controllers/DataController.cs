@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.InteropServices;
 using WebApplication1.Repositories;
 using WebApplicationAPI.Queueing;
 
@@ -186,5 +187,19 @@ namespace WebApplication1.Controllers
                 throw new Exception(ex.Message);
             }
         }
+
+        [HttpGet("QTC")]
+        public async Task<ActionResult> GetQTCData()
+        {
+            try
+            {
+                return Ok(await _repository.GetQTC());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }
