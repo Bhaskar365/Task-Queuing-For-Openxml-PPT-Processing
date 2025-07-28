@@ -55,6 +55,8 @@ namespace WebApplication1.Context
 
         public DbSet<BrandexSafetyModel> BrandexSafety { get; set; }
 
+        public DbSet<BrandexStrategicDistinctivenessModel> BrandexStrategicDistinctiveness { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // attribute 1
@@ -90,6 +92,13 @@ namespace WebApplication1.Context
             {
                 entity.HasNoKey().ToTable("BrandExSafety$");
             });
+
+            //Brandex Strategic Distinctiveness
+            modelBuilder.Entity<BrandexStrategicDistinctivenessModel>(entity =>
+            {
+                entity.HasNoKey().ToTable("BRANDEXSTRATEGICDISTINCTIVENESS$");
+            });
+
 
             modelBuilder.Entity<Aev2>(entity =>
             {

@@ -429,6 +429,8 @@ namespace WebApplicationAPI.Controllers
                             dll.BrandexSafetyMethod(CreateTargetPath(sourcePath, brandexSafetyData.First().ProjectTemplateType!), brandexData);
                             break;
 
+                        case "Brandex Strategic Distinctiveness":
+                            break;
 
                     }
 

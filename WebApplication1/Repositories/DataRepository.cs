@@ -58,6 +58,19 @@ namespace WebApplication1.Repositories
             }
         }
 
+        public async Task<IEnumerable<BrandexStrategicDistinctivenessModel>> GetBrandexStrategicDistinctivenessData()
+        {
+            try
+            {
+                var result = await _context.BrandexStrategicDistinctiveness.ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<IEnumerable<Likeability>> GetExagg()
         {
             var result = await _context.Likeabilities.ToListAsync();

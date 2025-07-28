@@ -214,5 +214,18 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpGet("Brandex Strategic Distinctiveness")]
+        public async Task<ActionResult> GetBrandexStrategicDistinctivenessData() 
+        {
+            try
+            {
+                return Ok(await _repository.GetBrandexStrategicDistinctivenessData());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

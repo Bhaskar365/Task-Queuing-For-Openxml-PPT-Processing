@@ -38,5 +38,7 @@ namespace WebApplication1.Repositories
 
         Task<IEnumerable<BrandexSafetyModel>> GetBrandexSafety();
 
+        Task<IEnumerable<BrandexStrategicDistinctivenessModel>> GetBrandexStrategicDistinctivenessData();
+
     }
 }
