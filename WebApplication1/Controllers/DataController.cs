@@ -227,5 +227,18 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpGet("Medical Terms")]
+        public async Task<ActionResult> GetMedicalTermsData()
+        {
+            try
+            {
+                return Ok(await _repository.GetMedicalTerms());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

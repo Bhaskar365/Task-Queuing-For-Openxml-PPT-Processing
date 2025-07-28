@@ -77,6 +77,19 @@ namespace WebApplication1.Repositories
             return result;
         }
 
+        public async Task<IEnumerable<MedicalTermsModel>> GetMedicalTerms()
+        {
+            try
+            {
+                var result = await _context.MedicalTerms.ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<IEnumerable<Memorability>> GetMemorabilityData()
         {
             var result = await _context.Memorabilities.ToListAsync();
