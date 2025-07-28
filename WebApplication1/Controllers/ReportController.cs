@@ -3,6 +3,7 @@ using ClassLibrary1;
 using DocumentFormat.OpenXml.Office2016.Excel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SharedModels;
 using SharedModels.DTO;
 using System.Threading.Tasks;
@@ -151,6 +152,7 @@ namespace WebApplicationAPI.Controllers
                             break;
 
                         case "Brandex Safety":
+
                             var brandexSafetyData = (await repository.GetBrandexSafety()).ToList();
 
                             List<BrandexSafetyShortModel> brandexData = new List<BrandexSafetyShortModel>();
@@ -430,6 +432,299 @@ namespace WebApplicationAPI.Controllers
                             break;
 
                         case "Brandex Strategic Distinctiveness":
+
+                            var brandexStrategicData = (await repository.GetBrandexStrategicDistinctivenessData()).ToList();
+
+                            List<BrandexStrategicDistinctivenessShortModel> brandexStrategicDistinctivenessesShortData = new List<BrandexStrategicDistinctivenessShortModel>();
+
+                            double dblAverage1Max = 0.0;
+                            double dblAverage2Max = 0.0;
+                            double dblAverage3Max = 0.0;
+                            double dblAverage4Max = 0.0;
+
+                            for (int i = 0; i < brandexStrategicData.Count; i++)
+                            {
+                                var dblAverage1MaxValue = brandexStrategicData[i].dblAveragePage1;
+                                if (dblAverage1MaxValue == 0)
+                                {
+                                    dblAverage1Max = 0.0;
+                                }
+                                if (dblAverage1MaxValue > dblAverage1Max)
+                                {
+                                    dblAverage1Max = (double)dblAverage1MaxValue;
+                                }
+
+                                var dblAverage2MaxValue = brandexStrategicData[i].dblAveragePage2;
+                                if (dblAverage2MaxValue == 0)
+                                {
+                                    dblAverage2Max = 0;
+                                }
+                                if (dblAverage2MaxValue > dblAverage2Max)
+                                {
+                                    dblAverage2Max = (double)dblAverage2MaxValue;
+                                }
+
+                                var dblAverage3MaxValue = brandexStrategicData[i].dblAveragePage3;
+                                if (dblAverage3MaxValue == 0)
+                                {
+                                    dblAverage3Max = 0;
+                                }
+                                if (dblAverage3MaxValue > dblAverage3Max)
+                                {
+                                    dblAverage3Max = (double)dblAverage3MaxValue;
+                                }
+
+                                var dblAverage4MaxValue = brandexStrategicData[i].dblAveragePage4;
+                                if (dblAverage4MaxValue == 0)
+                                {
+                                    dblAverage4Max = 0;
+                                }
+                                if (dblAverage4MaxValue > dblAverage4Max)
+                                {
+                                    dblAverage4Max = (double)dblAverage4MaxValue;
+                                }
+                            }
+
+                            // scaling factor 
+                            double scalingFactorForStrategicDistinctiveness = 1.00777;
+
+                            for (int i = 0; i < brandexStrategicData.Count; i++)
+                            {
+                                // for the table
+                                BrandexStrategicDistinctivenessShortModel brandexStrategicDistinctivenessModelData = new BrandexStrategicDistinctivenessShortModel();
+
+                                var dataForDistinctivessModel = brandexStrategicData[i];
+
+                                double averagePage1WeightedValue = 0.0;
+                                double averagePage2WeightedValue = 0.0;
+                                double averagePage3WeightedValue = 0.0;
+                                double averagePage4WeightedValue = 0.0;
+
+                                if (dblAverage1Max > 0)
+                                {
+                                    averagePage1WeightedValue =
+                                        (double)((dataForDistinctivessModel.dblAveragePage1 / dblAverage1Max) * dataForDistinctivessModel.dblPage1Weight)!;
+                                }
+                                else
+                                {
+                                    averagePage1WeightedValue = 0;
+                                }
+
+                                if (dblAverage2Max > 0)
+                                {
+                                    averagePage2WeightedValue =
+                                       (double)((dataForDistinctivessModel.dblAveragePage2 / dblAverage2Max) * dataForDistinctivessModel.dblPage2Weight)!;
+                                }
+                                else
+                                {
+                                    averagePage2WeightedValue = 0;
+                                }
+
+                                if (dblAverage3Max > 0)
+                                {
+                                    averagePage3WeightedValue =
+                                        (double)((dataForDistinctivessModel.dblAveragePage3 / dblAverage3Max) * dataForDistinctivessModel.dblPage3Weight)!;
+                                }
+                                else
+                                {
+                                    averagePage3WeightedValue = 0;
+                                }
+
+                                if (dblAverage4Max > 0)
+                                {
+                                    averagePage4WeightedValue =
+                                        (double)((dataForDistinctivessModel.dblAveragePage4 / dblAverage4Max) * dataForDistinctivessModel.dblPage4Weight)!;
+                                }
+                                else
+                                {
+                                    averagePage4WeightedValue = 0;
+                                }
+
+                                double indexSum = (averagePage1WeightedValue + averagePage2WeightedValue + averagePage3WeightedValue +
+                                             averagePage4WeightedValue) * scalingFactorForStrategicDistinctiveness;
+
+                                brandexStrategicDistinctivenessModelData.strTestName = dataForDistinctivessModel.strTestName!;
+
+                                brandexStrategicDistinctivenessModelData.dblAveragePage1 = dataForDistinctivessModel.dblAveragePage1;
+                                brandexStrategicDistinctivenessModelData.dblPage1Weight = dataForDistinctivessModel.dblPage1Weight;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage1Weighted = averagePage1WeightedValue;
+
+                                brandexStrategicDistinctivenessModelData.dblAveragePage2 = dataForDistinctivessModel.dblAveragePage2;
+                                brandexStrategicDistinctivenessModelData.dblPage2Weight = dataForDistinctivessModel.dblPage2Weight;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage2Weighted = averagePage2WeightedValue;
+
+                                brandexStrategicDistinctivenessModelData.dblAveragePage3 = dataForDistinctivessModel.dblAveragePage3;
+                                brandexStrategicDistinctivenessModelData.dblPage3Weight = dataForDistinctivessModel.dblPage3Weight;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage3Weighted = averagePage3WeightedValue;
+
+                                brandexStrategicDistinctivenessModelData.dblAveragePage4 = dataForDistinctivessModel.dblAveragePage4;
+                                brandexStrategicDistinctivenessModelData.dblPage4Weight = dataForDistinctivessModel.dblPage4Weight;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage4Weighted = averagePage4WeightedValue;
+
+                                brandexStrategicDistinctivenessModelData.dblAveragePage5 = dataForDistinctivessModel.dblAveragePage5;
+                                brandexStrategicDistinctivenessModelData.dblPage5Weight = dataForDistinctivessModel.dblPage5Weight;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage5Weighted = dataForDistinctivessModel.dblAveragePage5;
+
+                                brandexStrategicDistinctivenessModelData.dblAveragePage6 = dataForDistinctivessModel.dblAveragePage6;
+                                brandexStrategicDistinctivenessModelData.dblPage6Weight = dataForDistinctivessModel.dblPage6Weight;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage6Weighted = dataForDistinctivessModel.dblAveragePage6Weighted;
+
+                                brandexStrategicDistinctivenessModelData.dblAveragePage7 = dataForDistinctivessModel.dblAveragePage7;
+                                brandexStrategicDistinctivenessModelData.dblPage7Weight = dataForDistinctivessModel.dblPage7Weight;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage7Weighted = dataForDistinctivessModel.dblAveragePage7Weighted;
+
+                                brandexStrategicDistinctivenessModelData.dblAveragePage8 = dataForDistinctivessModel.dblAveragePage8;
+                                brandexStrategicDistinctivenessModelData.dblPage8Weight = dataForDistinctivessModel.dblPage8Weight;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage8Weighted = dataForDistinctivessModel.dblAveragePage8Weighted;
+
+                                brandexStrategicDistinctivenessModelData.dblIndex = indexSum;
+                                brandexStrategicDistinctivenessModelData.strDSIScore = dataForDistinctivessModel.strDSIScore;
+                                brandexStrategicDistinctivenessModelData.intRed = dataForDistinctivessModel.intRed;
+                                brandexStrategicDistinctivenessModelData.intGreen = dataForDistinctivessModel.intGreen;
+                                brandexStrategicDistinctivenessModelData.intBlue = dataForDistinctivessModel.intBlue;
+                                brandexStrategicDistinctivenessModelData.boolBold = dataForDistinctivessModel.boolBold;
+
+                                // for chart distinctiveness
+
+                                int fitToConceptStrategicWeightPage = 40;
+                                int memorabilityStrategicWeightPage = 15;
+                                int personalPreferenceStrategicWeightPage = 15;
+                                int attributeEvaluationStrategicWeightPage = 30;
+
+                                double averagePage1WeightedValueForChart = 0.0;
+                                double averagePage2WeightedValueForChart = 0.0;
+                                double averagePage3WeightedValueForChart = 0.0;
+                                double averagePage4WeightedValueForChart = 0.0;
+
+                                if (dblAverage1Max > 0)
+                                {
+                                    averagePage1WeightedValueForChart = (double)(((dataForDistinctivessModel.dblAveragePage1 / dblAverage1Max) * fitToConceptStrategicWeightPage) * scalingFactorForStrategicDistinctiveness)!;
+                                }
+                                else
+                                {
+                                    averagePage1WeightedValueForChart = 0;
+                                }
+
+                                if (dblAverage2Max > 0)
+                                {
+                                    averagePage2WeightedValueForChart = (double)(((dataForDistinctivessModel.dblAveragePage2 / dblAverage2Max) * memorabilityStrategicWeightPage) * scalingFactorForStrategicDistinctiveness)!;
+                                }
+                                else
+                                {
+                                    averagePage2WeightedValueForChart = 0;
+                                }
+
+                                if (dblAverage3Max > 0)
+                                {
+                                    averagePage3WeightedValueForChart = (double)(((dataForDistinctivessModel.dblAveragePage3 / dblAverage3Max) * personalPreferenceStrategicWeightPage) * scalingFactorForStrategicDistinctiveness)!;
+                                }
+                                else
+                                {
+                                    averagePage3WeightedValueForChart = 0;
+                                }
+
+                                if (dblAverage4Max > 0)
+                                {
+                                    averagePage4WeightedValueForChart = (double)(((dataForDistinctivessModel.dblAveragePage4 / dblAverage4Max) * attributeEvaluationStrategicWeightPage) * scalingFactorForStrategicDistinctiveness)!;
+                                }
+                                else
+                                {
+                                    averagePage4WeightedValueForChart = 0;
+                                }
+
+                                double indexSumForChartDistinctiveness = averagePage1WeightedValueForChart +
+                                                          averagePage2WeightedValueForChart +
+                                                          averagePage3WeightedValueForChart +
+                                                          averagePage4WeightedValueForChart;
+
+                                brandexStrategicDistinctivenessModelData.strTestName = dataForDistinctivessModel.strTestName!;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage1WeightedForDistinctivenessChart = averagePage1WeightedValueForChart;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage2WeightedForDistinctivenessChart = averagePage2WeightedValueForChart;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage3WeightedForDistinctivenessChart = averagePage3WeightedValueForChart;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage4WeightedForDistinctivenessChart = averagePage4WeightedValueForChart;
+
+                                brandexStrategicDistinctivenessModelData.dblIndexForMarketingChart = indexSumForChartDistinctiveness;
+
+                                brandexStrategicDistinctivenessModelData.strDSIScore = dataForDistinctivessModel.strDSIScore;
+                                brandexStrategicDistinctivenessModelData.intRed = dataForDistinctivessModel.intRed;
+                                brandexStrategicDistinctivenessModelData.intGreen = dataForDistinctivessModel.intGreen;
+                                brandexStrategicDistinctivenessModelData.intBlue = dataForDistinctivessModel.intBlue;
+                                brandexStrategicDistinctivenessModelData.boolBold = dataForDistinctivessModel.boolBold;
+
+                                // for chart marketing
+
+                                int fitToConceptDistinctivenessWeightPage = 10;
+                                int memorabilityDistinctivenssWeightPage = 30;
+                                int personalPreferenceDistinctivenessWeightPage = 40;
+                                int attributeEvaluationDistinctivenessWeightPage = 20;
+
+                                double scalingFactorForMarketingChart = 1.00327;
+
+                                double averagePage1WeightedValueForMarketingChart = 0.0;
+                                double averagePage2WeightedValueForMarketingChart = 0.0;
+                                double averagePage3WeightedValueForMarketingChart = 0.0;
+                                double averagePage4WeightedValueForMarketingChart = 0.0;
+
+                                if (dblAverage1Max > 0)
+                                {
+                                    averagePage1WeightedValueForMarketingChart = (double)(((dataForDistinctivessModel.dblAveragePage1 / dblAverage1Max) * fitToConceptDistinctivenessWeightPage) * scalingFactorForMarketingChart)!;
+                                }
+                                else
+                                {
+                                    averagePage1WeightedValueForMarketingChart = 0;
+                                }
+
+                                if (dblAverage2Max > 0)
+                                {
+                                    averagePage2WeightedValueForMarketingChart = (double)(((dataForDistinctivessModel.dblAveragePage2 / dblAverage2Max) * memorabilityDistinctivenssWeightPage) * scalingFactorForMarketingChart)!;
+                                }
+                                else
+                                {
+                                    averagePage2WeightedValueForMarketingChart = 0;
+                                }
+
+                                if (dblAverage3Max > 0)
+                                {
+                                    averagePage3WeightedValueForMarketingChart = (double)(((dataForDistinctivessModel.dblAveragePage3 / dblAverage3Max) * personalPreferenceDistinctivenessWeightPage) * scalingFactorForMarketingChart)!;
+                                }
+                                else
+                                {
+                                    averagePage3WeightedValueForMarketingChart = 0;
+                                }
+
+                                if (dblAverage4Max > 0)
+                                {
+                                    averagePage4WeightedValueForMarketingChart = (double)(((dataForDistinctivessModel.dblAveragePage4 / dblAverage4Max) * attributeEvaluationDistinctivenessWeightPage) * scalingFactorForMarketingChart)!;
+                                }
+                                else
+                                {
+                                    averagePage4WeightedValueForMarketingChart = 0;
+                                }
+
+                                double indexSumForChartMarketing = averagePage1WeightedValueForMarketingChart +
+                                                          averagePage2WeightedValueForMarketingChart +
+                                                          averagePage3WeightedValueForMarketingChart +
+                                                          averagePage4WeightedValueForMarketingChart;
+
+                                brandexStrategicDistinctivenessModelData.strTestName = dataForDistinctivessModel.strTestName!;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage1WeightedForMarketingChart = averagePage1WeightedValueForMarketingChart;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage2WeightedForMarketingChart = averagePage2WeightedValueForMarketingChart;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage3WeightedForMarketingChart = averagePage3WeightedValueForMarketingChart;
+                                brandexStrategicDistinctivenessModelData.dblAveragePage4WeightedForMarketingChart = averagePage4WeightedValueForMarketingChart;
+
+                                brandexStrategicDistinctivenessModelData.dblIndexForDistinctivenessChart = indexSumForChartMarketing;
+                                brandexStrategicDistinctivenessModelData.strDSIScore = dataForDistinctivessModel.strDSIScore;
+                                brandexStrategicDistinctivenessModelData.intRed = dataForDistinctivessModel.intRed;
+                                brandexStrategicDistinctivenessModelData.intGreen = dataForDistinctivessModel.intGreen;
+                                brandexStrategicDistinctivenessModelData.intBlue = dataForDistinctivessModel.intBlue;
+                                brandexStrategicDistinctivenessModelData.boolBold = dataForDistinctivessModel.boolBold;
+
+                                brandexStrategicDistinctivenessesShortData.Add(brandexStrategicDistinctivenessModelData);
+                            }
+
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\BrandexStrategicDistinctiveness{brandexStrategicData.Count()}.pptx";
+                            dll.BrandexStrategicDistinctivenessMethod(CreateTargetPath(sourcePath, brandexStrategicData.First().ProjectTemplateType!), brandexStrategicDistinctivenessesShortData);
+
                             break;
 
                     }

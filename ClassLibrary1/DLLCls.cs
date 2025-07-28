@@ -85,6 +85,11 @@ namespace ClassLibrary1
             template.BrandexSafetyTemplate(destination, apiData);
         }
 
+        public void BrandexStrategicDistinctivenessMethod(string destination, List<BrandexStrategicDistinctivenessShortModel> apiData)
+        {
+            template.BrandexStrategicDistinctivenessTemplate(destination, apiData);
+        }
+
 
     }
 }

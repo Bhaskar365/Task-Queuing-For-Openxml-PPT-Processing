@@ -22907,6 +22907,851 @@ namespace ClassLibrary1
         }
 
 
+        // BRANDEX STRATEGIC DISTINCTIVENESS
+        public void BrandexStrategicDistinctivenessTemplate(string destination, List<BrandexStrategicDistinctivenessShortModel> apiData)
+        {
+            try
+            {
+                using (PresentationDocument presentationDocument = PresentationDocument.Open(destination, true))
+                {
+                    if (presentationDocument != null)
+                    {
+                        var slideIds = presentationDocument?.PresentationPart?.Presentation?.SlideIdList?.ChildElements
+                                            .OfType<SlideId>().ToList();
+
+                        if (slideIds.Count > 0)
+                        {
+                            var slidePartsList = slideIds.Select(slideId =>
+                                                            (SlidePart)presentationDocument?.PresentationPart.GetPartById(slideId.RelationshipId)).ToList();
+
+                            if (slidePartsList.Count > 0 && slidePartsList != null)
+                            {
+                                var firstSlidePart = slidePartsList[0];
+
+                                // 1st slide
+                                if (firstSlidePart != null)
+                                {
+                                    Slide firstSlide = firstSlidePart?.Slide;
+
+                                    if (firstSlide != null)
+                                    {
+                                        // 2nd chart , distinctiveness
+                                        ChartPart chartPart1 = firstSlide?.SlidePart?.ChartParts.LastOrDefault();
+                                        if (chartPart1 != null)
+                                        {
+                                            BarChart barChart = chartPart1?.ChartSpace.Descendants<BarChart>().First();
+                                            EmbeddedPackagePart embeddedPackagePart = chartPart1?.EmbeddedPackagePart;
+
+                                            if (embeddedPackagePart != null)
+                                            {
+                                                using (SpreadsheetDocument spreadsheet = SpreadsheetDocument.Open(embeddedPackagePart.GetStream(), true))
+                                                {
+                                                    WorksheetPart worksheetPart = spreadsheet?.WorkbookPart.WorksheetParts.First();
+                                                    if (worksheetPart != null)
+                                                    {
+                                                        SheetData sheetData = worksheetPart?.Worksheet.Elements<SheetData>().FirstOrDefault();
+
+                                                        int excelDataIndex = 2;
+                                                        Cell cellVariableObj;
+
+                                                        apiData.Sort((x, y) => (x.dblIndexForDistinctivenessChart??0).CompareTo(y.dblIndexForDistinctivenessChart??0));
+
+                                                        foreach (var apiVariables in apiData)
+                                                        {
+                                                            cellVariableObj =
+                                                                sheetData.Descendants<Cell>()
+                                                                .FirstOrDefault(c => c.CellReference == "A" + excelDataIndex.ToString());
+
+                                                            if (cellVariableObj != null)
+                                                            {
+                                                                cellVariableObj.CellValue = new CellValue(apiVariables.strTestName);
+                                                                cellVariableObj.DataType = new EnumValue<CellValues>(CellValues.String);
+                                                            }
+
+                                                            cellVariableObj =
+                                                                sheetData.Descendants<Cell>()
+                                                                .FirstOrDefault(c => c.CellReference == "B" + excelDataIndex.ToString());
+
+                                                            if (cellVariableObj != null)
+                                                            {
+                                                                cellVariableObj.CellValue =
+                                                                    new CellValue(apiVariables.dblAveragePage1WeightedForDistinctivenessChart.ToString());
+                                                                cellVariableObj.DataType = new EnumValue<CellValues>(CellValues.Number);
+                                                            }
+
+                                                            cellVariableObj =
+                                                               sheetData.Descendants<Cell>()
+                                                               .FirstOrDefault(c => c.CellReference == "C" + excelDataIndex.ToString());
+
+                                                            if (cellVariableObj != null)
+                                                            {
+                                                                cellVariableObj.CellValue =
+                                                                    new CellValue(apiVariables.dblAveragePage2WeightedForDistinctivenessChart.ToString());
+                                                                cellVariableObj.DataType = new EnumValue<CellValues>(CellValues.Number);
+                                                            }
+
+                                                            cellVariableObj =
+                                                               sheetData.Descendants<Cell>()
+                                                               .FirstOrDefault(c => c.CellReference == "D" + excelDataIndex.ToString());
+
+                                                            if (cellVariableObj != null)
+                                                            {
+                                                                cellVariableObj.CellValue =
+                                                                    new CellValue(apiVariables.dblAveragePage3WeightedForDistinctivenessChart.ToString());
+                                                                cellVariableObj.DataType = new EnumValue<CellValues>(CellValues.Number);
+                                                            }
+
+                                                            cellVariableObj =
+                                                              sheetData.Descendants<Cell>()
+                                                              .FirstOrDefault(c => c.CellReference == "E" + excelDataIndex.ToString());
+
+                                                            if (cellVariableObj != null)
+                                                            {
+                                                                cellVariableObj.CellValue =
+                                                                    new CellValue(apiVariables.dblAveragePage4WeightedForDistinctivenessChart.ToString());
+                                                                cellVariableObj.DataType = new EnumValue<CellValues>(CellValues.Number);
+                                                            }
+                                                            excelDataIndex++;
+                                                        }
+
+                                                        for (int rowIndex = apiData.Count + 2; rowIndex <= 31; rowIndex++)
+                                                        {
+                                                            Row row = sheetData?.Elements<Row>().FirstOrDefault(r => r.RowIndex == rowIndex);
+                                                            if (row != null)
+                                                            {
+                                                                row.Remove();
+                                                            }
+                                                        }
+
+
+                                                        char[] columns = { 'B', 'C', 'D', 'E' };
+                                                        int columnIndex = 0;
+
+                                                        foreach (DocumentFormat.OpenXml.Drawing.Charts.BarChartSeries barChartSeries in
+                                                            barChart?.Elements<DocumentFormat.OpenXml.Drawing.Charts.BarChartSeries>())
+                                                        {
+                                                            if (columnIndex < columns.Length)
+                                                            {
+                                                                char column = columns[columnIndex];
+
+                                                                var numberReference =
+                                                                        barChartSeries?.Elements<DocumentFormat.OpenXml.Drawing.Charts.Values>().First()?.
+                                                                        Elements<NumberReference>().First();
+
+                                                                numberReference.Formula =
+                                                                    new DocumentFormat.OpenXml.Drawing.Charts.Formula(formulaChanges(column, apiData.Count() + 1));
+
+                                                                NumberingCache numberingCache = numberReference?.Elements<NumberingCache>().First();
+                                                                numberingCache.RemoveAllChildren();
+
+                                                                int idx = 0;
+
+                                                                foreach (var api in apiData)
+                                                                {
+                                                                    double chartValue;
+
+                                                                    switch (column)
+                                                                    {
+                                                                        case 'B':
+                                                                            chartValue = (double)api.dblAveragePage1WeightedForDistinctivenessChart!;
+                                                                            break;
+
+                                                                        case 'C':
+                                                                            chartValue = (double)api.dblAveragePage2WeightedForDistinctivenessChart!;
+                                                                            break;
+
+                                                                        case 'D':
+                                                                            chartValue = (double)api.dblAveragePage3WeightedForDistinctivenessChart!;
+                                                                            break;
+
+                                                                        case 'E':
+                                                                            chartValue = (double)api.dblAveragePage4WeightedForDistinctivenessChart!;
+                                                                            break;
+
+                                                                        default:
+                                                                            chartValue = 0;
+                                                                            break;
+                                                                    }
+
+                                                                    numberingCache.Append(new NumericPoint()
+                                                                    {
+                                                                        Index = (uint)idx,
+                                                                        NumericValue = new DocumentFormat.OpenXml.Drawing.Charts.NumericValue((Math.Round(chartValue * 10) / 10).ToString("F2"))
+                                                                    });
+                                                                    idx++;
+                                                                }
+                                                                columnIndex++;
+                                                            }
+
+                                                            StringReference stringReference = barChartSeries?.Elements<CategoryAxisData>()
+                                                                                    .First()?.Elements<StringReference>().First();
+
+                                                            stringReference.Formula =
+                                                                new DocumentFormat.OpenXml.Drawing.
+                                                                    Charts.Formula("Sheet1!$A$2:$A$" + (apiData.Count + 1).ToString());
+
+                                                            StringCache stringCache = stringReference?.Elements<StringCache>().First();
+
+                                                            stringCache.GetFirstChild<PointCount>().Val = (uint)apiData.Count;
+
+                                                            int catIdx = 0;
+
+                                                            foreach (var api in apiData)
+                                                            {
+                                                                stringCache.Append(new StringPoint()
+                                                                {
+                                                                    Index = (uint)catIdx,
+                                                                    NumericValue = new DocumentFormat.OpenXml.Drawing.Charts.NumericValue(api.strTestName)
+                                                                });
+
+                                                                StringPoint stringPoint = stringCache.Elements<StringPoint>().First();
+                                                                catIdx++;
+                                                            }
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        CommonSlideData commonSlideData1 = firstSlide?.GetFirstChild<P.CommonSlideData>();
+                                        if (commonSlideData1 != null)
+                                        {
+                                            ShapeTree shapeTree1 = commonSlideData1?.GetFirstChild<P.ShapeTree>();
+                                            if (shapeTree1 != null)
+                                            {
+                                                var testNameShapes = shapeTree1?.Elements<P.Shape>()
+                                                  .Where(shape => shape.InnerText.Contains("DTESTNAME") && !shape.InnerText.Equals("TESTNAME"))
+                                                  .OrderBy(shape =>
+                                                  {
+                                                      var match = Regex.Match(shape.InnerText, @"DTESTNAME(\d+)");
+                                                      return match.Success ? int.Parse(match.Groups[1].Value) : int.MaxValue;
+                                                  })
+                                                  .ToList();
+
+
+                                                if (testNameShapes != null && testNameShapes.Count > 0)
+                                                {
+                                                    for (int i = 0; i < apiData.Count; i++)
+                                                    {
+                                                        var shape = testNameShapes[i];
+                                                        var apiItem = apiData[apiData.Count - i - 1];
+                                                        var color = $"#{(int)apiData[apiData.Count - i - 1].intRed:X2}{(int)apiData[apiData.Count - i - 1].intGreen:X2}{(int)apiData[apiData.Count - i - 1].intBlue:X2}";
+
+                                                        P.TextBody textBody = shape?.GetFirstChild<P.TextBody>();
+                                                        if (textBody != null)
+                                                        {
+                                                            A.Paragraph paragraph = textBody?.Elements<A.Paragraph>().FirstOrDefault();
+                                                            if (paragraph != null)
+                                                            {
+                                                                A.Run run = paragraph?.Elements<A.Run>().FirstOrDefault();
+                                                                if (run != null)
+                                                                {
+                                                                    A.RunProperties runProperties = run?.GetFirstChild<A.RunProperties>();
+                                                                    if (runProperties != null)
+                                                                    {
+                                                                        runProperties.FontSize = DEFAULT_FONT_SIZE;
+                                                                        if (apiData[apiData.Count - i - 1]?.boolBold == true)
+                                                                        {
+                                                                            runProperties.Bold = apiData[apiData.Count - i - 1]?.boolBold;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            runProperties.Bold = false;
+                                                                        }
+                                                                    }
+
+                                                                    A.SolidFill solidFill1 = runProperties?.GetFirstChild<A.SolidFill>();
+                                                                    if (solidFill1 != null)
+                                                                    {
+                                                                        A.RgbColorModelHex rgbColor1 = solidFill1?.GetFirstChild<A.RgbColorModelHex>();
+                                                                        if (rgbColor1 != null)
+                                                                        {
+                                                                            if (color != null)
+                                                                            {
+                                                                                rgbColor1.Val = color.TrimStart('#');
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                rgbColor1.Val = DEFAULT_COLOR;
+                                                                            }
+                                                                        }
+                                                                    }
+
+                                                                    A.Text text = run?.GetFirstChild<A.Text>();
+                                                                    if (text != null)
+                                                                    {
+                                                                        if (apiData[apiData.Count - i - 1].strTestName != null)
+                                                                        {
+                                                                            text.Text = apiData[apiData.Count - i - 1].strTestName.ToString();
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            text.Text = "";
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                        }
+
+                                        chartPart1.ChartSpace.Save();
+                                        firstSlide.SlidePart.Slide.Save();
+                                    }
+
+                                    Slide firstSlide2 = firstSlidePart?.Slide;
+
+                                    if (firstSlide2 != null)
+                                    {
+                                        // 1st chart , marketing
+                                        ChartPart chartPart2 = firstSlide2?.SlidePart.ChartParts.FirstOrDefault();
+                                        if (chartPart2 != null)
+                                        {
+                                            BarChart barChart = chartPart2?.ChartSpace.Descendants<BarChart>().First();
+                                            EmbeddedPackagePart embeddedPackagePart2 = chartPart2?.EmbeddedPackagePart;
+
+                                            if (embeddedPackagePart2 != null)
+                                            {
+                                                using (SpreadsheetDocument spreadsheet = SpreadsheetDocument.Open(embeddedPackagePart2.GetStream(), true))
+                                                {
+                                                    WorksheetPart worksheetPart2 = spreadsheet?.WorkbookPart.WorksheetParts.First();
+                                                    if (worksheetPart2 != null)
+                                                    {
+                                                        SheetData sheetData = worksheetPart2?.Worksheet.Elements<SheetData>().FirstOrDefault();
+
+                                                        int excelDataIndex = 2;
+                                                        Cell cellVariableObj;
+
+                                                        apiData.Sort((x, y) => (x.dblIndexForMarketingChart??0).CompareTo(y.dblIndexForMarketingChart??0));
+
+                                                        foreach (var apiVariables in apiData)
+                                                        {
+                                                            cellVariableObj =
+                                                                sheetData.Descendants<Cell>()
+                                                                .FirstOrDefault(c => c.CellReference == "A" + excelDataIndex.ToString());
+
+                                                            if (cellVariableObj != null)
+                                                            {
+                                                                cellVariableObj.CellValue = new CellValue(apiVariables.strTestName);
+                                                                cellVariableObj.DataType = new EnumValue<CellValues>(CellValues.String);
+                                                            }
+
+                                                            cellVariableObj =
+                                                                sheetData.Descendants<Cell>()
+                                                                .FirstOrDefault(c => c.CellReference == "B" + excelDataIndex.ToString());
+
+                                                            if (cellVariableObj != null)
+                                                            {
+                                                                cellVariableObj.CellValue =
+                                                                    new CellValue(apiVariables.dblAveragePage1WeightedForMarketingChart.ToString());
+                                                                cellVariableObj.DataType = new EnumValue<CellValues>(CellValues.Number);
+                                                            }
+
+                                                            cellVariableObj =
+                                                               sheetData.Descendants<Cell>()
+                                                               .FirstOrDefault(c => c.CellReference == "C" + excelDataIndex.ToString());
+
+                                                            if (cellVariableObj != null)
+                                                            {
+                                                                cellVariableObj.CellValue =
+                                                                    new CellValue(apiVariables.dblAveragePage2WeightedForMarketingChart.ToString());
+                                                                cellVariableObj.DataType = new EnumValue<CellValues>(CellValues.Number);
+                                                            }
+
+                                                            cellVariableObj =
+                                                               sheetData.Descendants<Cell>()
+                                                               .FirstOrDefault(c => c.CellReference == "D" + excelDataIndex.ToString());
+
+                                                            if (cellVariableObj != null)
+                                                            {
+                                                                cellVariableObj.CellValue =
+                                                                    new CellValue(apiVariables.dblAveragePage3WeightedForMarketingChart.ToString());
+                                                                cellVariableObj.DataType = new EnumValue<CellValues>(CellValues.Number);
+                                                            }
+
+                                                            cellVariableObj =
+                                                              sheetData.Descendants<Cell>()
+                                                              .FirstOrDefault(c => c.CellReference == "E" + excelDataIndex.ToString());
+
+                                                            if (cellVariableObj != null)
+                                                            {
+                                                                cellVariableObj.CellValue =
+                                                                    new CellValue(apiVariables.dblAveragePage4WeightedForMarketingChart.ToString());
+                                                                cellVariableObj.DataType = new EnumValue<CellValues>(CellValues.Number);
+                                                            }
+                                                            excelDataIndex++;
+                                                        }
+
+                                                        for (int rowIndex = apiData.Count + 2; rowIndex <= 31; rowIndex++)
+                                                        {
+                                                            Row row = sheetData?.Elements<Row>().FirstOrDefault(r => r.RowIndex == rowIndex);
+                                                            if (row != null)
+                                                            {
+                                                                row.Remove();
+                                                            }
+                                                        }
+
+
+                                                        char[] columns = { 'B', 'C', 'D', 'E' };
+                                                        int columnIndex = 0;
+
+                                                        foreach (DocumentFormat.OpenXml.Drawing.Charts.BarChartSeries barChartSeries in
+                                                            barChart?.Elements<DocumentFormat.OpenXml.Drawing.Charts.BarChartSeries>())
+                                                        {
+                                                            if (columnIndex < columns.Length)
+                                                            {
+                                                                char column = columns[columnIndex];
+
+                                                                var numberReference =
+                                                                        barChartSeries?.Elements<DocumentFormat.OpenXml.Drawing.Charts.Values>().First()?.
+                                                                        Elements<NumberReference>().First();
+
+                                                                numberReference.Formula =
+                                                                    new DocumentFormat.OpenXml.Drawing.Charts.Formula(formulaChanges(column, apiData.Count() + 1));
+
+                                                                NumberingCache numberingCache = numberReference?.Elements<NumberingCache>().First();
+                                                                numberingCache.RemoveAllChildren();
+
+                                                                int idx = 0;
+
+                                                                foreach (var api in apiData)
+                                                                {
+                                                                    double chartValue = 0;
+
+                                                                    switch (column)
+                                                                    {
+                                                                        case 'B':
+                                                                            chartValue = (double)api.dblAveragePage1WeightedForMarketingChart!;
+                                                                            break;
+
+                                                                        case 'C':
+                                                                            chartValue = (double)api.dblAveragePage2WeightedForMarketingChart!;
+                                                                            break;
+
+                                                                        case 'D':
+                                                                            chartValue = (double)api.dblAveragePage3WeightedForMarketingChart!;
+                                                                            break;
+
+                                                                        case 'E':
+                                                                            chartValue = (double)api.dblAveragePage4WeightedForMarketingChart!;
+                                                                            break;
+                                                                    }
+
+                                                                    numberingCache.Append(new NumericPoint()
+                                                                    {
+                                                                        Index = (uint)idx,
+                                                                        NumericValue = new DocumentFormat.OpenXml.Drawing.Charts.NumericValue((Math.Round(chartValue * 10) / 10).ToString("F2"))
+                                                                    });
+                                                                    idx++;
+                                                                }
+                                                                columnIndex++;
+                                                            }
+
+                                                            StringReference stringReference = barChartSeries?.Elements<CategoryAxisData>()
+                                                                                    .First()?.Elements<StringReference>().First();
+
+                                                            stringReference.Formula =
+                                                                new DocumentFormat.OpenXml.Drawing.
+                                                                    Charts.Formula("Sheet1!$A$2:$A$" + (apiData.Count + 1).ToString());
+
+                                                            StringCache stringCache = stringReference?.Elements<StringCache>().First();
+
+                                                            stringCache.GetFirstChild<PointCount>().Val = (uint)apiData.Count;
+
+                                                            int catIdx = 0;
+
+                                                            foreach (var api in apiData)
+                                                            {
+                                                                stringCache.Append(new StringPoint()
+                                                                {
+                                                                    Index = (uint)catIdx,
+                                                                    NumericValue = new DocumentFormat.OpenXml.Drawing.Charts.NumericValue(api.strTestName)
+                                                                });
+
+                                                                StringPoint stringPoint = stringCache.Elements<StringPoint>().First();
+                                                                catIdx++;
+                                                            }
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        CommonSlideData commonSlideData2 = firstSlide2?.GetFirstChild<P.CommonSlideData>();
+                                        if (commonSlideData2 != null)
+                                        {
+                                            ShapeTree shapeTree2 = commonSlideData2?.GetFirstChild<P.ShapeTree>();
+                                            if (shapeTree2 != null)
+                                            {
+                                                var DtestNameShapes = shapeTree2?.Elements<P.Shape>()
+                                                          .Where(shape => shape.InnerText.Contains("TESTNAME") && !shape.InnerText.Equals("DTESTNAME"))
+                                                          .OrderBy(shape =>
+                                                          {
+                                                              var match = Regex.Match(shape.InnerText, @"TESTNAME(\d+)");
+                                                              return match.Success ? int.Parse(match.Groups[1].Value) : int.MaxValue;
+                                                          })
+                                                          .ToList();
+
+                                                if (DtestNameShapes.Count > 0)
+                                                {
+                                                    for (int i = 0; i < apiData.Count; i++)
+                                                    {
+                                                        var shape = DtestNameShapes[i];
+                                                        var apiItem = apiData[apiData.Count - i - 1];
+                                                        var color = $"#{(int)apiData[apiData.Count - i - 1].intRed:X2}{(int)apiData[apiData.Count - i - 1].intGreen:X2}{(int)apiData[apiData.Count - i - 1].intBlue:X2}";
+
+                                                        P.TextBody textBody = shape?.GetFirstChild<P.TextBody>();
+                                                        if (textBody != null)
+                                                        {
+                                                            A.Paragraph paragraph = textBody?.Elements<A.Paragraph>().FirstOrDefault();
+                                                            if (paragraph != null)
+                                                            {
+                                                                A.Run run = paragraph?.Elements<A.Run>().FirstOrDefault();
+                                                                if (run != null)
+                                                                {
+                                                                    A.RunProperties runProperties = run?.GetFirstChild<A.RunProperties>();
+                                                                    if (runProperties != null)
+                                                                    {
+                                                                        runProperties.FontSize = DEFAULT_FONT_SIZE;
+                                                                        if (apiData[apiData.Count - i - 1].boolBold == true)
+                                                                        {
+                                                                            runProperties.Bold = apiData[apiData.Count - i - 1].boolBold;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            runProperties.Bold = false;
+                                                                        }
+                                                                    }
+
+                                                                    A.SolidFill solidFill1 = runProperties.GetFirstChild<A.SolidFill>();
+                                                                    if (solidFill1 != null)
+                                                                    {
+                                                                        A.RgbColorModelHex rgbColor1 = solidFill1.GetFirstChild<A.RgbColorModelHex>();
+                                                                        if (rgbColor1 != null)
+                                                                        {
+                                                                            if (color != null)
+                                                                            {
+                                                                                rgbColor1.Val = color.TrimStart('#');
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                rgbColor1.Val = DEFAULT_COLOR;
+                                                                            }
+                                                                        }
+                                                                    }
+
+                                                                    A.Text text = run.GetFirstChild<A.Text>();
+                                                                    if (text != null)
+                                                                    {
+                                                                        if (apiData[apiData.Count - i - 1].strTestName != null)
+                                                                        {
+                                                                            text.Text = apiData[apiData.Count - i - 1]?.strTestName.ToString();
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            text.Text = "";
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                        }
+
+                                        chartPart2.ChartSpace.Save();
+                                        firstSlide2.SlidePart.Slide.Save();
+                                    }
+                                }
+
+                                // 2nd slide
+                                var secondSlidePart = slidePartsList[1];
+
+                                if (secondSlidePart != null)
+                                {
+                                    Slide secondSlide = secondSlidePart?.Slide;
+                                    if (secondSlide != null)
+                                    {
+                                        CommonSlideData commonSlideData = secondSlide?.GetFirstChild<CommonSlideData>();
+                                        if (commonSlideData != null)
+                                        {
+                                            ShapeTree shapeTree = commonSlideData?.GetFirstChild<ShapeTree>();
+
+                                            if (shapeTree != null)
+                                            {
+                                                var graphicFrame = shapeTree?.GetFirstChild<P.GraphicFrame>();
+                                                if (graphicFrame != null)
+                                                {
+                                                    var graphic = graphicFrame?.GetFirstChild<A.Graphic>();
+                                                    if (graphic != null)
+                                                    {
+                                                        var graphicData = graphic?.GetFirstChild<A.GraphicData>();
+                                                        if (graphicData != null)
+                                                        {
+                                                            var table = graphicData?.GetFirstChild<A.Table>();
+
+                                                            if (table != null)
+                                                            {
+                                                                var tableList = table?.Elements<A.TableRow>().ToList();
+                                                                var firstTableRow = tableList?.First();
+                                                                var tableCell = firstTableRow?.Elements<A.TableCell>().ToList();
+
+                                                                apiData.Sort((x, y) => (y.dblIndexForMarketingChart??0).CompareTo(x.dblIndexForMarketingChart??0));
+
+                                                                for (int row = 1; row <= apiData.Count; row++)
+                                                                {
+                                                                    for (int cell = 0; cell < tableCell.Count(); cell++)
+                                                                    {
+                                                                        var api = apiData[row - 1];
+
+                                                                        var testname = string.Empty;
+                                                                        bool isBold = false;
+                                                                        var chartValue = 0.00;
+                                                                        var color = $"#{(int)api.intRed!:X2}{(int)api.intGreen!:X2}{(int)api.intBlue!:X2}";
+
+
+                                                                        if (cell == 0)
+                                                                        {
+                                                                            testname = api.strTestName;
+                                                                            isBold = (bool)api.boolBold!;
+
+                                                                            FillBrandexSafetyLabels(secondSlidePart!, testname, row, cell, color, isBold);
+                                                                        }
+                                                                        if (cell == 1)
+                                                                        {
+                                                                            chartValue = (double)api.dblAveragePage1!;
+                                                                            isBold = (bool)api.boolBold!;
+
+                                                                            FillBrandexSafetyValues(secondSlidePart!, chartValue, row, cell, color, isBold);
+                                                                        }
+                                                                        if (cell == 2)
+                                                                        {
+                                                                            chartValue = Math.Round((double)api.dblAveragePage2!, 1);
+                                                                            isBold = (bool)api.boolBold!;
+
+                                                                            FillBrandexSafetyValuesForMemorability(secondSlidePart!, chartValue, row, cell, color, isBold);
+                                                                        }
+                                                                        if (cell == 3)
+                                                                        {
+                                                                            chartValue = (double)api.dblAveragePage3!;
+                                                                            isBold = (bool)api.boolBold!;
+
+                                                                            FillBrandexSafetyValues(secondSlidePart!, chartValue, row, cell, color, isBold);
+                                                                        }
+                                                                        if (cell == 4)
+                                                                        {
+                                                                            chartValue = (double)api.dblAveragePage4!;
+                                                                            isBold = (bool)api.boolBold!;
+
+                                                                            FillBrandexSafetyValues(secondSlidePart!, chartValue, row, cell, color, isBold);
+                                                                        }
+                                                                        if (cell == 5)
+                                                                        {
+                                                                            chartValue = (double)api.dblIndexForMarketingChart!;
+                                                                            isBold = (bool)api.boolBold!;
+
+                                                                            FillBrandexSafetyValues(secondSlidePart!, chartValue, row, cell, color, isBold);
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    if (secondSlide != null)
+                                    {
+                                        CommonSlideData commonSlideData = secondSlide?.GetFirstChild<CommonSlideData>();
+                                        if (commonSlideData != null)
+                                        {
+                                            ShapeTree shapeTree = commonSlideData?.GetFirstChild<ShapeTree>();
+                                            if (shapeTree != null)
+                                            {
+                                                var graphicFrame = shapeTree?.GetFirstChild<P.GraphicFrame>();
+                                                if (graphicFrame != null)
+                                                {
+                                                    var graphic = graphicFrame?.GetFirstChild<A.Graphic>();
+                                                    if (graphic != null)
+                                                    {
+                                                        var graphicData = graphic?.GetFirstChild<A.GraphicData>();
+                                                        if (graphicData != null)
+                                                        {
+                                                            var table = graphicData?.GetFirstChild<A.Table>();
+                                                            if (table != null)
+                                                            {
+                                                                var tableRows = table?.Elements<A.TableRow>().ToList();
+                                                                if (tableRows != null && tableRows.Count > 0)
+                                                                {
+                                                                    for (int i = apiData.Count + 1; i < tableRows.Count - 1; i++)
+                                                                    {
+                                                                        tableRows[i].Remove();
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                // 3rd slide
+                                var thirdSlidePart = slidePartsList[2];
+
+                                if (thirdSlidePart != null)
+                                {
+                                    Slide thirdSlide = thirdSlidePart?.Slide;
+                                    if (thirdSlide != null)
+                                    {
+                                        CommonSlideData commonSlideData = thirdSlide?.GetFirstChild<CommonSlideData>();
+                                        if (commonSlideData != null)
+                                        {
+                                            ShapeTree shapeTree = commonSlideData?.GetFirstChild<ShapeTree>();
+
+                                            if (shapeTree != null)
+                                            {
+                                                var graphicFrame = shapeTree?.GetFirstChild<P.GraphicFrame>();
+                                                if (graphicFrame != null)
+                                                {
+                                                    var graphic = graphicFrame?.GetFirstChild<A.Graphic>();
+                                                    if (graphic != null)
+                                                    {
+                                                        var graphicData = graphic?.GetFirstChild<A.GraphicData>();
+                                                        if (graphicData != null)
+                                                        {
+                                                            var table = graphicData?.GetFirstChild<A.Table>();
+
+                                                            if (table != null)
+                                                            {
+                                                                var tableList = table.Elements<A.TableRow>().ToList();
+                                                                var firstTableRow = tableList.First();
+                                                                var tableCell = firstTableRow.Elements<A.TableCell>().ToList();
+
+                                                                apiData.Sort((x, y) => (y.dblIndexForDistinctivenessChart??0).CompareTo(x.dblIndexForDistinctivenessChart??0));
+
+                                                                for (int row = 1; row <= apiData.Count; row++)
+                                                                {
+                                                                    for (int cell = 0; cell < tableCell.Count(); cell++)
+                                                                    {
+                                                                        var api = apiData[row - 1];
+
+                                                                        var testname = string.Empty;
+                                                                        bool isBold = false;
+                                                                        var chartValue = 0.00;
+                                                                        var color = $"#{(int)api.intRed!:X2}{(int)api.intGreen!:X2}{(int)api.intBlue!:X2}";
+
+
+                                                                        if (cell == 0)
+                                                                        {
+                                                                            testname = api.strTestName;
+                                                                            isBold = (bool)api.boolBold!;
+
+                                                                            FillBrandexSafetyLabels(thirdSlidePart!, testname, row, cell, color, isBold);
+                                                                        }
+                                                                        if (cell == 1)
+                                                                        {
+                                                                            chartValue = (double)api.dblAveragePage1!;
+                                                                            isBold = (bool)api.boolBold!;
+
+                                                                            FillBrandexSafetyValues(thirdSlidePart!, chartValue, row, cell, color, isBold);
+                                                                        }
+                                                                        if (cell == 2)
+                                                                        {
+                                                                            chartValue = Math.Round((double)api.dblAveragePage2!, 1);
+                                                                            isBold = (bool)api.boolBold!;
+
+                                                                            FillBrandexSafetyValuesForMemorability(thirdSlidePart!, chartValue, row, cell, color, isBold);
+                                                                        }
+                                                                        if (cell == 3)
+                                                                        {
+                                                                            chartValue = (double)api.dblAveragePage3!;
+                                                                            isBold = (bool)api.boolBold!;
+
+                                                                            FillBrandexSafetyValues(thirdSlidePart!, chartValue, row, cell, color, isBold);
+                                                                        }
+                                                                        if (cell == 4)
+                                                                        {
+                                                                            chartValue = (double)api.dblAveragePage4!;
+                                                                            isBold = (bool)api.boolBold!;
+
+                                                                            FillBrandexSafetyValues(thirdSlidePart!, chartValue, row, cell, color, isBold);
+                                                                        }
+                                                                        if (cell == 5)
+                                                                        {
+                                                                            chartValue = (double)api.dblIndexForDistinctivenessChart!;
+                                                                            isBold = (bool)api.boolBold!;
+
+                                                                            FillBrandexSafetyValues(thirdSlidePart!, chartValue, row, cell, color, isBold);
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    if (thirdSlide != null)
+                                    {
+                                        CommonSlideData commonSlideData = thirdSlide?.GetFirstChild<CommonSlideData>();
+                                        if (commonSlideData != null)
+                                        {
+                                            ShapeTree shapeTree = commonSlideData?.GetFirstChild<ShapeTree>();
+                                            if (shapeTree != null)
+                                            {
+                                                var graphicFrame = shapeTree?.GetFirstChild<P.GraphicFrame>();
+                                                if (graphicFrame != null)
+                                                {
+                                                    var graphic = graphicFrame?.GetFirstChild<A.Graphic>();
+                                                    if (graphic != null)
+                                                    {
+                                                        var graphicData = graphic?.GetFirstChild<A.GraphicData>();
+                                                        if (graphicData != null)
+                                                        {
+                                                            var table = graphicData?.GetFirstChild<A.Table>();
+                                                            if (table != null)
+                                                            {
+                                                                var tableRows = table?.Elements<A.TableRow>().ToList();
+                                                                if (tableRows != null && tableRows.Count > 0)
+                                                                {
+                                                                    for (int i = apiData.Count + 1; i < tableRows.Count - 1; i++)
+                                                                    {
+                                                                        tableRows[i].Remove();
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
         public string formulaChanges(char cell, int length)
         {
             var f = $"Sheet1!${cell.ToString()}$2:${cell.ToString()}${length.ToString()}";
