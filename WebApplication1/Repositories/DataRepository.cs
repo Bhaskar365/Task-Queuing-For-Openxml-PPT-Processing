@@ -96,6 +96,19 @@ namespace WebApplication1.Repositories
             return result;
         }
 
+        public async Task<IEnumerable<NonMedicalTermsModel>> GetNonMedicalTerms()
+        {
+            try
+            {
+                var result = await _context.NonMedicalTerms.ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<IEnumerable<PersonalPreference>> GetPersonalPreferenceData()
         {
             var result = await _context.PersonalPreferences.ToListAsync();

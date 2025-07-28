@@ -240,5 +240,19 @@ namespace WebApplication1.Controllers
             }
         }
 
+
+        [HttpGet("Non-medical Terms")]
+        public async Task<ActionResult> GetNonMedicalTermsData()
+        {
+            try
+            {
+                return Ok(await _repository.GetNonMedicalTerms());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

@@ -733,6 +733,10 @@ namespace WebApplicationAPI.Controllers
                             dll.MedicalTermsMethod(CreateTargetPath(sourcePath, medicalTermsData.First().ProjectTemplateType!), medicalTermsData);
                             break;
 
+                        case "Non-Medical Terms":
+
+                            break;
+
                     }
 
                     taskLog.CompletedOn = DateTime.UtcNow;

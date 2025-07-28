@@ -59,6 +59,8 @@ namespace WebApplication1.Context
 
         public DbSet<MedicalTermsModel> MedicalTerms { get; set; }
 
+        public DbSet<NonMedicalTermsModel> NonMedicalTerms { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // attribute 1
@@ -105,6 +107,12 @@ namespace WebApplication1.Context
             modelBuilder.Entity<MedicalTermsModel>(entity =>
             {
                 entity.HasNoKey().ToTable("MedicalTerms$");
+            });
+
+            //non-medical terms
+            modelBuilder.Entity<NonMedicalTermsModel>(entity =>
+            {
+                entity.HasNoKey().ToTable("NonMedicalTerms$");
             });
 
 

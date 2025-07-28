@@ -40,8 +40,9 @@ namespace WebApplication1.Repositories
 
         Task<IEnumerable<BrandexStrategicDistinctivenessModel>> GetBrandexStrategicDistinctivenessData();
 
-        Task<IEnumerable<MedicalTermsModel>> GetMedicalTerms(); 
+        Task<IEnumerable<MedicalTermsModel>> GetMedicalTerms();
 
+        Task<IEnumerable<NonMedicalTermsModel>> GetNonMedicalTerms();
 
     }
 }
