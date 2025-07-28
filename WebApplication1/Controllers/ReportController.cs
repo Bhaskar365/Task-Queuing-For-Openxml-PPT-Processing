@@ -734,7 +734,9 @@ namespace WebApplicationAPI.Controllers
                             break;
 
                         case "Non-Medical Terms":
-
+                            var nonMedicalTermsData = (await repository.GetNonMedicalTerms()).ToList();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\NonMedicalTermsPlaceholderRow.pptx";
+                            dll.NonMedicalTermsMethod(CreateTargetPath(sourcePath, nonMedicalTermsData.First().ProjectTemplateType!), nonMedicalTermsData);
                             break;
 
                     }

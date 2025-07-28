@@ -96,6 +96,11 @@ namespace ClassLibrary1
             template.MedicalTermsTemplate6(destination, apiData);
         }
 
+        public void NonMedicalTermsMethod(string destination, List<NonMedicalTermsModel> apiData)
+        {
+            template.NonMedicalTermsTemplateSpecial3(destination, apiData);
+        }
+
 
     }
 }
