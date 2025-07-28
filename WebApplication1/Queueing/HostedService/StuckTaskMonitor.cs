@@ -34,9 +34,9 @@ namespace WebApplicationAPI.Queueing.HostedService
                                 CurrentStatus = 'Fail',
                                 CompletedOn= GETUTCDATE()
                              WHERE
-                                CurrentStatus = 'Processing'
+                                CurrentStatus = 'Processing' OR CurrentStatus = 'Fail'
                                 AND CompletedOn IS NULL
-                                AND DATEDIFF(MINUTE,CreatedOn,GETUTCDATE())>=10
+                                AND DATEDIFF(MINUTE,CreatedOn,GETUTCDATE())>=2
                             ";
 
                 using SqlCommand cmd = new SqlCommand(sql, conn);

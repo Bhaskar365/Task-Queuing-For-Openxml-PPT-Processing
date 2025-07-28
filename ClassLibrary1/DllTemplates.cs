@@ -22617,8 +22617,8 @@ namespace ClassLibrary1
                                         {
                                             var shape = testNameShapes[i];
                                             var apiItem = sortedApi[sortedApi.Count - i - 1];
-                                            var color = $"#{sortedApi[sortedApi.Count - i - 1].intRed:X2}{sortedApi[sortedApi.Count - i - 1].intGreen:X2}{sortedApi[sortedApi.Count - i - 1].intBlue:X2}";
-
+                                            var color = $"#{(int)sortedApi[sortedApi.Count - i - 1].intRed:X2}{(int)sortedApi[sortedApi.Count - i - 1].intGreen:X2}{(int)sortedApi[sortedApi.Count - i - 1].intBlue:X2}";
+                                            
                                             P.TextBody textBody = shape?.GetFirstChild<P.TextBody>();
                                             if (textBody != null)
                                             {
@@ -22762,7 +22762,7 @@ namespace ClassLibrary1
                                                             var testname = string.Empty;
                                                             bool isBold = false;
                                                             var chartValue = 0.00;
-                                                            var color = $"#{api.intRed:X2}{api.intGreen:X2}{api.intBlue:X2}";
+                                                            var color = $"#{(int)api.intRed:X2}{(int)api.intGreen:X2}{(int)api.intBlue:X2}";
 
                                                             if (cell == 0)
                                                             {

@@ -426,18 +426,18 @@ namespace WebApplicationAPI.Controllers
 
 
                             sourcePath = $"C:\\ExcelChartFiles\\Templates\\BrandexSafetySpecific{brandexSafetyData.Count()}.pptx";
-                            dll.BrandexSafetyMethod(CreateTargetPath(sourcePath, brandexSafetyData.First().ProjectTemplateType!),brandexData);
+                            dll.BrandexSafetyMethod(CreateTargetPath(sourcePath, brandexSafetyData.First().ProjectTemplateType!), brandexData);
                             break;
 
 
                     }
 
                     taskLog.CompletedOn = DateTime.UtcNow;
-                    _taskLogging.MarkTaskAsCompleted(request.TaskId.ToString(), (DateTime)taskLog.CompletedOn, connectionString!,"Done");
+                    _taskLogging.MarkTaskAsCompleted(request.TaskId.ToString(), (DateTime)taskLog.CompletedOn, connectionString!, "Done");
 
                     _tracker.SetStatus(request.TaskId, "Done");
 
-                     _taskLogging.SetTaskStatusState(request.TaskId, "Done", connectionString!, user);
+                    _taskLogging.SetTaskStatusState(request.TaskId, "Done", connectionString!, user);
 
                 }
                 catch (Exception ex)
@@ -447,6 +447,7 @@ namespace WebApplicationAPI.Controllers
                 }
             });
 
+            /* --- sample code -- */
             //await Task.Run(async () =>
             //{
             //    _tracker.SetStatus(request.TaskId, "Processing");
