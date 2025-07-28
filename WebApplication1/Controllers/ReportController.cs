@@ -727,6 +727,12 @@ namespace WebApplicationAPI.Controllers
 
                             break;
 
+                        case "Medical Terms":
+                            var medicalTermsData = (await repository.GetMedicalTerms()).ToList();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\MedicalTermsPlaceholderRow.pptx";
+                            dll.MedicalTermsMethod(CreateTargetPath(sourcePath, medicalTermsData.First().ProjectTemplateType!), medicalTermsData);
+                            break;
+
                     }
 
                     taskLog.CompletedOn = DateTime.UtcNow;

@@ -91,5 +91,11 @@ namespace ClassLibrary1
         }
 
 
+        public void MedicalTermsMethod(string destination, List<MedicalTermsModel> apiData)
+        {
+            template.MedicalTermsTemplate6(destination, apiData);
+        }
+
+
     }
 }
