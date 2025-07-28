@@ -20,7 +20,7 @@ namespace WebApplicationAPI.Queueing.HostedService
         {
             while(!stoppingToken.IsCancellationRequested)
             {
-                await Task.Delay(TimeSpan.FromMinutes(1),stoppingToken);
+                await Task.Delay(TimeSpan.FromMinutes(3),stoppingToken);
 
                 using var scope = _serviceProvider.CreateScope();
                 var connectionString = _configuration.GetConnectionString("DBConnection");
@@ -29,6 +29,7 @@ namespace WebApplicationAPI.Queueing.HostedService
 
                 await conn.OpenAsync();
 
+                /*--- 5 minute status logic --*/
                 string sql = @"UPDATE 
                                 TaskLoggingTable SET 
                                 CurrentStatus = 'Fail',
@@ -36,7 +37,7 @@ namespace WebApplicationAPI.Queueing.HostedService
                              WHERE
                                 CurrentStatus = 'Processing' OR CurrentStatus = 'Fail'
                                 AND CompletedOn IS NULL
-                                AND DATEDIFF(MINUTE,CreatedOn,GETUTCDATE())>=5
+                                AND DATEDIFF(MINUTE,CreatedOn,GETUTCDATE())>=5              
                             ";
 
                 using SqlCommand cmd = new SqlCommand(sql, conn);
