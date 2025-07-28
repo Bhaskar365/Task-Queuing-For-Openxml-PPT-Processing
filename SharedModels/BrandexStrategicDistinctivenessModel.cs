@@ -8,8 +8,8 @@ namespace SharedModels
 {
     public class BrandexStrategicDistinctivenessModel
     {
-        public string strTestName { get; set; } = string.Empty;
-        public string strTestNameTranslation { get; set; } = string.Empty;
+        public string? strTestName { get; set; } = string.Empty;
+        public string? strTestNameTranslation { get; set; } = string.Empty;
 
         public double? dblAveragePage1 { get; set; }
         public double? dblPage1Weight { get; set; }
@@ -49,7 +49,7 @@ namespace SharedModels
         public double? intGreen { get; set; }
         public double? intBlue { get; set; }
         public bool? boolBold { get; set; }
-        public string ProjectTemplateType { get; set; } = string.Empty;
+        public string? ProjectTemplateType { get; set; } = string.Empty;
     }
 
     public class BrandexStrategicDistinctivenessShortModel
@@ -99,7 +99,7 @@ namespace SharedModels
         public double? dblIndex { get; set; }
         public double? dblIndexForDistinctivenessChart { get; set; }
         public double? dblIndexForMarketingChart { get; set; }
-        public string strDSIScore { get; set; } = string.Empty;
+        public string? strDSIScore { get; set; } = string.Empty;
         public double? intRed { get; set; }
         public double? intGreen { get; set; }
         public double? intBlue { get; set; }
