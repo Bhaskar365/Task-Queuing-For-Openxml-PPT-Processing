@@ -201,5 +201,18 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpGet("Brandex Safety")]
+        public async Task<ActionResult> GetBrandexSafetyData()
+        {
+            try
+            {
+                return Ok(await _repository.GetBrandexSafety());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

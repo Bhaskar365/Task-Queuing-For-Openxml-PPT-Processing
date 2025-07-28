@@ -426,8 +426,10 @@ namespace WebApplicationAPI.Controllers
 
 
                             sourcePath = $"C:\\ExcelChartFiles\\Templates\\BrandexSafetySpecific{brandexSafetyData.Count()}.pptx";
-
+                            dll.BrandexSafetyMethod(CreateTargetPath(sourcePath, brandexSafetyData.First().ProjectTemplateType!),brandexData);
                             break;
+
+
                     }
 
                     taskLog.CompletedOn = DateTime.UtcNow;

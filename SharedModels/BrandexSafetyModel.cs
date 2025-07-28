@@ -45,9 +45,9 @@ namespace SharedModels
 
         public double dblIndex { get; set; }
         public string? strDSIScore { get; set; } = string.Empty;
-        public int? intRed { get; set; }
-        public int? intGreen { get; set; }
-        public int? intBlue { get; set; }
+        public double? intRed { get; set; }
+        public double? intGreen { get; set; }
+        public double? intBlue { get; set; }
         public bool? boolBold { get; set; }
         public string? ProjectTemplateType { get; set; } = string.Empty;
     }
@@ -97,9 +97,9 @@ namespace SharedModels
         public double dblIndex { get; set; }
         public double dblIndexForChart { get; set; }
         public string strDSIScore { get; set; }
-        public int intRed { get; set; }
-        public int intGreen { get; set; }
-        public int intBlue { get; set; }
+        public double intRed { get; set; }
+        public double intGreen { get; set; }
+        public double intBlue { get; set; }
         public bool boolBold { get; set; }
     }
 
