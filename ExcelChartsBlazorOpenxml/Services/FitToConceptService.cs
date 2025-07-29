@@ -78,8 +78,6 @@ namespace ExcelChartsBlazorOpenxml.Services
             return await _httpClient.GetFromJsonAsync<List<QTCModel>>($"api/data/QTC");
         }
 
-
-
         public async Task<Guid> GenerateReportAsync(ReportGenerationRequest request)
         {
             var response = await _httpClient.PostAsJsonAsync("api/report/generate", request);
@@ -96,6 +94,57 @@ namespace ExcelChartsBlazorOpenxml.Services
         public async Task<List<Sala>> Sala154Data()
         {
             return await _httpClient.GetFromJsonAsync<List<Sala>>($"api/data/Sala154");
+        }
+        public async Task<List<BrandexSafetyShortModel>> BrandexSafetyData()
+        {
+            try
+            {
+                var response = await _httpClient.GetFromJsonAsync<List<BrandexSafetyShortModel>>($"api/data/Brandex Safety");
+                return response!;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<BrandexStrategicDistinctivenessModel>> BrandexStrategicDistinctivenessesData()
+        {
+            try
+            {
+                var response = await _httpClient.GetFromJsonAsync<List<BrandexStrategicDistinctivenessModel>>($"api/data/Brandex Strategic Distinctiveness");
+                return response!;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<MedicalTermsModel>> MedicalTermsData()
+        {
+            try
+            {
+                var response = await _httpClient.GetFromJsonAsync<List<MedicalTermsModel>>($"api/data/Medical Terms");
+                return response!;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<NonMedicalTermsModel>> NonMedicalTermsData()
+        {
+            try
+            {
+                var response = await _httpClient.GetFromJsonAsync<List<NonMedicalTermsModel>>($"api/data/Non-medical Terms");
+                return response!;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<List<UntrueModel>> UntrueData()
@@ -128,6 +177,5 @@ namespace ExcelChartsBlazorOpenxml.Services
             return response!;
         }
 
-       
     }
 }

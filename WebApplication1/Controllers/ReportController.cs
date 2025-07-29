@@ -151,6 +151,12 @@ namespace WebApplicationAPI.Controllers
                             dll.QTCMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), qtcData.ToList());
                             break;
 
+                        case "Sala":
+                            var salaData = await repository.GetSala();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\SALAPlaceholder.pptx";
+                            dll.SALANewMethod(CreateTargetPath(sourcePath, request.ProjectTemplateType), salaData.ToList());
+                            break;
+
                         case "Brandex Safety":
 
                             var brandexSafetyData = (await repository.GetBrandexSafety()).ToList();

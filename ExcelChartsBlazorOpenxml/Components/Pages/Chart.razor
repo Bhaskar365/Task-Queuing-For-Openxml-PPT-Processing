@@ -110,6 +110,13 @@ else
     List<Sala> Salas;
     List<Sala> Salas154;
     List<QTCModel> Qtc;
+    List<BrandexSafetyShortModel> BrandexSafety;
+    List<BrandexStrategicDistinctivenessModel> BrandexStrategicDistinctiveness;
+    List<MedicalTermsModel> MedicalTerms;
+    List<NonMedicalTermsModel> NonMedicalTerms;
+    List<UntrueModel> Untrue01;
+    List<MisleadingModel> Misleading02;
+    List<Exagg03Model> Exagg03;
 
     protected override async Task OnInitializedAsync()
     {
@@ -135,6 +142,13 @@ else
         Salas = await fitToConceptService.SalaData();
         Salas154 = await fitToConceptService.Sala154Data();
         Qtc = await fitToConceptService.QtcData();
+        BrandexSafety = await fitToConceptService.BrandexSafetyData();
+        BrandexStrategicDistinctiveness = await fitToConceptService.BrandexStrategicDistinctivenessesData();
+        MedicalTerms = await fitToConceptService.MedicalTermsData();
+        NonMedicalTerms = await fitToConceptService.NonMedicalTermsData();
+        Untrue01 = await fitToConceptService.UntrueData();
+        Misleading02 = await fitToConceptService.MisleadingData();
+        Exagg03 = await fitToConceptService.Exagg03Data();
 
         StateHasChanged();
     }
@@ -168,6 +182,7 @@ else
     string sourceFile11 = "C:\\Users\\bdas\\Downloads\\SALA_sample.pptx";
     string sourceFile12 = "C:\\Users\\bdas\\Downloads\\QTC_sample.pptx";
 
+
     public async Task Process()
     {
         isErrorPresent = false;
@@ -200,7 +215,7 @@ else
 
             await Task.Run(() =>
             {
-                dllClass.FitToConceptMethod(CreateTargetPath(sourcePath1,FTCdata.First().ProjectTemplateType!), FTCdata);
+               // dllClass.FitToConceptMethod(CreateTargetPath(sourcePath1,FTCdata.First().ProjectTemplateType!), FTCdata);
             });
         }
 
@@ -212,7 +227,7 @@ else
 
             await Task.Run(() =>
            {
-               dllClass.OverallImpressionsMethod(CreateTargetPath(sourcePath1, overallData.First().ProjectTemplateType!), overallData);
+               //dllClass.OverallImpressionsMethod(CreateTargetPath(sourcePath1, overallData.First().ProjectTemplateType!), overallData);
            });
         }
 
@@ -238,7 +253,7 @@ else
 
             await Task.Run(() =>
             {
-                dllClass.Attribute1Method(CreateTargetPath(sourcePath1, att1data.First().ProjectTemplateType!), att1data);
+                //dllClass.Attribute1Method(CreateTargetPath(sourcePath1, att1data.First().ProjectTemplateType!), att1data);
             });
         }
 
@@ -264,7 +279,7 @@ else
 
             await Task.Run(() =>
             {
-                dllClass.Attribute2Method(CreateTargetPath(sourcePath1, att2data.First().ProjectTemplateType!), att2data);
+                //dllClass.Attribute2Method(CreateTargetPath(sourcePath1, att2data.First().ProjectTemplateType!), att2data);
             });
         }
 
@@ -290,7 +305,7 @@ else
 
             await Task.Run(() =>
             {
-                dllClass.AttributeMethodForAttributeEvalAggreg(CreateTargetPath(sourcePath1, attrAggrdata.First().ProjectTemplateType!), attrAggrdata);
+                //dllClass.AttributeMethodForAttributeEvalAggreg(CreateTargetPath(sourcePath1, attrAggrdata.First().ProjectTemplateType!), attrAggrdata);
             });
         }
 
@@ -316,7 +331,7 @@ else
 
             await Task.Run(() =>
             {
-                dllClass.MemorabilityMethod(CreateTargetPath(sourcePath1, memorabilitydata.First().ProjectTemplateType!), memorabilitydata);
+                //dllClass.MemorabilityMethod(CreateTargetPath(sourcePath1, memorabilitydata.First().ProjectTemplateType!), memorabilitydata);
             });
         }
 
@@ -343,7 +358,7 @@ else
 
             await Task.Run(() =>
             {
-                dllClass.PersonalPreferencesMethod(CreateTargetPath(sourcePath1, personalPrefdata.First().ProjectTemplateType!), personalPrefdata);
+                //dllClass.PersonalPreferencesMethod(CreateTargetPath(sourcePath1, personalPrefdata.First().ProjectTemplateType!), personalPrefdata);
             });
         }
 
@@ -369,7 +384,7 @@ else
 
             await Task.Run(() =>
             {
-                dllClass.SuffixMethod(CreateTargetPath(sourcePath1, suffixdata.First().ProjectTemplateType!), suffixdata);
+                //dllClass.SuffixMethod(CreateTargetPath(sourcePath1, suffixdata.First().ProjectTemplateType!), suffixdata);
             });
         }
 
@@ -396,7 +411,7 @@ else
 
             await Task.Run(() =>
             {
-                dllClass.VerbalUnderstandingBarMethod(CreateTargetPath(sourcePath1, verbalUnderdata.First().ProjectTemplateType!), verbalUnderdata);
+                //dllClass.VerbalUnderstandingBarMethod(CreateTargetPath(sourcePath1, verbalUnderdata.First().ProjectTemplateType!), verbalUnderdata);
             });
         }
 
@@ -422,7 +437,7 @@ else
 
             await Task.Run(() =>
             {
-                dllClass.WrittenUnderstandingMethod(CreateTargetPath(sourcePath1, writtenUnderdata.First().ProjectTemplateType!), writtenUnderdata);
+                //dllClass.WrittenUnderstandingMethod(CreateTargetPath(sourcePath1, writtenUnderdata.First().ProjectTemplateType!), writtenUnderdata);
             });
         }
 
@@ -448,7 +463,7 @@ else
 
             await Task.Run(() =>
             {
-                dllClass.ExaggerativeMethod(CreateTargetPath(sourcePath1, exaggdata.First().ProjectTemplateType!), exaggdata);
+                //dllClass.ExaggerativeMethod(CreateTargetPath(sourcePath1, exaggdata.First().ProjectTemplateType!), exaggdata);
             });
         }
 
@@ -473,10 +488,9 @@ else
 
             await Task.Run(() =>
             {
-                dllClass.SALANewMethod(CreateTargetPath(sourcePath1, saladata.First().ProjectTemplateType!), saladata);
+                //dllClass.SALANewMethod(CreateTargetPath(sourcePath1, saladata.First().ProjectTemplateType!), saladata);
             });
         }
-
 
         //qtc
         var qtcDataEl = Qtc;
@@ -499,7 +513,32 @@ else
 
             await Task.Run(() =>
             {
-                dllClass.QTCMethod(CreateTargetPath(sourcePath1, qtcDataEl.First().ProjectTemplateType!), qtcDataEl);
+                //dllClass.QTCMethod(CreateTargetPath(sourcePath1, qtcDataEl.First().ProjectTemplateType!), qtcDataEl);
+            });
+        }
+
+        //brandex safety
+        var brandexData = BrandexSafety;
+        if (!brandexData.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (brandexData == null || brandexData.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+
+        if (brandexData.Count != 0 || brandexData.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\BrandexSafetySpecific{brandexData.Count}.pptx";
+
+            await Task.Run(() =>
+            {
+                dllClass.BrandexSafetyMethod(CreateTargetPath(sourcePath1, brandexData.First().ProjectTemplateType!), brandexData);
             });
         }
 
@@ -526,186 +565,186 @@ else
         int[] sourceInput14 = { 66,67,68 };
         int[] sourceInput15 = { 20 };
 
-        if (!File.Exists(sourceFile1))
-        {
-            //skip
-        }
-        else
-        {
-            MergeSlideWithSlideArray(sourceFile1, destination, sourceInput1);
-            DeleteSlide(destination, sourceInput1[0] - 1);
-        }
+        // if (!File.Exists(sourceFile1))
+        // {
+        //     //skip
+        // }
+        // else
+        // {
+        //     MergeSlideWithSlideArray(sourceFile1, destination, sourceInput1);
+        //     DeleteSlide(destination, sourceInput1[0] - 1);
+        // }
 
 
-        if (!File.Exists(sourceFile2))
-        {
-            //skip
-        }
-        else
-        {
-            MergeSlideWithSlideArray(sourceFile2, destination, sourceInput2);
-            DeleteSlide(destination, sourceInput2[0] - 1);
-        }
+        // if (!File.Exists(sourceFile2))
+        // {
+        //     //skip
+        // }
+        // else
+        // {
+        //     MergeSlideWithSlideArray(sourceFile2, destination, sourceInput2);
+        //     DeleteSlide(destination, sourceInput2[0] - 1);
+        // }
 
-        if (!File.Exists(sourceFile6))
-        {
-            //skip
-        }
-        else
-        {
-            MergeSlideWithSlideArray(sourceFile6, destination, sourceInput3);
-            DeleteSlide(destination, sourceInput3[0] - 1);
-        }
+        // if (!File.Exists(sourceFile6))
+        // {
+        //     //skip
+        // }
+        // else
+        // {
+        //     MergeSlideWithSlideArray(sourceFile6, destination, sourceInput3);
+        //     DeleteSlide(destination, sourceInput3[0] - 1);
+        // }
 
-        if (!File.Exists(sourceFile7))
-        {
-            //skip
-        }
-        else
-        {
-            MergeSlideWithSlideArray(sourceFile7, destination, sourceInput4);
-            DeleteSlide(destination, sourceInput4[0] - 1);
-        }
+        // if (!File.Exists(sourceFile7))
+        // {
+        //     //skip
+        // }
+        // else
+        // {
+        //     MergeSlideWithSlideArray(sourceFile7, destination, sourceInput4);
+        //     DeleteSlide(destination, sourceInput4[0] - 1);
+        // }
 
-        if (!File.Exists(sourceFile8))
-        {
-            //skip
-        }
-        else
-        {
-            MergeSlideWithSlideArray(sourceFile8, destination, sourceInput5);
-            DeleteSlide(destination, sourceInput5[0] - 1);
-        }
+        // if (!File.Exists(sourceFile8))
+        // {
+        //     //skip
+        // }
+        // else
+        // {
+        //     MergeSlideWithSlideArray(sourceFile8, destination, sourceInput5);
+        //     DeleteSlide(destination, sourceInput5[0] - 1);
+        // }
 
-        if (!File.Exists(sourceFile9))
-        {
-            //skip
-        }
-        else
-        {
-            MergeSlideWithSlideArray(sourceFile9, destination, sourceInput6);
-            DeleteSlide(destination, sourceInput6[0] - 1);
-        }
-
-
-        if (!File.Exists(sourceFile3))
-        {
-            //skip
-        }
-        else
-        {
-            MergeSlideWithSlideArray(sourceFile3, destination, sourceInput7);
-            DeleteSlide(destination, sourceInput7[0] - 1);
-        }
-
-        if (!File.Exists(sourceFile4))
-        {
-            //skip
-        }
-        else
-        {
-            MergeSlideWithSlideArray(sourceFile4, destination, sourceInput8);
-            DeleteSlide(destination, sourceInput8[0] - 1);
-        }
+        // if (!File.Exists(sourceFile9))
+        // {
+        //     //skip
+        // }
+        // else
+        // {
+        //     MergeSlideWithSlideArray(sourceFile9, destination, sourceInput6);
+        //     DeleteSlide(destination, sourceInput6[0] - 1);
+        // }
 
 
-        if (!File.Exists(sourceFile5))
-        {
-            //skip
-        }
-        else
-        {
-            MergeSlideWithSlideArray(sourceFile5, destination, sourceInput9);
-            DeleteSlide(destination, sourceInput9[0] - 1);
-        }
+        // if (!File.Exists(sourceFile3))
+        // {
+        //     //skip
+        // }
+        // else
+        // {
+        //     MergeSlideWithSlideArray(sourceFile3, destination, sourceInput7);
+        //     DeleteSlide(destination, sourceInput7[0] - 1);
+        // }
+
+        // if (!File.Exists(sourceFile4))
+        // {
+        //     //skip
+        // }
+        // else
+        // {
+        //     MergeSlideWithSlideArray(sourceFile4, destination, sourceInput8);
+        //     DeleteSlide(destination, sourceInput8[0] - 1);
+        // }
 
 
-        if (!File.Exists(sourceFile10))
-        {
-            //skip
-        }
-        else
-        {
-            MergeSlideWithSlideArray(sourceFile10, destination, sourceInput10);
-            DeleteSlide(destination, sourceInput10[0] - 1);
-        }
+        // if (!File.Exists(sourceFile5))
+        // {
+        //     //skip
+        // }
+        // else
+        // {
+        //     MergeSlideWithSlideArray(sourceFile5, destination, sourceInput9);
+        //     DeleteSlide(destination, sourceInput9[0] - 1);
+        // }
 
 
-        if (!File.Exists(sourceFile11))
-        {
-            //skip
-        }
-        else
-        {
-            MergeSlideWithSlideArray(sourceFile11, destination, sourceInput11);
-            int count = CountSlides(sourceFile11);
+        // if (!File.Exists(sourceFile10))
+        // {
+        //     //skip
+        // }
+        // else
+        // {
+        //     MergeSlideWithSlideArray(sourceFile10, destination, sourceInput10);
+        //     DeleteSlide(destination, sourceInput10[0] - 1);
+        // }
 
-            if (count == 1)
-            {
-                int endIndex = 66 + count + 4;
 
-                DeleteSlide(destination, endIndex);
-                // DeleteSlide(destination, endIndex - 1);
-                // DeleteSlide(destination, endIndex - 2);
-                // DeleteSlide(destination, endIndex - 3);
-                // DeleteSlide(destination, endIndex - 4);
-            }
+        // if (!File.Exists(sourceFile11))
+        // {
+        //     //skip
+        // }
+        // else
+        // {
+        //     MergeSlideWithSlideArray(sourceFile11, destination, sourceInput11);
+        //     int count = CountSlides(sourceFile11);
 
-            if (count == 2)
-            {
-                int endIndex = 66 + count + 4;
+        //     if (count == 1)
+        //     {
+        //         int endIndex = 66 + count + 4;
 
-                DeleteSlide(destination, endIndex);
-                DeleteSlide(destination, endIndex - 1);
-                // DeleteSlide(destination, endIndex - 2);
-                // DeleteSlide(destination, endIndex - 3);
-                // DeleteSlide(destination, endIndex - 4);
-            }
+        //         DeleteSlide(destination, endIndex);
+        //         // DeleteSlide(destination, endIndex - 1);
+        //         // DeleteSlide(destination, endIndex - 2);
+        //         // DeleteSlide(destination, endIndex - 3);
+        //         // DeleteSlide(destination, endIndex - 4);
+        //     }
 
-            if (count == 3)
-            {
-                int endIndex = 66 + count + 4;
+        //     if (count == 2)
+        //     {
+        //         int endIndex = 66 + count + 4;
 
-                DeleteSlide(destination, endIndex);
-                DeleteSlide(destination, endIndex - 1);
-                DeleteSlide(destination, endIndex - 2);
-                // DeleteSlide(destination, endIndex - 3);
-                // DeleteSlide(destination, endIndex - 4);
-            }
+        //         DeleteSlide(destination, endIndex);
+        //         DeleteSlide(destination, endIndex - 1);
+        //         // DeleteSlide(destination, endIndex - 2);
+        //         // DeleteSlide(destination, endIndex - 3);
+        //         // DeleteSlide(destination, endIndex - 4);
+        //     }
 
-            if (count == 4)
-            {
-                int endIndex = 66 + count + 4;
+        //     if (count == 3)
+        //     {
+        //         int endIndex = 66 + count + 4;
 
-                DeleteSlide(destination, endIndex);
-                DeleteSlide(destination, endIndex - 1);
-                DeleteSlide(destination, endIndex - 2);
-                DeleteSlide(destination, endIndex - 3);
-                // DeleteSlide(destination, endIndex - 4);
-            }
+        //         DeleteSlide(destination, endIndex);
+        //         DeleteSlide(destination, endIndex - 1);
+        //         DeleteSlide(destination, endIndex - 2);
+        //         // DeleteSlide(destination, endIndex - 3);
+        //         // DeleteSlide(destination, endIndex - 4);
+        //     }
 
-            if (count == 5)
-            {
-                int endIndex = 66 + count + 4;
+        //     if (count == 4)
+        //     {
+        //         int endIndex = 66 + count + 4;
 
-                DeleteSlide(destination, endIndex);
-                DeleteSlide(destination, endIndex - 1);
-                DeleteSlide(destination, endIndex - 2);
-                DeleteSlide(destination, endIndex - 3);
-                DeleteSlide(destination, endIndex - 4);
-            }
-        }
+        //         DeleteSlide(destination, endIndex);
+        //         DeleteSlide(destination, endIndex - 1);
+        //         DeleteSlide(destination, endIndex - 2);
+        //         DeleteSlide(destination, endIndex - 3);
+        //         // DeleteSlide(destination, endIndex - 4);
+        //     }
 
-        //qtc
-        if (!File.Exists(sourceFile12))
-        {
-            //skip
-        }
-        else
-        {
-            MergeSlideWithSlideArray(sourceFile12, destination, sourceInput15);
-            DeleteSlide(destination, sourceInput15[0]-1);
-        }
+        //     if (count == 5)
+        //     {
+        //         int endIndex = 66 + count + 4;
+
+        //         DeleteSlide(destination, endIndex);
+        //         DeleteSlide(destination, endIndex - 1);
+        //         DeleteSlide(destination, endIndex - 2);
+        //         DeleteSlide(destination, endIndex - 3);
+        //         DeleteSlide(destination, endIndex - 4);
+        //     }
+        // }
+
+        // //qtc
+        // if (!File.Exists(sourceFile12))
+        // {
+        //     //skip
+        // }
+        // else
+        // {
+        //     MergeSlideWithSlideArray(sourceFile12, destination, sourceInput15);
+        //     DeleteSlide(destination, sourceInput15[0]-1);
+        // }
         
       
 
