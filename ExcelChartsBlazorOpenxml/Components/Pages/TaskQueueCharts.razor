@@ -22,7 +22,7 @@ else
         <div class="card card-body">
             <table class="table  table-striped">
                 <thead>
-                    <tr style="font-size: xx-small;">
+                    <tr>
                         <th scope="col">Task ID</th>
                         <th scope="col">Project Type</th>
                         <th scope="col">Created On</th>
@@ -35,7 +35,7 @@ else
                 <tbody>
                     @if (LogList == null || LogList.Count == 0)
                     {
-                        <tr style="font-size: xx-small;">
+                        <tr>
                             <td colspan="7" class="text-center">No data</td>
                         </tr>
                     }
@@ -43,7 +43,7 @@ else
                     {
                         foreach (var data in LogList)
                         {
-                            <tr style="font-size: xx-small;">
+                            <tr>
                                 <td>@data.TaskId</td>
                                 <td>@data.ProjectType</td>
                                 <td>@data.CreatedOn.ToString("dddd, dd MMMM yyyy HH:mm:ss")</td>
@@ -71,7 +71,7 @@ else
 
         <table class="table table-striped">
             <thead>
-                <tr style="font-size: xx-small;">
+                <tr>
                     <th>ProjectType</th>
                     <th>Task ID</th>
                     <th>Status</th>
@@ -82,7 +82,7 @@ else
             <tbody>
                 @if (UndoneQueueList == null || UndoneQueueList.Count == 0)
                 {
-                    <tr style="font-size: xx-small;">
+                    <tr>
                         <td colspan="5" class="text-center">No data</td>
                     </tr>
                 }
@@ -90,7 +90,7 @@ else
                 {
                     @foreach (var task in UndoneQueueList)
                     {
-                        <tr style="font-size: xx-small;">
+                        <tr>
                             <td>@task.ProjectType</td>
                             <td>@task.TaskId</td>
                             <td class="@GetStatusClass(task.CurrentStatus)">
