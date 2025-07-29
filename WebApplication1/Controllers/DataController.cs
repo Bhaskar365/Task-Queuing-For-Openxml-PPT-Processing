@@ -261,7 +261,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                //return Ok(await _repository);
+                return Ok(await _repository.GetUntrue());
             }
             catch (Exception ex)
             {
@@ -274,7 +274,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                //return Ok(await _repository.GetMisleading02());
+                return Ok(await _repository.GetMisleading());
             }
             catch (Exception ex)
             {
@@ -287,7 +287,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                //return Ok(await _repository.GetExagg03());
+                return Ok(await _repository.Get03Exagg());    
             }
             catch (Exception ex)
             {
