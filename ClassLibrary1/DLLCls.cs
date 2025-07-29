@@ -81,6 +81,11 @@ namespace ClassLibrary1
             template.MisleadingTemplateForAll(destination, apiData);
         }
 
+        public void Exagg03Method(string destination, List<Exagg03Model> apiData)
+        {
+            template.Exagg03TemplateForAll(destination, apiData);
+        }
+
 
         public void SALANewMethod(string destination, List<Sala> apiData)
         {

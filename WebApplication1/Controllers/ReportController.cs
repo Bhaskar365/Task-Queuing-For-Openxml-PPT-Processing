@@ -752,7 +752,9 @@ namespace WebApplicationAPI.Controllers
                             break;
 
                         case "03 Exagg":
-                            
+                            var exagg03Data = (await repository.Get03Exagg()).ToList();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\Exaggerative{exagg03Data.Count}.pptx";
+                            dll.Exagg03Method(CreateTargetPath(sourcePath, exagg03Data.First().ProjectTemplateType!), exagg03Data);
                             break;
                     }
 
