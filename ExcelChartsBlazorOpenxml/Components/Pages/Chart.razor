@@ -110,7 +110,7 @@ else
     List<Sala> Salas;
     List<Sala> Salas154;
     List<QTCModel> Qtc;
-    List<BrandexSafetyShortModel> BrandexSafety;
+    List<BrandexSafetyModel> BrandexSafety;
     List<BrandexStrategicDistinctivenessModel> BrandexStrategicDistinctiveness;
     List<MedicalTermsModel> MedicalTerms;
     List<NonMedicalTermsModel> NonMedicalTerms;
@@ -215,7 +215,7 @@ else
 
             await Task.Run(() =>
             {
-               // dllClass.FitToConceptMethod(CreateTargetPath(sourcePath1,FTCdata.First().ProjectTemplateType!), FTCdata);
+                dllClass.FitToConceptMethod(CreateTargetPath(sourcePath1,FTCdata.First().ProjectTemplateType!), FTCdata);
             });
         }
 
@@ -227,7 +227,7 @@ else
 
             await Task.Run(() =>
            {
-               //dllClass.OverallImpressionsMethod(CreateTargetPath(sourcePath1, overallData.First().ProjectTemplateType!), overallData);
+               dllClass.OverallImpressionsMethod(CreateTargetPath(sourcePath1, overallData.First().ProjectTemplateType!), overallData);
            });
         }
 
@@ -253,7 +253,7 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.Attribute1Method(CreateTargetPath(sourcePath1, att1data.First().ProjectTemplateType!), att1data);
+                dllClass.Attribute1Method(CreateTargetPath(sourcePath1, att1data.First().ProjectTemplateType!), att1data);
             });
         }
 
@@ -279,7 +279,7 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.Attribute2Method(CreateTargetPath(sourcePath1, att2data.First().ProjectTemplateType!), att2data);
+                dllClass.Attribute2Method(CreateTargetPath(sourcePath1, att2data.First().ProjectTemplateType!), att2data);
             });
         }
 
@@ -305,7 +305,7 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.AttributeMethodForAttributeEvalAggreg(CreateTargetPath(sourcePath1, attrAggrdata.First().ProjectTemplateType!), attrAggrdata);
+                dllClass.AttributeMethodForAttributeEvalAggreg(CreateTargetPath(sourcePath1, attrAggrdata.First().ProjectTemplateType!), attrAggrdata);
             });
         }
 
@@ -331,7 +331,7 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.MemorabilityMethod(CreateTargetPath(sourcePath1, memorabilitydata.First().ProjectTemplateType!), memorabilitydata);
+                dllClass.MemorabilityMethod(CreateTargetPath(sourcePath1, memorabilitydata.First().ProjectTemplateType!), memorabilitydata);
             });
         }
 
@@ -358,7 +358,7 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.PersonalPreferencesMethod(CreateTargetPath(sourcePath1, personalPrefdata.First().ProjectTemplateType!), personalPrefdata);
+                dllClass.PersonalPreferencesMethod(CreateTargetPath(sourcePath1, personalPrefdata.First().ProjectTemplateType!), personalPrefdata);
             });
         }
 
@@ -384,7 +384,7 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.SuffixMethod(CreateTargetPath(sourcePath1, suffixdata.First().ProjectTemplateType!), suffixdata);
+                dllClass.SuffixMethod(CreateTargetPath(sourcePath1, suffixdata.First().ProjectTemplateType!), suffixdata);
             });
         }
 
@@ -411,7 +411,7 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.VerbalUnderstandingBarMethod(CreateTargetPath(sourcePath1, verbalUnderdata.First().ProjectTemplateType!), verbalUnderdata);
+                dllClass.VerbalUnderstandingBarMethod(CreateTargetPath(sourcePath1, verbalUnderdata.First().ProjectTemplateType!), verbalUnderdata);
             });
         }
 
@@ -437,7 +437,7 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.WrittenUnderstandingMethod(CreateTargetPath(sourcePath1, writtenUnderdata.First().ProjectTemplateType!), writtenUnderdata);
+                dllClass.WrittenUnderstandingMethod(CreateTargetPath(sourcePath1, writtenUnderdata.First().ProjectTemplateType!), writtenUnderdata);
             });
         }
 
@@ -463,7 +463,7 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.ExaggerativeMethod(CreateTargetPath(sourcePath1, exaggdata.First().ProjectTemplateType!), exaggdata);
+                dllClass.ExaggerativeMethod(CreateTargetPath(sourcePath1, exaggdata.First().ProjectTemplateType!), exaggdata);
             });
         }
 
@@ -488,7 +488,7 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.SALANewMethod(CreateTargetPath(sourcePath1, saladata.First().ProjectTemplateType!), saladata);
+                dllClass.SALANewMethod(CreateTargetPath(sourcePath1, saladata.First().ProjectTemplateType!), saladata);
             });
         }
 
@@ -513,7 +513,7 @@ else
 
             await Task.Run(() =>
             {
-                //dllClass.QTCMethod(CreateTargetPath(sourcePath1, qtcDataEl.First().ProjectTemplateType!), qtcDataEl);
+                dllClass.QTCMethod(CreateTargetPath(sourcePath1, qtcDataEl.First().ProjectTemplateType!), qtcDataEl);
             });
         }
 
@@ -534,11 +534,281 @@ else
 
         if (brandexData.Count != 0 || brandexData.Any())
         {
+            List<BrandexSafetyShortModel> brandexDataShort = new List<BrandexSafetyShortModel>();
+
+            double average1Max = 0.0000;
+            double average2Max = 0.0000;
+            double average3Max = 0.0;
+            double average4Max = 0.0000;
+            double average5Max = 0.0000;
+
+            for (int i = 0; i < brandexData.Count; i++)
+            {
+                var dblAverage1max = brandexData[i]?.dblAveragePage1;
+                if (dblAverage1max == 0.0 || dblAverage1max == null)
+                {
+                    average1Max = 0;
+                }
+                if (average1Max < dblAverage1max)
+                {
+                    average1Max = (double)dblAverage1max;
+                }
+
+                var dblAverage2max = brandexData[i].dblAveragePage2;
+                if (dblAverage2max == 0.0 || dblAverage2max == null)
+                {
+                    average2Max = 0;
+                }
+                if (average2Max < dblAverage2max)
+                {
+                    average2Max = (double)dblAverage2max;
+                }
+
+                var dblAverage3max = brandexData[i].dblAveragePage3;
+                if (dblAverage3max == 0.0 || dblAverage3max == null)
+                {
+                    average3Max = 0;
+                }
+                if (average3Max < dblAverage3max)
+                {
+                    average3Max = (double)dblAverage3max;
+                }
+
+                var dblAverage4max = brandexData[i].dblAveragePage4;
+                if (dblAverage4max == 0.0 || dblAverage4max == null)
+                {
+                    average4Max = 0;
+                }
+                if (average4Max < dblAverage4max)
+                {
+                    average4Max = (double)dblAverage4max;
+                }
+
+                var dblAverage5max = brandexData[i].dblAveragePage5;
+                if (dblAverage5max == 0.0 || dblAverage5max == null)
+                {
+                    average5Max = 0;
+                }
+                if (average5Max < dblAverage5max)
+                {
+                    average5Max = (double)dblAverage5max;
+                }
+            }
+
+            double scalingFactor = 0.22;
+
+            for (int i = 0; i < brandexData.Count; i++)
+            {
+                //for the table
+                BrandexSafetyShortModel brandexSafetyShortModel = new BrandexSafetyShortModel();
+
+                var dataEl = brandexData[i];
+
+                double averagePage1WeightedValue = 0.0;
+                double averagePage2WeightedValue = 0.0;
+                double averagePage3WeightedValue = 0.0;
+                double averagePage4WeightedValue = 0.0;
+                double averagePage5WeightedValue = 0.0;
+
+                if (average1Max > 0)
+                {
+                    // averagePage1WeightedValue =(dataEl.dblAveragePage1 / average1Max) * dataEl.dblPage1Weight) ;
+
+                    averagePage1WeightedValue = (double)((double)(dataEl.dblAveragePage1 ?? 0.0 / average1Max) * (double)(dataEl.dblPage1Weight));
+                }
+                else
+                {
+                    averagePage1WeightedValue = 0;
+                }
+
+                if (average2Max > 0)
+                {
+                    // averagePage2WeightedValue = (double)(dataEl.dblAveragePage2 / average2Max) * dataEl.dblPage2Weight;
+
+                    averagePage2WeightedValue = (double)((double)(dataEl.dblAveragePage2 ?? 0.0 / average2Max) * (double)(dataEl.dblPage2Weight));
+                }
+                else
+                {
+                    averagePage2WeightedValue = 0;
+                }
+
+                if (average3Max > 0)
+                {
+                    averagePage3WeightedValue = (double)((double)(dataEl.dblAveragePage3 ?? 0.0 / average3Max) * (double)(dataEl.dblPage3Weight));
+                }
+                else
+                {
+                    averagePage3WeightedValue = 0;
+                }
+
+                if (average4Max > 0)
+                {
+                    //averagePage4WeightedValue = (dataEl.dblAveragePage4 / average4Max) * dataEl.dblPage4Weight;
+
+                    averagePage4WeightedValue = (double)((double)(dataEl.dblAveragePage4 ?? 0.0 / average4Max) * (double)(dataEl.dblPage4Weight));
+                }
+                else
+                {
+                    averagePage4WeightedValue = 0;
+                }
+
+                if (average5Max > 0)
+                {
+                    // averagePage5WeightedValue = (dataEl.dblAveragePage5 / average5Max) * dataEl.dblPage5Weight;
+                    averagePage5WeightedValue = (double)((double)(dataEl.dblAveragePage5 ?? 0.0 / average5Max) * (double)(dataEl.dblPage5Weight));
+
+
+                }
+                else
+                {
+                    averagePage5WeightedValue = 0;
+                }
+
+
+                //double averagePage1WeightedValue = (dataEl.dblAveragePage1 / average1Max) * dataEl.dblPage1Weight;
+                //double averagePage2WeightedValue = (dataEl.dblAveragePage2 / average2Max) * dataEl.dblPage2Weight;
+                //double averagePage3WeightedValue = (dataEl.dblAveragePage3 / average3Max) * dataEl.dblPage3Weight;
+                // double averagePage4WeightedValue = (dataEl.dblAveragePage4 / average4Max) * dataEl.dblPage4Weight;
+                //double averagePage5WeightedValue = (dataEl.dblAveragePage5 / average5Max) * dataEl.dblPage5Weight;
+
+                double indexSum = (averagePage1WeightedValue + averagePage2WeightedValue + averagePage3WeightedValue +
+                                  averagePage4WeightedValue + averagePage5WeightedValue) * scalingFactor;
+
+
+                brandexSafetyShortModel.strTestName = dataEl.strTestName;
+
+                brandexSafetyShortModel.dblAveragePage1 = dataEl.dblAveragePage1 ?? 0.0;
+                brandexSafetyShortModel.dblPage1Weight = dataEl.dblPage1Weight ?? 0.0;
+                brandexSafetyShortModel.dblAveragePage1Weighted = averagePage1WeightedValue;
+
+                brandexSafetyShortModel.dblAveragePage2 = dataEl.dblAveragePage2 ?? 0.0;
+                brandexSafetyShortModel.dblPage2Weight = dataEl.dblPage2Weight ?? 0.0;
+                brandexSafetyShortModel.dblAveragePage2Weighted = averagePage2WeightedValue;
+
+                brandexSafetyShortModel.dblAveragePage3 = dataEl.dblAveragePage3 ?? 0.0;
+                brandexSafetyShortModel.dblPage3Weight = dataEl.dblPage3Weight ?? 0.0;
+                brandexSafetyShortModel.dblAveragePage3Weighted = averagePage3WeightedValue;
+
+                brandexSafetyShortModel.dblAveragePage4 = dataEl.dblAveragePage4 ?? 0.0;
+                brandexSafetyShortModel.dblPage4Weight = dataEl.dblPage4Weight ?? 0.0;
+                brandexSafetyShortModel.dblAveragePage4Weighted = averagePage4WeightedValue;
+
+                brandexSafetyShortModel.dblAveragePage5 = dataEl.dblAveragePage5 ?? 0.0;
+                brandexSafetyShortModel.dblPage5Weight = dataEl.dblPage5Weight ?? 0.0;
+                brandexSafetyShortModel.dblAveragePage5Weighted = averagePage5WeightedValue;
+
+                brandexSafetyShortModel.dblAveragePage6 = dataEl.dblAveragePage6 ?? 0.0;
+                brandexSafetyShortModel.dblPage6Weight = dataEl.dblPage6Weight ?? 0.0;
+                brandexSafetyShortModel.dblAveragePage6Weighted = (double)dataEl.dblAveragePage6Weighted;
+
+                brandexSafetyShortModel.dblAveragePage7 = dataEl.dblAveragePage7 ?? 0.0;
+                brandexSafetyShortModel.dblPage7Weight = dataEl.dblPage7Weight ?? 0.0;
+                brandexSafetyShortModel.dblAveragePage7Weighted = (double)dataEl.dblAveragePage7Weighted;
+
+                brandexSafetyShortModel.dblAveragePage8 = dataEl.dblAveragePage8 ?? 0.0;
+                brandexSafetyShortModel.dblPage8Weight = dataEl.dblPage8Weight ?? 0.0;
+                brandexSafetyShortModel.dblAveragePage8Weighted = (double)dataEl.dblAveragePage8Weighted;
+
+                brandexSafetyShortModel.dblIndex = indexSum;
+                brandexSafetyShortModel.strDSIScore = dataEl.strDSIScore;
+                brandexSafetyShortModel.intRed = (int)dataEl.intRed;
+                brandexSafetyShortModel.intGreen = (int)dataEl.intGreen;
+                brandexSafetyShortModel.intBlue = (int)dataEl.intBlue;
+                brandexSafetyShortModel.boolBold = (bool)dataEl.boolBold;
+
+
+                //for the chart -
+
+                double averagePage1WeightedValueForChart = 0.0;
+                double averagePage2WeightedValueForChart = 0.0;
+                double averagePage3WeightedValueForChart = 0.0;
+                double averagePage4WeightedValueForChart = 0.0;
+                double averagePage5WeightedValueForChart = 0.0;
+
+                if (average1Max > 0)
+                {
+                    averagePage1WeightedValueForChart = (double)((dataEl.dblAveragePage1 ?? 0.0 / average1Max) * dataEl.dblPage1Weight) * scalingFactor;
+                }
+                else
+                {
+                    averagePage1WeightedValueForChart = 0;
+                }
+
+                if (average2Max > 0)
+                {
+                    averagePage2WeightedValueForChart = (double)((dataEl.dblAveragePage2 ?? 0.0 / average2Max) * dataEl.dblPage2Weight) * scalingFactor;
+                }
+                else
+                {
+                    averagePage2WeightedValueForChart = 0;
+                }
+
+                if (average3Max > 0)
+                {
+                    averagePage3WeightedValueForChart = (double)((dataEl.dblAveragePage3 ?? 0.0 / average3Max) * dataEl.dblPage3Weight) * scalingFactor;
+                }
+                else
+                {
+                    averagePage3WeightedValueForChart = 0;
+                }
+
+                if (average4Max > 0)
+                {
+                    averagePage4WeightedValueForChart = (double)((dataEl.dblAveragePage4 ?? 0.0 / average4Max) * dataEl.dblPage4Weight) * scalingFactor;
+                }
+                else
+                {
+                    averagePage4WeightedValueForChart = 0;
+                }
+
+                if (average5Max > 0)
+                {
+                    averagePage5WeightedValueForChart = (double)((dataEl.dblAveragePage5 ?? 0.0 / average5Max) * dataEl.dblPage5Weight) * scalingFactor;
+                }
+                else
+                {
+                    averagePage5WeightedValueForChart = 0;
+                }
+
+                //double averagePage1WeightedValueForChart = ((dataEl.dblAveragePage1 / average1Max) * dataEl.dblPage1Weight) * scalingFactor;
+                //double averagePage2WeightedValueForChart = ((dataEl.dblAveragePage2 / average2Max) * dataEl.dblPage2Weight) * scalingFactor;
+                //double averagePage3WeightedValueForChart = ((dataEl.dblAveragePage3 / average3Max) * dataEl.dblPage3Weight) * scalingFactor;
+                //double averagePage4WeightedValueForChart = ((dataEl.dblAveragePage4 / average4Max) * dataEl.dblPage4Weight) * scalingFactor;
+                //double averagePage5WeightedValueForChart = ((dataEl.dblAveragePage5 / average5Max) * dataEl.dblPage5Weight) * scalingFactor;
+
+                double indexSumForChart = averagePage1WeightedValueForChart +
+                                          averagePage2WeightedValueForChart +
+                                          averagePage3WeightedValueForChart +
+                                          averagePage4WeightedValueForChart +
+                                          averagePage5WeightedValueForChart;
+
+                brandexSafetyShortModel.strTestName = dataEl.strTestName;
+
+                brandexSafetyShortModel.dblAveragePage1WeightedForChart = averagePage1WeightedValueForChart;
+
+                brandexSafetyShortModel.dblAveragePage2WeightedForChart = averagePage2WeightedValueForChart;
+
+                brandexSafetyShortModel.dblAveragePage3WeightedForChart = averagePage3WeightedValueForChart;
+
+                brandexSafetyShortModel.dblAveragePage4WeightedForChart = averagePage4WeightedValueForChart;
+
+                brandexSafetyShortModel.dblAveragePage5WeightedForChart = averagePage5WeightedValueForChart;
+
+                brandexSafetyShortModel.dblIndexForChart = indexSumForChart;
+                brandexSafetyShortModel.strDSIScore = dataEl.strDSIScore;
+                brandexSafetyShortModel.intRed = (int)dataEl.intRed;
+                brandexSafetyShortModel.intGreen = (int)dataEl.intGreen;
+                brandexSafetyShortModel.intBlue = (int)dataEl.intBlue;
+                brandexSafetyShortModel.boolBold = (bool)dataEl.boolBold;
+
+                brandexDataShort.Add(brandexSafetyShortModel);
+            }
+
             sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\BrandexSafetySpecific{brandexData.Count}.pptx";
 
             await Task.Run(() =>
             {
-                dllClass.BrandexSafetyMethod(CreateTargetPath(sourcePath1, brandexData.First().ProjectTemplateType!), brandexData);
+                dllClass.BrandexSafetyMethod(CreateTargetPath(sourcePath1, brandexData.First().ProjectTemplateType!), brandexDataShort);
             });
         }
 
@@ -565,186 +835,186 @@ else
         int[] sourceInput14 = { 66,67,68 };
         int[] sourceInput15 = { 20 };
 
-        // if (!File.Exists(sourceFile1))
-        // {
-        //     //skip
-        // }
-        // else
-        // {
-        //     MergeSlideWithSlideArray(sourceFile1, destination, sourceInput1);
-        //     DeleteSlide(destination, sourceInput1[0] - 1);
-        // }
+        if (!File.Exists(sourceFile1))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile1, destination, sourceInput1);
+            DeleteSlide(destination, sourceInput1[0] - 1);
+        }
 
 
-        // if (!File.Exists(sourceFile2))
-        // {
-        //     //skip
-        // }
-        // else
-        // {
-        //     MergeSlideWithSlideArray(sourceFile2, destination, sourceInput2);
-        //     DeleteSlide(destination, sourceInput2[0] - 1);
-        // }
+        if (!File.Exists(sourceFile2))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile2, destination, sourceInput2);
+            DeleteSlide(destination, sourceInput2[0] - 1);
+        }
 
-        // if (!File.Exists(sourceFile6))
-        // {
-        //     //skip
-        // }
-        // else
-        // {
-        //     MergeSlideWithSlideArray(sourceFile6, destination, sourceInput3);
-        //     DeleteSlide(destination, sourceInput3[0] - 1);
-        // }
+        if (!File.Exists(sourceFile6))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile6, destination, sourceInput3);
+            DeleteSlide(destination, sourceInput3[0] - 1);
+        }
 
-        // if (!File.Exists(sourceFile7))
-        // {
-        //     //skip
-        // }
-        // else
-        // {
-        //     MergeSlideWithSlideArray(sourceFile7, destination, sourceInput4);
-        //     DeleteSlide(destination, sourceInput4[0] - 1);
-        // }
+        if (!File.Exists(sourceFile7))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile7, destination, sourceInput4);
+            DeleteSlide(destination, sourceInput4[0] - 1);
+        }
 
-        // if (!File.Exists(sourceFile8))
-        // {
-        //     //skip
-        // }
-        // else
-        // {
-        //     MergeSlideWithSlideArray(sourceFile8, destination, sourceInput5);
-        //     DeleteSlide(destination, sourceInput5[0] - 1);
-        // }
+        if (!File.Exists(sourceFile8))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile8, destination, sourceInput5);
+            DeleteSlide(destination, sourceInput5[0] - 1);
+        }
 
-        // if (!File.Exists(sourceFile9))
-        // {
-        //     //skip
-        // }
-        // else
-        // {
-        //     MergeSlideWithSlideArray(sourceFile9, destination, sourceInput6);
-        //     DeleteSlide(destination, sourceInput6[0] - 1);
-        // }
-
-
-        // if (!File.Exists(sourceFile3))
-        // {
-        //     //skip
-        // }
-        // else
-        // {
-        //     MergeSlideWithSlideArray(sourceFile3, destination, sourceInput7);
-        //     DeleteSlide(destination, sourceInput7[0] - 1);
-        // }
-
-        // if (!File.Exists(sourceFile4))
-        // {
-        //     //skip
-        // }
-        // else
-        // {
-        //     MergeSlideWithSlideArray(sourceFile4, destination, sourceInput8);
-        //     DeleteSlide(destination, sourceInput8[0] - 1);
-        // }
+        if (!File.Exists(sourceFile9))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile9, destination, sourceInput6);
+            DeleteSlide(destination, sourceInput6[0] - 1);
+        }
 
 
-        // if (!File.Exists(sourceFile5))
-        // {
-        //     //skip
-        // }
-        // else
-        // {
-        //     MergeSlideWithSlideArray(sourceFile5, destination, sourceInput9);
-        //     DeleteSlide(destination, sourceInput9[0] - 1);
-        // }
+        if (!File.Exists(sourceFile3))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile3, destination, sourceInput7);
+            DeleteSlide(destination, sourceInput7[0] - 1);
+        }
+
+        if (!File.Exists(sourceFile4))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile4, destination, sourceInput8);
+            DeleteSlide(destination, sourceInput8[0] - 1);
+        }
 
 
-        // if (!File.Exists(sourceFile10))
-        // {
-        //     //skip
-        // }
-        // else
-        // {
-        //     MergeSlideWithSlideArray(sourceFile10, destination, sourceInput10);
-        //     DeleteSlide(destination, sourceInput10[0] - 1);
-        // }
+        if (!File.Exists(sourceFile5))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile5, destination, sourceInput9);
+            DeleteSlide(destination, sourceInput9[0] - 1);
+        }
 
 
-        // if (!File.Exists(sourceFile11))
-        // {
-        //     //skip
-        // }
-        // else
-        // {
-        //     MergeSlideWithSlideArray(sourceFile11, destination, sourceInput11);
-        //     int count = CountSlides(sourceFile11);
+        if (!File.Exists(sourceFile10))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile10, destination, sourceInput10);
+            DeleteSlide(destination, sourceInput10[0] - 1);
+        }
 
-        //     if (count == 1)
-        //     {
-        //         int endIndex = 66 + count + 4;
 
-        //         DeleteSlide(destination, endIndex);
-        //         // DeleteSlide(destination, endIndex - 1);
-        //         // DeleteSlide(destination, endIndex - 2);
-        //         // DeleteSlide(destination, endIndex - 3);
-        //         // DeleteSlide(destination, endIndex - 4);
-        //     }
+        if (!File.Exists(sourceFile11))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile11, destination, sourceInput11);
+            int count = CountSlides(sourceFile11);
 
-        //     if (count == 2)
-        //     {
-        //         int endIndex = 66 + count + 4;
+            if (count == 1)
+            {
+                int endIndex = 66 + count + 4;
 
-        //         DeleteSlide(destination, endIndex);
-        //         DeleteSlide(destination, endIndex - 1);
-        //         // DeleteSlide(destination, endIndex - 2);
-        //         // DeleteSlide(destination, endIndex - 3);
-        //         // DeleteSlide(destination, endIndex - 4);
-        //     }
+                DeleteSlide(destination, endIndex);
+                // DeleteSlide(destination, endIndex - 1);
+                // DeleteSlide(destination, endIndex - 2);
+                // DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
 
-        //     if (count == 3)
-        //     {
-        //         int endIndex = 66 + count + 4;
+            if (count == 2)
+            {
+                int endIndex = 66 + count + 4;
 
-        //         DeleteSlide(destination, endIndex);
-        //         DeleteSlide(destination, endIndex - 1);
-        //         DeleteSlide(destination, endIndex - 2);
-        //         // DeleteSlide(destination, endIndex - 3);
-        //         // DeleteSlide(destination, endIndex - 4);
-        //     }
+                DeleteSlide(destination, endIndex);
+                DeleteSlide(destination, endIndex - 1);
+                // DeleteSlide(destination, endIndex - 2);
+                // DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
 
-        //     if (count == 4)
-        //     {
-        //         int endIndex = 66 + count + 4;
+            if (count == 3)
+            {
+                int endIndex = 66 + count + 4;
 
-        //         DeleteSlide(destination, endIndex);
-        //         DeleteSlide(destination, endIndex - 1);
-        //         DeleteSlide(destination, endIndex - 2);
-        //         DeleteSlide(destination, endIndex - 3);
-        //         // DeleteSlide(destination, endIndex - 4);
-        //     }
+                DeleteSlide(destination, endIndex);
+                DeleteSlide(destination, endIndex - 1);
+                DeleteSlide(destination, endIndex - 2);
+                // DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
 
-        //     if (count == 5)
-        //     {
-        //         int endIndex = 66 + count + 4;
+            if (count == 4)
+            {
+                int endIndex = 66 + count + 4;
 
-        //         DeleteSlide(destination, endIndex);
-        //         DeleteSlide(destination, endIndex - 1);
-        //         DeleteSlide(destination, endIndex - 2);
-        //         DeleteSlide(destination, endIndex - 3);
-        //         DeleteSlide(destination, endIndex - 4);
-        //     }
-        // }
+                DeleteSlide(destination, endIndex);
+                DeleteSlide(destination, endIndex - 1);
+                DeleteSlide(destination, endIndex - 2);
+                DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
 
-        // //qtc
-        // if (!File.Exists(sourceFile12))
-        // {
-        //     //skip
-        // }
-        // else
-        // {
-        //     MergeSlideWithSlideArray(sourceFile12, destination, sourceInput15);
-        //     DeleteSlide(destination, sourceInput15[0]-1);
-        // }
+            if (count == 5)
+            {
+                int endIndex = 66 + count + 4;
+
+                DeleteSlide(destination, endIndex);
+                DeleteSlide(destination, endIndex - 1);
+                DeleteSlide(destination, endIndex - 2);
+                DeleteSlide(destination, endIndex - 3);
+                DeleteSlide(destination, endIndex - 4);
+            }
+        }
+
+        //qtc
+        if (!File.Exists(sourceFile12))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile12, destination, sourceInput15);
+            DeleteSlide(destination, sourceInput15[0]-1);
+        }
         
       
 

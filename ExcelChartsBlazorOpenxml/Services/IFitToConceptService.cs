@@ -34,7 +34,7 @@ namespace ExcelChartsBlazorOpenxml.Services
 
         Task<List<QTCModel>> QtcData();
 
-        Task<List<BrandexSafetyShortModel>> BrandexSafetyData();
+        Task<List<BrandexSafetyModel>> BrandexSafetyData();
 
         Task<List<BrandexStrategicDistinctivenessModel>> BrandexStrategicDistinctivenessesData();
 

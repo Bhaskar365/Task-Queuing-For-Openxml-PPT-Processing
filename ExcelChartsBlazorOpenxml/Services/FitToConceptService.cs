@@ -95,11 +95,11 @@ namespace ExcelChartsBlazorOpenxml.Services
         {
             return await _httpClient.GetFromJsonAsync<List<Sala>>($"api/data/Sala154");
         }
-        public async Task<List<BrandexSafetyShortModel>> BrandexSafetyData()
+        public async Task<List<BrandexSafetyModel>> BrandexSafetyData()
         {
             try
             {
-                var response = await _httpClient.GetFromJsonAsync<List<BrandexSafetyShortModel>>($"api/data/Brandex Safety");
+                var response = await _httpClient.GetFromJsonAsync<List<BrandexSafetyModel>>($"api/data/Brandex Safety");
                 return response!;
             }
             catch (Exception ex)
