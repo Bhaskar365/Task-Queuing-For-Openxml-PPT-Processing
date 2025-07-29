@@ -44,5 +44,11 @@ namespace WebApplication1.Repositories
 
         Task<IEnumerable<NonMedicalTermsModel>> GetNonMedicalTerms();
 
+        Task<IEnumerable<ExaggModel>> GetUntrue01();
+
+        Task<IEnumerable<ExaggModel>> GetMisleading02();
+
+        Task<IEnumerable<ExaggModel>> GetExagg03();
+
     }
 }

@@ -254,5 +254,44 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpGet("Untrue 01")]
+        public async Task<ActionResult> GetUntrue01Data()
+        {
+            try
+            {
+                return Ok(await _repository.GetUntrue01());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet("Misleading 02")]
+        public async Task<ActionResult> GetMisleading02Data()
+        {
+            try
+            {
+                return Ok(await _repository.GetMisleading02());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet("Exagg 03")]
+        public async Task<ActionResult> GetExagg03Data()
+        {
+            try
+            {
+                return Ok(await _repository.GetExagg03());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

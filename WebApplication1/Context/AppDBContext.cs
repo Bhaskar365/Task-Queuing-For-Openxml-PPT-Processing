@@ -61,6 +61,12 @@ namespace WebApplication1.Context
 
         public DbSet<NonMedicalTermsModel> NonMedicalTerms { get; set; }
 
+        public DbSet<ExaggModel> Untrue01 {get;set;}
+
+        public DbSet<ExaggModel> Misleading02 { get; set; }
+
+        public DbSet<ExaggModel> Exagg03 { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // attribute 1
@@ -113,6 +119,24 @@ namespace WebApplication1.Context
             modelBuilder.Entity<NonMedicalTermsModel>(entity =>
             {
                 entity.HasNoKey().ToTable("NonMedicalTerms$");
+            });
+
+            //untrue01
+            modelBuilder.Entity<ExaggModel>(entity =>
+            {
+                entity.HasNoKey().ToTable("01 Untrue$");
+            });
+
+            //misleading
+            modelBuilder.Entity<ExaggModel>(entity =>
+            {
+                entity.HasNoKey().ToTable("02 Misleading$");
+            });
+
+            //exagg
+            modelBuilder.Entity<ExaggModel>(entity =>
+            {
+                entity.HasNoKey().ToTable("03 Exagg$");
             });
 
 

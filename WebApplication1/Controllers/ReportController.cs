@@ -739,6 +739,14 @@ namespace WebApplicationAPI.Controllers
                             dll.NonMedicalTermsMethod(CreateTargetPath(sourcePath, nonMedicalTermsData.First().ProjectTemplateType!), nonMedicalTermsData);
                             break;
 
+                        case "03 Exagg":
+                        case "03 exagg":
+                        case "01 Untrue":
+                        case "02 Misleading":
+                        case "02 Mislead":
+                            
+                            break;
+
                     }
 
                     taskLog.CompletedOn = DateTime.UtcNow;

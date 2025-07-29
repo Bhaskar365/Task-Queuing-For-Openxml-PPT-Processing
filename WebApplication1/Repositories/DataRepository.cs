@@ -77,6 +77,19 @@ namespace WebApplication1.Repositories
             return result;
         }
 
+        public async Task<IEnumerable<ExaggModel>> GetExagg03()
+        {
+            try
+            {
+                var result = await _context.Exagg03.ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<IEnumerable<MedicalTermsModel>> GetMedicalTerms()
         {
             try
@@ -94,6 +107,19 @@ namespace WebApplication1.Repositories
         {
             var result = await _context.Memorabilities.ToListAsync();
             return result;
+        }
+
+        public async Task<IEnumerable<ExaggModel>> GetMisleading02()
+        {
+            try
+            {
+                var result = await _context.Misleading02.ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<IEnumerable<NonMedicalTermsModel>> GetNonMedicalTerms()
@@ -152,6 +178,19 @@ namespace WebApplication1.Repositories
             try
             {
                 var result = await _context.TaskLogs.ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<ExaggModel>> GetUntrue01()
+        {
+            try
+            {
+                var result = await _context.Untrue01.ToListAsync();
                 return result;
             }
             catch (Exception ex)
