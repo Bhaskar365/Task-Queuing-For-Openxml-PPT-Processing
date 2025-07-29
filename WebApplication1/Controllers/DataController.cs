@@ -256,7 +256,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [HttpGet("Untrue 01")]
+        [HttpGet("Untrue01")]
         public async Task<ActionResult> GetUntrue01Data()
         {
             try
@@ -269,7 +269,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [HttpGet("Misleading 02")]
+        [HttpGet("Misleading02")]
         public async Task<ActionResult> GetMisleading02Data()
         {
             try
@@ -282,7 +282,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [HttpGet("Exagg 03")]
+        [HttpGet("Exagg03")]
         public async Task<ActionResult> GetExagg03Data()
         {
             try

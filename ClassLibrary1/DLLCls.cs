@@ -70,6 +70,18 @@ namespace ClassLibrary1
             template.ExaggerativeTemplateForAll(destination, apiData);
         }
 
+
+        public void Untrue01Method(string destination, List<UntrueModel> apiData)
+        {
+            template.UntrueTemplateForAll(destination, apiData);
+        }
+
+        public void Misleading02Method(string destination, List<MisleadingModel> apiData)
+        {
+            template.MisleadingTemplateForAll(destination, apiData);
+        }
+
+
         public void SALANewMethod(string destination, List<Sala> apiData)
         {
             template.SALANewModelTemplateSpecial2(destination, apiData);

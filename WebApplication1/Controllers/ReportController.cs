@@ -739,14 +739,21 @@ namespace WebApplicationAPI.Controllers
                             dll.NonMedicalTermsMethod(CreateTargetPath(sourcePath, nonMedicalTermsData.First().ProjectTemplateType!), nonMedicalTermsData);
                             break;
 
-                        case "03 Exagg":
-                        case "03 exagg":
                         case "01 Untrue":
-                        case "02 Misleading":
-                        case "02 Mislead":
-                            
+                            var untrue01Data = (await repository.GetUntrue()).ToList();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\Exaggerative{untrue01Data.Count}.pptx";
+                            dll.Untrue01Method(CreateTargetPath(sourcePath, untrue01Data.First().ProjectTemplateType), untrue01Data);
                             break;
 
+                        case "02 Misleading":
+                            var misleading02Data = (await repository.GetMisleading()).ToList();
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\Exaggerative{misleading02Data.Count}.pptx";
+                            dll.Misleading02Method(CreateTargetPath(sourcePath, misleading02Data.First().ProjectTemplateType!), misleading02Data);
+                            break;
+
+                        case "03 Exagg":
+                            
+                            break;
                     }
 
                     taskLog.CompletedOn = DateTime.UtcNow;

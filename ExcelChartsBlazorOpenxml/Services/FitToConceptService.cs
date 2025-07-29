@@ -1,4 +1,5 @@
-﻿using SharedModels;
+﻿using DocumentFormat.OpenXml.VariantTypes;
+using SharedModels;
 using SharedModels.DTO;
 using WebApplicationAPI.Models;
 
@@ -97,6 +98,25 @@ namespace ExcelChartsBlazorOpenxml.Services
             return await _httpClient.GetFromJsonAsync<List<Sala>>($"api/data/Sala154");
         }
 
+        public async Task<List<UntrueModel>> UntrueData()
+        {
+            var response = await _httpClient.GetFromJsonAsync<List<UntrueModel>>($"api/data/Untrue01");
+            return response;
+        }
+
+        public async Task<List<MisleadingModel>> MisleadingData()
+        {
+            var response = await _httpClient.GetFromJsonAsync<List<MisleadingModel>>($"api/data/Misleading02");
+            return response;
+        }
+
+        public async Task<List<Exagg03Model>> Exagg03Data()
+        {
+            var response = await _httpClient.GetFromJsonAsync<List<Exagg03Model>>($"api/data/Exagg03");
+            return response;
+        }
+
+
         public async Task<List<TaskLog>> GetLogs()
         {
             return await _httpClient.GetFromJsonAsync<List<TaskLog>>($"api/report/user/taskLogs");
@@ -107,5 +127,7 @@ namespace ExcelChartsBlazorOpenxml.Services
             var response = await _httpClient.GetFromJsonAsync<List<TaskLog>>($"api/report/{user}/logs");
             return response!;
         }
+
+       
     }
 }

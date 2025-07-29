@@ -34,6 +34,13 @@ namespace ExcelChartsBlazorOpenxml.Services
 
         Task<List<QTCModel>> QtcData();
 
+        Task<List<UntrueModel>> UntrueData();
+
+        Task<List<MisleadingModel>> MisleadingData();
+
+        Task<List<Exagg03Model>> Exagg03Data();
+
+
         Task<Guid> GenerateReportAsync(ReportGenerationRequest request);
         Task<string> GetReportStatusAsync(Guid taskId);
 
