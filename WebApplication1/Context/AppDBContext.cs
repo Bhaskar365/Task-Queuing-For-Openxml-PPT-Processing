@@ -61,11 +61,11 @@ namespace WebApplication1.Context
 
         public DbSet<NonMedicalTermsModel> NonMedicalTerms { get; set; }
 
-        public DbSet<ExaggModel> Untrue01 {get;set;}
+        public DbSet<UntrueModel> Untrue01 {get;set;}
 
-        public DbSet<ExaggModel> Misleading02 { get; set; }
+        public DbSet<MisleadingModel> Misleading02 { get; set; }
 
-        public DbSet<ExaggModel> Exagg03 { get; set; }
+        public DbSet<Exagg03Model> Exagg03 { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
