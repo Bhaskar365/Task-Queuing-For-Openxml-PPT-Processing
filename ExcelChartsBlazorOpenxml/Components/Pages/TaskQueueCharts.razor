@@ -197,17 +197,7 @@ else
     }
 
     public bool hasProcessStarted = false;
-    List<FitToConceptModel> fitToConceptsData;
-    List<OverallImpressionsModel> OverallImpressionsData;
-    List<Aev1> Attribute1Data;
-    List<Aev2> Attribute2Data;
-    List<Aev3> AttributeAggregrateData;
-    List<Memorability> MemorabilityData;
-    List<PersonalPreference> PersonalPreferenceData;
-    List<Suffix> SuffixData;
-    List<VerbalUnderstanding> VerbalUnderstandingData;
-    List<WrittenUnderstanding> WrittenUnderstandingData;
-    List<Likeability> Exagg;
+ 
     List<TaskLog> LogList;
 
     List<TaskLog> UndoneQueueList;
@@ -222,18 +212,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         StateHasChanged();
-        fitToConceptsData = await fitToConceptService.GetFitToConceptData();
-        OverallImpressionsData = await fitToConceptService.GetOverallImpressionsData();
-        Attribute1Data = await fitToConceptService.GetAtt1Data();
-        Attribute2Data = await fitToConceptService.GetAtt2Data();
-        AttributeAggregrateData = await fitToConceptService.GetAttrAggData();
-        MemorabilityData = await fitToConceptService.MemorabilityData();
-        PersonalPreferenceData = await fitToConceptService.PersonalPrefData();
-        SuffixData = await fitToConceptService.SuffixData();
-        VerbalUnderstandingData = await fitToConceptService.VerbalUnderData();
-        WrittenUnderstandingData = await fitToConceptService.WrittenUnderData();
-        Exagg = await fitToConceptService.ExaggData();
-
+     
         StateHasChanged();
         LogList = await fitToConceptService.GetLogs();
         StateHasChanged();
@@ -301,114 +280,6 @@ else
                                      "02 Misleading",
                                      "03 Exagg",
                                 };
-
-    // private async Task Process()
-    // {
-
-    //     // foreach(var proj in projectList)
-    //     // {
-    //     //     switch(proj)
-    //     //     {
-    //     //         case "FitToConcept":
-    //     //             await fitToConceptService.GetFitToConceptData();
-    //     //             new DLLCls().FitToConceptMethod(path, data.Cast<FitToConceptModel>().ToList()),
-    //     //             break;
-    //     //         default:
-    //     //             break;
-    //     //     }
-    //     // }
-
-    //     var definitions = new List<ReportDefinition>
-    //         {
-    //             new("FitToConcept", async () => (await fitToConceptService.GetFitToConceptData()).Cast<object>(),
-    //                 (path, data) => new DLLCls().FitToConceptMethod(path, data.Cast<FitToConceptModel>().ToList())),
-
-    //             new("OverallImpressions", async () => (await fitToConceptService.GetOverallImpressionsData()).Cast<object>(),
-    //                 (path, data) => new DLLCls().OverallImpressionsMethod(path, data.Cast<OverallImpressionsModel>().ToList())),
-
-    //             new("Att1", async () => (await fitToConceptService.GetAtt1Data()).Cast<object>(),
-    //                 (path, data) => new DLLCls().Attribute1Method(path, data.Cast<Aev1>().ToList())),
-
-    //             new("Att2", async () => (await fitToConceptService.GetAtt2Data()).Cast<object>(),
-    //                 (path, data) => new DLLCls().Attribute2Method(path, data.Cast<Aev2>().ToList())),
-
-    //             new("AttrAggr", async () => (await fitToConceptService.GetAttrAggData()).Cast<object>(),
-    //                 (path, data) => new DLLCls().AttributeMethodForAttributeEvalAggreg(path, data.Cast<Aev3>().ToList())),
-
-    //             new("Memorability", async () => (await fitToConceptService.MemorabilityData()).Cast<object>(),
-    //                 (path, data) => new DLLCls().MemorabilityMethod(path, data.Cast<Memorability>().ToList())),
-
-    //              new("PersonalPref", async () => (await fitToConceptService.PersonalPrefData()).Cast<object>(),
-    //                 (path, data) => new DLLCls().PersonalPreferencesMethod(path, data.Cast<PersonalPreference>().ToList())),
-
-    //             new("Suffix", async () => (await fitToConceptService.SuffixData()).Cast<object>(),
-    //                 (path, data) => new DLLCls().SuffixMethod(path, data.Cast<Suffix>().ToList())),
-
-    //              new("VerbalUnder", async () => (await fitToConceptService.VerbalUnderData()).Cast<object>(),
-    //                 (path, data) => new DLLCls().VerbalUnderstandingBarMethod(path, data.Cast<VerbalUnderstanding>().ToList())),
-
-    //             new("writtenUnd", async () => (await fitToConceptService.WrittenUnderData()).Cast<object>(),
-    //                 (path, data) => new DLLCls().WrittenUnderstandingMethod(path, data.Cast<WrittenUnderstanding>().ToList())),
-
-    //              new("Exaggerative", async () => (await fitToConceptService.ExaggData()).Cast<object>(),
-    //                 (path, data) => new DLLCls().ExaggerativeMethod(path, data.Cast<Likeability>().ToList())),
-
-    //         };
-
-    //     hasProcessStarted = true;
-    //     currentState = ProcessState.Generating;
-
-    //     try
-    //     {
-
-    //         foreach (var def in definitions)
-    //         {
-    //             var request = new ReportGenerationRequest
-    //                 {
-    //                     ProjectTemplateType = def.projectType,
-    //                     TaskId = Guid.NewGuid()
-    //                 };
-
-    //             var taskId = await fitToConceptService.GenerateReportAsync(request);
-
-    //             if (request != null)
-    //             {
-    //                 reportStatuses.Add(new ReportStatus
-    //                     {
-    //                         ProjectName = request.ProjectTemplateType!,
-    //                         TaskId = taskId,
-    //                         Status = "Queued"
-    //                     });
-    //             }
-
-    //             _ = PollStatusAsync(taskId);
-    //         }
-
-    //         // var request = new ReportGenerationRequest
-    //         //     {
-    //         //         ProjectTemplateType = fitToConceptsData?.First().ProjectTemplateType!,
-    //         //         TaskId = Guid.NewGuid()
-    //         //     };
-
-    //         // var taskId = await fitToConceptService.GenerateReportAsync(request);
-
-    //         // if (request != null)
-    //         // {
-    //         //     reportStatuses.Add(new ReportStatus
-    //         //         {
-    //         //             ProjectName = request.ProjectTemplateType!,
-    //         //             TaskId = taskId,
-    //         //             Status = "Queued"
-    //         //         });
-    //         // }
-
-    //         // _ = PollStatusAsync(taskId);
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         throw new Exception(ex.Message);
-    //     }
-    // }
 
     private async Task Process()
     {
