@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using SharedModels;
 using System.Runtime.InteropServices;
 using WebApplication1.Repositories;
 using WebApplicationAPI.Queueing;
@@ -259,7 +261,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                return Ok(await _repository.GetUntrue01());
+                //return Ok(await _repository);
             }
             catch (Exception ex)
             {
@@ -272,7 +274,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                return Ok(await _repository.GetMisleading02());
+                //return Ok(await _repository.GetMisleading02());
             }
             catch (Exception ex)
             {
@@ -285,7 +287,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                return Ok(await _repository.GetExagg03());
+                //return Ok(await _repository.GetExagg03());
             }
             catch (Exception ex)
             {

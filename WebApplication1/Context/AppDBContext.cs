@@ -122,21 +122,24 @@ namespace WebApplication1.Context
             });
 
             //untrue01
-            modelBuilder.Entity<ExaggModel>(entity =>
+            modelBuilder.Entity<UntrueModel>(entity =>
             {
-                entity.HasNoKey().ToTable("01 Untrue$");
+                entity.ToTable("01 Untrue$");
+                entity.HasKey(e => e.Id);
             });
 
             //misleading
-            modelBuilder.Entity<ExaggModel>(entity =>
+            modelBuilder.Entity<MisleadingModel>(entity =>
             {
-                entity.HasNoKey().ToTable("02 Misleading$");
+                entity.ToTable("02 Misleading$");
+                entity.HasKey(e => e.Id);
             });
 
             //exagg
-            modelBuilder.Entity<ExaggModel>(entity =>
+            modelBuilder.Entity<Exagg03Model>(entity =>
             {
-                entity.HasNoKey().ToTable("03 Exagg$");
+                entity.ToTable("03 Exagg$");
+                entity.HasKey(e => e.Id);
             });
 
 

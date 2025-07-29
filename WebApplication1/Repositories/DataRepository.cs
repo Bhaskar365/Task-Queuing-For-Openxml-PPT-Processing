@@ -15,6 +15,20 @@ namespace WebApplication1.Repositories
         {
             _context = context;
         }
+
+        public async Task<IEnumerable<Exagg03Model>> Get03Exagg()
+        {
+            try
+            {
+                var result = await _context.Exagg03.ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<IEnumerable<FitToConceptModel>> GetAllFitToConceptData()
         {
             var result = await _context.FitToConceptTestTable.ToListAsync();
@@ -77,18 +91,7 @@ namespace WebApplication1.Repositories
             return result;
         }
 
-        public async Task<IEnumerable<ExaggModel>> GetExagg03()
-        {
-            try
-            {
-                var result = await _context.Exagg03.ToListAsync();
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+       
 
         public async Task<IEnumerable<MedicalTermsModel>> GetMedicalTerms()
         {
@@ -109,7 +112,7 @@ namespace WebApplication1.Repositories
             return result;
         }
 
-        public async Task<IEnumerable<ExaggModel>> GetMisleading02()
+        public async Task<IEnumerable<MisleadingModel>> GetMisleading()
         {
             try
             {
@@ -186,7 +189,7 @@ namespace WebApplication1.Repositories
             }
         }
 
-        public async Task<IEnumerable<ExaggModel>> GetUntrue01()
+        public async Task<IEnumerable<UntrueModel>> GetUntrue()
         {
             try
             {
@@ -210,5 +213,6 @@ namespace WebApplication1.Repositories
             var result = await _context.WrittenUnderstandings.ToListAsync();
             return result;
         }
+
     }
 }
