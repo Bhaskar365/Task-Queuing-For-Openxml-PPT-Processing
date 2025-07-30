@@ -181,6 +181,7 @@ else
     string sourceFile10 = "C:\\Users\\bdas\\Downloads\\Exaggerative_sample.pptx";
     string sourceFile11 = "C:\\Users\\bdas\\Downloads\\SALA_sample.pptx";
     string sourceFile12 = "C:\\Users\\bdas\\Downloads\\QTC_sample.pptx";
+    string sourceFile13 = "C:\\Users\\bdas\\Downloads\\BrandexSafety_sample.pptx";
 
 
     public async Task Process()
@@ -834,175 +835,192 @@ else
         int[] sourceInput13 = { 66,67 };
         int[] sourceInput14 = { 66,67,68 };
         int[] sourceInput15 = { 20 };
+        int[] sourceInput16 = { 16,17 };
 
+        //fit to concept
         if (!File.Exists(sourceFile1))
         {
             //skip
         }
         else
         {
-            MergeSlideWithSlideArray(sourceFile1, destination, sourceInput1);
-            DeleteSlide(destination, sourceInput1[0] - 1);
+            MergeSlideWithSlideArray(sourceFile1, destination, sourceInput1);       // 38
+
+            int x = sourceInput1[0] - 1;
+            DeleteSlide(destination, x);
         }
 
 
+        // overall impressions
         if (!File.Exists(sourceFile2))
         {
             //skip
         }
         else
         {
-            MergeSlideWithSlideArray(sourceFile2, destination, sourceInput2);
+            MergeSlideWithSlideArray(sourceFile2, destination, sourceInput2);        // 38, 85
             DeleteSlide(destination, sourceInput2[0] - 1);
         }
 
+        //Att 1
         if (!File.Exists(sourceFile6))
         {
             //skip
         }
         else
         {
-            MergeSlideWithSlideArray(sourceFile6, destination, sourceInput3);
+            MergeSlideWithSlideArray(sourceFile6, destination, sourceInput3);       // 38, 85, 40
             DeleteSlide(destination, sourceInput3[0] - 1);
         }
 
+        //Att 2
         if (!File.Exists(sourceFile7))
         {
             //skip
         }
         else
         {
-            MergeSlideWithSlideArray(sourceFile7, destination, sourceInput4);
-            DeleteSlide(destination, sourceInput4[0] - 1);
+            MergeSlideWithSlideArray(sourceFile7, destination, sourceInput4);      //  38, 85, 40, 41
+            int x = sourceInput4[0] - 1;
+            DeleteSlide(destination, x);
         }
 
+        //Att Agg
         if (!File.Exists(sourceFile8))
         {
             //skip
         }
         else
         {
-            MergeSlideWithSlideArray(sourceFile8, destination, sourceInput5);
-            DeleteSlide(destination, sourceInput5[0] - 1);
+            MergeSlideWithSlideArray(sourceFile8, destination, sourceInput5);   // 38, 85, 40, 41, 44
+            int x = sourceInput5[0] - 1;
+            DeleteSlide(destination, x);
         }
 
+        // memorability
         if (!File.Exists(sourceFile9))
         {
             //skip
         }
         else
         {
-            MergeSlideWithSlideArray(sourceFile9, destination, sourceInput6);
-            DeleteSlide(destination, sourceInput6[0] - 1);
+            MergeSlideWithSlideArray(sourceFile9, destination, sourceInput6);       // 38, 85, 40, 41, 44, 45
+            int x = sourceInput6[0] - 1;
+            DeleteSlide(destination, x);
         }
 
-
+        // personal pref
         if (!File.Exists(sourceFile3))
         {
             //skip
         }
         else
         {
-            MergeSlideWithSlideArray(sourceFile3, destination, sourceInput7);
-            DeleteSlide(destination, sourceInput7[0] - 1);
+            MergeSlideWithSlideArray(sourceFile3, destination, sourceInput7);  // 38, 85, 40, 41, 44, 45, 46
+            int x = sourceInput7[0] - 1;
+            DeleteSlide(destination, x);
         }
 
+        //verbal unders
         if (!File.Exists(sourceFile4))
         {
             //skip
         }
         else
         {
-            MergeSlideWithSlideArray(sourceFile4, destination, sourceInput8);
-            DeleteSlide(destination, sourceInput8[0] - 1);
+            MergeSlideWithSlideArray(sourceFile4, destination, sourceInput8);        // 38, 85, 40, 41, 44, 45, 46, 82
+            int x = sourceInput8[0] - 1;
+            DeleteSlide(destination, x);
         }
 
-
+        // written underst
         if (!File.Exists(sourceFile5))
         {
             //skip
         }
         else
         {
-            MergeSlideWithSlideArray(sourceFile5, destination, sourceInput9);
-            DeleteSlide(destination, sourceInput9[0] - 1);
+            MergeSlideWithSlideArray(sourceFile5, destination, sourceInput9);            // 38, 85, 40, 41, 44, 45, 46, 82, 83
+            int x = sourceInput9[0] - 1;
+            DeleteSlide(destination, x);
         }
 
-
+        //exagg
         if (!File.Exists(sourceFile10))
         {
             //skip
         }
         else
         {
-            MergeSlideWithSlideArray(sourceFile10, destination, sourceInput10);
-            DeleteSlide(destination, sourceInput10[0] - 1);
+            MergeSlideWithSlideArray(sourceFile10, destination, sourceInput10);          // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87
+            int x = sourceInput10[0] - 1;
+            DeleteSlide(destination, x);
         }
 
-
+        // SALA
         if (!File.Exists(sourceFile11))
         {
             //skip
         }
         else
         {
-            MergeSlideWithSlideArray(sourceFile11, destination, sourceInput11);
-            int count = CountSlides(sourceFile11);
+            // MergeSlideWithSlideArray(sourceFile11, destination, sourceInput11);
+            // int count = CountSlides(sourceFile11);
 
-            if (count == 1)
-            {
-                int endIndex = 66 + count + 4;
+            // if (count == 1)
+            // {
+            //     int endIndex = 66 + count + 4;
 
-                DeleteSlide(destination, endIndex);
-                // DeleteSlide(destination, endIndex - 1);
-                // DeleteSlide(destination, endIndex - 2);
-                // DeleteSlide(destination, endIndex - 3);
-                // DeleteSlide(destination, endIndex - 4);
-            }
+            //     DeleteSlide(destination, endIndex);
+            //     // DeleteSlide(destination, endIndex - 1);
+            //     // DeleteSlide(destination, endIndex - 2);
+            //     // DeleteSlide(destination, endIndex - 3);
+            //     // DeleteSlide(destination, endIndex - 4);
+            // }
 
-            if (count == 2)
-            {
-                int endIndex = 66 + count + 4;
+            // if (count == 2)
+            // {
+            //     int endIndex = 66 + count + 4;
 
-                DeleteSlide(destination, endIndex);
-                DeleteSlide(destination, endIndex - 1);
-                // DeleteSlide(destination, endIndex - 2);
-                // DeleteSlide(destination, endIndex - 3);
-                // DeleteSlide(destination, endIndex - 4);
-            }
+            //     DeleteSlide(destination, endIndex);
+            //     DeleteSlide(destination, endIndex - 1);
+            //     // DeleteSlide(destination, endIndex - 2);
+            //     // DeleteSlide(destination, endIndex - 3);
+            //     // DeleteSlide(destination, endIndex - 4);
+            // }
 
-            if (count == 3)
-            {
-                int endIndex = 66 + count + 4;
+            // if (count == 3)
+            // {
+            //     int endIndex = 66 + count + 4;
 
-                DeleteSlide(destination, endIndex);
-                DeleteSlide(destination, endIndex - 1);
-                DeleteSlide(destination, endIndex - 2);
-                // DeleteSlide(destination, endIndex - 3);
-                // DeleteSlide(destination, endIndex - 4);
-            }
+            //     DeleteSlide(destination, endIndex);
+            //     DeleteSlide(destination, endIndex - 1);
+            //     DeleteSlide(destination, endIndex - 2);
+            //     // DeleteSlide(destination, endIndex - 3);
+            //     // DeleteSlide(destination, endIndex - 4);
+            // }
 
-            if (count == 4)
-            {
-                int endIndex = 66 + count + 4;
+            // if (count == 4)
+            // {
+            //     int endIndex = 66 + count + 4;
 
-                DeleteSlide(destination, endIndex);
-                DeleteSlide(destination, endIndex - 1);
-                DeleteSlide(destination, endIndex - 2);
-                DeleteSlide(destination, endIndex - 3);
-                // DeleteSlide(destination, endIndex - 4);
-            }
+            //     DeleteSlide(destination, endIndex);
+            //     DeleteSlide(destination, endIndex - 1);
+            //     DeleteSlide(destination, endIndex - 2);
+            //     DeleteSlide(destination, endIndex - 3);
+            //     // DeleteSlide(destination, endIndex - 4);
+            // }
 
-            if (count == 5)
-            {
-                int endIndex = 66 + count + 4;
+            // if (count == 5)
+            // {
+            //     int endIndex = 66 + count + 4;
 
-                DeleteSlide(destination, endIndex);
-                DeleteSlide(destination, endIndex - 1);
-                DeleteSlide(destination, endIndex - 2);
-                DeleteSlide(destination, endIndex - 3);
-                DeleteSlide(destination, endIndex - 4);
-            }
+            //     DeleteSlide(destination, endIndex);
+            //     DeleteSlide(destination, endIndex - 1);
+            //     DeleteSlide(destination, endIndex - 2);
+            //     DeleteSlide(destination, endIndex - 3);
+            //     DeleteSlide(destination, endIndex - 4);
+            // }
         }
 
         //qtc
@@ -1012,11 +1030,24 @@ else
         }
         else
         {
-            MergeSlideWithSlideArray(sourceFile12, destination, sourceInput15);
-            DeleteSlide(destination, sourceInput15[0]-1);
+            // MergeSlideWithSlideArray(sourceFile12, destination, sourceInput15);
+            // DeleteSlide(destination, sourceInput15[0]-1);
         }
-        
-      
+
+        //brandex safety
+        if (!File.Exists(sourceFile13))
+        {
+            //skip
+        }
+        else
+        {
+            // MergeSlideWithSlideArray(sourceFile13, destination, sourceInput16);
+
+            // int x = sourceInput16[0] - 1;
+
+            // DeleteSlide(destination, x);
+            // DeleteSlide(destination, x-1);
+        }
 
       
     }
