@@ -964,63 +964,63 @@ else
         }
         else
         {
-            // MergeSlideWithSlideArray(sourceFile11, destination, sourceInput11);
-            // int count = CountSlides(sourceFile11);
+            MergeSlideWithSlideArray(sourceFile11, destination, sourceInput11);
+            int count = CountSlides(sourceFile11);
 
-            // if (count == 1)
-            // {
-            //     int endIndex = 66 + count + 4;
+            if (count == 1)
+            {
+                int endIndex = 66 + count + 4;                      // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87,   66
 
-            //     DeleteSlide(destination, endIndex);
-            //     // DeleteSlide(destination, endIndex - 1);
-            //     // DeleteSlide(destination, endIndex - 2);
-            //     // DeleteSlide(destination, endIndex - 3);
-            //     // DeleteSlide(destination, endIndex - 4);
-            // }
+                DeleteSlide(destination, endIndex);                  
+                // DeleteSlide(destination, endIndex - 1);
+                // DeleteSlide(destination, endIndex - 2);
+                // DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
 
-            // if (count == 2)
-            // {
-            //     int endIndex = 66 + count + 4;
+            if (count == 2)
+            {
+                int endIndex = 66 + count + 4;
 
-            //     DeleteSlide(destination, endIndex);
-            //     DeleteSlide(destination, endIndex - 1);
-            //     // DeleteSlide(destination, endIndex - 2);
-            //     // DeleteSlide(destination, endIndex - 3);
-            //     // DeleteSlide(destination, endIndex - 4);
-            // }
+                DeleteSlide(destination, endIndex);              // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87,   66, 67
+                DeleteSlide(destination, endIndex - 1);
+                // DeleteSlide(destination, endIndex - 2);
+                // DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
 
-            // if (count == 3)
-            // {
-            //     int endIndex = 66 + count + 4;
+            if (count == 3)                                      // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87,   66, 67, 68
+            {
+                int endIndex = 66 + count + 4;
 
-            //     DeleteSlide(destination, endIndex);
-            //     DeleteSlide(destination, endIndex - 1);
-            //     DeleteSlide(destination, endIndex - 2);
-            //     // DeleteSlide(destination, endIndex - 3);
-            //     // DeleteSlide(destination, endIndex - 4);
-            // }
+                DeleteSlide(destination, endIndex);             
+                DeleteSlide(destination, endIndex - 1);
+                DeleteSlide(destination, endIndex - 2);
+                // DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
 
-            // if (count == 4)
-            // {
-            //     int endIndex = 66 + count + 4;
+            if (count == 4)                                     // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87,   66, 67, 68, 69
+            {
+                int endIndex = 66 + count + 4;
 
-            //     DeleteSlide(destination, endIndex);
-            //     DeleteSlide(destination, endIndex - 1);
-            //     DeleteSlide(destination, endIndex - 2);
-            //     DeleteSlide(destination, endIndex - 3);
-            //     // DeleteSlide(destination, endIndex - 4);
-            // }
+                DeleteSlide(destination, endIndex);             
+                DeleteSlide(destination, endIndex - 1);
+                DeleteSlide(destination, endIndex - 2);
+                DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
 
-            // if (count == 5)
-            // {
-            //     int endIndex = 66 + count + 4;
+            if (count == 5)                                      // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87,   66, 67, 68, 69, 70
+            {
+                int endIndex = 66 + count + 4;
 
-            //     DeleteSlide(destination, endIndex);
-            //     DeleteSlide(destination, endIndex - 1);
-            //     DeleteSlide(destination, endIndex - 2);
-            //     DeleteSlide(destination, endIndex - 3);
-            //     DeleteSlide(destination, endIndex - 4);
-            // }
+                DeleteSlide(destination, endIndex);
+                DeleteSlide(destination, endIndex - 1);
+                DeleteSlide(destination, endIndex - 2);
+                DeleteSlide(destination, endIndex - 3);
+                DeleteSlide(destination, endIndex - 4);
+            }
         }
 
         //qtc
@@ -1030,8 +1030,9 @@ else
         }
         else
         {
-            // MergeSlideWithSlideArray(sourceFile12, destination, sourceInput15);
-            // DeleteSlide(destination, sourceInput15[0]-1);
+            MergeSlideWithSlideArray(sourceFile12, destination, sourceInput15);        //  20, 38,  40, 41, 44, 45, 46, 82, 83,85, 87,   66, 67, 68, 69,
+            int x = sourceInput15[0] - 1;
+            DeleteSlide(destination,x);
         }
 
         //brandex safety
