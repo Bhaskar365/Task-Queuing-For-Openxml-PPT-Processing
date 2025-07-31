@@ -186,7 +186,7 @@ else
     string sourceFile14 = "C:\\Users\\bdas\\Downloads\\BrandexStrategicDistinctiveness_sample.pptx";
     string sourceFile15 = "C:\\Users\\bdas\\Downloads\\MedicalTerms_sample.pptx";
     string sourceFile16 = "C:\\Users\\bdas\\Downloads\\NonMedical_sample.pptx";
-
+    string sourceFile17 = "C:\\Users\\bdas\\Downloads\\02Misleading_sample.pptx";
 
     public async Task Process()
     {
@@ -1178,6 +1178,32 @@ else
              });
         }
 
+        //01 untrue
+        var misleading02Data = Misleading02;
+        if (!misleading02Data.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (misleading02Data == null || misleading02Data.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (misleading02Data!.Count != 0 || misleading02Data.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\Exaggerative{misleading02Data.Count}.pptx";
+
+            await Task.Run(() =>
+           {
+               dllClass.Misleading02Method(CreateTargetPath(sourcePath1, misleading02Data.First().ProjectTemplateType!), misleading02Data);
+           });
+        }
+
+
+
 
         doneMsg = "Done";
         hasProcessStarted = false;
@@ -1204,6 +1230,7 @@ else
         int[] sourceInput17 = { 19, 20, 21 };
         int[] sourceInput18 = { 71, 72, 73, 74 };
         int[] sourceInput19 = { 76 };
+        int[] sourceInput20 = { 88 };
 
         //fit to concept
         if (!File.Exists(sourceFile1))
@@ -1571,6 +1598,18 @@ else
             }
         }
 
+        
+        //02 Misleading
+        if (!File.Exists(sourceFile17))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile17, destination, sourceInput20);          // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87 , 88
+            int x = sourceInput10[0];
+            DeleteSlide(destination, x);
+        }
     }
 
     public static int id = 20;
