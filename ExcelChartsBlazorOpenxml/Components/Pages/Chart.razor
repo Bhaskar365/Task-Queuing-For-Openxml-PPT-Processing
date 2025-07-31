@@ -185,6 +185,7 @@ else
     string sourceFile13 = "C:\\Users\\bdas\\Downloads\\BrandexSafety_sample.pptx";
     string sourceFile14 = "C:\\Users\\bdas\\Downloads\\BrandexStrategicDistinctiveness_sample.pptx";
     string sourceFile15 = "C:\\Users\\bdas\\Downloads\\MedicalTerms_sample.pptx";
+    string sourceFile16 = "C:\\Users\\bdas\\Downloads\\NonMedical_sample.pptx";
 
 
     public async Task Process()
@@ -1154,6 +1155,28 @@ else
         }
 
         //non medical
+        var nonMedData = NonMedicalTerms;
+        if (!nonMedData.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (nonMedData == null || nonMedData.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (nonMedData!.Count != 0 || nonMedData.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\NonMedicalTermsPlaceholderRow.pptx";
+
+            await Task.Run(() =>
+             {
+                 dllClass.NonMedicalTermsMethod(CreateTargetPath(sourcePath1, nonMedData.First().ProjectTemplateType!), nonMedData);
+             });
+        }
 
 
         doneMsg = "Done";
@@ -1180,7 +1203,7 @@ else
         int[] sourceInput16 = { 16, 17 };
         int[] sourceInput17 = { 19, 20, 21 };
         int[] sourceInput18 = { 71, 72, 73, 74 };
-
+        int[] sourceInput19 = { 76 };
 
         //fit to concept
         if (!File.Exists(sourceFile1))
@@ -1426,7 +1449,7 @@ else
 
             if (count == 1)
             {
-                int endIndex = 71 + count + 4;                      // 
+                int endIndex = 71 + count + 4;                      // 71
 
                 DeleteSlide(destination, endIndex);
                 // DeleteSlide(destination, endIndex - 1);
@@ -1437,7 +1460,7 @@ else
 
             if (count == 2)
             {
-                int endIndex = 71 + count + 4;
+                int endIndex = 71 + count + 4;                       // 71, 72
 
                 DeleteSlide(destination, endIndex);              
                 DeleteSlide(destination, endIndex - 1);
@@ -1448,7 +1471,7 @@ else
 
             if (count == 3)                                      
             {
-                int endIndex = 71 + count + 4;
+                int endIndex = 71 + count + 4;                      // 71, 72, 73
 
                 DeleteSlide(destination, endIndex);
                 DeleteSlide(destination, endIndex - 1);
@@ -1459,7 +1482,7 @@ else
 
             if (count == 4)                                   
             {
-                int endIndex = 71 + count + 4;
+                int endIndex = 71 + count + 4;                       // 71, 72, 73, 74
 
                 DeleteSlide(destination, endIndex);
                 DeleteSlide(destination, endIndex - 1);
@@ -1470,7 +1493,75 @@ else
 
             if (count == 5)                                      
             {
-                int endIndex = 71 + count + 4;
+                int endIndex = 71 + count + 4;                      // 71, 72, 73, 74, 75
+
+                DeleteSlide(destination, endIndex);
+                DeleteSlide(destination, endIndex - 1);
+                DeleteSlide(destination, endIndex - 2);
+                DeleteSlide(destination, endIndex - 3);
+                DeleteSlide(destination, endIndex - 4);
+            }
+        }
+
+
+        //non-medical terms
+        if (!File.Exists(sourceFile16))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile16, destination, sourceInput19);
+
+            int count = CountSlides(sourceFile16);
+
+            if (count == 1)
+            {
+                int endIndex = 76 + count + 4;                      // 76
+
+                DeleteSlide(destination, endIndex);
+                // DeleteSlide(destination, endIndex - 1);
+                // DeleteSlide(destination, endIndex - 2);
+                // DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
+
+            if (count == 2)
+            {
+                int endIndex = 76 + count + 4;
+
+                DeleteSlide(destination, endIndex);
+                DeleteSlide(destination, endIndex - 1);
+                // DeleteSlide(destination, endIndex - 2);
+                // DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
+
+            if (count == 3)
+            {
+                int endIndex = 76 + count + 4;
+
+                DeleteSlide(destination, endIndex);
+                DeleteSlide(destination, endIndex - 1);
+                DeleteSlide(destination, endIndex - 2);
+                // DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
+
+            if (count == 4)
+            {
+                int endIndex = 76 + count + 4;
+
+                DeleteSlide(destination, endIndex);
+                DeleteSlide(destination, endIndex - 1);
+                DeleteSlide(destination, endIndex - 2);
+                DeleteSlide(destination, endIndex - 3);
+                // DeleteSlide(destination, endIndex - 4);
+            }
+
+            if (count == 5)
+            {
+                int endIndex = 76 + count + 4;
 
                 DeleteSlide(destination, endIndex);
                 DeleteSlide(destination, endIndex - 1);
