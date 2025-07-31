@@ -1152,7 +1152,7 @@ else
         int[] sourceInput14 = { 66, 67, 68 };
         int[] sourceInput15 = { 20 };
         int[] sourceInput16 = { 16, 17 };
-        int[] sourceInput17 = { 17,18,19 };
+        int[] sourceInput17 = { 19,20,21 };
 
         //fit to concept
         if (!File.Exists(sourceFile1))
@@ -1375,12 +1375,12 @@ else
         else
         {
             MergeSlideWithSlideArray(sourceFile14, destination, sourceInput17);    // 20, 38, 40, 41, 44, 45, 46, 82, 83,85, 87, 66, 67, 68, 69, 16, 17
+                                                                                   // 19,20,21
+            int x = sourceInput17[0] - 1;         //18
 
-            int x = sourceInput17[0] - 1;
-
-            // DeleteSlide(destination, x);
-            // DeleteSlide(destination, x - 1);
-            // DeleteSlide(destination, x - 2);
+            DeleteSlide(destination, x);            // 18  -> del 19
+            DeleteSlide(destination, x - 1);      // 17  -> del 18
+            DeleteSlide(destination, x - 2);      // 16  -> del 17
         }
 
 
