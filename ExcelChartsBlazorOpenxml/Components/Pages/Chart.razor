@@ -187,6 +187,7 @@ else
     string sourceFile15 = "C:\\Users\\bdas\\Downloads\\MedicalTerms_sample.pptx";
     string sourceFile16 = "C:\\Users\\bdas\\Downloads\\NonMedical_sample.pptx";
     string sourceFile17 = "C:\\Users\\bdas\\Downloads\\02Misleading_sample.pptx";
+    string sourceFile18 = "C:\\Users\\bdas\\Downloads\\03Exagg_sample.pptx";
 
     public async Task Process()
     {
@@ -1202,8 +1203,29 @@ else
            });
         }
 
+        //03 exagg
+        var exaggD = Exagg03;
+        if (!exaggD.Any())
+        {
+            emptyMessage = "No data present in api";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (exaggD == null || exaggD.ToString() == "[]")
+        {
+            emptyMessage = "Chart Not Available";
+            isErrorPresent = true;
+            StateHasChanged();
+        }
+        if (exaggD!.Count != 0 || exaggD.Any())
+        {
+            sourcePath1 = $"C:\\ExcelChartFiles\\Templates\\Exaggerative{exaggD.Count}.pptx";
 
-
+            await Task.Run(() =>
+           {
+               dllClass.Exagg03Method(CreateTargetPath(sourcePath1, exaggD.First().ProjectTemplateType!), exaggD);
+           });
+        }
 
         doneMsg = "Done";
         hasProcessStarted = false;
@@ -1231,6 +1253,7 @@ else
         int[] sourceInput18 = { 71, 72, 73, 74 };
         int[] sourceInput19 = { 76 };
         int[] sourceInput20 = { 88 };
+        int[] sourceInput21 = { 89 };
 
         //fit to concept
         if (!File.Exists(sourceFile1))
@@ -1607,8 +1630,21 @@ else
         else
         {
             MergeSlideWithSlideArray(sourceFile17, destination, sourceInput20);          // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87 , 88
-            int x = sourceInput10[0];
-            DeleteSlide(destination, x);
+            int x = sourceInput20[0];
+            DeleteSlide(destination, x-1);
+        }
+
+
+        //03 Exagg
+        if (!File.Exists(sourceFile18))
+        {
+            //skip
+        }
+        else
+        {
+            MergeSlideWithSlideArray(sourceFile18, destination, sourceInput21);          // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87 , 88
+             int x = sourceInput21[0];
+             DeleteSlide(destination, x-1);
         }
     }
 
