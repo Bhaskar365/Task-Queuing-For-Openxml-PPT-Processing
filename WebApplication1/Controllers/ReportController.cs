@@ -1,5 +1,8 @@
 ﻿
+using Azure.Core;
 using ClassLibrary1;
+using DocumentFormat.OpenXml.Office2016.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using ExcelChartsBlazorOpenxml.Components;
 using Microsoft.AspNetCore.Mvc;
 using SharedModels;
@@ -844,7 +847,43 @@ namespace WebApplicationAPI.Controllers
         [HttpPost("ppt/merge")]
         public IActionResult MergeRemove([FromBody] List<TaskLog> list)
         {
-            foreach(var listEl in list)
+
+            //try
+            //{
+
+
+            //    var connectionString = _configuration.GetConnectionString("DBConnection");
+            //    string user = "testUser";
+            //    var uniqueGUID = $"Final_PPT_{Guid.NewGuid()}";
+
+            //    _tracker.SetStatus(uniqueGUID, "Queued");
+
+            //    await _queue.EnqueueAsync(async token =>
+            //    {
+
+            //      _tracker.SetStatus(uniqueGUID, "Processing");
+
+            //      _taskLogging.InsertTask(data, connectionString!);
+            //      _taskLogging.SetTaskStatusState(uniqueGUID, "Processing", connectionString!, user);
+
+            //    }
+
+            //     data.CompletedOn = DateTime.UtcNow;
+            //     _taskLogging.MarkTaskAsCompleted(uniqueGUID, (DateTime)taskLog.CompletedOn, connectionString!, "Done");
+
+            //     _tracker.SetStatus(uniqueGUID, "Done");
+
+            //     _taskLogging.SetTaskStatusState(uniqueGUID, "Done", connectionString!, user);
+
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception(ex.Message);
+            //}
+
+
+            foreach (var listEl in list)
             {
                 var data = listEl;
 

@@ -19,4 +19,10 @@ namespace SharedModels.DTO
         public string CurrentStatus { get; set; } = string.Empty;
 
     }
+
+
+
+
+
+
 }
