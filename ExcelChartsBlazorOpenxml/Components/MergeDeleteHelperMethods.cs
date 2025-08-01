@@ -168,7 +168,7 @@ namespace ExcelChartsBlazorOpenxml.Components
         }
 
 
-        static int CountSlides(string presentationFile)
+        public static int CountSlides(string presentationFile)
         {
             // Open the presentation as read-only.
             using (PresentationDocument presentationDocument = PresentationDocument.Open(presentationFile, false))
@@ -202,7 +202,7 @@ namespace ExcelChartsBlazorOpenxml.Components
             return slidesCount;
         }
 
-        static void DeleteSlide(string presentationFile, int slideIndex)
+        public static void DeleteSlide(string presentationFile, int slideIndex)
         {
             // Open the source document as read/write.
             using (PresentationDocument presentationDocument = PresentationDocument.Open(presentationFile, true))

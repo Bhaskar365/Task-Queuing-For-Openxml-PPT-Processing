@@ -186,5 +186,11 @@ namespace ExcelChartsBlazorOpenxml.Services
             return userData;
         }
 
+        public async Task<List<TaskLog>> MergeSlides(List<TaskLog> taskLog)
+        {
+            var response = await _httpClient.PostAsJsonAsync<List<TaskLog>>($"api/report/ppt/merge", taskLog);
+            var result = await response.Content.ReadFromJsonAsync<List<TaskLog>>();
+            return result!;
+        }
     }
 }

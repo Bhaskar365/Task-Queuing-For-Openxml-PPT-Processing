@@ -50,6 +50,9 @@ namespace ExcelChartsBlazorOpenxml.Services
 
 
         Task<Guid> GenerateReportAsync(ReportGenerationRequest request);
+
+        Task<List<TaskLog>> MergeSlides(List<TaskLog> taskLog);
+
         Task<string> GetReportStatusAsync(Guid taskId);
 
         Task<List<TaskLog>> GetLogs();
@@ -57,6 +60,8 @@ namespace ExcelChartsBlazorOpenxml.Services
         Task<List<TaskLog>> GetUnfinishedLogs(string user);
 
         Task<List<TaskLog>> GetUserLogs(string user);
+
+
 
     }
 }

@@ -99,14 +99,14 @@ else
                             <td>@task.CreatedBy</td>
                             <td class="p-0">
                                 <button class="btn btn-info btn-sm"
-                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                                        @onclick="@(()=>RetryAgain(task))">
+                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                                @onclick="@(()=>RetryAgain(task))">
                                     Retry
                                 </button>
                                 &nbsp;
                                 <button class="btn btn-danger btn-sm"
-                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                                        @onclick="@(()=>RemoveTask(task))">
+                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                                @onclick="@(()=>RemoveTask(task))">
                                     Remove
                                 </button>
                             </td>
@@ -330,7 +330,7 @@ else
 
             finalLogs = await fitToConceptService.GetUserLogs(user);
 
-            
+            await fitToConceptService.MergeSlides(finalLogs);
 
             StateHasChanged();
         }
@@ -376,7 +376,7 @@ else
                 var existing = reportStatuses.FirstOrDefault(x => x.TaskId == taskId);
                 if (existing != null) existing.Status = status;
 
-                if (!(status == "Done" || status.StartsWith("Error") || status == "Fail"))
+                if (!(status == "Done" || status.StartsWith("Processing") || status == "Fail"))
                 {
                     allDone = false;
                 }

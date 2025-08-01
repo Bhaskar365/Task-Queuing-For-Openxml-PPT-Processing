@@ -1,5 +1,6 @@
 ﻿
 using ClassLibrary1;
+using ExcelChartsBlazorOpenxml.Components;
 using Microsoft.AspNetCore.Mvc;
 using SharedModels;
 using SharedModels.DTO;
@@ -36,6 +37,49 @@ namespace WebApplicationAPI.Controllers
             _repository = repository;
         }
 
+
+        public string destination = "C:\\ExcelChartFiles\\MRRxNaming.pptx";
+
+        public string sourceFile1 = "C:\\Users\\bdas\\Downloads\\FittoConcept_sample.pptx";
+        public string sourceFile2 = "C:\\Users\\bdas\\Downloads\\OverallImpressions_sample.pptx";
+        public string sourceFile3 = "C:\\Users\\bdas\\Downloads\\PersonalPref_sample.pptx";
+        public string sourceFile4 = "C:\\Users\\bdas\\Downloads\\VerbalUnder_sample.pptx";
+        public string sourceFile5 = "C:\\Users\\bdas\\Downloads\\writtenUnd_sample.pptx";
+        public string sourceFile6 = "C:\\Users\\bdas\\Downloads\\Att1_sample.pptx";
+        public string sourceFile7 = "C:\\Users\\bdas\\Downloads\\Att2_sample.pptx";
+        public string sourceFile8 = "C:\\Users\\bdas\\Downloads\\AttrAggr_sample.pptx";
+        public string sourceFile9 = "C:\\Users\\bdas\\Downloads\\Memorability_sample.pptx";
+        public string sourceFile10 = "C:\\Users\\bdas\\Downloads\\Exaggerative_sample.pptx";
+        public string sourceFile11 = "C:\\Users\\bdas\\Downloads\\SALA_sample.pptx";
+        public string sourceFile12 = "C:\\Users\\bdas\\Downloads\\QTC_sample.pptx";
+        public string sourceFile13 = "C:\\Users\\bdas\\Downloads\\BrandexSafety_sample.pptx";
+        public string sourceFile14 = "C:\\Users\\bdas\\Downloads\\BrandexStrategicDistinctiveness_sample.pptx";
+        public string sourceFile15 = "C:\\Users\\bdas\\Downloads\\MedicalTerms_sample.pptx";
+        public string sourceFile16 = "C:\\Users\\bdas\\Downloads\\NonMedical_sample.pptx";
+        public string sourceFile17 = "C:\\Users\\bdas\\Downloads\\02Misleading_sample.pptx";
+        public string sourceFile18 = "C:\\Users\\bdas\\Downloads\\03Exagg_sample.pptx";
+
+        public int[] sourceInput1 = { 38 };
+        public int[] sourceInput2 = { 85 };
+        public int[] sourceInput3 = { 40 };
+        public int[] sourceInput4 = { 41 };
+        public int[] sourceInput5 = { 44 };
+        public int[] sourceInput6 = { 45 };
+        public int[] sourceInput7 = { 46 };
+        public int[] sourceInput8 = { 82 };
+        public int[] sourceInput9 = { 83 };
+        public int[] sourceInput10 = { 87 };
+        public int[] sourceInput11 = { 66, 67, 68, 69 };
+        public int[] sourceInput12 = { 66 };
+        public int[] sourceInput13 = { 66, 67 };
+        public int[] sourceInput14 = { 66, 67, 68 };
+        public int[] sourceInput15 = { 20 };
+        public int[] sourceInput16 = { 16, 17 };
+        public int[] sourceInput17 = { 19, 20, 21 };
+        public int[] sourceInput18 = { 71, 72, 73, 74 };
+        public int[] sourceInput19 = { 76 };
+        public int[] sourceInput20 = { 88 };
+        public int[] sourceInput21 = { 89 };
 
 
 
@@ -795,6 +839,435 @@ namespace WebApplicationAPI.Controllers
                 ProjectType = request.ProjectTemplateType,
             });
         }
+
+
+        [HttpPost("ppt/merge")]
+        public IActionResult MergeRemove([FromBody] List<TaskLog> list)
+        {
+            foreach(var listEl in list)
+            {
+                var data = listEl;
+
+                //fit to concept
+                if (!System.IO.File.Exists(sourceFile1))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile1, destination, sourceInput1);       // 38
+
+                    int x = sourceInput1[0] - 1;
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x);
+                }
+
+
+                // overall impressions
+                if (!System.IO.File.Exists(sourceFile2))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile2, destination, sourceInput2);        // 38, 85
+                    MergeDeleteHelperMethods.DeleteSlide(destination, sourceInput2[0] - 1);
+                }
+
+                //Att 1
+                if (!System.IO.File.Exists(sourceFile6))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile6, destination, sourceInput3);       // 38, 85, 40
+                    MergeDeleteHelperMethods.DeleteSlide(destination, sourceInput3[0] - 1);
+                }
+
+                //Att 2
+                if (!System.IO.File.Exists(sourceFile7))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile7, destination, sourceInput4);      //  38, 85, 40, 41
+                    int x = sourceInput4[0] - 1;
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x);
+                }
+
+                //Att Agg
+                if (!System.IO.File.Exists(sourceFile8))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile8, destination, sourceInput5);   // 38, 85, 40, 41, 44
+                    int x = sourceInput5[0] - 1;
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x);
+                }
+
+                // memorability
+                if (!System.IO.File.Exists(sourceFile9))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile9, destination, sourceInput6);       // 38, 85, 40, 41, 44, 45
+                    int x = sourceInput6[0] - 1;
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x);
+                }
+
+                // personal pref
+                if (!System.IO.File.Exists(sourceFile3))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile3, destination, sourceInput7);  // 38, 85, 40, 41, 44, 45, 46
+                    int x = sourceInput7[0] - 1;
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x);
+                }
+
+                //verbal unders
+                if (!System.IO.File.Exists(sourceFile4))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile4, destination, sourceInput8);        // 38, 85, 40, 41, 44, 45, 46, 82
+                    int x = sourceInput8[0] - 1;
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x);
+                }
+
+                // written underst
+                if (!System.IO.File.Exists(sourceFile5))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile5, destination, sourceInput9);            // 38, 85, 40, 41, 44, 45, 46, 82, 83
+                    int x = sourceInput9[0] - 1;
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x);
+                }
+
+                //exagg
+                if (!System.IO.File.Exists(sourceFile10))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile10, destination, sourceInput10);          // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87
+                    int x = sourceInput10[0] - 1;
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x);
+                }
+
+                // SALA
+                if (!System.IO.File.Exists(sourceFile11))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile11, destination, sourceInput11);
+                    int count = MergeDeleteHelperMethods.CountSlides(sourceFile11);
+
+                    if (count == 1)
+                    {
+                        int endIndex = 66 + count + 4;                      // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87,   66
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        // DeleteSlide(destination, endIndex - 1);
+                        // DeleteSlide(destination, endIndex - 2);
+                        // DeleteSlide(destination, endIndex - 3);
+                        // DeleteSlide(destination, endIndex - 4);
+                    }
+
+                    if (count == 2)
+                    {
+                        int endIndex = 66 + count + 4;
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);              // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87,   66, 67
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 1);
+                        // DeleteSlide(destination, endIndex - 2);
+                        // DeleteSlide(destination, endIndex - 3);
+                        // DeleteSlide(destination, endIndex - 4);
+                    }
+
+                    if (count == 3)                                      // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87,   66, 67, 68
+                    {
+                        int endIndex = 66 + count + 4;
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 1);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 2);
+                        // DeleteSlide(destination, endIndex - 3);
+                        // DeleteSlide(destination, endIndex - 4);
+                    }
+
+                    if (count == 4)                                     // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87,   66, 67, 68, 69
+                    {
+                        int endIndex = 66 + count + 4;
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 1);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 2);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 3);
+                        // DeleteSlide(destination, endIndex - 4);
+                    }
+
+                    if (count == 5)                                      // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87,   66, 67, 68, 69, 70
+                    {
+                        int endIndex = 66 + count + 4;
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 1);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 2);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 3);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 4);
+                    }
+                }
+
+                //qtc
+                if (!System.IO.File.Exists(sourceFile12))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile12, destination, sourceInput15);        //  20, 38,  40, 41, 44, 45, 46, 82, 83,85, 87,   66, 67, 68, 69,
+                    int x = sourceInput15[0] - 1;
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x);
+                }
+
+                //brandex safety
+                if (!System.IO.File.Exists(sourceFile13))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile13, destination, sourceInput16);    //  20, 38,  40, 41, 44, 45, 46, 82, 83,85, 87, 66, 67, 68, 69, 16, 17
+
+                    int x = sourceInput16[0] - 1;
+
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x);
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x - 1);
+                }
+
+                //brandex strategic distinctiveness
+                if (!System.IO.File.Exists(sourceFile14))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile14, destination, sourceInput17);    // 20, 38, 40, 41, 44, 45, 46, 82, 83,85, 87, 66, 67, 68, 69, 16, 17
+                                                                                           // 19,20,21
+                    int x = sourceInput17[0] - 1;         //18
+
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x);            // 18  -> del 19
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x - 1);      // 17  -> del 18
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x - 2);      // 16  -> del 17
+                }
+
+
+                //medical terms
+                if (!System.IO.File.Exists(sourceFile15))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile15, destination, sourceInput18);     // 20, 38, 40, 41, 44, 45, 46, 82, 83,85, 87, 66, 67, 68, 69, 16, 17
+                                                                                            //  19,20,21
+
+                    int count = MergeDeleteHelperMethods.CountSlides(sourceFile15);
+
+                    if (count == 1)
+                    {
+                        int endIndex = 71 + count + 4;                      // 71
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        // DeleteSlide(destination, endIndex - 1);
+                        // DeleteSlide(destination, endIndex - 2);
+                        // DeleteSlide(destination, endIndex - 3);
+                        // DeleteSlide(destination, endIndex - 4);
+                    }
+
+                    if (count == 2)
+                    {
+                        int endIndex = 71 + count + 4;                       // 71, 72
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 1);
+                        // DeleteSlide(destination, endIndex - 2);
+                        // DeleteSlide(destination, endIndex - 3);
+                        // DeleteSlide(destination, endIndex - 4);
+                    }
+
+                    if (count == 3)
+                    {
+                        int endIndex = 71 + count + 4;                      // 71, 72, 73
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 1);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 2);
+                        // DeleteSlide(destination, endIndex - 3);
+                        // DeleteSlide(destination, endIndex - 4);
+                    }
+
+                    if (count == 4)
+                    {
+                        int endIndex = 71 + count + 4;                       // 71, 72, 73, 74
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 1);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 2);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 3);
+                        // DeleteSlide(destination, endIndex - 4);
+                    }
+
+                    if (count == 5)
+                    {
+                        int endIndex = 71 + count + 4;                      // 71, 72, 73, 74, 75
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 1);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 2);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 3);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 4);
+                    }
+                }
+
+
+                //non-medical terms
+                if (!System.IO.File.Exists(sourceFile16))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile16, destination, sourceInput19);
+
+                    int count = MergeDeleteHelperMethods.CountSlides(sourceFile16);
+
+                    if (count == 1)
+                    {
+                        int endIndex = 76 + count + 4;                      // 76
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        // DeleteSlide(destination, endIndex - 1);
+                        // DeleteSlide(destination, endIndex - 2);
+                        // DeleteSlide(destination, endIndex - 3);
+                        // DeleteSlide(destination, endIndex - 4);
+                    }
+
+                    if (count == 2)
+                    {
+                        int endIndex = 76 + count + 4;
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 1);
+                        // DeleteSlide(destination, endIndex - 2);
+                        // DeleteSlide(destination, endIndex - 3);
+                        // DeleteSlide(destination, endIndex - 4);
+                    }
+
+                    if (count == 3)
+                    {
+                        int endIndex = 76 + count + 4;
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 1);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 2);
+                        // DeleteSlide(destination, endIndex - 3);
+                        // DeleteSlide(destination, endIndex - 4);
+                    }
+
+                    if (count == 4)
+                    {
+                        int endIndex = 76 + count + 4;
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 1);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 2);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 3);
+                        // DeleteSlide(destination, endIndex - 4);
+                    }
+
+                    if (count == 5)
+                    {
+                        int endIndex = 76 + count + 4;
+
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 1);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 2);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 3);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, endIndex - 4);
+                    }
+                }
+
+
+                //02 Misleading
+                if (!System.IO.File.Exists(sourceFile17))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile17, destination, sourceInput20);          // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87 , 88
+                    int x = sourceInput20[0];
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x - 1);
+                }
+
+
+                //03 Exagg
+                if (!System.IO.File.Exists(sourceFile18))
+                {
+                    //skip
+                }
+                else
+                {
+                    MergeDeleteHelperMethods.MergeSlideWithSlideArray(sourceFile18, destination, sourceInput21);          // 38, 85, 40, 41, 44, 45, 46, 82, 83, 87 , 88
+                    int x = sourceInput21[0];
+                    MergeDeleteHelperMethods.DeleteSlide(destination, x - 1);
+                }
+
+                MergeDeleteHelperMethods.DeleteSlide(destination, 93);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 92);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 91);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 90);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 89);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 83);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 80);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 79);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 78);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 77);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 75);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 70);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 65);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 64);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 63);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 48);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 46);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 42);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 41);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 35);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 34);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 33);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 32);
+                MergeDeleteHelperMethods.DeleteSlide(destination, 31);
+            }
+            return Ok(list);
+        }
+
 
         [HttpGet("status/{taskId}")]
         public IActionResult GetStatus(Guid taskId)
