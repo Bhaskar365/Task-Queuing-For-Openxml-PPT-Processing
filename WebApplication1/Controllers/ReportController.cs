@@ -1,12 +1,8 @@
-﻿using Azure.Core;
+﻿
 using ClassLibrary1;
-using DocumentFormat.OpenXml.Office2016.Excel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using SharedModels;
 using SharedModels.DTO;
-using System.Threading.Tasks;
 using WebApplication1.Repositories;
 using WebApplicationAPI.Queueing;
 using WebApplicationAPI.TaskLogging;

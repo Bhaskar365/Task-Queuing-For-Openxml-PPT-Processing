@@ -177,5 +177,14 @@ namespace ExcelChartsBlazorOpenxml.Services
             return response!;
         }
 
+        public async Task<List<TaskLog>> GetUserLogs(string user)
+        {
+            var response = await _httpClient.GetFromJsonAsync<List<TaskLog>>($"api/report/user/taskLogs");
+
+            var userData = response!.Where(x => x.CreatedBy == user).ToList();    
+
+            return userData;
+        }
+
     }
 }
