@@ -1712,30 +1712,30 @@ namespace WebApplicationAPI.Controllers
                         }
 
 
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 93);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 92);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 91);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 90);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 89);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 83);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 80);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 79);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 78);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 77);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 75);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 70);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 65);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 64);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 63);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 48);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 46);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 42);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 41);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 35);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 34);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 33);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 32);
-                        //MergeDeleteHelperMethods.DeleteSlide(destination, 31);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 93);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 92);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 91);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 90);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 89);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 83);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 80);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 79);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 78);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 77);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 75);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 70);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 65);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 64);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 63);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 48);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 46);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 42);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 41);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 35);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 34);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 33);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 32);
+                        MergeDeleteHelperMethods.DeleteSlide(destination, 31);
 
                         taskLog.CompletedOn = DateTime.UtcNow;
                         _taskLogging.MarkTaskAsCompleted(taskLog.TaskId.ToString(), (DateTime)taskLog.CompletedOn, connectionString!, "Done");
