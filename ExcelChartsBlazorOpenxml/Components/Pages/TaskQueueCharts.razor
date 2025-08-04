@@ -178,12 +178,6 @@ else
     }
 }
 
-@if (finalLogs.Count > 0)
-{
-    <p>@finalLogs.First().ProjectType</p>
-    <p>@finalLogs.First().CurrentStatus</p>
-    <p>@finalLogs.First().CreatedBy</p>
-}
 
 @code {
 
@@ -203,6 +197,7 @@ else
             "Processing" => "text-warning bg-dark",
             "Fail" => "text-danger bg-dark",
             "Queued" => "text-primary-emphasis bg-dark",
+            "Merging" => "text-info-emphasis",
             _ => "text-info-emphasis bg-dark"
         };
     }
