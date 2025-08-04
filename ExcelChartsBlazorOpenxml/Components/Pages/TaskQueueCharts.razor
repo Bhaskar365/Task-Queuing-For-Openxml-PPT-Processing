@@ -325,8 +325,37 @@ else
 
             finalLogs = await fitToConceptService.GetUserLogs(user);
 
-            await fitToConceptService.MergeSlides(finalLogs);
+            var result = await fitToConceptService.MergeSlides(finalLogs);
 
+            Guid guid = Guid.NewGuid();
+
+            if (result!=null)
+            {
+                reportStatuses.Add(new ReportStatus
+                    {
+                        ProjectName = "RACKEM",
+                        TaskId = guid,
+                        Status = "Merging"
+                    });
+
+                var lastListEl = result.Last();
+
+                if (lastListEl != null)
+                {
+                    var res = lastListEl.CurrentStatus;
+
+                    if(res=="Done")
+                    {
+                        reportStatuses.Add(new ReportStatus
+                            {
+                                Status = "Done"
+                            });
+                    }
+                }
+                StateHasChanged();
+            }
+
+           
             StateHasChanged();
         }
         catch (Exception ex)
