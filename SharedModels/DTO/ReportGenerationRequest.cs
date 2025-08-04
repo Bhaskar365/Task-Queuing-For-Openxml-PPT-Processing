@@ -25,4 +25,42 @@ namespace SharedModels.DTO
         public string ProjectType { get; set; } = string.Empty;
     }
 
+
+    //public class APIRequestModel
+    //{
+    //    public string project { get; set; } = string.Empty;
+    //   public string template { get; set; } = string.Empty;
+    //    public string group { get; set; } = string.Empty;
+    //    public string breakdown { get; set; } = string.Empty;
+    //    public string HistoricalMeanType { get; set; } = string.Empty;
+    //    public string HistoricalMeanDescription { get; set; } = string.Empty;
+    //}
+
+    public class APIRequestModel
+    {
+        string project = "";
+        string template = "";
+        string group = "";
+        string breakdown = "";
+        string HistoricalMeanType = "";
+        string HistoricalMeanDescription = "";
+
+        public APIRequestModel() { }
+
+        public APIRequestModel(string project,
+                          string template,
+                          string group,
+                          string breakdown,
+                          string HistoricalMeanType,
+                          string HistoricalMeanDescription)
+        {
+            this.project = project;
+            this.template = template;
+            this.group = group;
+            this.breakdown = breakdown;
+            this.HistoricalMeanDescription = HistoricalMeanDescription;
+            this.HistoricalMeanType = HistoricalMeanType;
+        }
+    }
+
 }

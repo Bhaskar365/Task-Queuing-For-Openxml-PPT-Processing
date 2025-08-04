@@ -99,14 +99,14 @@ else
                             <td>@task.CreatedBy</td>
                             <td class="p-0">
                                 <button class="btn btn-info btn-sm"
-                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                                @onclick="@(()=>RetryAgain(task))">
+                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                                        @onclick="@(()=>RetryAgain(task))">
                                     Retry
                                 </button>
                                 &nbsp;
                                 <button class="btn btn-danger btn-sm"
-                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                                @onclick="@(()=>RemoveTask(task))">
+                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                                        @onclick="@(()=>RemoveTask(task))">
                                     Remove
                                 </button>
                             </td>
@@ -188,6 +188,9 @@ else
     List<TaskLog> finalLogs = new List<TaskLog>();
 
     ProcessState currentState = ProcessState.Idle;
+
+    private bool isMerging = false;
+    private bool isMergeComplete = false;
 
     public string GetStatusClass(string status)
     {
@@ -283,15 +286,32 @@ else
                                     "Brandex Strategic Distinctiveness",
                                     "Medical Terms",
                                     "Non-Medical Terms",
-                                    "01 Untrue",
                                     "02 Misleading",
                                     "03 Exagg",
                                 };
+
+    List<APIRequestModel> api = new List<APIRequestModel>
+    {
+
+        new APIRequestModel("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Attribute 1", "Attribute 1", "OVERALL","",""),
+        new APIRequestModel("RACKEM", "Attribute 2", "Attribute 2", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Attribute 3", "Attribute 3", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "01 Untrue", "01 Untrue", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "02 Misleading", "02 Misleading", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "03 Exagg", "03 Exagg", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Memorability", "Memorability", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
+    };
+
 
     private async Task Process()
     {
         hasProcessStarted = true;
         currentState = ProcessState.Generating;
+
+        isMerging = false;
+        isMergeComplete = false;
 
         var taskIds = new List<Guid>();
 
@@ -325,11 +345,13 @@ else
 
             finalLogs = await fitToConceptService.GetUserLogs(user);
 
+
+
             var result = await fitToConceptService.MergeSlides(finalLogs);
 
             Guid guid = Guid.NewGuid();
 
-            if (result!=null)
+            if (result != null)
             {
                 reportStatuses.Add(new ReportStatus
                     {
@@ -344,18 +366,16 @@ else
                 {
                     var res = lastListEl.CurrentStatus;
 
-                    if(res=="Done")
+                    if (res == "Done")
                     {
-                        reportStatuses.Add(new ReportStatus
-                            {
-                                Status = "Done"
-                            });
+                        reportStatuses.First(x => x.TaskId == guid).Status = "Done";
+                        StateHasChanged();
                     }
                 }
                 StateHasChanged();
             }
 
-           
+
             StateHasChanged();
         }
         catch (Exception ex)

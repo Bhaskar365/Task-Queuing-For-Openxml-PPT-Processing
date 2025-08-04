@@ -867,8 +867,6 @@ namespace WebApplicationAPI.Controllers
                     CurrentStatus = "Processing"
                 };
 
-                Console.WriteLine(taskLog);
-
                 try
                 {
                     _tracker.SetStatus(taskLog.TaskId, "Queued");
