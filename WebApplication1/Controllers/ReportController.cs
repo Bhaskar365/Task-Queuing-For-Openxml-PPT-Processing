@@ -14,6 +14,8 @@ using WebApplicationAPI.Queueing;
 using WebApplicationAPI.TaskLogging;
 using WebApplicationAPI.TaskTracking;
 
+using OpenXmlDLLDotnetFramework;
+
 namespace WebApplicationAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -843,6 +845,41 @@ namespace WebApplicationAPI.Controllers
                 TaskId = request.TaskId,
                 ProjectType = request.ProjectTemplateType,
             });
+        }
+
+
+        public string finalTemplateName = "C:\\ExcelChartFiles\\MRRxNaming.pptx";
+
+        [HttpPost("dllgenerate")]
+        public async Task<IActionResult> GenerateReportUsingDLL([FromBody] ReportGenerationRequestDLL request) 
+        {
+            APIWrapper apiWrapperDllClass = new APIWrapper();
+
+            var connectionString = _configuration.GetConnectionString("DBConnection");
+            string user = "testUser";
+
+            _tracker.SetStatus(request.TaskId, "Queued");
+
+            await _queue.EnqueueAsync(async token => 
+            {
+                try
+                {
+                    _tracker.SetStatus(request.TaskId, "Processing");
+                    await apiWrapperDllClass.OpenXMLParallelProcess(request.project,request.templates,request.breakdowns,request.HistoricalMeanType,request.HistoricalMeanDescription, finalTemplateName);
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            });
+
+            return Ok(new ReportStatusDto
+            {
+                TaskId = request.TaskId,
+                ProjectType = request.project,
+            });
+
         }
 
 

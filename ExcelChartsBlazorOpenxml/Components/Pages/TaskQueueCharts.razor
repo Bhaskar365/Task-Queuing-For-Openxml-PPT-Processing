@@ -16,7 +16,9 @@
 }
 else
 {
-    <button type="button" class="btn btn-primary buttonload" @onclick="Process">Generate Report</button>
+    @* <button type="button" class="btn btn-primary buttonload" @onclick="Process">Generate Report</button> *@
+
+    <button type="button" @onclick="ProcessDLL"></button>
 
     <div>
         <div class="card card-body">
@@ -99,14 +101,14 @@ else
                             <td>@task.CreatedBy</td>
                             <td class="p-0">
                                 <button class="btn btn-info btn-sm"
-                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                                        @onclick="@(()=>RetryAgain(task))">
+                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                                @onclick="@(()=>RetryAgain(task))">
                                     Retry
                                 </button>
                                 &nbsp;
                                 <button class="btn btn-danger btn-sm"
-                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                                        @onclick="@(()=>RemoveTask(task))">
+                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                                @onclick="@(()=>RemoveTask(task))">
                                     Remove
                                 </button>
                             </td>
@@ -290,19 +292,6 @@ else
                                     "03 Exagg",
                                 };
 
-    List<APIRequestModel> api = new List<APIRequestModel>
-    {
-
-        new APIRequestModel("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "Attribute 1", "Attribute 1", "OVERALL","",""),
-        new APIRequestModel("RACKEM", "Attribute 2", "Attribute 2", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "Attribute 3", "Attribute 3", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "01 Untrue", "01 Untrue", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "02 Misleading", "02 Misleading", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "03 Exagg", "03 Exagg", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "Memorability", "Memorability", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
-    };
 
 
     private async Task Process()
@@ -430,6 +419,55 @@ else
             await Task.Delay(10); // Wait a bit before next check
         }
     }
+
+
+
+    List<APIRequestModel> projectWrapperAPIList = new List<APIRequestModel>
+    {
+        new APIRequestModel("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Attribute 1", "Attribute 1", "OVERALL","",""),
+        new APIRequestModel("RACKEM", "Attribute 2", "Attribute 2", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Attribute 3", "Attribute 3", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "01 Untrue", "01 Untrue", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "02 Misleading", "02 Misleading", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "03 Exagg", "03 Exagg", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Memorability", "Memorability", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
+    };
+
+    private async Task ProcessDLL()
+    {
+        var taskIdList = new List<Guid>();
+
+        try
+        {
+            foreach (var projectEl in projectWrapperAPIList)
+            {
+                var request = new ReportGenerationRequestDLL
+                    {
+                        project = projectEl.project,
+                        templates = string.IsNullOrWhiteSpace(projectEl.template)  ? new List<string>(): new List<string> { projectEl.template },
+                        breakdowns = string.IsNullOrWhiteSpace(projectEl.breakdown) ? new List<string>() : new List<string> { projectEl.template },
+                        HistoricalMeanType = projectEl.HistoricalMeanType,
+                        HistoricalMeanDescription = projectEl.HistoricalMeanDescription,
+                        TaskId = Guid.NewGuid()
+                    };
+
+                taskIdList.Add(request.TaskId);
+
+               // var taskId = await fitToConceptService.GenerateReportAsync(request);
+
+
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+
+
+
 }
 
 

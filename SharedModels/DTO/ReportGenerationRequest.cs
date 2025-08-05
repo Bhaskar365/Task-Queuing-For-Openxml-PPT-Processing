@@ -12,6 +12,24 @@ namespace SharedModels.DTO
         public Guid TaskId { get; set; } = Guid.NewGuid();
     }
 
+    public class ReportGenerationRequestDLL
+    {
+        public string project { get; set; } = string.Empty;
+
+        public List<string>? templates { get; set; } 
+
+        public List<string>? breakdowns { get; set; }
+
+        public string HistoricalMeanType { get; set; } = string.Empty;
+
+        public string HistoricalMeanDescription { get; set; } = string.Empty;
+
+        public Guid TaskId { get; set; } = Guid.NewGuid();
+    }
+
+
+
+
     public class ReportGenerationResponse
     {
         public Guid TaskId { get; set; }
@@ -38,12 +56,12 @@ namespace SharedModels.DTO
 
     public class APIRequestModel
     {
-        string project = "";
-        string template = "";
-        string group = "";
-        string breakdown = "";
-        string HistoricalMeanType = "";
-        string HistoricalMeanDescription = "";
+        public string project = "";
+        public string template = "";
+        public string group = "";
+        public string breakdown = "";
+        public string HistoricalMeanType = "";
+        public string HistoricalMeanDescription = "";
 
         public APIRequestModel() { }
 

@@ -85,6 +85,13 @@ namespace ExcelChartsBlazorOpenxml.Services
             return result!.TaskId;
         }
 
+        public async Task<Guid> GenerateReportDLLAsync(ReportGenerationRequest request)
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/report/dllgenerate", request);
+            var result = await response.Content.ReadFromJsonAsync<ReportGenerationResponse>();
+            return result!.TaskId;
+        }
+
         public async Task<string> GetReportStatusAsync(Guid taskId)
         {
             var response = await _httpClient.GetFromJsonAsync<ReportStatusDto>($"api/report/status/{taskId}");

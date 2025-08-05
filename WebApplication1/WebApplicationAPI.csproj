@@ -26,4 +26,10 @@
     <ProjectReference Include="..\SharedModels\SharedModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="OpenXmlDll">
+      <HintPath>C:\Users\bdas\Downloads\OpenXMLDll\OpenXmlDll\OpenXmlDll\bin\Release\OpenXmlDll.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
