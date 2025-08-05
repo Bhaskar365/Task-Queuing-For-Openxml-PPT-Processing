@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.VariantTypes;
+﻿using DocumentFormat.OpenXml.Office2016.Excel;
+using DocumentFormat.OpenXml.VariantTypes;
 using SharedModels;
 using SharedModels.DTO;
 using WebApplicationAPI.Models;
@@ -198,6 +199,13 @@ namespace ExcelChartsBlazorOpenxml.Services
             var response = await _httpClient.PostAsJsonAsync("api/report/dllgenerate", request);
             var result = await response.Content.ReadFromJsonAsync<ReportGenerationResponse>();
             return result!.TaskId;
+        }
+
+        public async Task<List<TaskLog>> SendDLLMergeRequest(List<APIRequestModel> projectWrapperAPIList)
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", projectWrapperAPIList);
+            var result = await response.Content.ReadFromJsonAsync<List<TaskLog>>();
+            return result!;
         }
     }
 }

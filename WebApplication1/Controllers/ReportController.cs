@@ -851,7 +851,7 @@ namespace WebApplicationAPI.Controllers
         }
 
 
-        public string finalTemplateName = "C:\\ExcelChartFiles\\MRRxNaming.pptx";
+       
 
         [HttpPost("dllgenerate")]
         public async Task<IActionResult> GenerateReportUsingDLL([FromBody] ReportGenerationRequestDLL request) 
@@ -958,8 +958,27 @@ namespace WebApplicationAPI.Controllers
         }
 
 
-        [HttpPost("dllpptMerge")]
-        
+        public string finalTemplateName = "C:\\ExcelChartFiles\\MRRxNaming.pptx";
+
+        [HttpPost("ppt/dllMerge")]
+        public async Task<IActionResult> MergeUsingDLL([FromBody] List<APIRequestModel> projectWrapperAPIList)
+        {
+            APIWrapper apiWrapperDllClass = new APIWrapper();
+
+            List<string> chartList = new List<string>();
+
+            foreach (var templates in projectWrapperAPIList) 
+            {
+                chartList.Add(templates.template);
+            }
+
+            foreach(var projEl in projectWrapperAPIList)
+            {
+               await apiWrapperDllClass.addChartsToFinalTemplate1(projEl.project,chartList, finalTemplateName,projEl.breakdown);
+            }
+
+            return Ok(Guid.NewGuid());
+        }
 
         [HttpGet("status/{taskId}")]
         public IActionResult GetStatus(Guid taskId)

@@ -58,12 +58,12 @@ namespace SharedModels.DTO
 
     public class APIRequestModel
     {
-        public string project = "";
-        public string template = "";
-        public string group = "";
-        public string breakdown = "";
-        public string HistoricalMeanType = "";
-        public string HistoricalMeanDescription = "";
+        public string project { get; set; } = "";
+        public string template { get; set; } = "";
+        public string group { get; set; } = "";
+        public string breakdown { get; set; } = "";
+        public string HistoricalMeanType { get; set; } = "";
+        public string HistoricalMeanDescription { get; set; } = "";
 
         public APIRequestModel() { }
 
