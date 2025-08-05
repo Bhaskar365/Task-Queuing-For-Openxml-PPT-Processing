@@ -6,6 +6,9 @@ using DocumentFormat.OpenXml.Office2016.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using ExcelChartsBlazorOpenxml.Components;
 using Microsoft.AspNetCore.Mvc;
+
+using OpenXmlDLLDotnetFramework;
+
 using SharedModels;
 using SharedModels.DTO;
 using System.Threading.Tasks;
@@ -14,7 +17,7 @@ using WebApplicationAPI.Queueing;
 using WebApplicationAPI.TaskLogging;
 using WebApplicationAPI.TaskTracking;
 
-using OpenXmlDLLDotnetFramework;
+
 
 namespace WebApplicationAPI.Controllers
 {
@@ -853,19 +856,39 @@ namespace WebApplicationAPI.Controllers
         [HttpPost("dllgenerate")]
         public async Task<IActionResult> GenerateReportUsingDLL([FromBody] ReportGenerationRequestDLL request) 
         {
-            APIWrapper apiWrapperDllClass = new APIWrapper();
+            try
+            {
+                APIWrapper apiWrapperDllClass = new APIWrapper();
 
-            var connectionString = _configuration.GetConnectionString("DBConnection");
-            string user = "testUser";
+                var connectionString = _configuration.GetConnectionString("DBConnection");
+                string user = "testUser";
 
-            _tracker.SetStatus(request.TaskId, "Queued");
+                _tracker.SetStatus(request.TaskId, "Queued");
+
+                _tracker.SetStatus(request.TaskId, "Processing");
+                await apiWrapperDllClass.OpenXMLParallelProcess(request.project, request.templates, request.breakdowns, request.HistoricalMeanType, request.HistoricalMeanDescription, finalTemplateName);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            //APIWrapper apiWrapperDllClass = new APIWrapper();
+
+            //var connectionString = _configuration.GetConnectionString("DBConnection");
+            //string user = "testUser";
+
+            //_tracker.SetStatus(request.TaskId, "Queued");
+
+            //_tracker.SetStatus(request.TaskId, "Processing");
+            //await apiWrapperDllClass.OpenXMLParallelProcess(request.project, request.templates, request.breakdowns, request.HistoricalMeanType, request.HistoricalMeanDescription, finalTemplateName);
 
             await _queue.EnqueueAsync(async token => 
             {
                 try
                 {
-                    _tracker.SetStatus(request.TaskId, "Processing");
-                    await apiWrapperDllClass.OpenXMLParallelProcess(request.project,request.templates,request.breakdowns,request.HistoricalMeanType,request.HistoricalMeanDescription, finalTemplateName);
+                    //_tracker.SetStatus(request.TaskId, "Processing");
+                    //await apiWrapperDllClass.OpenXMLParallelProcess(request.project,request.templates,request.breakdowns,request.HistoricalMeanType,request.HistoricalMeanDescription, finalTemplateName);
 
                 }
                 catch (Exception ex)

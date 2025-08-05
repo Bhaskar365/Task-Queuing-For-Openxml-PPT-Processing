@@ -18,7 +18,7 @@ else
 {
     @* <button type="button" class="btn btn-primary buttonload" @onclick="Process">Generate Report</button> *@
 
-    <button type="button" @onclick="ProcessDLL"></button>
+    <button type="button" class="btn btn-primary buttonload" @onclick="ProcessDLL">Generate Report</button>
 
     <div>
         <div class="card card-body">
@@ -447,7 +447,7 @@ else
                     {
                         project = projectEl.project,
                         templates = string.IsNullOrWhiteSpace(projectEl.template)  ? new List<string>(): new List<string> { projectEl.template },
-                        breakdowns = string.IsNullOrWhiteSpace(projectEl.breakdown) ? new List<string>() : new List<string> { projectEl.template },
+                        breakdowns = string.IsNullOrWhiteSpace(projectEl.breakdown) ? new List<string>() : new List<string> { projectEl.breakdown },
                         HistoricalMeanType = projectEl.HistoricalMeanType,
                         HistoricalMeanDescription = projectEl.HistoricalMeanDescription,
                         TaskId = Guid.NewGuid()
@@ -455,8 +455,18 @@ else
 
                 taskIdList.Add(request.TaskId);
 
-               // var taskId = await fitToConceptService.GenerateReportAsync(request);
+                var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(request);
 
+                reportStatuses.Add(new ReportStatus
+                    {
+                        ProjectName = request.project,
+                        TaskId = taskId,
+                        Status = "Queued"
+                    });
+
+                hasProcessStarted = false;
+                _ = PollStatusAsync(taskId);
+                StateHasChanged();
 
             }
         }

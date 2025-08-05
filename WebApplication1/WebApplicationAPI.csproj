@@ -18,17 +18,20 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ClassLibrary1\ClassLibrary1.csproj" />
     <ProjectReference Include="..\ExcelChartsBlazorOpenxml\ExcelChartsBlazorOpenxml.csproj" />
     <ProjectReference Include="..\SharedModels\SharedModels.csproj" />
+	
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="OpenXmlDll">
-      <HintPath>C:\Users\bdas\Downloads\OpenXMLDll\OpenXmlDll\OpenXmlDll\bin\Release\OpenXmlDll.dll</HintPath>
+      <!--<HintPath>D:\OpenXMLDll\OpenXmlDll\OpenXmlDll\bin\Release\OpenXmlDll.dll</HintPath>-->
+		<HintPath>D:\OpenXMLDll\OpenXmlDll\OpenXmlDll\obj\Debug\OpenXmlDll.dll</HintPath>
     </Reference>
   </ItemGroup>
 

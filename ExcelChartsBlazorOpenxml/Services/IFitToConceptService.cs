@@ -51,6 +51,9 @@ namespace ExcelChartsBlazorOpenxml.Services
 
         Task<Guid> GenerateReportAsync(ReportGenerationRequest request);
 
+        Task<Guid> GenerateReportUsingDLLAsync(ReportGenerationRequestDLL request);
+
+
         Task<List<TaskLog>> MergeSlides(List<TaskLog> taskLog);
 
         Task<string> GetReportStatusAsync(Guid taskId);
