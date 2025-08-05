@@ -144,6 +144,7 @@ else
             <thead>
                 <tr>
                     <th>Project</th>
+                    <th>Breakdown</th>
                     <th>Task ID</th>
                     <th>Status</th>
                 </tr>
@@ -153,6 +154,7 @@ else
                 {
                     <tr>
                         <td>@task.ProjectName</td>
+                        <td>@string.Join(", ", task.Templates ?? new List<string>())</td>
                         <td>@task.TaskId</td>
 
                         @if (task.Status == "Queued")
@@ -216,6 +218,7 @@ else
     public class ReportStatus
     {
         public string ProjectName { get; set; } = string.Empty;
+        public List<string>? Templates { get; set; }
         public Guid TaskId { get; set; }
         public string Status { get; set; } = string.Empty;
     }
@@ -333,8 +336,6 @@ else
             await WaitUntilAllTasksComplete(taskIds);
 
             finalLogs = await fitToConceptService.GetUserLogs(user);
-
-
 
             var result = await fitToConceptService.MergeSlides(finalLogs);
 
@@ -460,6 +461,7 @@ else
                 reportStatuses.Add(new ReportStatus
                     {
                         ProjectName = request.project,
+                        Templates = new List<string> { projectEl.template },
                         TaskId = taskId,
                         Status = "Queued"
                     });
@@ -467,8 +469,14 @@ else
                 hasProcessStarted = false;
                 _ = PollStatusAsync(taskId);
                 StateHasChanged();
-
             }
+
+            await WaitUntilAllTasksComplete(taskIdList);
+
+            // finalLogs = await fitToConceptService.GetUserLogs(user);
+
+
+
         }
         catch (Exception ex)
         {
