@@ -963,21 +963,28 @@ namespace WebApplicationAPI.Controllers
         [HttpPost("ppt/dllMerge")]
         public async Task<IActionResult> MergeUsingDLL([FromBody] List<APIRequestModel> projectWrapperAPIList)
         {
-            APIWrapper apiWrapperDllClass = new APIWrapper();
-
-            List<string> chartList = new List<string>();
-
-            foreach (var templates in projectWrapperAPIList) 
+            try
             {
-                chartList.Add(templates.template);
-            }
+                APIWrapper apiWrapperDllClass = new APIWrapper();
 
-            foreach(var projEl in projectWrapperAPIList)
+                List<string> chartList = new List<string>();
+
+                foreach (var templates in projectWrapperAPIList)
+                {
+                    chartList.Add(templates.template);
+                }
+
+                foreach (var projEl in projectWrapperAPIList)
+                {
+                    await apiWrapperDllClass.addChartsToFinalTemplate1(projEl.project, chartList, finalTemplateName, projEl.breakdown);
+                }
+
+                return Ok();
+            }
+            catch (Exception ex)
             {
-               await apiWrapperDllClass.addChartsToFinalTemplate1(projEl.project,chartList, finalTemplateName,projEl.breakdown);
+                throw new Exception(ex.Message);
             }
-
-            return Ok(Guid.NewGuid());
         }
 
         [HttpGet("status/{taskId}")]
