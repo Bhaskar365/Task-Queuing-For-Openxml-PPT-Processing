@@ -1,0 +1,390 @@
+﻿@using MudBlazor
+
+@page "/panel"
+
+
+
+<MudTabs Elevation="3" Rounded="true" Class="my-6" ApplyEffectsToContainer="true" PanelClass="pa-2">
+    <MudTabPanel Text="Power Point" Class="mudTabPanelFontSize">
+
+        <div class="panels-container">
+
+            <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 left-panel" Style="height:max-content">
+                <MudGrid>
+                    <MudPaper Elevation="1" Class="responsive-container-paper">
+                        <MudPaper Elevation="0">
+                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                <MudItem xs="12" sm="5">
+                                    <MudText Class="custom-label" Color="Color.Error">Select Data Source</MudText>
+                                </MudItem>
+                                <MudItem xs="12" sm="7">
+                                    <MudSelect @bind-Value="SourceText"
+                                               Variant="Variant.Outlined"
+                                               FitContent=True
+                                               Disabled>
+                                    </MudSelect>
+                                </MudItem>
+
+                            </MudGrid>
+                        </MudPaper>
+
+                        <MudPaper Class="responsive-container" Elevation="0">
+                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                <MudItem xs="12" sm="5">
+                                    <MudText Class="custom-label" Color="Color.Error">Project Name</MudText>
+                                </MudItem>
+                                <MudItem xs="12" sm="7">
+                                    <MudSelect @bind-Value="ProjectTextValue"
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
+                                        <MudSelectItem Value="@("Option 1")">1062_HC</MudSelectItem>
+                                    </MudSelect>
+                                </MudItem>
+
+                            </MudGrid>
+                        </MudPaper>
+
+                        <MudPaper Class="responsive-container" Elevation="0">
+                            @*  <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                <MudItem xs="12" sm="5">
+                                    <MudText Class="custom-label">DSI Project Name</MudText>
+                                </MudItem>
+                                <MudItem xs="12" sm="7">
+                                    <MudSelect @bind-Value="DSITextValue"
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
+                                        <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
+                                    </MudSelect>
+                                </MudItem>
+
+                            </MudGrid>
+                        </MudPaper>
+
+                        <MudPaper Class="responsive-container" Elevation="0">
+                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                <MudItem xs="12" sm="5">
+                                    <MudText Class="custom-label">Historical Mean Type</MudText>
+                                </MudItem>
+                                <MudItem xs="12" sm="7">
+                                    <MudSelect @bind-Value="HistoricalMeanTextValue"
+                                               Label=""
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
+                                    </MudSelect>
+                                </MudItem>
+
+                            </MudGrid>
+                        </MudPaper>
+
+                        <MudPaper Class="responsive-container" Elevation="0">
+                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                <MudItem xs="12" sm="5">
+                                    <MudText Class="custom-label">Historical Mean Description</MudText>
+                                </MudItem>
+                                <MudItem xs="12" sm="7">
+                                    <MudSelect @bind-Value="HistoricalMeanDescriptionTextValue"
+                                               Label=""
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
+                                    </MudSelect>
+                                </MudItem>
+
+                            </MudGrid>
+                        </MudPaper>
+
+                        <MudPaper Class="responsive-container" Elevation="0">
+                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                <MudItem xs="12" sm="5">
+                                    <MudText Class="custom-label">Associations/Likeability %</MudText>
+                                </MudItem>
+                                <MudItem xs="12" sm="7">
+                                    <MudNumericField @bind-Value="associationsValue" Variant="Variant.Outlined" Min="0" Max="10" Style="height:25px;" />
+                                </MudItem>
+
+                            </MudGrid>
+                        </MudPaper>
+
+                        <MudPaper Class="responsive-container" Elevation="0">
+                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                <MudItem xs="12" sm="5">
+                                    <MudText Class="custom-label">Attribute Evaluation Title</MudText>
+                                </MudItem>
+                                <MudItem xs="12" sm="7">
+                                    <MudTextField @bind-Value="AttributeTextValue" Variant="Variant.Filled" Disabled Style="height:25px;"></MudTextField>
+                                </MudItem>
+
+                            </MudGrid>
+                        </MudPaper>
+
+                        <MudPaper Class="responsive-container" Elevation="0">
+                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                <MudItem xs="12" sm="5">
+                                    <MudText Class="custom-label">Fit To Concept</MudText>
+                                </MudItem>
+                                <MudItem xs="12" sm="7">
+                                    <MudSelect @bind-Value="FitToConceptTextValue"
+                                               Label=""
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
+                                    </MudSelect>
+                                </MudItem>
+
+                            </MudGrid>
+                        </MudPaper>
+
+                        <MudPaper Class="responsive-container" Elevation="0">
+                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                <MudItem xs="12" sm="5">
+                                    <MudText Class="custom-label">Logo Project Folder</MudText>
+                                </MudItem>
+                                <MudItem xs="12" sm="7">
+                                    <MudTextField @bind-Value="LogoFolderTextValue" Variant="Variant.Outlined" Style="height:25px;"></MudTextField>
+                                </MudItem>
+
+                            </MudGrid>
+                        </MudPaper>
+
+                        <MudPaper Class="responsive-container" Elevation="0">
+                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                <MudItem xs="12" sm="5">
+                                    <MudText Class="custom-label">PPT Final Template</MudText>
+                                </MudItem>
+
+                                <MudItem xs="12" sm="7">
+                                    <MudSelect @bind-Value="FinalPPTTemplateText"
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
+                                        <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
+                                    </MudSelect>
+                                </MudItem>
+
+                            </MudGrid>
+                        </MudPaper>
+
+                        <MudPaper Class="responsive-container" Elevation="0">
+                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
+                                <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
+                                    <MudCheckBox @bind-Value="Size_CheckBox1"
+                                                 Size="Size.Small"
+                                                 Color="Color.Primary"
+                                                 Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                    <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
+                                </MudItem>
+
+                                <MudItem xs="12" sm="7">
+                                    <MudSelect @bind-Value="SpecificHistMean"
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
+                                        <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
+                                    </MudSelect>
+                                </MudItem>
+
+                            </MudGrid>
+                        </MudPaper>
+
+                        <MudButton Variant="Variant.Filled" Class="generateBtnClass">Generate Power Point</MudButton>
+
+                        <MudPaper Class="responsive-container" Elevation="0">
+                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;">
+                                <MudItem Style="display: flex;flex-direction: row;align-items: center;">*@
+                            <MudGrid AlignItems="Center" Spacing="2" Class="inlineMudItemClass">
+                                <MudItem Class="inlineMudItemClass">
+                                    <MudCheckBox @bind-Value="Size_CheckBox2" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
+                                    <MudText Class="custom-label">Open folder when done</MudText>
+                                </MudItem>
+                                @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
+                                <MudItem xs="12" sm="5" Class="inlineMudItemClass">
+
+
+                                    <MudCheckBox @bind-Value="Size_CheckBox3" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
+                                    <MudText Class="custom-label">Use OpenXml</MudText>
+                                </MudItem>
+                            </MudGrid>
+                        </MudPaper>
+
+                    </MudPaper>
+                </MudGrid>
+            </MudContainer>
+
+
+            <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 right-panel" Style="height:max-content;">
+                <MudGrid Class="py-1 px-2" Elevation="0">
+                    <MudPaper Elevation="1" Class="responsive-container-paper-right">
+
+                        <MudGrid class="mudGridSectionProjectParams">
+
+                            <MudPaper Elevation="0" class="paramsMudPaperSection">
+                                <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Pages</MudText>
+
+                                <div style="flex: 1; overflow: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
+                                    @for (int i = 0; i < checkboxes.Count; i++)
+                                    {
+                                        <MudCheckBox Value="checkboxes[i].IsChecked"
+                                                     Label="@checkboxes[i].Label"
+                                                     Color="Color.Default" Size="Size.Small">
+                                        </MudCheckBox>
+                                    }
+                                </div>
+
+                                <MudButton Variant="Variant.Filled"
+                                           Size="Size.Small"
+                                           FullWidth="true" Class="btnClass">
+                                    Select All/Unselect All
+                                </MudButton>
+                            </MudPaper>
+
+                            <MudPaper Elevation="0" class="paramsMudPaperSection">
+                                <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Breakdowns</MudText>
+
+                                <div style="flex: 1; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
+                                </div>
+
+                                <MudButton Variant="Variant.Filled"
+                                           Size="Size.Small" FullWidth="true"
+                                           Class="btnClass">
+                                    Select All/Unselect All
+                                </MudButton>
+                            </MudPaper>
+
+                            <MudPaper Elevation="0" class="paramsMudPaperSection">
+                                <MudText Typo="Typo.subtitle2"
+                                         Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Test Names</MudText>
+
+                                <div style="flex: 1; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
+                                </div>
+
+                                <MudButton Variant="Variant.Filled"
+                                           Size="Size.Small" FullWidth="true"
+                                           Class="btnClass">
+                                    Select All/Unselect All
+                                </MudButton>
+                            </MudPaper>
+
+                            <MudPaper Elevation="0" class="paramsMudPaperSection">
+                                <MudText Typo="Typo.subtitle2"
+                                         Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;white-space:nowrap;">Attribute Evaluation Aggregate</MudText>
+
+                                <div style="flex: 1; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
+                                </div>
+
+                                <MudButton Variant="Variant.Filled"
+                                           Size="Size.Small"
+                                           FullWidth="true"
+                                           Class="btnClass">
+                                    Select All/Unselect All
+                                </MudButton>
+
+                                <MudText Typo="Typo.subtitle2"
+                                         Style="margin: 10px 0 8px 0; font-weight: bold; text-align: center;font-size:8px;white-space:nowrap;">Fit to Brand Personality Aggregate</MudText>
+
+                                <div style="flex: 0.5; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
+                                </div>
+
+                                <MudButton Variant="Variant.Filled"
+                                           Size="Size.Small"
+                                           FullWidth="true"
+                                           Class="btnClass">
+                                    Select All/Unselect All
+                                </MudButton>
+                            </MudPaper>
+
+                        </MudGrid>
+                    </MudPaper>
+                </MudGrid>
+            </MudContainer>
+
+
+        </div>
+
+    </MudTabPanel>
+
+    <MudTabPanel Text="Brandex" BadgeIcon="@Icons.Material.Filled.Check" BadgeColor="Color.Success" Typo="Typo.h6" Class="mudTabPanelFontSize">
+        <MudText>Brandex</MudText>
+    </MudTabPanel>
+
+    <MudTabPanel Text="QTC" Typo="Typo.subtitle1" Class="mudTabPanelFontSize">
+        <MudText>QTC</MudText>
+    </MudTabPanel>
+
+    <MudTabPanel Text="Reports" Typo="Typo.h6" Class="mudTabPanelFontSize">
+        <MudText>Reports</MudText>
+    </MudTabPanel>
+
+</MudTabs>
+
+
+
+@code {
+
+
+    private List<CheckboxItem> checkboxes = new List<CheckboxItem>
+    {
+        new CheckboxItem { Id = 1, Label = "YESIBY", IsChecked = true },
+        new CheckboxItem { Id = 2, Label = "HAMUBFORITOYU", IsChecked = true },
+        new CheckboxItem { Id = 3, Label = "RACKEM", IsChecked = true },
+         new CheckboxItem { Id = 1, Label = "YESIBY", IsChecked = true },
+        new CheckboxItem { Id = 2, Label = "HAMUBFORITOYU", IsChecked = true },
+        new CheckboxItem { Id = 3, Label = "RACKEM", IsChecked = true },
+         new CheckboxItem { Id = 1, Label = "YESIBY", IsChecked = true },
+        new CheckboxItem { Id = 2, Label = "HAMUBFORITOYU", IsChecked = true },
+        new CheckboxItem { Id = 3, Label = "RACKEM", IsChecked = true },
+        new CheckboxItem { Id = 1, Label = "YESIBY", IsChecked = true },
+        new CheckboxItem { Id = 2, Label = "HAMUBFORITOYU", IsChecked = true },
+        new CheckboxItem { Id = 3, Label = "RACKEM", IsChecked = true }
+    };
+
+    private string selectedOption = "Excel Charts";
+
+    public string SourceText { get; set; } = "Excel Charts";
+
+    public string ProjectTextValue { get; set; } = "1062_HC";
+
+    public string DSITextValue { get; set; } = "1062_HC_MR";
+
+    public string HistoricalMeanTextValue { get; set; } = "";
+
+    public string HistoricalMeanDescriptionTextValue { get; set; } = "";
+
+    public double associationsValue { get; set; } = 1.0;
+
+    public string AttributeTextValue { get; set; } = "";
+
+    public string FitToConceptTextValue { get; set; } = "";
+
+    public string LogoFolderTextValue = "Location";
+
+    public string FinalPPTTemplateText = "No Template";
+
+    public string SpecificHistMean = "";
+
+    public bool Size_CheckBox1 = false;
+
+    public bool Size_CheckBox2 = true;
+
+    public bool Size_CheckBox3 = false;
+
+    public bool Label_CheckBox2 { get; set; } = true;
+
+    public class CheckboxItem
+    {
+        public int Id { get; set; }
+        public string Label { get; set; }
+        public bool IsChecked { get; set; }
+    }
+
+
+
+
+}

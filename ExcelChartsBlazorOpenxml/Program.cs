@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddMudServices();
 builder.Services.AddScoped<IFitToConceptService, FitToConceptService>();    
 
 builder.Services.AddHttpClient<IFitToConceptService,FitToConceptService>(client =>
@@ -15,7 +16,7 @@ builder.Services.AddHttpClient<IFitToConceptService,FitToConceptService>(client 
     client.BaseAddress = new Uri("http://localhost:5223");
 });
 
-builder.Services.AddMudServices();
+
 
 var app = builder.Build();
 
