@@ -201,11 +201,19 @@ namespace ExcelChartsBlazorOpenxml.Services
             return result!.TaskId;
         }
 
-        public async Task<List<TaskLog>> SendDLLMergeRequest(List<APIRequestModel> projectWrapperAPIList)
+        //public async Task<List<TaskLog>> SendDLLMergeRequest(List<APIRequestModel> projectWrapperAPIList)
+        //{
+        //    var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", projectWrapperAPIList);
+        //    var result = await response.Content.ReadFromJsonAsync<List<TaskLog>>();
+        //    return result!;
+        //}
+
+        public async Task<Guid> SendDLLMergeRequest(ReportGenerationRequestDLL request)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", projectWrapperAPIList);
-            var result = await response.Content.ReadFromJsonAsync<List<TaskLog>>();
-            return result!;
+            var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", request);
+            var result = await response.Content.ReadFromJsonAsync<ReportGenerationRequestDLL>();
+            return result.TaskId;
         }
+
     }
 }

@@ -1,14 +1,7 @@
 ﻿
-using Azure.Core;
-using ClassLibrary1;
-using DocumentFormat.OpenXml.Office2016.Drawing.Charts;
-using DocumentFormat.OpenXml.Office2016.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
-using ExcelChartsBlazorOpenxml.Components;
-using Microsoft.AspNetCore.Mvc;
-
 using OpenXmlDLLDotnetFramework;
 
+using Microsoft.AspNetCore.Mvc;
 using SharedModels;
 using SharedModels.DTO;
 using System.Threading.Tasks;
@@ -16,6 +9,7 @@ using WebApplication1.Repositories;
 using WebApplicationAPI.Queueing;
 using WebApplicationAPI.TaskLogging;
 using WebApplicationAPI.TaskTracking;
+using ClassLibrary1;
 
 
 
@@ -851,65 +845,72 @@ namespace WebApplicationAPI.Controllers
         }
 
 
-       
+        public string finalTemplateName = "C:\\ExcelChartFiles\\MRRxNaming.pptx";
 
         [HttpPost("dllgenerate")]
         public async Task<IActionResult> GenerateReportUsingDLL([FromBody] ReportGenerationRequestDLL request) 
         {
-            APIWrapper apiWrapperDllClass = new APIWrapper();
-
-            var connectionString = _configuration.GetConnectionString("DBConnection");
-            string user = "testUser";
-
-            _tracker.SetStatus(request.TaskId, "Queued");
-
-            await _queue.EnqueueAsync(async token =>
+            try
             {
-                try
+                APIWrapper.copyTemplates();
+                APIWrapper apiWrapperDllClass = new APIWrapper();
+
+                var connectionString = _configuration.GetConnectionString("DBConnection");
+                string user = "testUser";
+
+                _tracker.SetStatus(request.TaskId, "Queued");
+
+                await _queue.EnqueueAsync(async token =>
                 {
-                    _tracker.SetStatus(request.TaskId, "Processing");
-
-                    using var scope = _scopeFactory.CreateScope();
-                    var repository = scope.ServiceProvider.GetRequiredService<IDataRepository>();
-                    var dll = new DLLCls();
-                    string sourcePath = "";
-
-                    TaskLog taskLog = new TaskLog
+                    try
                     {
-                        TaskId = request.TaskId,
-                        CreatedOn = DateTime.UtcNow,
-                        ProjectType = request.project,
-                        CreatedBy = user,
-                        CurrentStatus = "Processing"
-                    };
+                        _tracker.SetStatus(request.TaskId, "Processing");
+
+                        using var scope = _scopeFactory.CreateScope();
+                        var repository = scope.ServiceProvider.GetRequiredService<IDataRepository>();
+                        var dll = new DLLCls();
+                        string sourcePath = "";
+
+                        TaskLog taskLog = new TaskLog
+                        {
+                            TaskId = request.TaskId,
+                            CreatedOn = DateTime.UtcNow,
+                            ProjectType = request.project,
+                            CreatedBy = user,
+                            CurrentStatus = "Processing"
+                        };
 
 
-                    _taskLogging.InsertTask(taskLog, connectionString!);
-                    _taskLogging.SetTaskStatusState(request.TaskId, "Processing", connectionString!, user);
+                        _taskLogging.InsertTask(taskLog, connectionString!);
+                        _taskLogging.SetTaskStatusState(request.TaskId, "Processing", connectionString!, user);
 
-                    //dll call - individual chart generation
-                    await apiWrapperDllClass.OpenXMLParallelProcess(request.project, request.templates, request.breakdowns, request.HistoricalMeanType, request.HistoricalMeanDescription, finalTemplateName);
+                        //dll call - individual chart generation
+                        await apiWrapperDllClass.OpenXMLParallelProcess(request.project, request.templates, request.breakdowns, request.HistoricalMeanType, request.HistoricalMeanDescription, finalTemplateName);
 
-                    taskLog.CompletedOn = DateTime.UtcNow;
-                    _taskLogging.MarkTaskAsCompleted(request.TaskId.ToString(), (DateTime)taskLog.CompletedOn, connectionString!, "Done");
+                        taskLog.CompletedOn = DateTime.UtcNow;
+                        _taskLogging.MarkTaskAsCompleted(request.TaskId.ToString(), (DateTime)taskLog.CompletedOn, connectionString!, "Done");
 
-                    _tracker.SetStatus(request.TaskId, "Done");
+                        _tracker.SetStatus(request.TaskId, "Done");
 
-                    _taskLogging.SetTaskStatusState(request.TaskId, "Done", connectionString!, user);
+                        _taskLogging.SetTaskStatusState(request.TaskId, "Done", connectionString!, user);
 
-                }
-                catch (Exception ex)
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                });
+
+                return Ok(new ReportStatusDto
                 {
-                    throw new Exception(ex.Message);
-                }
-            });
-
-            return Ok(new ReportStatusDto
+                    ProjectType = request.project,
+                    TaskId = request.TaskId,
+                });
+            }
+            catch (Exception)
             {
-                ProjectType = request.project,
-                TaskId = request.TaskId,
-            });
-
+                throw;
+            }
         }
 
 
@@ -958,34 +959,71 @@ namespace WebApplicationAPI.Controllers
         }
 
 
-        public string finalTemplateName = "C:\\ExcelChartFiles\\MRRxNaming.pptx";
+
+        //[HttpPost("ppt/dllMerge")]
+        //public async Task<IActionResult> MergeUsingDLL([FromBody] List<APIRequestModel> projectWrapperAPIList)
+        //{
+        //    try
+        //    {
+        //        APIWrapper apiWrapperDllClass = new APIWrapper();
+
+        //        List<string> templateList = new List<string>();
+        //        List<string> breakdownsList = new List<string>();
+
+        //        foreach (var tem in projectWrapperAPIList)
+        //        {
+        //            templateList.Add(tem.template);
+        //        }
+
+        //        foreach (var br in projectWrapperAPIList)
+        //        {
+        //            breakdownsList.Add(br.breakdown);
+        //        }
+
+        //        string project = projectWrapperAPIList.FirstOrDefault()!.project;
+
+        //        foreach (string breakdown in breakdownsList) 
+        //        {
+        //            await apiWrapperDllClass.addChartsToFinalTemplate1(project, templateList, finalTemplateName, breakdown);
+        //        }
+
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
         [HttpPost("ppt/dllMerge")]
-        public async Task<IActionResult> MergeUsingDLL([FromBody] List<APIRequestModel> projectWrapperAPIList)
+        public async Task<IActionResult> MergeUsingDLL([FromBody] ReportGenerationRequestDLL request)
         {
             try
             {
                 APIWrapper apiWrapperDllClass = new APIWrapper();
 
-                List<string> chartList = new List<string>();
+                List<string> templateList = new List<string>();
+                List<string> breakdownsList;
 
-                foreach (var templates in projectWrapperAPIList)
+
+                breakdownsList = request.breakdowns!;
+
+
+                foreach (string breakdown in breakdownsList)
                 {
-                    chartList.Add(templates.template);
+                    await apiWrapperDllClass.addChartsToFinalTemplate1(request.project, request.templates, finalTemplateName, breakdown);
                 }
 
-                foreach (var projEl in projectWrapperAPIList)
-                {
-                    await apiWrapperDllClass.addChartsToFinalTemplate1(projEl.project, chartList, finalTemplateName, projEl.breakdown);
-                }
+               // await apiWrapperDllClass.OpenXMLParallelProcess(request.project, request.templates, request.breakdowns, request.HistoricalMeanType, request.HistoricalMeanDescription, finalTemplateName);
 
                 return Ok();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.Message);
+                throw;
             }
         }
+
 
         [HttpGet("status/{taskId}")]
         public IActionResult GetStatus(Guid taskId)

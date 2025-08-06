@@ -1,5 +1,6 @@
 ﻿@page "/taskQueueChart"
-@using ClassLibrary1
+@* @using ClassLibrary1 *@
+@using OpenXmlDLLDotnetFramework
 @using SharedModels
 @using SharedModels.DTO
 
@@ -19,6 +20,8 @@ else
     @* <button type="button" class="btn btn-primary buttonload" @onclick="Process">Generate Report</button> *@
 
     <button type="button" class="btn btn-primary buttonload" @onclick="ProcessDLL">Generate Report</button>
+
+    @* <button type="button" class="btn btn-primary buttonload" @onclick="DLLProcess">Generate Report</button> *@
 
     <div>
         <div class="card card-body">
@@ -426,14 +429,14 @@ else
     List<APIRequestModel> projectWrapperAPIList = new List<APIRequestModel>
     {
         new APIRequestModel("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "Attribute 1", "Attribute 1", "OVERALL","",""),
-        new APIRequestModel("RACKEM", "Attribute 2", "Attribute 2", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "Attribute 3", "Attribute 3", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "01 Untrue", "01 Untrue", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "02 Misleading", "02 Misleading", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "03 Exagg", "03 Exagg", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "Memorability", "Memorability", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "Attribute 1", "Attribute 1", "OVERALL","",""),
+        // new APIRequestModel("RACKEM", "Attribute 2", "Attribute 2", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "Attribute 3", "Attribute 3", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "01 Untrue", "01 Untrue", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "02 Misleading", "02 Misleading", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "03 Exagg", "03 Exagg", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "Memorability", "Memorability", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
     };
 
     private async Task ProcessDLL()
@@ -447,7 +450,7 @@ else
                 var request = new ReportGenerationRequestDLL
                     {
                         project = projectEl.project,
-                        templates = string.IsNullOrWhiteSpace(projectEl.template)  ? new List<string>(): new List<string> { projectEl.template },
+                        templates = string.IsNullOrWhiteSpace(projectEl.template) ? new List<string>() : new List<string> { projectEl.template },
                         breakdowns = string.IsNullOrWhiteSpace(projectEl.breakdown) ? new List<string>() : new List<string> { projectEl.breakdown },
                         HistoricalMeanType = projectEl.HistoricalMeanType,
                         HistoricalMeanDescription = projectEl.HistoricalMeanDescription,
@@ -469,13 +472,31 @@ else
                 hasProcessStarted = false;
                 _ = PollStatusAsync(taskId);
                 StateHasChanged();
+
+            }
+            await WaitUntilAllTasksComplete(taskIdList);
+
+            foreach (var projectEl in projectWrapperAPIList)
+            {
+                var request = new ReportGenerationRequestDLL
+                    {
+                        project = projectEl.project,
+                        templates = string.IsNullOrWhiteSpace(projectEl.template) ? new List<string>() : new List<string> { projectEl.template },
+                        breakdowns = string.IsNullOrWhiteSpace(projectEl.breakdown) ? new List<string>() : new List<string> { projectEl.breakdown },
+                        HistoricalMeanType = projectEl.HistoricalMeanType,
+                        HistoricalMeanDescription = projectEl.HistoricalMeanDescription,
+                        TaskId = Guid.NewGuid()
+                    };
+
+               await fitToConceptService.SendDLLMergeRequest(request);
+
             }
 
-            await WaitUntilAllTasksComplete(taskIdList);
+
 
             // finalLogs = await fitToConceptService.GetUserLogs(user);
 
-            var result = await fitToConceptService.SendDLLMergeRequest(projectWrapperAPIList);
+            // var result = await fitToConceptService.SendDLLMergeRequest(projectWrapperAPIList);
 
 
         }
@@ -484,6 +505,75 @@ else
             throw new Exception(ex.Message);
         }
     }
+
+
+    public string finalTemplateName = "C:\\ExcelChartFiles\\MRRxNaming.pptx";
+
+
+
+    private async Task DLLProcess()
+    {
+        try
+        {
+            string project = "";
+            List<string> lstPages = new List<string>();
+            List<string> lstBreakdowns = new List<string>();
+            string historType = "";
+            string historMeanDesc = "";
+
+            foreach (var list in projectWrapperAPIList)
+            {
+                lstPages.Add(list.template);
+                lstBreakdowns.Add(list.breakdown);
+                project = list.project;
+                historType = list.HistoricalMeanType;
+                historMeanDesc = list.HistoricalMeanDescription;
+
+                await generateUsingOpenXml(project, lstPages, lstBreakdowns, historType, historMeanDesc, finalTemplateName);
+            }
+
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    private async Task generateUsingOpenXml(string project,
+                                            List<string> lstPages,
+                                            List<string> lstBreakdowns,
+                                            string HistoricalMeansType,
+                                            string HistoricalMeansDescription,
+                                            string FinalTemplate)
+    {
+        try
+        {
+            APIWrapper wrapper = new APIWrapper();
+
+
+            await wrapper.OpenXMLParallelProcess(project, lstPages, lstBreakdowns, HistoricalMeansType, HistoricalMeansDescription, FinalTemplate);
+
+            string op;
+
+            foreach (string brkdown in lstBreakdowns)
+            {
+                op = await wrapper.addChartsToFinalTemplate1(project, lstPages, FinalTemplate, brkdown);
+
+                if (op == "Process sucessful")
+                {
+
+
+                }
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+
+
+    }
+
 
 
 

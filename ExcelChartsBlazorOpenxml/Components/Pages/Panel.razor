@@ -370,6 +370,8 @@
         new CheckboxItem { Id = 3, Label = "RACKEM", IsChecked = true }
     };
 
+
+
     private string selectedOption = "Excel Charts";
 
     public string SourceText { get; set; } = "Excel Charts";
@@ -424,6 +426,12 @@
         new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
     };
 
+
+
+    // protected override void OnInitialized()
+    // {
+    //     base.OnInitialized();
+    // }
 
 
     private async Task ProcessDLL()
