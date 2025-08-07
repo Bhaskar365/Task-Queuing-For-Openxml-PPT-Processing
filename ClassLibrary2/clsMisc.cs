@@ -1086,41 +1086,77 @@ namespace OpenXmlDll
                 var y = x.GetFirstChild<DocumentFormat.OpenXml.Presentation.ShapeTree>();
                 if(y!=null)
                 {
-                    var paragraph = y.InnerText.ToList();
-
-                }
-            }
-
-            // Iterate through all shapes in the slide
-            foreach (var shape in slide.Descendants<DocumentFormat.OpenXml.Presentation.Shape>())
-            {
-                // Check if the shape has text
-                if (shape.TextBody != null)
-                {
-                    // Iterate through all paragraphs in the shape
-                    foreach (var paragraph in shape.TextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>())
+                    var shapes = y.Elements<DocumentFormat.OpenXml.Presentation.Shape>().ToList();
+                    if(shapes != null)
                     {
-                        // Iterate through all runs (text elements) in the paragraph
-                        foreach (var run in paragraph.Descendants<DocumentFormat.OpenXml.Drawing.Run>())
+                        foreach(var s in shapes)
                         {
-                            // Check if the run contains the text to find
-                            if (run.Text.Text.Contains(textToFind))
+                            var text = s.GetFirstChild<DocumentFormat.OpenXml.Presentation.TextBody>();
+                            if(text!=null)
                             {
-                                // Replace the text
-                                run.Text.Text = run.Text.Text.Replace(textToFind, textToReplace);
-                            }
-                            else
-                            {
-                                //skip
+                                var para = text.GetFirstChild<DocumentFormat.OpenXml.Drawing.Paragraph>();
+                                if(para!=null)
+                                {
+                                    var run = para.Elements<DocumentFormat.OpenXml.Drawing.Run>().ToList();
+                                    if (run != null) 
+                                    {
+                                        foreach (var r in run)
+                                        {
+                                            var t = r.GetFirstChild<DocumentFormat.OpenXml.Drawing.Text>();
+                                            if (t != null)
+                                            {
+                                                if (!(string.IsNullOrEmpty(t.Text) || string.IsNullOrWhiteSpace(t.Text)))
+                                                {
+                                                    if (t.Text.Contains(textToFind))
+                                                    {
+                                                        t.Text = t.Text.Replace(textToFind, textToReplace);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    //skip
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
-                }
-                else 
-                {
-                    //skip
+
                 }
             }
+
+            //// Iterate through all shapes in the slide
+            //foreach (var shape in slide.Descendants<DocumentFormat.OpenXml.Presentation.Shape>())
+            //{
+            //    // Check if the shape has text
+            //    if (shape.TextBody != null)
+            //    {
+            //        // Iterate through all paragraphs in the shape
+            //        foreach (var paragraph in shape.TextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>())
+            //        {
+            //            // Iterate through all runs (text elements) in the paragraph
+            //            foreach (var run in paragraph.Descendants<DocumentFormat.OpenXml.Drawing.Run>())
+            //            {
+            //                // Check if the run contains the text to find
+            //                if (run.Text.Text.Contains(textToFind))
+            //                {
+            //                    // Replace the text
+            //                    run.Text.Text = run.Text.Text.Replace(textToFind, textToReplace);
+            //                }
+            //                else
+            //                {
+            //                    //skip
+            //                }
+            //            }
+            //        }
+            //    }
+            //    else 
+            //    {
+            //        //skip
+            //    }
+            //}
 
         }
 
