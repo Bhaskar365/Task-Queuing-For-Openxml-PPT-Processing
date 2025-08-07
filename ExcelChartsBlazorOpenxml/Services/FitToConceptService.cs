@@ -213,7 +213,7 @@ namespace ExcelChartsBlazorOpenxml.Services
             try
             {
                 var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", request);
-                return;
+                Console.WriteLine(response);
             }
             catch (Exception)
             {

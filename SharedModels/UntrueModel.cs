@@ -16,6 +16,6 @@ namespace SharedModels
         public double? Negative { get; set; }
         public bool? TestNameBold { get; set; }
         public string? TestNameColor { get; set; }
-        public string ProjectTemplateType { get; set; }
+        public string? ProjectTemplateType { get; set; }
     }
 }

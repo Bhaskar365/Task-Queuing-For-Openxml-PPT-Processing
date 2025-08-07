@@ -1010,7 +1010,8 @@ namespace WebApplicationAPI.Controllers
 
                 foreach (string breakdown in breakdownsList)
                 {
-                    await apiWrapperDllClass.addChartsToFinalTemplate1(request.project, request.templates, finalTemplateName, breakdown);    
+                    var res = await apiWrapperDllClass.addChartsToFinalTemplate1(request.project, request.templates, finalTemplateName, breakdown);
+                    Console.WriteLine(res);
                 }
 
                 // await apiWrapperDllClass.OpenXMLParallelProcess(request.project, request.templates, request.breakdowns, request.HistoricalMeanType, request.HistoricalMeanDescription, finalTemplateName);

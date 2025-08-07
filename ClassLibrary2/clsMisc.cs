@@ -510,7 +510,7 @@ namespace OpenXmlDll
 
 
                 ChangePresentationPart(destinationPresPart);
-                
+
                 destinationPresPart.Presentation.Save();
 
                 destinationDoc?.Dispose();
@@ -521,7 +521,7 @@ namespace OpenXmlDll
         }
 
 
-        public static  void ChangePresentationPart(PresentationPart presentationPart1)
+        public static void ChangePresentationPart(PresentationPart presentationPart1)
         {
             Presentation presentation1 = presentationPart1.Presentation;
 
@@ -823,94 +823,173 @@ namespace OpenXmlDll
 
         public static void MergeSlideWithSlideArray(string sourcePresentation, string destPresentation, int[] insertIndex, int rId)
         {
-
             Random random = new Random();
             int randomNumber = random.Next(0, 1000);
             int id = rId + randomNumber;
 
-            using (PresentationDocument destinationDoc = PresentationDocument.Open(destPresentation, true))
+            try
             {
-                PresentationPart destinationPresPart = destinationDoc.PresentationPart;
-
-                if (destinationPresPart.Presentation.SlideIdList == null)
-                    destinationPresPart.Presentation.SlideIdList = new SlideIdList();
-
-                using (PresentationDocument sourceDoc = PresentationDocument.Open(sourcePresentation, true))
+                using (PresentationDocument destinationDoc = PresentationDocument.Open(destPresentation, true))
                 {
-                    PresentationPart sourcePresPart = sourceDoc.PresentationPart;
+                    PresentationPart destinationPresPart = destinationDoc.PresentationPart;
 
-                    uniqueId = GetMaxSlideMasterId(destinationPresPart.Presentation.SlideMasterIdList);
-                   uint maxSlideId = GetMaxSlideId(destinationPresPart.Presentation.SlideIdList);
+                    if (destinationPresPart.Presentation.SlideIdList == null)
+                        destinationPresPart.Presentation.SlideIdList = new SlideIdList();
 
-                    var sourceSlideIds = sourcePresPart.Presentation.SlideIdList.Elements<SlideId>().ToList();
-
-                    if (insertIndex.Length > sourceSlideIds.Count)
-                        throw new ArgumentException("Not enough slides in source to match insert positions");
-
-                    for (int i = 0; i < insertIndex.Length; i++)
+                    using (PresentationDocument sourceDoc = PresentationDocument.Open(sourcePresentation, true))
                     {
-                        id++;
-                        SlideId sourceSlideId = sourceSlideIds[i];
-                        SlidePart sourceSlidePart = (SlidePart)sourcePresPart.GetPartById(sourceSlideId.RelationshipId);
+                        PresentationPart sourcePresPart = sourceDoc.PresentationPart;
 
-                        string relId = "rel" + id;
+                        uniqueId = GetMaxSlideMasterId(destinationPresPart.Presentation.SlideMasterIdList);
+                        uint maxSlideId = GetMaxSlideId(destinationPresPart.Presentation.SlideIdList);
 
-                        SlidePart destinationSlidePart = destinationPresPart.AddPart<SlidePart>(sourceSlidePart, relId);
+                        var sourceSlideIds = sourcePresPart.Presentation.SlideIdList.Elements<SlideId>().ToList();
 
-                        SlideMasterPart destinationMasterPart = destinationSlidePart.SlideLayoutPart.SlideMasterPart;
-                        destinationPresPart.AddPart(destinationMasterPart);
+                        if (insertIndex.Length > sourceSlideIds.Count)
+                            throw new ArgumentException("Not enough slides in source to match insert positions");
 
-                        uniqueId++;
-                        SlideMasterId newSlideMasterId = new SlideMasterId
+                        for (int i = 0; i < insertIndex.Length; i++)
                         {
-                            RelationshipId = destinationPresPart.GetIdOfPart(destinationMasterPart),
-                            Id = uniqueId
-                        };
+                            id++;
+                            SlideId sourceSlideId = sourceSlideIds[i];
+                            SlidePart sourceSlidePart = (SlidePart)sourcePresPart.GetPartById(sourceSlideId.RelationshipId);
 
-                        if (!destinationPresPart.Presentation.SlideMasterIdList.Elements<SlideMasterId>().Any(x => x.RelationshipId == newSlideMasterId.RelationshipId))
-                        {
-                            destinationPresPart.Presentation.SlideMasterIdList.Append(newSlideMasterId);
+                            string relId = "rel" + id;
+
+                            SlidePart destinationSlidePart = destinationPresPart.AddPart<SlidePart>(sourceSlidePart, relId);
+
+                            SlideMasterPart destinationMasterPart = destinationSlidePart.SlideLayoutPart.SlideMasterPart;
+                            destinationPresPart.AddPart(destinationMasterPart);
+
+                            uniqueId++;
+                            SlideMasterId newSlideMasterId = new SlideMasterId
+                            {
+                                RelationshipId = destinationPresPart.GetIdOfPart(destinationMasterPart),
+                                Id = uniqueId
+                            };
+
+                            if (!destinationPresPart.Presentation.SlideMasterIdList.Elements<SlideMasterId>().Any(x => x.RelationshipId == newSlideMasterId.RelationshipId))
+                            {
+                                destinationPresPart.Presentation.SlideMasterIdList.Append(newSlideMasterId);
+                            }
+
+                            maxSlideId++;
+
+                            SlideId newSlideId = new SlideId
+                            {
+                                RelationshipId = relId,
+                                Id = maxSlideId
+                            };
+
+                            InsertSlideAtIndexArray(destinationPresPart.Presentation.SlideIdList, newSlideId, insertIndex[i] - 1);
                         }
-
-                        maxSlideId++;
-
-                        SlideId newSlideId = new SlideId
-                        {
-                            RelationshipId = relId,
-                            Id = maxSlideId
-                        };
-
-                        InsertSlideAtIndexArray(destinationPresPart.Presentation.SlideIdList, newSlideId, insertIndex[i]-1);
+                        FixSlideLayoutIds(destinationPresPart);
                     }
-                    FixSlideLayoutIds(destinationPresPart);
+                    destinationPresPart.Presentation.Save();
+
+                    destinationDoc?.Dispose();
+
+
+
                 }
-                destinationPresPart.Presentation.Save();
-
-                destinationDoc?.Dispose();
-
-
-
             }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            //Random random = new Random();
+            //int randomNumber = random.Next(0, 1000);
+            //int id = rId + randomNumber;
+
+            //using (PresentationDocument destinationDoc = PresentationDocument.Open(destPresentation, true))
+            //{
+            //    PresentationPart destinationPresPart = destinationDoc.PresentationPart;
+
+            //    if (destinationPresPart.Presentation.SlideIdList == null)
+            //        destinationPresPart.Presentation.SlideIdList = new SlideIdList();
+
+            //    using (PresentationDocument sourceDoc = PresentationDocument.Open(sourcePresentation, true))
+            //    {
+            //        PresentationPart sourcePresPart = sourceDoc.PresentationPart;
+
+            //        uniqueId = GetMaxSlideMasterId(destinationPresPart.Presentation.SlideMasterIdList);
+            //       uint maxSlideId = GetMaxSlideId(destinationPresPart.Presentation.SlideIdList);
+
+            //        var sourceSlideIds = sourcePresPart.Presentation.SlideIdList.Elements<SlideId>().ToList();
+
+            //        if (insertIndex.Length > sourceSlideIds.Count)
+            //            throw new ArgumentException("Not enough slides in source to match insert positions");
+
+            //        for (int i = 0; i < insertIndex.Length; i++)
+            //        {
+            //            id++;
+            //            SlideId sourceSlideId = sourceSlideIds[i];
+            //            SlidePart sourceSlidePart = (SlidePart)sourcePresPart.GetPartById(sourceSlideId.RelationshipId);
+
+            //            string relId = "rel" + id;
+
+            //            SlidePart destinationSlidePart = destinationPresPart.AddPart<SlidePart>(sourceSlidePart, relId);
+
+            //            SlideMasterPart destinationMasterPart = destinationSlidePart.SlideLayoutPart.SlideMasterPart;
+            //            destinationPresPart.AddPart(destinationMasterPart);
+
+            //            uniqueId++;
+            //            SlideMasterId newSlideMasterId = new SlideMasterId
+            //            {
+            //                RelationshipId = destinationPresPart.GetIdOfPart(destinationMasterPart),
+            //                Id = uniqueId
+            //            };
+
+            //            if (!destinationPresPart.Presentation.SlideMasterIdList.Elements<SlideMasterId>().Any(x => x.RelationshipId == newSlideMasterId.RelationshipId))
+            //            {
+            //                destinationPresPart.Presentation.SlideMasterIdList.Append(newSlideMasterId);
+            //            }
+
+            //            maxSlideId++;
+
+            //            SlideId newSlideId = new SlideId
+            //            {
+            //                RelationshipId = relId,
+            //                Id = maxSlideId
+            //            };
+
+            //            InsertSlideAtIndexArray(destinationPresPart.Presentation.SlideIdList, newSlideId, insertIndex[i]-1);
+            //        }
+            //        FixSlideLayoutIds(destinationPresPart);
+            //    }
+            //    destinationPresPart.Presentation.Save();
+
+            //    destinationDoc?.Dispose();
+
+
+
+            //}
         }
 
         public static void InsertSlideAtIndexArray(SlideIdList slideIdList, SlideId newSlideId, int index)
         {
-            var slideIds = slideIdList.Elements<SlideId>().ToList();
-
-            if (index < 0 || index >= slideIds.Count)
+            try
             {
-                slideIdList.Append(newSlideId); // Add to the end if index is out of range
+                var slideIds = slideIdList.Elements<SlideId>().ToList();
+
+                if (index < 0 || index >= slideIds.Count)
+                {
+                    slideIdList.Append(newSlideId); // Add to the end if index is out of range
+                }
+                else
+                {
+                    var targetSlide = slideIds.ElementAt(index);
+
+                    // Insert the new slide before the target slide
+                    targetSlide.InsertBeforeSelf(newSlideId);
+                }
             }
-            else
+            catch (Exception)
             {
-                var targetSlide = slideIds.ElementAt(index);
-
-                // Insert the new slide before the target slide
-                targetSlide.InsertBeforeSelf(newSlideId);
+                throw;
             }
         }
-
-
 
         static bool DoesSlideExist(PresentationDocument presentationDoc, int slideIndex)
         {
@@ -923,58 +1002,62 @@ namespace OpenXmlDll
 
         public static void DeleteSlideFromPPT(string filePath, int slideNo)
         {
-
-            using (PresentationDocument destinationDoc = PresentationDocument.Open(filePath, true))
+            try
             {
-
-                if(DoesSlideExist(destinationDoc, slideNo))
+                using (PresentationDocument destinationDoc = PresentationDocument.Open(filePath, true))
                 {
-                    PresentationPart presentationPart = destinationDoc.PresentationPart;
 
-                    // Get the presentation from the presentation part
-                    Presentation presentation = presentationPart.Presentation;
-
-                    // Get the slide ID list
-                    SlideIdList slideIdList = presentation.SlideIdList;
-
-                    // Get the slide ID of the specified slide
-                    SlideId slideId = slideIdList.ChildElements[slideNo] as SlideId;
-
-                    // Get the relationship ID of the slide
-                    string slideRelId = slideId.RelationshipId;
-
-                    // Remove the slide from the slide list
-                    slideIdList.RemoveChild(slideId);
-
-                    // Remove references to the slide from custom shows
-                    if (presentation.CustomShowList != null)
+                    if (DoesSlideExist(destinationDoc, slideNo))
                     {
-                        foreach (CustomShow customShow in presentation.CustomShowList.Elements<CustomShow>())
+                        PresentationPart presentationPart = destinationDoc.PresentationPart;
+
+                        // Get the presentation from the presentation part
+                        Presentation presentation = presentationPart.Presentation;
+
+                        // Get the slide ID list
+                        SlideIdList slideIdList = presentation.SlideIdList;
+
+                        // Get the slide ID of the specified slide
+                        SlideId slideId = slideIdList.ChildElements[slideNo] as SlideId;
+
+                        // Get the relationship ID of the slide
+                        string slideRelId = slideId.RelationshipId;
+
+                        // Remove the slide from the slide list
+                        slideIdList.RemoveChild(slideId);
+
+                        // Remove references to the slide from custom shows
+                        if (presentation.CustomShowList != null)
                         {
-                            if (customShow.SlideList != null)
+                            foreach (CustomShow customShow in presentation.CustomShowList.Elements<CustomShow>())
                             {
-                                SlideListEntry entry = customShow.SlideList.ChildElements
-                                    .FirstOrDefault(s => ((SlideListEntry)s).Id == slideRelId) as SlideListEntry;
-                                if (entry != null)
+                                if (customShow.SlideList != null)
                                 {
-                                    customShow.SlideList.RemoveChild(entry);
+                                    SlideListEntry entry = customShow.SlideList.ChildElements
+                                        .FirstOrDefault(s => ((SlideListEntry)s).Id == slideRelId) as SlideListEntry;
+                                    if (entry != null)
+                                    {
+                                        customShow.SlideList.RemoveChild(entry);
+                                    }
                                 }
                             }
                         }
+
+                        // Save the modified presentation
+                        presentation.Save();
+
+                        // Remove the slide part
+                        destinationDoc.PresentationPart.DeletePart(slideRelId);
                     }
 
-                    // Save the modified presentation
-                    presentation.Save();
 
-                    // Remove the slide part
-                    destinationDoc.PresentationPart.DeletePart(slideRelId);
+
                 }
-
-              
-
             }
-
-
+            catch (Exception)
+            {
+                throw;
+            }
 
         }
 
@@ -982,61 +1065,68 @@ namespace OpenXmlDll
 
         public static async Task<string> DeleteSlideFromPPTAsync1(string filePath, int slideNo)
         {
-           
-
-           // bool fileOpened = IsFileInUse(filePath);
-
-            string res = "";
-
-
-            while (!IsFileInUse(filePath))
+            try
             {
-                try
+                string res = "";
+
+
+                while (!IsFileInUse(filePath))
                 {
-                    await Task.Run(() => DeleteSlideFromPPT(filePath, slideNo));
-                    res= "Deletion Sucessful";
-                    break;
+                    try
+                    {
+                        await Task.Run(() => DeleteSlideFromPPT(filePath, slideNo));
+                        res = "Deletion Sucessful";
+                        break;
+                    }
+                    catch (IOException)
+                    {
+                        // If the file is in use, wait and retry
+                        //Console.WriteLine("File is in use. Waiting...");
+                        Thread.Sleep(300); // Wait for 1 second before retrying
+                    }
                 }
-                catch (IOException)
-                {
-                    // If the file is in use, wait and retry
-                    //Console.WriteLine("File is in use. Waiting...");
-                    Thread.Sleep(300); // Wait for 1 second before retrying
-                }
+
+                return res;
             }
-
-            return res;
-
+            catch (Exception)
+            {
+                throw;
+            }
+            // bool fileOpened = IsFileInUse(filePath);
         }
 
         public static async Task<string> MergeSlideWithSlideArrayAsync1(string sourcePresentation, string destPresentation, int[] insertIndex, int rId)
         {
 
-            //bool fileOpened = IsFileInUse(sourcePresentation) && IsFileInUse(destPresentation);
-
-            string res = "";
-
-            while (!IsFileInUse(destPresentation))
+            try
             {
-                try
+                //bool fileOpened = IsFileInUse(sourcePresentation) && IsFileInUse(destPresentation);
+
+                string res = "";
+
+                while (!IsFileInUse(destPresentation))
                 {
-                    await Task.Run(() => MergeSlideWithSlideArray(sourcePresentation, destPresentation, insertIndex, rId)); ;
-                    res = "Merge Sucessful";
-                    break;
+                    try
+                    {
+                        await Task.Run(() => MergeSlideWithSlideArray(sourcePresentation, destPresentation, insertIndex, rId)); ;
+                        res = "Merge Sucessful";
+                        break;
+                    }
+                    catch (IOException)
+                    {
+                        // If the file is in use, wait and retry
+                        //Console.WriteLine("File is in use. Waiting...");
+                        Thread.Sleep(300); // Wait for 1 second before retrying
+                    }
                 }
-                catch (IOException)
-                {
-                    // If the file is in use, wait and retry
-                    //Console.WriteLine("File is in use. Waiting...");
-                    Thread.Sleep(300); // Wait for 1 second before retrying
-                }
+
+                return res;
             }
+            catch (Exception)
+            {
 
-            return res;
-
-
-
-            
+                throw;
+            }
         }
 
         public static bool IsFileInUse(string filePath)
@@ -1063,58 +1153,70 @@ namespace OpenXmlDll
 
         public static SlidePart GetSlidePartByIndex(PresentationPart presentationPart, int slideIndex)
         {
-            // Get the list of slide IDs
-            var slideIds = presentationPart.Presentation.SlideIdList.ChildElements;
-
-            if (slideIndex >= 0 && slideIndex < slideIds.Count)
+            try
             {
-                // Get the slide ID at the specified index
-                var slideId = (SlideId)slideIds[slideIndex];
+                // Get the list of slide IDs
+                var slideIds = presentationPart.Presentation.SlideIdList.ChildElements;
 
-                // Get the slide part by relationship ID
-                return (SlidePart)presentationPart.GetPartById(slideId.RelationshipId);
+                if (slideIndex >= 0 && slideIndex < slideIds.Count)
+                {
+                    // Get the slide ID at the specified index
+                    var slideId = (SlideId)slideIds[slideIndex];
+
+                    // Get the slide part by relationship ID
+                    return (SlidePart)presentationPart.GetPartById(slideId.RelationshipId);
+                }
+
+                return null; // Slide index out of range
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
-            return null; // Slide index out of range
+
         }
 
         public static void ReplaceTextInSlide(Slide slide, string textToFind, string textToReplace)
         {
-            var x = slide.GetFirstChild<DocumentFormat.OpenXml.Presentation.CommonSlideData>();
-            if(x!=null)
+            try
             {
-                var y = x.GetFirstChild<DocumentFormat.OpenXml.Presentation.ShapeTree>();
-                if(y!=null)
+                var x = slide.GetFirstChild<DocumentFormat.OpenXml.Presentation.CommonSlideData>();
+                if (x != null)
                 {
-                    var shapes = y.Elements<DocumentFormat.OpenXml.Presentation.Shape>().ToList();
-                    if(shapes != null)
+                    var y = x.GetFirstChild<DocumentFormat.OpenXml.Presentation.ShapeTree>();
+                    if (y != null)
                     {
-                        foreach(var s in shapes)
+                        var shapes = y.Elements<DocumentFormat.OpenXml.Presentation.Shape>().ToList();
+                        if (shapes != null)
                         {
-                            var text = s.GetFirstChild<DocumentFormat.OpenXml.Presentation.TextBody>();
-                            if(text!=null)
+                            foreach (var s in shapes)
                             {
-                                var para = text.GetFirstChild<DocumentFormat.OpenXml.Drawing.Paragraph>();
-                                if(para!=null)
+                                var text = s.GetFirstChild<DocumentFormat.OpenXml.Presentation.TextBody>();
+                                if (text != null)
                                 {
-                                    var run = para.Elements<DocumentFormat.OpenXml.Drawing.Run>().ToList();
-                                    if (run != null) 
+                                    var para = text.GetFirstChild<DocumentFormat.OpenXml.Drawing.Paragraph>();
+                                    if (para != null)
                                     {
-                                        foreach (var r in run)
+                                        var run = para.Elements<DocumentFormat.OpenXml.Drawing.Run>().ToList();
+                                        if (run != null)
                                         {
-                                            var t = r.GetFirstChild<DocumentFormat.OpenXml.Drawing.Text>();
-                                            if (t != null)
+                                            foreach (var r in run)
                                             {
-                                                if (!(string.IsNullOrEmpty(t.Text) || string.IsNullOrWhiteSpace(t.Text)))
+                                                var t = r.GetFirstChild<DocumentFormat.OpenXml.Drawing.Text>();
+                                                if (t != null)
                                                 {
-                                                    if (t.Text.Contains(textToFind))
+                                                    if (!(string.IsNullOrEmpty(t.Text) || string.IsNullOrWhiteSpace(t.Text)))
                                                     {
-                                                        t.Text = t.Text.Replace(textToFind, textToReplace);
+                                                        if (t.Text.Contains(textToFind))
+                                                        {
+                                                            t.Text = t.Text.Replace(textToFind, textToReplace);
+                                                        }
                                                     }
-                                                }
-                                                else
-                                                {
-                                                    //skip
+                                                    else
+                                                    {
+                                                        //skip
+                                                    }
                                                 }
                                             }
                                         }
@@ -1122,28 +1224,52 @@ namespace OpenXmlDll
                                 }
                             }
                         }
-                    }
 
+                    }
                 }
             }
+            catch (Exception)
+            {
+                throw;
+            }
 
-            //// Iterate through all shapes in the slide
-            //foreach (var shape in slide.Descendants<DocumentFormat.OpenXml.Presentation.Shape>())
+       
+
+            //try
             //{
-            //    // Check if the shape has text
-            //    if (shape.TextBody != null)
+
+            //    // Iterate through all shapes in the slide
+            //    foreach (var shape in slide?.Descendants<DocumentFormat.OpenXml.Presentation.Shape>())
             //    {
-            //        // Iterate through all paragraphs in the shape
-            //        foreach (var paragraph in shape.TextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>())
+            //        // Check if the shape has text
+            //        if (shape.TextBody != null)
             //        {
-            //            // Iterate through all runs (text elements) in the paragraph
-            //            foreach (var run in paragraph.Descendants<DocumentFormat.OpenXml.Drawing.Run>())
+            //            // Iterate through all paragraphs in the shape
+            //            foreach (var paragraph in shape?.TextBody?.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>())
             //            {
-            //                // Check if the run contains the text to find
-            //                if (run.Text.Text.Contains(textToFind))
+            //                if (paragraph != null)
             //                {
-            //                    // Replace the text
-            //                    run.Text.Text = run.Text.Text.Replace(textToFind, textToReplace);
+            //                    // Iterate through all runs (text elements) in the paragraph
+            //                    foreach (var run in paragraph?.Descendants<DocumentFormat.OpenXml.Drawing.Run>())
+            //                    {
+            //                        if (run != null)
+            //                        {
+            //                            // Check if the run contains the text to find
+            //                            if (run.Text.Text.Contains(textToFind))
+            //                            {
+            //                                // Replace the text
+            //                                run.Text.Text = run.Text.Text.Replace(textToFind, textToReplace);
+            //                            }
+            //                            else
+            //                            {
+            //                                //skip
+            //                            }
+            //                        }
+            //                        else
+            //                        {
+            //                            //skip
+            //                        }
+            //                    }
             //                }
             //                else
             //                {
@@ -1151,11 +1277,16 @@ namespace OpenXmlDll
             //                }
             //            }
             //        }
+            //        else
+            //        {
+            //            //skip
+            //        }
             //    }
-            //    else 
-            //    {
-            //        //skip
-            //    }
+            //}
+            //catch (Exception)
+            //{
+
+            //    throw;
             //}
 
         }
@@ -1219,37 +1350,44 @@ namespace OpenXmlDll
 
 
 
-        public static void repTextInSlide (string filePath,string textToFind,string textToReplace,int  targetSlideIndex)
+        public static void repTextInSlide(string filePath, string textToFind, string textToReplace, int targetSlideIndex)
         {
 
             //string filePath = @"C:\excelfiles\RACKEM\Final\MRRxNaming.pptx";
             //string textToFind = "<<AttributeEvaluationTitle2>>";
 
-           // string textToReplace = "Attribute #2";
-           // int targetSlideIndex = 38; // Slide index (0-based39) to modify
+            // string textToReplace = "Attribute #2";
+            // int targetSlideIndex = 38; // Slide index (0-based39) to modify
 
 
-            using (PresentationDocument presentationDoc = PresentationDocument.Open(filePath, true))
+            try
             {
-                // Get the presentation part
-                PresentationPart presentationPart = presentationDoc.PresentationPart;
-
-                // Get the slide at the specified index
-                SlidePart slidePart = GetSlidePartByIndex(presentationPart, targetSlideIndex);
-
-                if (slidePart != null)
+                using (PresentationDocument presentationDoc = PresentationDocument.Open(filePath, true))
                 {
-                    // Get the slide
-                    Slide slide = slidePart.Slide;
+                    // Get the presentation part
+                    PresentationPart presentationPart = presentationDoc.PresentationPart;
 
-                    // Find and replace text in the slide
-                    ReplaceTextInSlide(slide, textToFind, textToReplace);
+                    // Get the slide at the specified index
+                    SlidePart slidePart = GetSlidePartByIndex(presentationPart, targetSlideIndex);
 
-                    // Save the changes
-                    presentationDoc.Save();
+                    if (slidePart != null)
+                    {
+                        // Get the slide
+                        Slide slide = slidePart.Slide;
+
+                        // Find and replace text in the slide
+                        ReplaceTextInSlide(slide, textToFind, textToReplace);
+
+                        // Save the changes
+                        presentationDoc.Save();
+
+                    }
 
                 }
-
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
         }
@@ -1276,35 +1414,44 @@ namespace OpenXmlDll
 
         public static async Task repTextInSlideAsync(string filePath, string textToFind, string textToReplace, int targetSlideIndex)
         {
-            bool fileOpened = false;
-
-            //string res = "";
-
-            while (!IsFileInUse(filePath))
+            try
             {
-                try
-                {
-                    await Task.Run(() => repTextInSlide(filePath, textToFind, textToReplace, targetSlideIndex));
 
-                    //res = "Merge Sucessful";
-                    break;
-                }
-                catch (IOException)
+                bool fileOpened = false;
+
+                //string res = "";
+
+                while (!IsFileInUse(filePath))
                 {
-                    // If the file is in use, wait and retry
-                    //Console.WriteLine("File is in use. Waiting...");
-                    Thread.Sleep(300); // Wait for 1 second before retrying
+                    try
+                    {
+                        await Task.Run(() => repTextInSlide(filePath, textToFind, textToReplace, targetSlideIndex));
+
+                        //res = "Merge Sucessful";
+                        break;
+                    }
+                    catch (IOException)
+                    {
+                        // If the file is in use, wait and retry
+                        //Console.WriteLine("File is in use. Waiting...");
+                        Thread.Sleep(300); // Wait for 1 second before retrying
+                    }
                 }
+
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
-         
+
 
 
         }
 
-        public static void replaceText(string filePath,string searchText,string replaceText)
+        public static void replaceText(string filePath, string searchText, string replaceText)
         {
-            
+
 
             // Open the PowerPoint presentation
             using (PresentationDocument presentationDoc = PresentationDocument.Open(filePath, true))

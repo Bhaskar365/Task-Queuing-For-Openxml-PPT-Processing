@@ -314,7 +314,7 @@ namespace OpenXmlDLLDotnetFramework
 
                         fitToConceptData = JsonConvert.DeserializeObject<List<DLLTemplate.FitToConceptModel>>(data, jsonSettings);
 
-                       
+
                         if (fitToConceptData.Count == 0)
                         {
                             //sourcePath = $"C:\\ExcelChartFiles\\Templates\\NotAvailable.pptx";
@@ -326,7 +326,7 @@ namespace OpenXmlDLLDotnetFramework
                         else
                         {
                             sourcePath = $"C:\\ExcelChartFiles\\Templates\\FittoConcept" + fitToConceptData.Count + ".pptx";
-                            dLLClass.FitToConceptMethod(CreateTargetPath(sourcePath), fitToConceptData,HistoricalMeanType,HistoricalMeanDescription);
+                            dLLClass.FitToConceptMethod(CreateTargetPath(sourcePath), fitToConceptData, HistoricalMeanType, HistoricalMeanDescription);
                         }
                         break;
 
@@ -355,11 +355,11 @@ namespace OpenXmlDLLDotnetFramework
                         else
                         {
 
-                           
-                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\AttributeEvaluation" + Att1Data.Count + ".pptx";
-                            dLLClass.AttributeMethod(CreateTargetPath(sourcePath), Att1Data,group,HistoricalMeanType,HistoricalMeanDescription, project);
 
-                         
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\AttributeEvaluation" + Att1Data.Count + ".pptx";
+                            dLLClass.AttributeMethod(CreateTargetPath(sourcePath), Att1Data, group, HistoricalMeanType, HistoricalMeanDescription, project);
+
+
                         }
                         break;
 
@@ -1178,13 +1178,13 @@ namespace OpenXmlDLLDotnetFramework
                             for (int i = 0; i < brandexSafetyData.Count; i++)
                             {
                                 var dblAverage1max = brandexSafetyData[i]?.dblAveragePage1;
-                                if (dblAverage1max == 0.0 || dblAverage1max==null )
+                                if (dblAverage1max == 0.0 || dblAverage1max == null)
                                 {
                                     average1Max = 0;
                                 }
                                 if (average1Max < dblAverage1max)
                                 {
-                                    average1Max =(double)dblAverage1max;
+                                    average1Max = (double)dblAverage1max;
                                 }
 
                                 var dblAverage2max = brandexSafetyData[i].dblAveragePage2;
@@ -1237,7 +1237,7 @@ namespace OpenXmlDLLDotnetFramework
 
                                 var dataEl = brandexSafetyData[i];
 
-                                double averagePage1WeightedValue  = 0.0;
+                                double averagePage1WeightedValue = 0.0;
                                 double averagePage2WeightedValue = 0.0;
                                 double averagePage3WeightedValue = 0.0;
                                 double averagePage4WeightedValue = 0.0;
@@ -1359,7 +1359,7 @@ namespace OpenXmlDLLDotnetFramework
 
                                 if (average1Max > 0)
                                 {
-                                    averagePage1WeightedValueForChart =(double) ((dataEl.dblAveragePage1 / average1Max) * dataEl.dblPage1Weight) * scalingFactor;
+                                    averagePage1WeightedValueForChart = (double)((dataEl.dblAveragePage1 / average1Max) * dataEl.dblPage1Weight) * scalingFactor;
                                 }
                                 else
                                 {
@@ -1368,7 +1368,7 @@ namespace OpenXmlDLLDotnetFramework
 
                                 if (average2Max > 0)
                                 {
-                                    averagePage2WeightedValueForChart =(double) ((dataEl.dblAveragePage2 / average2Max) * dataEl.dblPage2Weight) * scalingFactor;
+                                    averagePage2WeightedValueForChart = (double)((dataEl.dblAveragePage2 / average2Max) * dataEl.dblPage2Weight) * scalingFactor;
                                 }
                                 else
                                 {
@@ -1377,7 +1377,7 @@ namespace OpenXmlDLLDotnetFramework
 
                                 if (average3Max > 0)
                                 {
-                                    averagePage3WeightedValueForChart =(double) ((dataEl.dblAveragePage3 / average3Max) * dataEl.dblPage3Weight) * scalingFactor;
+                                    averagePage3WeightedValueForChart = (double)((dataEl.dblAveragePage3 / average3Max) * dataEl.dblPage3Weight) * scalingFactor;
                                 }
                                 else
                                 {
@@ -1395,7 +1395,7 @@ namespace OpenXmlDLLDotnetFramework
 
                                 if (average5Max > 0)
                                 {
-                                    averagePage5WeightedValueForChart =(double) ((dataEl.dblAveragePage5 / average5Max) * dataEl.dblPage5Weight) * scalingFactor;
+                                    averagePage5WeightedValueForChart = (double)((dataEl.dblAveragePage5 / average5Max) * dataEl.dblPage5Weight) * scalingFactor;
                                 }
                                 else
                                 {
@@ -1538,7 +1538,7 @@ namespace OpenXmlDLLDotnetFramework
                         else
                         {
                             sourcePath = $"C:\\ExcelChartFiles\\Templates\\Memorability" + memorability.Count + ".pptx";
-                            dLLClass.MemorabilityMethod(CreateTargetPath(sourcePath), memorability,HistoricalMeanType,HistoricalMeanDescription);
+                            dLLClass.MemorabilityMethod(CreateTargetPath(sourcePath), memorability, HistoricalMeanType, HistoricalMeanDescription);
                         }
                         break;
 
@@ -1602,7 +1602,7 @@ namespace OpenXmlDLLDotnetFramework
                         else
                         {
                             sourcePath = $"C:\\ExcelChartFiles\\Templates\\Suffix" + suffixOverallImpressionData.Count + ".pptx";
-                            dLLClass.SuffixMethod(CreateTargetPath(sourcePath), suffixOverallImpressionData,breakdown);
+                            dLLClass.SuffixMethod(CreateTargetPath(sourcePath), suffixOverallImpressionData, breakdown);
                         }
                         break;
 
@@ -1640,7 +1640,7 @@ namespace OpenXmlDLLDotnetFramework
                         else
                         {
                             sourcePath = $"C:\\ExcelChartFiles\\Templates\\EaseOfPronunciation" + easeOfPronounicationData.Count + ".pptx";
-                            dLLClass.EaseOfPronounicationMethod(CreateTargetPath(sourcePath), easeOfPronounicationData,HistoricalMeanType,HistoricalMeanDescription);
+                            dLLClass.EaseOfPronounicationMethod(CreateTargetPath(sourcePath), easeOfPronounicationData, HistoricalMeanType, HistoricalMeanDescription);
                         }
                         break;
 
@@ -1697,12 +1697,12 @@ namespace OpenXmlDLLDotnetFramework
                         if (Vaynsmr_heme_initialRecallData.Count == 0)
                         {
                             sourcePath = $"C:\\ExcelChartFiles\\Templates\\NotAvailable.pptx";
-                            dLLClass.NotAvailableMethod(CreateTargetPath(sourcePath), this.template );
+                            dLLClass.NotAvailableMethod(CreateTargetPath(sourcePath), this.template);
                         }
                         else
                         {
                             sourcePath = $"C:\\ExcelChartFiles\\Templates\\InitialRecall" + Vaynsmr_heme_initialRecallData.Count + ".pptx";
-                            dLLClass.InitialRecallMethod(CreateTargetPath(sourcePath), Vaynsmr_heme_initialRecallData,HistoricalMeanType,HistoricalMeanDescription);
+                            dLLClass.InitialRecallMethod(CreateTargetPath(sourcePath), Vaynsmr_heme_initialRecallData, HistoricalMeanType, HistoricalMeanDescription);
                         }
                         break;
 
@@ -1737,7 +1737,7 @@ namespace OpenXmlDLLDotnetFramework
                         else
                         {
                             sourcePath = $"C:\\ExcelChartFiles\\Templates\\Modifier" + atemporalModifierData.Count + ".pptx";
-                            dLLClass.ModifierMethod(CreateTargetPath(sourcePath), atemporalModifierData,group);
+                            dLLClass.ModifierMethod(CreateTargetPath(sourcePath), atemporalModifierData, group);
                         }
                         break;
 
@@ -2028,7 +2028,7 @@ namespace OpenXmlDLLDotnetFramework
                         else
                         {
                             sourcePath = $"C:\\ExcelChartFiles\\Templates\\QTC.pptx";
-                            dLLClass.QTCMethod(CreateTargetPath(sourcePath), qtcData,breakdown);
+                            dLLClass.QTCMethod(CreateTargetPath(sourcePath), qtcData, breakdown);
                         }
                         break;
 
@@ -2146,7 +2146,7 @@ namespace OpenXmlDLLDotnetFramework
                         else
                         {
                             sourcePath = $"C:\\ExcelChartFiles\\Templates\\ModifierConfusion" + modifierConfusionData.Count + ".pptx";
-                            dLLClass.ModifierConfusionMethod(CreateTargetPath(sourcePath), modifierConfusionData,group);
+                            dLLClass.ModifierConfusionMethod(CreateTargetPath(sourcePath), modifierConfusionData, group);
                         }
                         break;
 
@@ -2507,7 +2507,7 @@ namespace OpenXmlDLLDotnetFramework
 
                     case "Negative Communication Rationale":
 
- 
+
                         List<NegativeCommunicationRationaleModel> negCommRationaleData = new List<NegativeCommunicationRationaleModel>();
                         negCommRationaleData = JsonConvert.DeserializeObject<List<NegativeCommunicationRationaleModel>>(data);
 
@@ -2918,7 +2918,7 @@ namespace OpenXmlDLLDotnetFramework
 
 
 
-                   
+
 
 
 
@@ -2972,7 +2972,7 @@ namespace OpenXmlDLLDotnetFramework
         }
 
 
-        public  string getAttributeTitle(string project, string chart)
+        public string getAttributeTitle(string project, string chart)
         {
             string repText = "";
             System.Data.DataTable dt1 = clsData.MRData.getDataTable("[dbo].[ExcelChartsPrc_getAttributeEvaluationTitle] " + "'" + project + "'," + "'" + chart + "'");
@@ -3000,11 +3000,11 @@ namespace OpenXmlDLLDotnetFramework
                 //temp copy the final template file to the path 
 
                 //commented
-                File.Copy("\\\\miafs02\\Market Research\\MR Programs\\ExcelCharts_Chartsdll\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
+                // File.Copy("\\\\miafs02\\Market Research\\MR Programs\\ExcelCharts_Chartsdll\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
 
                 //local path
 
-              //  File.Copy("C:\\ExcelChartFiles\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
+                File.Copy("C:\\ExcelChartFiles\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
 
                 //get all the pagegroup names for the chart 
 
@@ -3049,7 +3049,9 @@ namespace OpenXmlDLLDotnetFramework
                 //copy a final in the path
 
                 createFolder($"C:\\excelfiles\\{project}\\Final");
-                copyFile("C:\\ExcelChartsTemplatesNew\\ExcelCharts_ChartTemplates\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx", $"C:\\excelfiles\\{project}\\Final\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx");
+                //copyFile("C:\\ExcelChartsTemplatesNew\\ExcelCharts_ChartTemplates\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx", $"C:\\excelfiles\\{project}\\Final\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx");
+
+                copyFile("C:\\ExcelChartFiles\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx");
 
 
                 lstPPTFinalSettings = lstPPTFinalSettings.OrderByDescending(p => p.intPPTSlideIndexFirst).ToList();
@@ -3254,12 +3256,17 @@ namespace OpenXmlDLLDotnetFramework
                             {
                                 for (int k = 0; k <= DelLastPage - DelFirstPage; k++)
                                 {
-                                    if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                    //if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                    //{
+                                    //    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                    //}
+
+                                    if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{ project}\\\\Final\\\\MRRxNaming.pptx"))
                                     {
                                         op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
 
                                     }
-
                                 }
 
                             }
@@ -3273,6 +3280,12 @@ namespace OpenXmlDLLDotnetFramework
                                         op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
 
                                     }
+
+                                    //if (DelLastPage - k - 1 < CountSlides($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx"))
+                                    //{
+                                    //    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                    //}
 
                                 }
 
@@ -3458,6 +3471,12 @@ namespace OpenXmlDLLDotnetFramework
 
                                         }
 
+                                        //if (DelLastPage - k - 1 < CountSlides($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx"))
+                                        //{
+                                        //    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                        //}
+
                                     }
 
                                 }
@@ -3471,6 +3490,12 @@ namespace OpenXmlDLLDotnetFramework
                                             op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
 
                                         }
+
+                                        //if (DelLastPage - k - 1 < CountSlides($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx"))
+                                        //{
+                                        //    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                        //}
 
                                     }
 
@@ -3529,14 +3554,7 @@ namespace OpenXmlDLLDotnetFramework
                                     break;
 
                                 }
-
-
                             }
-
-
-
-
-
                         }
 
                         if (noproceed)
@@ -3610,6 +3628,8 @@ namespace OpenXmlDLLDotnetFramework
                                         for (int k = 0; k <= DelLastPage - DelFirstPage; k++)
                                         {
                                             op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+                                            //op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", DelLastPage - k - 1);
+
                                             //Thread.Sleep(100);
                                         }
 
@@ -3624,9 +3644,14 @@ namespace OpenXmlDLLDotnetFramework
 
                                         if (File.Exists(getIndividualChartPath(chart, project, breakDown)))
                                         {
-                                            op = await clsMisc.MergeSlideWithSlideArrayAsync1(getIndividualChartPath(chart, project, breakDown), $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", intChartPages.ToArray(), DelLastPage - 1);
-
-
+                                            try
+                                            {
+                                                op = await clsMisc.MergeSlideWithSlideArrayAsync1(getIndividualChartPath(chart, project, breakDown), $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", intChartPages.ToArray(), DelLastPage - 1);
+                                            }
+                                            catch (Exception)
+                                            {
+                                                throw;
+                                            }
                                         }
 
 
@@ -3686,7 +3711,7 @@ namespace OpenXmlDLLDotnetFramework
                                         resPageType = "Attribute Evaluation 2";
                                         DelLastPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 2", "LastPage");
                                         DelFirstPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 2", "FirstPage");
-                                        // await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", "Attribute #2", 38);
+                                        await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", "Attribute #2", 38);
 
                                         //if (!checkParticularAttributeEvaluationIsSelected(lstChartDispNames, 1))
                                         //{
@@ -3839,6 +3864,7 @@ namespace OpenXmlDLLDotnetFramework
                                     {
 
                                         op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - 1);
+                                        //op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", DelLastPage - 1);
                                     }
 
                                     else
@@ -3846,6 +3872,7 @@ namespace OpenXmlDLLDotnetFramework
                                         for (int k = 0; k <= DelLastPage - DelFirstPage; k++)
                                         {
                                             op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+                                            //op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", DelLastPage - k - 1);
                                             //Thread.Sleep(100);
                                         }
                                     }
@@ -3948,28 +3975,37 @@ namespace OpenXmlDLLDotnetFramework
 
         private int getPageIndex(List<clsPPTFinalSettings> lst, string pageGroupName, string pageIndex)
         {
-            int result = 0;
-
-            if (pageIndex == "LastPage")
-            {
-                result = lst.FirstOrDefault(item => item.strPageGroupName == pageGroupName).intPPTSlideIndexLast;
-            }
-
-            else if (pageIndex == "FirstPage")
+            try
             {
 
-                result = lst.FirstOrDefault(item => item.strPageGroupName == pageGroupName).intPPTSlideIndexFirst;
-            }
+                int result = 0;
 
-            return result;
+                if (pageIndex == "LastPage")
+                {
+                    result = lst.FirstOrDefault(item => item.strPageGroupName == pageGroupName).intPPTSlideIndexLast;
+                }
+
+                else if (pageIndex == "FirstPage")
+                {
+
+                    result = lst.FirstOrDefault(item => item.strPageGroupName == pageGroupName).intPPTSlideIndexFirst;
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        
+
         private bool checkAttributeEvaluationIsSelected(List<clschartPageDisplayName> lstPageDispName)
         {
 
             bool result = false;
-            if(lstPageDispName.Any(m=>m.strPageType== "Attribute Evaluation" && m.isReportSelectedByUser==true))
+            if (lstPageDispName.Any(m => m.strPageType == "Attribute Evaluation" && m.isReportSelectedByUser == true))
             {
 
                 result = true;
@@ -3980,16 +4016,16 @@ namespace OpenXmlDLLDotnetFramework
 
         }
 
-        private bool checkParticularAttributeEvaluationIsSelected(List<clschartPageDisplayName> lstPageDispName , int attValue)
+        private bool checkParticularAttributeEvaluationIsSelected(List<clschartPageDisplayName> lstPageDispName, int attValue)
         {
 
             bool result = false;
 
             var lst = lstPageDispName.Where(m => m.strPageType == "Attribute Evaluation" && m.isReportSelectedByUser == true);
 
-            foreach(clschartPageDisplayName obj in lst)
+            foreach (clschartPageDisplayName obj in lst)
             {
-                if(obj.strPageName.Contains(attValue.ToString()))
+                if (obj.strPageName.Contains(attValue.ToString()))
                 {
 
                     result = true;
@@ -3997,7 +4033,7 @@ namespace OpenXmlDLLDotnetFramework
                 }
 
             }
-           
+
             return result;
 
         }
@@ -4034,112 +4070,112 @@ namespace OpenXmlDLLDotnetFramework
         }
 
 
-        private bool checkParticularChartIsSelected(List<clschartPageDisplayName> lstPageDispName, int attValue,string chart)
+        private bool checkParticularChartIsSelected(List<clschartPageDisplayName> lstPageDispName, int attValue, string chart)
+        {
+
+            bool result = false;
+
+            var lst = lstPageDispName.Where(m => m.strPageName == "Exaggerative-Inappropriate" && m.isReportSelectedByUser == true);
+
+            foreach (clschartPageDisplayName obj in lst)
             {
-
-                bool result = false;
-
-                var lst = lstPageDispName.Where(m => m.strPageName == "Exaggerative-Inappropriate" && m.isReportSelectedByUser == true);
-
-                foreach (clschartPageDisplayName obj in lst)
+                if (obj.strPageName.Contains(attValue.ToString()))
                 {
-                    if (obj.strPageName.Contains(attValue.ToString()))
-                    {
-                        result = true;
-
-                    }
+                    result = true;
 
                 }
 
-
-                return result;
-
             }
+
+
+            return result;
+
+        }
 
 
 
 
         private string getReverseChartName(string chartName)
+        {
+            if (chartName == "Attribute Evaluation 1")
             {
-                if (chartName == "Attribute Evaluation 1")
-                {
-                    return "Attribute 1";
-                }
-                else if (chartName == "Attribute Evaluation 2")
-                {
-                    return "Attribute 2";
-                }
+                return "Attribute 1";
+            }
+            else if (chartName == "Attribute Evaluation 2")
+            {
+                return "Attribute 2";
+            }
 
-                else if (chartName == "Attribute Evaluation 3")
-                {
-                    return "Attribute 3";
-                }
+            else if (chartName == "Attribute Evaluation 3")
+            {
+                return "Attribute 3";
+            }
 
-                else if (chartName == "Attribute Evaluation 4")
-                {
-                    return "Attribute 4";
-                }
-
-
-                else
-                {
-                    return chartName;
-                }
-
+            else if (chartName == "Attribute Evaluation 4")
+            {
+                return "Attribute 4";
             }
 
 
-
-            private int getmaxSlideid(string fileName)
+            else
             {
-                int maxSlideNumber = 0;
-                if (!File.Exists(fileName))
+                return chartName;
+            }
+
+        }
+
+
+
+        private int getmaxSlideid(string fileName)
+        {
+            int maxSlideNumber = 0;
+            if (!File.Exists(fileName))
+            {
+                return 0;
+            }
+
+            else
+            {
+                maxSlideNumber = 1;
+                using (PresentationDocument doc = PresentationDocument.Open(fileName, false))
                 {
-                    return 0;
+
+                    PresentationPart presentationPart = doc.PresentationPart;
+
+                    maxSlideNumber = presentationPart.SlideParts.Count();
                 }
 
-                else
-                {
-                    maxSlideNumber = 1;
-                    using (PresentationDocument doc = PresentationDocument.Open(fileName, false))
-                    {
-
-                        PresentationPart presentationPart = doc.PresentationPart;
-
-                        maxSlideNumber = presentationPart.SlideParts.Count();
-                    }
-
-                    return Convert.ToInt32(maxSlideNumber);
-
-
-                }
-
-
+                return Convert.ToInt32(maxSlideNumber);
 
 
             }
 
 
 
-            private string getIndividualChartPath(string chart, string projectName, string breakDown)
+
+        }
+
+
+
+        private string getIndividualChartPath(string chart, string projectName, string breakDown)
+        {
+
+
+
+            string outputpath = $"C:\\excelfiles\\{projectName}\\{chart}_{breakDown}.pptx";
+
+
+            //get the right chart name 
+
+            return outputpath;
+
+        }
+
+        public int CountSlides(string presentationFile)
+        {
+
+            if (File.Exists(presentationFile))
             {
-
-
-
-                string outputpath = $"C:\\excelfiles\\{projectName}\\{chart}_{breakDown}.pptx";
-
-
-                //get the right chart name 
-
-                return outputpath;
-
-            }
-
-            public int CountSlides(string presentationFile)
-            {
-
-                if(File.Exists(presentationFile))
-                 {
 
                 using (PresentationDocument ppt = PresentationDocument.Open(presentationFile, false))
                 {
@@ -4164,22 +4200,22 @@ namespace OpenXmlDLLDotnetFramework
 
 
 
-                 }
+            }
 
-                else
-                {
+            else
+            {
                 return 0;
-                    
-                }
 
-
-
-             
             }
 
 
 
-            private string getRightChartName(string pageName, int index)
+
+        }
+
+
+
+        private string getRightChartName(string pageName, int index)
         {
             if (pageName == "Attribute Evaluation" && index == 1)
             {
@@ -4222,41 +4258,43 @@ namespace OpenXmlDLLDotnetFramework
         }
 
 
-            private string getChartsPagegroupName(string projectName, string chartName)
+        private string getChartsPagegroupName(string projectName, string chartName)
+        {
+            string realchartName = "";
+
+            System.Data.DataTable dt = clsData.MRData.getDataTable("[xlv1].[getPageGroupsForProject]  " + "'" + projectName + "'");
+
+
+
+            List<clschartPageGroup> lstPg = dt.AsEnumerable().Select(row => new clschartPageGroup
+            {
+                strPageGroup = row.Field<string>("strPageGroup"),
+                strPageGroupType = row.Field<string>("strPageGroupType")
+            }).ToList();
+
+
+            List<clschartPageGroup> lstPgChart = lstPg.Where(p => p.strPageGroup == chartName).ToList();
+
+            foreach (clschartPageGroup obj in lstPgChart)
+            {
+
+                realchartName = obj.strPageGroupType;
+
+            }
+
+            return realchartName;
+
+        }
+
+
+
+        private List<clschartPageGroup> getProjectPagegroupNames(string projectName)
+        {
+            try
             {
                 string realchartName = "";
 
                 System.Data.DataTable dt = clsData.MRData.getDataTable("[xlv1].[getPageGroupsForProject]  " + "'" + projectName + "'");
-
-
-
-                List<clschartPageGroup> lstPg = dt.AsEnumerable().Select(row => new clschartPageGroup
-                {
-                    strPageGroup = row.Field<string>("strPageGroup"),
-                    strPageGroupType = row.Field<string>("strPageGroupType")
-                }).ToList();
-
-
-                List<clschartPageGroup> lstPgChart = lstPg.Where(p => p.strPageGroup == chartName).ToList();
-
-                foreach (clschartPageGroup obj in lstPgChart)
-                {
-
-                    realchartName = obj.strPageGroupType;
-
-                }
-
-                return realchartName;
-
-            }
-
-
-
-            private List<clschartPageGroup> getProjectPagegroupNames(string projectName)
-            {
-                string realchartName = "";
-
-              System.Data.DataTable dt = clsData.MRData.getDataTable("[xlv1].[getPageGroupsForProject]  " + "'" + projectName + "'");
 
 
                 List<clschartPageGroup> lstPg = dt.AsEnumerable().Select(row => new clschartPageGroup
@@ -4267,12 +4305,23 @@ namespace OpenXmlDLLDotnetFramework
 
 
                 return lstPg;
+            }
+            catch (Exception)
+            {
 
+                throw;
             }
 
 
-            private List<clschartPageDisplayName> getProjectChartDisplayNames(string projectName)
+
+        }
+
+
+        private List<clschartPageDisplayName> getProjectChartDisplayNames(string projectName)
+        {
+            try
             {
+
                 string realchartName = "";
 
                 System.Data.DataTable dt = clsData.MRData.getDataTable("[dbo].[ExcelChartsPrc_getPages]  " + 1 + ",'" + projectName + "'");
@@ -4291,111 +4340,117 @@ namespace OpenXmlDLLDotnetFramework
                 return lstPg;
 
             }
-
-
-            public static void createFolder(string path)
+            catch (Exception)
             {
-                try
-                {
-                    if (!Directory.Exists(path))
-                    {
-                        // Try to create the directory.
-                        DirectoryInfo di = Directory.CreateDirectory(path);
-                    }
-                }
-                catch (IOException ioex)
-                {
-                    Console.WriteLine(ioex.Message);
-                }
+
+                throw;
+            }
+        }
 
 
+        public static void createFolder(string path)
+        {
+            try
+            {
+                if (!Directory.Exists(path))
+                {
+                    // Try to create the directory.
+                    DirectoryInfo di = Directory.CreateDirectory(path);
+                }
+            }
+            catch (IOException ioex)
+            {
+                Console.WriteLine(ioex.Message);
             }
 
 
-            public static void copyFile(string source, string destination)
+        }
+
+
+        public static void copyFile(string source, string destination)
+        {
+            try
             {
-                try
-                {
-                    File.Copy(source, destination,true);
+                File.Copy(source, destination, true);
 
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-
-
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
 
-            public static void notAvailable(string sourcePath, string template, string breakdown)
+        }
+
+
+        public static void notAvailable(string sourcePath, string template, string breakdown)
+        {
+            DLLClass dLLClass = new DLLClass();
+            APIWrapper obj = new APIWrapper();
+            dLLClass.NotAvailableMethod(sourcePath, template, breakdown);
+
+        }
+
+
+        public static void copyTemplates()
+        {
+
+            //lok please check currently doing only for the first time
+
+            string sourceDirectory = @"\\miafs02\Market Research\MR Programs\ExcelCharts_Chartsdll\Templates";
+            string destinationDirectory = "C:\\ExcelChartFiles\\Templates\\";
+
+            if (!Directory.Exists("C:\\ExcelChartFiles\\"))
             {
-                DLLClass dLLClass = new DLLClass();
-                APIWrapper obj = new APIWrapper();
-                dLLClass.NotAvailableMethod(sourcePath, template, breakdown);
-
-            }
-
-
-            public static void copyTemplates()
-            {
-
-                //lok please check currently doing only for the first time
-
-                string sourceDirectory = @"\\miafs02\Market Research\MR Programs\ExcelCharts_Chartsdll\Templates";
-                string destinationDirectory = "C:\\ExcelChartFiles\\Templates\\";
 
                 if (!Directory.Exists("C:\\ExcelChartFiles\\"))
                 {
+                    // Create the directory if it doesn't exist
+                    Directory.CreateDirectory("C:\\ExcelChartFiles\\");
+                }
 
-                    if (!Directory.Exists("C:\\ExcelChartFiles\\"))
-                    {
-                        // Create the directory if it doesn't exist
-                        Directory.CreateDirectory("C:\\ExcelChartFiles\\");
-                    }
+                if (!Directory.Exists(destinationDirectory))
+                {
+                    // Create the directory if it doesn't exist
+                    Directory.CreateDirectory(destinationDirectory);
 
-                    if (!Directory.Exists(destinationDirectory))
-                    {
-                        // Create the directory if it doesn't exist
-                        Directory.CreateDirectory(destinationDirectory);
+                }
 
-                    }
-
-                    foreach (var file in Directory.GetFiles(sourceDirectory))
-                    {
-                        File.Copy(file, Path.Combine(destinationDirectory, Path.GetFileName(file)), true);
-                    }
-
-
+                foreach (var file in Directory.GetFiles(sourceDirectory))
+                {
+                    File.Copy(file, Path.Combine(destinationDirectory, Path.GetFileName(file)), true);
                 }
 
 
             }
 
 
-            public void notAvailable(string template)
-            {
-
-                //DLLClass obj = new DLLClass();
-                //obj.NotAvailableMethod(CreateTargetPath($"C:\\ExcelChartFiles\\Templates\\NotAvailable.pptx"), template);
-
-                //template.NotAvailableTemplate(destination, templateName, breakdown);
-
-            }
+        }
 
 
-            public void copyInsertSlide(string source, string destination, int pos)
-            {
-                clsMisc.CopySlide(source, destination, pos);
+        public void notAvailable(string template)
+        {
 
-            }
+            //DLLClass obj = new DLLClass();
+            //obj.NotAvailableMethod(CreateTargetPath($"C:\\ExcelChartFiles\\Templates\\NotAvailable.pptx"), template);
+
+            //template.NotAvailableTemplate(destination, templateName, breakdown);
+
+        }
+
+
+        public void copyInsertSlide(string source, string destination, int pos)
+        {
+            clsMisc.CopySlide(source, destination, pos);
+
+        }
 
 
 
 
 
-       
 
-   
+
+
     }
 }

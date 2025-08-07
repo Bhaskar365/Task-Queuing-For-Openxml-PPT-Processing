@@ -14,6 +14,7 @@ builder.Services.AddScoped<IFitToConceptService, FitToConceptService>();
 builder.Services.AddHttpClient<IFitToConceptService,FitToConceptService>(client =>
 {
     client.BaseAddress = new Uri("http://localhost:5223");
+    client.Timeout = TimeSpan.FromMinutes(5);
 });
 
 

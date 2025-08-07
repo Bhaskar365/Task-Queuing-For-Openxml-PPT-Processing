@@ -461,6 +461,7 @@ else
 
                 var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(request);
 
+
                 reportStatuses.Add(new ReportStatus
                     {
                         ProjectName = request.project,
@@ -473,8 +474,9 @@ else
                 _ = PollStatusAsync(taskId);
                 StateHasChanged();
 
+               // await fitToConceptService.SendDLLMergeRequest(request);
             }
-            await WaitUntilAllTasksComplete(taskIdList);
+           // await WaitUntilAllTasksComplete(taskIdList);
 
             foreach (var projectEl in projectWrapperAPIList)
             {
