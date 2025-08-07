@@ -996,13 +996,12 @@ namespace WebApplicationAPI.Controllers
         //}
 
         [HttpPost("ppt/dllMerge")]
-        public async Task<IActionResult> MergeUsingDLL([FromBody] ReportGenerationRequestDLL request)
+        public async Task MergeUsingDLL([FromBody] ReportGenerationRequestDLL request)
         {
             try
             {
                 APIWrapper apiWrapperDllClass = new APIWrapper();
 
-                List<string> templateList = new List<string>();
                 List<string> breakdownsList;
 
 
@@ -1011,16 +1010,16 @@ namespace WebApplicationAPI.Controllers
 
                 foreach (string breakdown in breakdownsList)
                 {
-                    await apiWrapperDllClass.addChartsToFinalTemplate1(request.project, request.templates, finalTemplateName, breakdown);
+                    await apiWrapperDllClass.addChartsToFinalTemplate1(request.project, request.templates, finalTemplateName, breakdown);    
                 }
 
-               // await apiWrapperDllClass.OpenXMLParallelProcess(request.project, request.templates, request.breakdowns, request.HistoricalMeanType, request.HistoricalMeanDescription, finalTemplateName);
+                // await apiWrapperDllClass.OpenXMLParallelProcess(request.project, request.templates, request.breakdowns, request.HistoricalMeanType, request.HistoricalMeanDescription, finalTemplateName);
 
-                return Ok();
+                return;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 

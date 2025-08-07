@@ -3000,11 +3000,11 @@ namespace OpenXmlDLLDotnetFramework
                 //temp copy the final template file to the path 
 
                 //commented
-                //File.Copy("\\\\miafs02\\Market Research\\MR Programs\\ExcelCharts_Chartsdll\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
+                File.Copy("\\\\miafs02\\Market Research\\MR Programs\\ExcelCharts_Chartsdll\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
 
                 //local path
 
-                File.Copy("C:\\ExcelChartFiles\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
+              //  File.Copy("C:\\ExcelChartFiles\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
 
                 //get all the pagegroup names for the chart 
 
