@@ -322,6 +322,7 @@ a, .btn-link {
 .mud-input.mud-input-outlined.mud-input-adorned-end {
     height: 25px !important;
 }
+
 /*
 .responsive-container-paper {
     width: auto !important;
@@ -448,8 +449,6 @@ a, .btn-link {
 
 .responsive-container-paper {
     padding: 6px !important;
-    width: auto !important;
-    height: 75dvh !important;
     display: flex;
     flex-direction: column;
 }

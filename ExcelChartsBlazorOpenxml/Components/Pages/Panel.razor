@@ -2,19 +2,22 @@
 
 @using ExcelChartsBlazorOpenxml.Services
 @using MudBlazor
+@using Newtonsoft.Json
 @using SharedModels
 @using SharedModels.DTO
+@using System.Xml.Linq
 @using static ExcelChartsBlazorOpenxml.Components.Pages.TaskQueueCharts
 @inject IFitToConceptService fitToConceptService;
+@inject HttpClient httpClient
 
 <MudTabs Elevation="3" Rounded="true" Class="my-6" ApplyEffectsToContainer="true" PanelClass="pa-2">
     <MudTabPanel Text="Power Point" Class="mudTabPanelFontSize">
 
         <div class="panels-container">
 
-            <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 left-panel" Style="height:max-content">
+            <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 left-panel">
                 <MudGrid>
-                    <MudPaper Elevation="1" Class="responsive-container-paper">
+                    <MudPaper Elevation="3" Class="responsive-container-paper">
                         <MudPaper Elevation="0">
                             @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
@@ -204,7 +207,7 @@
                             @if (currentState == ProcessState.Generating)
                             {
                                 <span> Generating...</span>
-                                
+
                                 <i class="fas fa-spinner fa-spin" style="margin-left:3px;"></i>
                             }
                             else if (currentState == ProcessState.Done)
@@ -241,10 +244,9 @@
                 </MudGrid>
             </MudContainer>
 
-
             <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 right-panel" Style="height:max-content;">
                 <MudGrid Class="py-1 px-2" Elevation="0">
-                    <MudPaper Elevation="1" Class="responsive-container-paper-right">
+                    <MudPaper Elevation="3" Class="responsive-container-paper-right">
 
                         <MudGrid class="mudGridSectionProjectParams">
 
@@ -252,11 +254,12 @@
                                 <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Pages</MudText>
 
                                 <div style="flex: 1; overflow: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
-                                    @for (int i = 0; i < checkboxes.Count; i++)
+                                    @for (int i = 0; i < testNames.Count; i++)
                                     {
-                                        <MudCheckBox Value="checkboxes[i].IsChecked"
-                                        Label="@checkboxes[i].Label"
-                                        Color="Color.Default" Size="Size.Small">
+                                        <MudCheckBox Value="true"
+                                                     Label="@testNames[i]"
+                                                    Color="Color.Default" 
+                                                    Size="Size.Small">
                                         </MudCheckBox>
                                     }
                                 </div>
@@ -356,7 +359,7 @@
 
     private List<CheckboxItem> checkboxes = new List<CheckboxItem>
     {
-        new CheckboxItem { Id = 1, Label = "YESIBY", IsChecked = true },
+        new CheckboxItem { Id = 1, Label = "TESTNAME 1", IsChecked = true },
         new CheckboxItem { Id = 2, Label = "HAMUBFORITOYU", IsChecked = true },
         new CheckboxItem { Id = 3, Label = "RACKEM", IsChecked = true },
          new CheckboxItem { Id = 1, Label = "YESIBY", IsChecked = true },
@@ -369,8 +372,6 @@
         new CheckboxItem { Id = 2, Label = "HAMUBFORITOYU", IsChecked = true },
         new CheckboxItem { Id = 3, Label = "RACKEM", IsChecked = true }
     };
-
-
 
     private string selectedOption = "Excel Charts";
 
@@ -407,7 +408,7 @@
     public class CheckboxItem
     {
         public int Id { get; set; }
-        public string Label { get; set; }
+        public string? Label { get; set; }
         public bool IsChecked { get; set; }
     }
 
@@ -416,22 +417,76 @@
     List<APIRequestModel> projectWrapperAPIList = new List<APIRequestModel>
     {
         new APIRequestModel("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "Attribute 1", "Attribute 1", "OVERALL","",""),
-        new APIRequestModel("RACKEM", "Attribute 2", "Attribute 2", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "Attribute 3", "Attribute 3", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "01 Untrue", "01 Untrue", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "02 Misleading", "02 Misleading", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "03 Exagg", "03 Exagg", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "Memorability", "Memorability", "OVERALL", "", ""),
-        new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "Attribute 1", "Attribute 1", "OVERALL","",""),
+        // new APIRequestModel("RACKEM", "Attribute 2", "Attribute 2", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "Attribute 3", "Attribute 3", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "01 Untrue", "01 Untrue", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "02 Misleading", "02 Misleading", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "03 Exagg", "03 Exagg", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "Memorability", "Memorability", "OVERALL", "", ""),
+        // new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
     };
 
+    List<string> testNames = new List<string>(); 
+    List<FitToConceptModel> fitToConceptData = new List<FitToConceptModel>();
 
+    protected override async Task OnInitializedAsync()
+    {
+        var apiCall = await CallAPI("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", "");
 
-    // protected override void OnInitialized()
-    // {
-    //     base.OnInitialized();
-    // }
+        XDocument xDoc = XDocument.Parse(apiCall);
+        var data = xDoc?.Root?.Value;
+
+        fitToConceptData = JsonConvert.DeserializeObject<List<FitToConceptModel>>(data!)!;
+
+        foreach(var testname in fitToConceptData!)
+        {
+            testNames.Add(testname.TestName!);
+        }
+
+        await base.OnInitializedAsync();
+    }
+
+    private async Task<string> CallAPI(string project,
+                                  string template,
+                                  string group,
+                                  string breakdown,
+                                  string HistoricalMeanType,
+                                  string HistoricalMeanDescription)
+    {
+        const string URL = "https://tools.brandinstitute.com/wsXlCharts/wsExcelCharts.asmx/GetChartBreakDownData";
+
+        var payload = new[]
+        {
+                new KeyValuePair<string,string>("token","2BF27A11-E318-447A-98FD-70AFE3871AA9"),
+                new KeyValuePair<string,string>("project",project),
+                new KeyValuePair<string,string>("template",template),
+                new KeyValuePair<string,string>("group",group),
+                new KeyValuePair<string,string>("breakdown",breakdown),
+                new KeyValuePair<string,string>("historicalMeanType",HistoricalMeanType),
+                new KeyValuePair<string,string>("historicalMeanDescription",HistoricalMeanDescription)
+            };
+
+        var content = new FormUrlEncodedContent(payload);
+
+        try
+        {
+            var response = await httpClient.PostAsync(URL, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                return $"Error: {response.StatusCode}, {response.ReasonPhrase}";
+            }
+        }
+        catch (Exception ex)
+        {
+            return ex.Message;
+        }
+    }
 
 
     private async Task ProcessDLL()
