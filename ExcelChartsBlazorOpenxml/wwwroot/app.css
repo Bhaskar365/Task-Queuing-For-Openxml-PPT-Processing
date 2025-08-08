@@ -472,6 +472,10 @@ a, .btn-link {
         height: 15px !important;
     }
 
+    .progressProjectSpinner {
+        margin-left:50px;
+    }
+
     .lds-dual-ring {
         color: #1c4c5b
     }
@@ -484,7 +488,6 @@ a, .btn-link {
     .lds-dual-ring {
         width: 100%;
         height: 100%;
-        border: 2px solid red;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -493,11 +496,11 @@ a, .btn-link {
         .lds-dual-ring:after {
             content: " ";
             display: block;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             margin: 8px;
             border-radius: 50%;
-            border: 6.4px solid currentColor;
+            border: 2px solid currentColor;
             border-color: currentColor transparent currentColor transparent;
             animation: lds-dual-ring 1.2s linear infinite;
         }
@@ -513,7 +516,7 @@ a, .btn-link {
     }
 
     .paramsMudPaperSection .mud-input-control {
-        margin-bottom:-25px !important;
+        margin-bottom:-10px !important;
     }
 
     .custom-checkbox .mud-typography {
