@@ -6,6 +6,8 @@
 @using SharedModels
 @using SharedModels.DTO
 @using System.Xml.Linq
+@using System.Data
+@using prjData
 @using static ExcelChartsBlazorOpenxml.Components.Pages.TaskQueueCharts
 @inject IFitToConceptService fitToConceptService;
 @inject HttpClient httpClient
@@ -26,9 +28,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="SourceText"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True
-                                    Disabled>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True
+                                               Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -42,10 +44,10 @@
                                     <MudText Class="custom-label" Color="Color.Error">Project Name</MudText>
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
-                                    <MudSelect @bind-Value="ProjectTextValue"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
-                                        <MudSelectItem Value="@("Option 1")">1062_HC</MudSelectItem>
+                                    <MudSelect @bind-Value="@project"
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
+                                        <MudSelectItem Value="@(project)"></MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
 
@@ -60,8 +62,8 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="DSITextValue"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
                                         <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -77,9 +79,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="HistoricalMeanTextValue"
-                                    Label=""
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
+                                               Label=""
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -94,9 +96,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="HistoricalMeanDescriptionTextValue"
-                                    Label=""
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
+                                               Label=""
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -137,9 +139,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="FitToConceptTextValue"
-                                    Label=""
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
+                                               Label=""
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -168,8 +170,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="FinalPPTTemplateText"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
                                         <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -183,16 +185,16 @@
                                 @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
                                 <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
                                     <MudCheckBox @bind-Value="Size_CheckBox1"
-                                    Size="Size.Small"
-                                    Color="Color.Primary"
-                                    Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                                 Size="Size.Small"
+                                                 Color="Color.Primary"
+                                                 Class="custom-label-historical-mean-checkbox"></MudCheckBox>
                                     <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
                                 </MudItem>
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="SpecificHistMean"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
                                         <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -254,19 +256,26 @@
                                 <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Pages</MudText>
 
                                 <div style="flex: 1; overflow: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
-                                    @for (int i = 0; i < testNames.Count; i++)
+                                    @if (isDataLoaded)
                                     {
-                                        <MudCheckBox Value="true"
-                                                     Label="@testNames[i]"
-                                                    Color="Color.Default" 
-                                                    Size="Size.Small">
-                                        </MudCheckBox>
+                                        <p class="lds-dual-ring"></p>
+                                    }
+                                    else
+                                    {
+                                        @for (int i = 0; i < lstPg.Count; i++)
+                                        {
+                                            <MudCheckBox Value="true"
+                                                         Label="@lstPg[i].strPageGroup"
+                                                         Color="Color.Primary"
+                                                         Size="Size.Small" Class="custom-checkbox">
+                                            </MudCheckBox>
+                                        }
                                     }
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true" Class="btnClass">
+                                           Size="Size.Small"
+                                           FullWidth="true" Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -278,50 +287,67 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small" FullWidth="true"
-                                Class="btnClass">
+                                           Size="Size.Small" FullWidth="true"
+                                           Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
 
                             <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2"
-                                Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Test Names</MudText>
+                                         Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">
+                                    Test Names
+                                </MudText>
 
                                 <div style="flex: 1; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
+                                    @if (!isDataLoaded)
+                                    {
+                                        <p class="lds-dual-ring"></p>
+                                    }
+                                    else
+                                    {
+                                        @for (int i = 0; i < testNamesList.Count; i++)
+                                        {
+                                            <MudCheckBox Value="true"
+                                                         Label="@testNamesList[i]"
+                                                         Color="Color.Primary"
+                                                         Size="Size.Small" Class="custom-checkbox">
+                                            </MudCheckBox>
+                                        }
+                                    }
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small" FullWidth="true"
-                                Class="btnClass">
+                                           Size="Size.Small" FullWidth="true"
+                                           Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
 
                             <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2"
-                                Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;white-space:nowrap;">Attribute Evaluation Aggregate</MudText>
+                                         Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;white-space:nowrap;">Attribute Evaluation Aggregate</MudText>
 
                                 <div style="flex: 1; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true"
-                                Class="btnClass">
+                                           Size="Size.Small"
+                                           FullWidth="true"
+                                           Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
 
                                 <MudText Typo="Typo.subtitle2"
-                                Style="margin: 10px 0 8px 0; font-weight: bold; text-align: center;font-size:8px;white-space:nowrap;">Fit to Brand Personality Aggregate</MudText>
+                                         Style="margin: 10px 0 8px 0; font-weight: bold; text-align: center;font-size:8px;white-space:nowrap;">Fit to Brand Personality Aggregate</MudText>
 
                                 <div style="flex: 0.5; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true"
-                                Class="btnClass">
+                                           Size="Size.Small"
+                                           FullWidth="true"
+                                           Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -377,8 +403,6 @@
 
     public string SourceText { get; set; } = "Excel Charts";
 
-    public string ProjectTextValue { get; set; } = "1062_HC";
-
     public string DSITextValue { get; set; } = "1062_HC_MR";
 
     public string HistoricalMeanTextValue { get; set; } = "";
@@ -412,6 +436,12 @@
         public bool IsChecked { get; set; }
     }
 
+    public class clschartPageGroup
+    {
+        public string strPageGroup { get; set; }
+        public string strPageGroupType { get; set; }
+    }
+
     private List<ReportStatus> reportStatuses = new();
 
     List<APIRequestModel> projectWrapperAPIList = new List<APIRequestModel>
@@ -427,8 +457,13 @@
         // new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
     };
 
-    List<string> testNames = new List<string>(); 
+    List<string> testNamesList = new List<string>();
     List<FitToConceptModel> fitToConceptData = new List<FitToConceptModel>();
+
+    List<clschartPageGroup> lstPg = new List<clschartPageGroup>();
+    bool isDataLoaded = false;
+
+    public string? project = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -439,12 +474,16 @@
 
         fitToConceptData = JsonConvert.DeserializeObject<List<FitToConceptModel>>(data!)!;
 
-        foreach(var testname in fitToConceptData!)
-        {
-            testNames.Add(testname.TestName!);
-        }
+        project = fitToConceptData.First().ProjectName;
 
-        await base.OnInitializedAsync();
+        foreach (var testname in fitToConceptData!)
+        {
+
+            testNamesList.Add(testname.TestName!);
+        }
+        lstPg = await getProjectPagegroupNames(project);
+
+        isDataLoaded = true;
     }
 
     private async Task<string> CallAPI(string project,
@@ -488,6 +527,30 @@
         }
     }
 
+    private async Task<List<clschartPageGroup>> getProjectPagegroupNames(string projectName)
+    {
+        try
+        {
+            string realchartName = "";
+
+            System.Data.DataTable dt = clsData.MRData.getDataTable("[xlv1].[getPageGroupsForProject]  " + "'" + projectName + "'");
+
+
+            List<clschartPageGroup> lstPg = dt.AsEnumerable().Select(row => new clschartPageGroup
+                {
+                    strPageGroup = row.Field<string>("strPageGroup"),
+                    strPageGroupType = row.Field<string>("strPageGroupType")
+                }).ToList();
+
+
+            return lstPg;
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
 
     private async Task ProcessDLL()
     {

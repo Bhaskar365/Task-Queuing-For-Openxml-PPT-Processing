@@ -466,6 +466,61 @@ a, .btn-link {
         white-space: nowrap !important;
     }
 
+    .custom-checkbox .mud-checkbox .mud-icon-root {
+        font-size: 1rem !important;
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .lds-dual-ring {
+        color: #1c4c5b
+    }
+
+        .lds-dual-ring,
+        .lds-dual-ring:after {
+            box-sizing: border-box;
+        }
+
+    .lds-dual-ring {
+        width: 100%;
+        height: 100%;
+        border: 2px solid red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .lds-dual-ring:after {
+            content: " ";
+            display: block;
+            width: 35px;
+            height: 35px;
+            margin: 8px;
+            border-radius: 50%;
+            border: 6.4px solid currentColor;
+            border-color: currentColor transparent currentColor transparent;
+            animation: lds-dual-ring 1.2s linear infinite;
+        }
+
+    @keyframes lds-dual-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .paramsMudPaperSection .mud-input-control {
+        margin-bottom:-25px !important;
+    }
+
+    .custom-checkbox .mud-typography {
+        margin-left: -10px !important;
+        font-size: small !important;
+        white-space: nowrap;
+    }
 
     .custom-label-historical-mean-checkbox {
         /*border:2px solid red !important;*/
