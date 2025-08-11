@@ -473,7 +473,7 @@ a, .btn-link {
     }
 
     .progressProjectSpinner {
-        margin-left:50px;
+        margin-left: 50px;
     }
 
     .lds-dual-ring {
@@ -516,7 +516,7 @@ a, .btn-link {
     }
 
     .paramsMudPaperSection .mud-input-control {
-        margin-bottom:-10px !important;
+        margin-bottom: -10px !important;
     }
 
     .custom-checkbox .mud-typography {
@@ -583,37 +583,53 @@ a, .btn-link {
         height: 68% !important;
         height: 100% !important;
     }
-}
 
-.btnClass {
-    font-size: 8px !important;
-    margin-top: 5rem !important;
-}
-
-    .btnClass:hover {
-        background-color: powderblue !important;
-        border: 1px solid darkblue !important;
+    .btnClass {
+        font-size: 8px !important;
+        margin-top: 5rem !important;
     }
 
-.generateBtnClass {
-    margin-top: 5px !important;
-}
+        .btnClass:hover {
+            background-color: powderblue !important;
+            border: 1px solid darkblue !important;
+        }
 
-    .generateBtnClass:hover {
-        background-color: powderblue !important;
-        border: 1px solid darkblue !important;
+    .generateBtnClass {
+        margin-top: 5px !important;
     }
 
-.boxColumnStying {
-    margin-bottom: 8px !important;
-    font-weight: bold !important;
-    text-align: center !important;
-    font-size: 10px !important;
-}
+        .generateBtnClass:hover {
+            background-color: powderblue !important;
+            border: 1px solid darkblue !important;
+        }
 
-#boxColumnBorderStying {
-    flex: 1 !important;
-    overflow-y: auto !important;
-    border: 1px solid #e0e0e0 !important;
-    margin-bottom: 8px !important;
+    .boxColumnStying {
+        margin-bottom: 8px !important;
+        font-weight: bold !important;
+        text-align: center !important;
+        font-size: 10px !important;
+    }
+
+    #boxColumnBorderStying {
+        flex: 1 !important;
+        overflow-y: auto !important;
+        border: 1px solid #e0e0e0 !important;
+        margin-bottom: 8px !important;
+    }
+
+    .boxColunnLabelStyling {
+        margin-bottom: 8px !important;
+        font-weight: bold !important;
+        text-align: center !important;
+        font-size: 10px !important;
+    }
+
+    .attributeEvalTextStyling {
+        margin-bottom: 7px !important;
+        font-weight: bold !important;
+        text-align: center !important;
+        font-size: 10px !important;
+        white-space: nowrap !important;
+    }
+
 }

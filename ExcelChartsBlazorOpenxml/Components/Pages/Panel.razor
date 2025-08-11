@@ -277,7 +277,8 @@
                             <MudGrid class="mudGridSectionProjectParams">
 
                                 <MudPaper Elevation="0" class="paramsMudPaperSection">
-                                    <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Pages</MudText>
+                                    @* <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Pages</MudText> *@
+                                    <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Pages</MudText>
 
                                     <div id="boxColumnBorderStying">
                                         @if (!isContentLoaded)
@@ -305,7 +306,9 @@
                                 </MudPaper>
 
                                 <MudPaper Elevation="0" class="paramsMudPaperSection">
-                                    <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Breakdowns</MudText>
+                                    @* <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Breakdowns</MudText> *@
+                                    <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Breakdowns</MudText>
+
 
                                     <div id="boxColumnBorderStying">
                                     </div>
@@ -318,10 +321,12 @@
                                 </MudPaper>
 
                                 <MudPaper Elevation="0" class="paramsMudPaperSection">
-                                    <MudText Typo="Typo.subtitle2"
+                                   @*  <MudText Typo="Typo.subtitle2"
                                              Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">
                                         Test Names
-                                    </MudText>
+                                    </MudText> *@
+
+                                    <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Test Names</MudText>
 
                                     <div id="boxColumnBorderStying">
                                         @if (!isContentLoaded)
@@ -349,8 +354,7 @@
                                 </MudPaper>
 
                                 <MudPaper Elevation="0" class="paramsMudPaperSection">
-                                    <MudText Typo="Typo.subtitle2"
-                                             Style="margin-bottom: 0px; font-weight: bold; text-align: center;font-size:10px;white-space:nowrap;">Attribute Evaluation Aggregate</MudText>
+                                    <MudText Typo="Typo.subtitle2" Class="attributeEvalTextStyling">Attribute Evaluation Aggregate</MudText>
 
                                     <div id="boxColumnBorderStying">
                                     </div>
