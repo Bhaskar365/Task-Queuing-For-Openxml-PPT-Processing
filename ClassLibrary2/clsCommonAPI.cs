@@ -3019,7 +3019,7 @@ namespace OpenXmlDLLDotnetFramework
 
                 //get the page settings for the template 
 
-                System.Data.DataTable dt = clsData.MRData.getDataTable("ExcelChartsPrc_getPPTFinalSettings " + "'" + finalTemplate + "'," + "'" + "BI - 2024" + "'");
+                System.Data.DataTable dt = clsData.MRData.getDataTable("ExcelChartsPrc_getPPTFinalSettings " + "'" + "MR-Rx Naming" + "'," + "'" + "BI - 2024" + "'");
 
                 Console.WriteLine(dt.Rows);
                 

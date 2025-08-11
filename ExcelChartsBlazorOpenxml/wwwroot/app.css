@@ -453,7 +453,7 @@ a, .btn-link {
     flex-direction: column;
 }
 
-@media only screen and (min-width:900px) {
+@media only screen and (min-width:1400px) {
     .custom-label {
         font-size: 9px !important;
         margin-top: 6px !important;
@@ -640,4 +640,10 @@ a, .btn-link {
         white-space: nowrap !important;
     }
 
+}
+
+@media (min-width:610px) and (max-width:900px) {
+    .panels-container {
+        border:2px solid red;
+    }
 }
