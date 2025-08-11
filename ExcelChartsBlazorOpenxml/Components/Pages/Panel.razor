@@ -3,6 +3,7 @@
 @using ExcelChartsBlazorOpenxml.Services
 @using MudBlazor
 @using Newtonsoft.Json
+@using OpenXmlDLLDotnetFramework
 @using SharedModels
 @using SharedModels.DTO
 @using System.Xml.Linq
@@ -15,363 +16,376 @@
 <MudTabs Elevation="3" Rounded="true" Class="my-6" ApplyEffectsToContainer="true" PanelClass="pa-2">
     <MudTabPanel Text="Power Point" Class="mudTabPanelFontSize">
 
-        <div class="panels-container">
+        @if (!isDataLoaded)
+        {
+            <h3>Loading............</h3>
+        }
+        else
+        {
+            <div class="panels-container">
 
-            <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 left-panel">
-                <MudGrid>
-                    <MudPaper Elevation="3" Class="responsive-container-paper">
-                        <MudPaper Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label" Color="Color.Error">Select Data Source</MudText>
-                                </MudItem>
-                                <MudItem xs="12" sm="7">
-                                    <MudSelect @bind-Value="SourceText"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True
-                                    Disabled>
-                                    </MudSelect>
-                                </MudItem>
+                <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 left-panel">
+                    <MudGrid>
+                        <MudPaper Elevation="3" Class="responsive-container-paper">
+                            <MudPaper Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label" Color="Color.Error">Select Data Source</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="7">
+                                        <MudSelect @bind-Value="SourceText"
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True
+                                                   Disabled>
+                                        </MudSelect>
+                                    </MudItem>
 
-                            </MudGrid>
+                                </MudGrid>
+                            </MudPaper>
+
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label" Color="Color.Error">Project Name</MudText>
+                                    </MudItem>
+
+                                    <MudItem xs="12" sm="7">
+                                        <MudSelect @bind-Value="@project"
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True>
+                                            @if (!isContentLoaded)
+                                            {
+                                                <MudSelectItem Value="@(project)">
+                                                    <i class="fas fa-spinner fa-spin progressProjectSpinner"></i>
+                                                </MudSelectItem>
+                                            }
+                                            else
+                                            {
+                                                <MudSelectItem Value="@(project)"></MudSelectItem>
+                                            }
+
+                                        </MudSelect>
+                                    </MudItem>
+
+
+
+                                </MudGrid>
+                            </MudPaper>
+
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @*  <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label">DSI Project Name</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="7">
+                                        <MudSelect @bind-Value="DSITextValue"
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True>
+                                            <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
+                                        </MudSelect>
+                                    </MudItem>
+
+                                </MudGrid>
+                            </MudPaper>
+
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label">Historical Mean Type</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="7">
+                                        <MudSelect @bind-Value="HistoricalMeanTextValue"
+                                                   Label=""
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True Disabled>
+                                        </MudSelect>
+                                    </MudItem>
+
+                                </MudGrid>
+                            </MudPaper>
+
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label">Historical Mean Description</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="7">
+                                        <MudSelect @bind-Value="HistoricalMeanDescriptionTextValue"
+                                                   Label=""
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True Disabled>
+                                        </MudSelect>
+                                    </MudItem>
+
+                                </MudGrid>
+                            </MudPaper>
+
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label">Associations/Likeability %</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="7">
+                                        <MudNumericField @bind-Value="associationsValue" Variant="Variant.Outlined" Min="0" Max="10" Style="height:25px;" />
+                                    </MudItem>
+
+                                </MudGrid>
+                            </MudPaper>
+
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label">Attribute Evaluation Title</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="7">
+                                        <MudTextField @bind-Value="AttributeTextValue" Variant="Variant.Filled" Disabled Style="height:25px;"></MudTextField>
+                                    </MudItem>
+
+                                </MudGrid>
+                            </MudPaper>
+
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label">Fit To Concept</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="7">
+                                        <MudSelect @bind-Value="FitToConceptTextValue"
+                                                   Label=""
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True Disabled>
+                                        </MudSelect>
+                                    </MudItem>
+
+                                </MudGrid>
+                            </MudPaper>
+
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label">Logo Project Folder</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="7">
+                                        <MudTextField @bind-Value="LogoFolderTextValue" Variant="Variant.Outlined" Style="height:25px;"></MudTextField>
+                                    </MudItem>
+
+                                </MudGrid>
+                            </MudPaper>
+
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label">PPT Final Template</MudText>
+                                    </MudItem>
+
+                                    <MudItem xs="12" sm="7">
+                                        <MudSelect @bind-Value="FinalPPTTemplateText"
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True>
+                                            <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
+                                        </MudSelect>
+                                    </MudItem>
+
+                                </MudGrid>
+                            </MudPaper>
+
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
+                                    <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
+                                        <MudCheckBox @bind-Value="Size_CheckBox1"
+                                                     Size="Size.Small"
+                                                     Color="Color.Primary"
+                                                     Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                        <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
+                                    </MudItem>
+
+                                    <MudItem xs="12" sm="7">
+                                        <MudSelect @bind-Value="SpecificHistMean"
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True Disabled>
+                                            <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
+                                        </MudSelect>
+                                    </MudItem>
+
+                                </MudGrid>
+                            </MudPaper>
+
+                            @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
+
+
+                            <MudButton Variant="Variant.Filled" Class="generateBtnClass buttonload" @onclick="ProcessDLL" disabled="@hasProcessStarted">
+                                @if (currentState == ProcessState.Generating)
+                                {
+                                    <span> Generating...</span>
+
+                                    <i class="fas fa-spinner fa-spin" style="margin-left:3px;"></i>
+                                }
+                                else if (currentState == ProcessState.Done)
+                                {
+                                    <span> Done</span>
+                                    <i class="fas fa-check" style="margin-left:3px;"></i>
+
+                                }
+                                else
+                                {
+                                    <span>Generate Report</span>
+                                }
+                            </MudButton>
+
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;">
+                                <MudItem Style="display: flex;flex-direction: row;align-items: center;">*@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="inlineMudItemClass">
+                                    <MudItem Class="inlineMudItemClass">
+                                        <MudCheckBox @bind-Value="Size_CheckBox2" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
+                                        <MudText Class="custom-label">Open folder when done</MudText>
+                                    </MudItem>
+                                    @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
+                                    <MudItem xs="12" sm="5" Class="inlineMudItemClass">
+
+
+                                        <MudCheckBox @bind-Value="Size_CheckBox3" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
+                                        <MudText Class="custom-label">Use OpenXml</MudText>
+                                    </MudItem>
+                                </MudGrid>
+                            </MudPaper>
+
                         </MudPaper>
+                    </MudGrid>
 
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label" Color="Color.Error">Project Name</MudText>
-                                </MudItem>
 
-                                <MudItem xs="12" sm="7">
-                                    <MudSelect @bind-Value="@project"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
-                                        @if (!isDataLoaded)
+
+
+                </MudContainer>
+
+                <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 right-panel" Style="height:max-content;">
+                    <MudGrid Class="py-1 px-2" Elevation="0">
+                        <MudPaper Elevation="3" Class="responsive-container-paper-right">
+
+                            <MudGrid class="mudGridSectionProjectParams">
+
+                                <MudPaper Elevation="0" class="paramsMudPaperSection">
+                                    <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Pages</MudText>
+
+                                    <div style="flex: 1; overflow: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
+                                        @if (!isContentLoaded)
                                         {
-                                            <MudSelectItem Value="@(project)">
-                                                <i class="fas fa-spinner fa-spin progressProjectSpinner"></i>
-                                            </MudSelectItem>
+                                            <p class="lds-dual-ring"></p>
                                         }
                                         else
                                         {
-                                            <MudSelectItem Value="@(project)"></MudSelectItem>
+                                            @for (int i = 0; i < lstPg.Count; i++)
+                                            {
+                                                <MudCheckBox Value="true"
+                                                             Label="@lstPg[i].strPageGroup"
+                                                             Color="Color.Primary"
+                                                             Size="Size.Small" Class="custom-checkbox">
+                                                </MudCheckBox>
+                                            }
                                         }
+                                    </div>
 
-                                    </MudSelect>
-                                </MudItem>
+                                    <MudButton Variant="Variant.Filled"
+                                               Size="Size.Small"
+                                               FullWidth="true" Class="btnClass">
+                                        Select All/Unselect All
+                                    </MudButton>
+                                </MudPaper>
 
+                                <MudPaper Elevation="0" class="paramsMudPaperSection">
+                                    <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Breakdowns</MudText>
 
+                                    <div style="flex: 1; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
+                                    </div>
 
-                            </MudGrid>
-                        </MudPaper>
+                                    <MudButton Variant="Variant.Filled"
+                                               Size="Size.Small" FullWidth="true"
+                                               Class="btnClass">
+                                        Select All/Unselect All
+                                    </MudButton>
+                                </MudPaper>
 
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @*  <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label">DSI Project Name</MudText>
-                                </MudItem>
-                                <MudItem xs="12" sm="7">
-                                    <MudSelect @bind-Value="DSITextValue"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
-                                        <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
-                                    </MudSelect>
-                                </MudItem>
+                                <MudPaper Elevation="0" class="paramsMudPaperSection">
+                                    <MudText Typo="Typo.subtitle2"
+                                             Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">
+                                        Test Names
+                                    </MudText>
 
-                            </MudGrid>
-                        </MudPaper>
-
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label">Historical Mean Type</MudText>
-                                </MudItem>
-                                <MudItem xs="12" sm="7">
-                                    <MudSelect @bind-Value="HistoricalMeanTextValue"
-                                    Label=""
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
-                                    </MudSelect>
-                                </MudItem>
-
-                            </MudGrid>
-                        </MudPaper>
-
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label">Historical Mean Description</MudText>
-                                </MudItem>
-                                <MudItem xs="12" sm="7">
-                                    <MudSelect @bind-Value="HistoricalMeanDescriptionTextValue"
-                                    Label=""
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
-                                    </MudSelect>
-                                </MudItem>
-
-                            </MudGrid>
-                        </MudPaper>
-
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label">Associations/Likeability %</MudText>
-                                </MudItem>
-                                <MudItem xs="12" sm="7">
-                                    <MudNumericField @bind-Value="associationsValue" Variant="Variant.Outlined" Min="0" Max="10" Style="height:25px;" />
-                                </MudItem>
-
-                            </MudGrid>
-                        </MudPaper>
-
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label">Attribute Evaluation Title</MudText>
-                                </MudItem>
-                                <MudItem xs="12" sm="7">
-                                    <MudTextField @bind-Value="AttributeTextValue" Variant="Variant.Filled" Disabled Style="height:25px;"></MudTextField>
-                                </MudItem>
-
-                            </MudGrid>
-                        </MudPaper>
-
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label">Fit To Concept</MudText>
-                                </MudItem>
-                                <MudItem xs="12" sm="7">
-                                    <MudSelect @bind-Value="FitToConceptTextValue"
-                                    Label=""
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
-                                    </MudSelect>
-                                </MudItem>
-
-                            </MudGrid>
-                        </MudPaper>
-
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label">Logo Project Folder</MudText>
-                                </MudItem>
-                                <MudItem xs="12" sm="7">
-                                    <MudTextField @bind-Value="LogoFolderTextValue" Variant="Variant.Outlined" Style="height:25px;"></MudTextField>
-                                </MudItem>
-
-                            </MudGrid>
-                        </MudPaper>
-
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label">PPT Final Template</MudText>
-                                </MudItem>
-
-                                <MudItem xs="12" sm="7">
-                                    <MudSelect @bind-Value="FinalPPTTemplateText"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
-                                        <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
-                                    </MudSelect>
-                                </MudItem>
-
-                            </MudGrid>
-                        </MudPaper>
-
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
-                                <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
-                                    <MudCheckBox @bind-Value="Size_CheckBox1"
-                                    Size="Size.Small"
-                                    Color="Color.Primary"
-                                    Class="custom-label-historical-mean-checkbox"></MudCheckBox>
-                                    <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
-                                </MudItem>
-
-                                <MudItem xs="12" sm="7">
-                                    <MudSelect @bind-Value="SpecificHistMean"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
-                                        <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
-                                    </MudSelect>
-                                </MudItem>
-
-                            </MudGrid>
-                        </MudPaper>
-
-                        @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
-
-
-                        <MudButton Variant="Variant.Filled" Class="generateBtnClass buttonload" @onclick="ProcessDLL" disabled="@hasProcessStarted">
-                            @if (currentState == ProcessState.Generating)
-                            {
-                                <span> Generating...</span>
-
-                                <i class="fas fa-spinner fa-spin" style="margin-left:3px;"></i>
-                            }
-                            else if (currentState == ProcessState.Done)
-                            {
-                                <span> Done</span>
-                                <i class="fas fa-check" style="margin-left:3px;"></i>
-
-                            }
-                            else
-                            {
-                                <span>Generate Report</span>
-                            }
-                        </MudButton>
-
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;">
-                                <MudItem Style="display: flex;flex-direction: row;align-items: center;">*@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="inlineMudItemClass">
-                                <MudItem Class="inlineMudItemClass">
-                                    <MudCheckBox @bind-Value="Size_CheckBox2" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
-                                    <MudText Class="custom-label">Open folder when done</MudText>
-                                </MudItem>
-                                @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
-                                <MudItem xs="12" sm="5" Class="inlineMudItemClass">
-
-
-                                    <MudCheckBox @bind-Value="Size_CheckBox3" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
-                                    <MudText Class="custom-label">Use OpenXml</MudText>
-                                </MudItem>
-                            </MudGrid>
-                        </MudPaper>
-
-                    </MudPaper>
-                </MudGrid>
-            </MudContainer>
-
-            <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 right-panel" Style="height:max-content;">
-                <MudGrid Class="py-1 px-2" Elevation="0">
-                    <MudPaper Elevation="3" Class="responsive-container-paper-right">
-
-                        <MudGrid class="mudGridSectionProjectParams">
-
-                            <MudPaper Elevation="0" class="paramsMudPaperSection">
-                                <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Pages</MudText>
-
-                                <div style="flex: 1; overflow: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
-                                    @if (!isDataLoaded)
-                                    {
-                                        <p class="lds-dual-ring"></p>
-                                    }
-                                    else
-                                    {
-                                        @for (int i = 0; i < lstPg.Count; i++)
+                                    <div style="flex: 1; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
+                                        @if (!isContentLoaded)
                                         {
-                                            <MudCheckBox Value="true"
-                                            Label="@lstPg[i].strPageGroup"
-                                            Color="Color.Primary"
-                                            Size="Size.Small" Class="custom-checkbox">
-                                            </MudCheckBox>
+                                            <p class="lds-dual-ring"></p>
                                         }
-                                    }
-                                </div>
-
-                                <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true" Class="btnClass">
-                                    Select All/Unselect All
-                                </MudButton>
-                            </MudPaper>
-
-                            <MudPaper Elevation="0" class="paramsMudPaperSection">
-                                <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">Breakdowns</MudText>
-
-                                <div style="flex: 1; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
-                                </div>
-
-                                <MudButton Variant="Variant.Filled"
-                                Size="Size.Small" FullWidth="true"
-                                Class="btnClass">
-                                    Select All/Unselect All
-                                </MudButton>
-                            </MudPaper>
-
-                            <MudPaper Elevation="0" class="paramsMudPaperSection">
-                                <MudText Typo="Typo.subtitle2"
-                                Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;">
-                                    Test Names
-                                </MudText>
-
-                                <div style="flex: 1; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
-                                    @if (!isDataLoaded)
-                                    {
-                                        <p class="lds-dual-ring"></p>
-                                    }
-                                    else
-                                    {
-                                        @for (int i = 0; i < testNamesList.Count; i++)
+                                        else
                                         {
-                                            <MudCheckBox Value="true"
-                                            Label="@testNamesList[i]"
-                                            Color="Color.Primary"
-                                            Size="Size.Small" Class="custom-checkbox">
-                                            </MudCheckBox>
+                                            @for (int i = 0; i < testNamesList.Count; i++)
+                                            {
+                                                <MudCheckBox Value="true"
+                                                             Label="@testNamesList[i]"
+                                                             Color="Color.Primary"
+                                                             Size="Size.Small" Class="custom-checkbox">
+                                                </MudCheckBox>
+                                            }
                                         }
-                                    }
-                                </div>
+                                    </div>
 
-                                <MudButton Variant="Variant.Filled"
-                                Size="Size.Small" FullWidth="true"
-                                Class="btnClass">
-                                    Select All/Unselect All
-                                </MudButton>
-                            </MudPaper>
+                                    <MudButton Variant="Variant.Filled"
+                                               Size="Size.Small" FullWidth="true"
+                                               Class="btnClass">
+                                        Select All/Unselect All
+                                    </MudButton>
+                                </MudPaper>
 
-                            <MudPaper Elevation="0" class="paramsMudPaperSection">
-                                <MudText Typo="Typo.subtitle2"
-                                Style="margin-bottom: 8px; font-weight: bold; text-align: center;font-size:10px;white-space:nowrap;">Attribute Evaluation Aggregate</MudText>
+                                <MudPaper Elevation="0" class="paramsMudPaperSection">
+                                    <MudText Typo="Typo.subtitle2"
+                                             Style="margin-bottom: 0px; font-weight: bold; text-align: center;font-size:10px;white-space:nowrap;">Attribute Evaluation Aggregate</MudText>
 
-                                <div style="flex: 1; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
-                                </div>
+                                    <div style="flex: 1; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
+                                    </div>
 
-                                <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true"
-                                Class="btnClass">
-                                    Select All/Unselect All
-                                </MudButton>
+                                    <MudButton Variant="Variant.Filled"
+                                               Size="Size.Small"
+                                               FullWidth="true"
+                                               Class="btnClass">
+                                        Select All/Unselect All
+                                    </MudButton>
 
-                                <MudText Typo="Typo.subtitle2"
-                                Style="margin: 10px 0 8px 0; font-weight: bold; text-align: center;font-size:8px;white-space:nowrap;">Fit to Brand Personality Aggregate</MudText>
+                                    <MudText Typo="Typo.subtitle2"
+                                             Style="margin: 10px 0 8px 0; font-weight: bold; text-align: center;font-size:8px;white-space:nowrap;">Fit to Brand Personality Aggregate</MudText>
 
-                                <div style="flex: 0.5; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
-                                </div>
+                                    <div style="flex: 1; overflow-y: auto; border: 1px solid #e0e0e0; margin-bottom: 8px;">
+                                    </div>
 
-                                <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true"
-                                Class="btnClass">
-                                    Select All/Unselect All
-                                </MudButton>
-                            </MudPaper>
+                                    <MudButton Variant="Variant.Filled"
+                                               Size="Size.Small"
+                                               FullWidth="true"
+                                               Class="btnClass">
+                                        Select All/Unselect All
+                                    </MudButton>
+                                </MudPaper>
 
-                        </MudGrid>
-                    </MudPaper>
-                </MudGrid>
-            </MudContainer>
+                            </MudGrid>
+                        </MudPaper>
+                    </MudGrid>
+                </MudContainer>
 
 
-        </div>
+            </div>
+        }
+
+
 
     </MudTabPanel>
 
@@ -475,12 +489,12 @@
 
     List<clschartPageGroup> lstPg = new List<clschartPageGroup>();
     bool isDataLoaded = false;
+    bool isContentLoaded = false;
 
     public string? project = "";
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(20000);
         var apiCall = await CallAPI("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", "");
 
         XDocument xDoc = XDocument.Parse(apiCall);
@@ -495,10 +509,10 @@
 
             testNamesList.Add(testname.TestName!);
         }
-        lstPg = await getProjectPagegroupNames(project);
-
+        lstPg = await getProjectPagegroupNames(project!);
 
         isDataLoaded = true;
+        isContentLoaded = true;
     }
 
     private async Task<string> CallAPI(string project,
@@ -546,15 +560,13 @@
     {
         try
         {
-            string realchartName = "";
-
             System.Data.DataTable dt = clsData.MRData.getDataTable("[xlv1].[getPageGroupsForProject]  " + "'" + projectName + "'");
 
 
             List<clschartPageGroup> lstPg = dt.AsEnumerable().Select(row => new clschartPageGroup
                 {
-                    strPageGroup = row.Field<string>("strPageGroup"),
-                    strPageGroupType = row.Field<string>("strPageGroupType")
+                    strPageGroup = row.Field<string>("strPageGroup")!,
+                    strPageGroupType = row.Field<string>("strPageGroupType")!
                 }).ToList();
 
 
@@ -562,13 +574,15 @@
         }
         catch (Exception)
         {
-
             throw;
         }
     }
 
     private async Task ProcessDLL()
     {
+        hasProcessStarted = true;
+        currentState = ProcessState.Generating;
+
         var taskIdList = new List<Guid>();
 
         try
@@ -587,13 +601,13 @@
 
                 taskIdList.Add(request.TaskId);
 
-                hasProcessStarted = true;
-                currentState = ProcessState.Generating;
 
                 var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(request);
 
                 _ = PollStatusAsync(taskId);
                 StateHasChanged();
+
+                await Task.Delay(5000);
             }
 
             await WaitUntilAllTasksComplete(taskIdList);

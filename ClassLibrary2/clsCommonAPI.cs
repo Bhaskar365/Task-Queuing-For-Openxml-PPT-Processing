@@ -3020,6 +3020,9 @@ namespace OpenXmlDLLDotnetFramework
                 //get the page settings for the template 
 
                 System.Data.DataTable dt = clsData.MRData.getDataTable("ExcelChartsPrc_getPPTFinalSettings " + "'" + finalTemplate + "'," + "'" + "BI - 2024" + "'");
+
+                Console.WriteLine(dt.Rows);
+                
                 List<clsPPTFinalSettings> lstPPTFinalSettings = new List<clsPPTFinalSettings>();
 
                 int DelLastPage = 0;
@@ -3052,7 +3055,6 @@ namespace OpenXmlDLLDotnetFramework
                 //copyFile("C:\\ExcelChartsTemplatesNew\\ExcelCharts_ChartTemplates\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx", $"C:\\excelfiles\\{project}\\Final\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx");
 
                 copyFile("C:\\ExcelChartFiles\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx");
-
 
                 lstPPTFinalSettings = lstPPTFinalSettings.OrderByDescending(p => p.intPPTSlideIndexFirst).ToList();
                 int chartsCompCount = 0;
@@ -3262,7 +3264,7 @@ namespace OpenXmlDLLDotnetFramework
 
                                     //}
 
-                                    if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{ project}\\\\Final\\\\MRRxNaming.pptx"))
+                                    if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
                                     {
                                         op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
 
@@ -4285,8 +4287,6 @@ namespace OpenXmlDLLDotnetFramework
             return realchartName;
 
         }
-
-
 
         private List<clschartPageGroup> getProjectPagegroupNames(string projectName)
         {
