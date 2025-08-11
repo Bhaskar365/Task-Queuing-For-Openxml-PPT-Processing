@@ -632,4 +632,12 @@ a, .btn-link {
         white-space: nowrap !important;
     }
 
+    .fitToBrandPersonalityStyling {
+        margin: 10px 0 8px 0 !important;
+        font-weight: bold !important;
+        text-align: center !important;
+        font-size: 8px !important;
+        white-space: nowrap !important;
+    }
+
 }
