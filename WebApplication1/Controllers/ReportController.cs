@@ -845,7 +845,7 @@ namespace WebApplicationAPI.Controllers
         }
 
 
-        public string finalTemplateName = "C:\\ExcelChartFiles\\MRRxNaming.pptx";
+        public string finalTemplateName = "MR-Rx Naming";
 
         [HttpPost("dllgenerate")]
         public async Task<IActionResult> GenerateReportUsingDLL([FromBody] ReportGenerationRequestDLL request) 
