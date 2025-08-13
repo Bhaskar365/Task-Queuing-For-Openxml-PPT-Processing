@@ -960,69 +960,75 @@ namespace WebApplicationAPI.Controllers
 
 
 
+        [HttpPost("ppt/dllMerge")]
+        public async Task<ActionResult> MergeUsingDLL([FromBody] List<APIRequestModel> projectWrapperAPIList)
+        {
+            try
+            {
+                if(projectWrapperAPIList.Count == 0)
+                {
+                    return BadRequest();
+                }
+
+                APIWrapper apiWrapperDllClass = new APIWrapper();
+
+                List<string> templateList = new List<string>();
+                List<string> breakdownsList = new List<string>();
+
+                foreach (var tem in projectWrapperAPIList)
+                {
+                    templateList.Add(tem.template);
+                }
+
+                foreach (var br in projectWrapperAPIList)
+                {
+                    breakdownsList.Add(br.breakdown);
+                }
+
+                string project = projectWrapperAPIList.FirstOrDefault()!.project;
+
+                foreach (string breakdown in breakdownsList)
+                {
+                     string x = await apiWrapperDllClass.addChartsToFinalTemplate1(project, templateList, finalTemplateName, breakdown);
+                    return Ok(x);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         //[HttpPost("ppt/dllMerge")]
-        //public async Task<IActionResult> MergeUsingDLL([FromBody] List<APIRequestModel> projectWrapperAPIList)
+        //public async Task MergeUsingDLL([FromBody] ReportGenerationRequestDLL request)
         //{
         //    try
         //    {
         //        APIWrapper apiWrapperDllClass = new APIWrapper();
 
-        //        List<string> templateList = new List<string>();
-        //        List<string> breakdownsList = new List<string>();
+        //        List<string> breakdownsList;
 
-        //        foreach (var tem in projectWrapperAPIList)
+
+        //        breakdownsList = request.breakdowns!;
+
+
+        //        foreach (string breakdown in breakdownsList)
         //        {
-        //            templateList.Add(tem.template);
+        //            var res = await apiWrapperDllClass.addChartsToFinalTemplate1(request.project, request.templates, finalTemplateName, breakdown);
+        //            Console.WriteLine(res);
         //        }
 
-        //        foreach (var br in projectWrapperAPIList)
-        //        {
-        //            breakdownsList.Add(br.breakdown);
-        //        }
+        //        // await apiWrapperDllClass.OpenXMLParallelProcess(request.project, request.templates, request.breakdowns, request.HistoricalMeanType, request.HistoricalMeanDescription, finalTemplateName);
 
-        //        string project = projectWrapperAPIList.FirstOrDefault()!.project;
-
-        //        foreach (string breakdown in breakdownsList) 
-        //        {
-        //            await apiWrapperDllClass.addChartsToFinalTemplate1(project, templateList, finalTemplateName, breakdown);
-        //        }
-
-        //        return Ok();
+        //        return;
         //    }
         //    catch (Exception ex)
         //    {
-        //        throw ex;
+        //        throw new Exception(ex.Message);
         //    }
         //}
-
-        [HttpPost("ppt/dllMerge")]
-        public async Task MergeUsingDLL([FromBody] ReportGenerationRequestDLL request)
-        {
-            try
-            {
-                APIWrapper apiWrapperDllClass = new APIWrapper();
-
-                List<string> breakdownsList;
-
-
-                breakdownsList = request.breakdowns!;
-
-
-                foreach (string breakdown in breakdownsList)
-                {
-                    var res = await apiWrapperDllClass.addChartsToFinalTemplate1(request.project, request.templates, finalTemplateName, breakdown);
-                    Console.WriteLine(res);
-                }
-
-                // await apiWrapperDllClass.OpenXMLParallelProcess(request.project, request.templates, request.breakdowns, request.HistoricalMeanType, request.HistoricalMeanDescription, finalTemplateName);
-
-                return;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
 
 
         [HttpGet("status/{taskId}")]

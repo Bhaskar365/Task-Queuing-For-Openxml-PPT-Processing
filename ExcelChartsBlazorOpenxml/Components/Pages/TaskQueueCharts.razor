@@ -429,14 +429,14 @@ else
     List<APIRequestModel> projectWrapperAPIList = new List<APIRequestModel>
     {
         new APIRequestModel("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "Attribute 1", "Attribute 1", "OVERALL","",""),
-        // new APIRequestModel("RACKEM", "Attribute 2", "Attribute 2", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "Attribute 3", "Attribute 3", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "01 Untrue", "01 Untrue", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "02 Misleading", "02 Misleading", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "03 Exagg", "03 Exagg", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "Memorability", "Memorability", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Attribute 1", "Attribute 1", "OVERALL","",""),
+        new APIRequestModel("RACKEM", "Attribute 2", "Attribute 2", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Attribute 3", "Attribute 3", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "01 Untrue", "01 Untrue", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "02 Misleading", "02 Misleading", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "03 Exagg", "03 Exagg", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Memorability", "Memorability", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
     };
 
     private async Task ProcessDLL()
@@ -461,7 +461,6 @@ else
 
                 var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(request);
 
-
                 reportStatuses.Add(new ReportStatus
                     {
                         ProjectName = request.project,
@@ -474,33 +473,32 @@ else
                 _ = PollStatusAsync(taskId);
                 StateHasChanged();
 
-               // await fitToConceptService.SendDLLMergeRequest(request);
+                // await fitToConceptService.SendDLLMergeRequest(request);
             }
-           // await WaitUntilAllTasksComplete(taskIdList);
+            // await WaitUntilAllTasksComplete(taskIdList);
 
-            foreach (var projectEl in projectWrapperAPIList)
-            {
-                var request = new ReportGenerationRequestDLL
-                    {
-                        project = projectEl.project,
-                        templates = string.IsNullOrWhiteSpace(projectEl.template) ? new List<string>() : new List<string> { projectEl.template },
-                        breakdowns = string.IsNullOrWhiteSpace(projectEl.breakdown) ? new List<string>() : new List<string> { projectEl.breakdown },
-                        HistoricalMeanType = projectEl.HistoricalMeanType,
-                        HistoricalMeanDescription = projectEl.HistoricalMeanDescription,
-                        TaskId = Guid.NewGuid()
-                    };
+            // foreach (var projectEl in projectWrapperAPIList)
+            // {
+            //     var request = new ReportGenerationRequestDLL
+            //         {
+            //             project = projectEl.project,
+            //             templates = string.IsNullOrWhiteSpace(projectEl.template) ? new List<string>() : new List<string> { projectEl.template },
+            //             breakdowns = string.IsNullOrWhiteSpace(projectEl.breakdown) ? new List<string>() : new List<string> { projectEl.breakdown },
+            //             HistoricalMeanType = projectEl.HistoricalMeanType,
+            //             HistoricalMeanDescription = projectEl.HistoricalMeanDescription,
+            //             TaskId = Guid.NewGuid()
+            //         };
 
-                await fitToConceptService.SendDLLMergeRequest(request);
+            //     await fitToConceptService.SendDLLMergeRequest(request);
 
-                Console.WriteLine();  
-            }
-
-
+            //     Console.WriteLine();  
+            // }
 
             // finalLogs = await fitToConceptService.GetUserLogs(user);
 
-            // var result = await fitToConceptService.SendDLLMergeRequest(projectWrapperAPIList);
+            var result = await fitToConceptService.SendDLLMergeRequest(projectWrapperAPIList);
 
+            Console.WriteLine(result);
 
         }
         catch (Exception ex)

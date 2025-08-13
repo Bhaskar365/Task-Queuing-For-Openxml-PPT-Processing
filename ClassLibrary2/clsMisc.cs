@@ -22,8 +22,6 @@ namespace OpenXmlDll
 {
     public class clsMisc
     {
-
-
         static uint uniqueId;
         public static void CopySlide(string sourceFile, string destinationFile, int insertPosition)
         {
@@ -258,16 +256,14 @@ namespace OpenXmlDll
 
             {
 
-                PresentationPart destinationPPTPart = destinationDoc.PresentationPart;
+                PresentationPart destinationPPTPart = destinationDoc?.PresentationPart;
 
                 if (destinationPPTPart.Presentation.SlideIdList == null)
 
                     destinationPPTPart.Presentation.SlideIdList = new SlideIdList();
 
                 using (PresentationDocument sourceDoc = PresentationDocument.Open(sourcePPT, true))
-
                 {
-
                     PresentationPart sourcePPTPart = sourceDoc.PresentationPart;
 
                     uniqueId = GetMaxSlideMasterId(destinationPPTPart.Presentation.SlideMasterIdList);
@@ -284,9 +280,9 @@ namespace OpenXmlDll
 
                         string relId = "rel" + id;
 
-                        SlidePart destinationSlidePart = destinationPPTPart.AddPart<SlidePart>(sourceSlidePart, relId);
+                        SlidePart destinationSlidePart = destinationPPTPart?.AddPart<SlidePart>(sourceSlidePart, relId);
 
-                        SlideMasterPart destinationMasterPart = destinationSlidePart.SlideLayoutPart.SlideMasterPart;
+                        SlideMasterPart destinationMasterPart = destinationSlidePart?.SlideLayoutPart?.SlideMasterPart;
 
                         destinationPPTPart.AddPart(destinationMasterPart);
 
@@ -296,7 +292,7 @@ namespace OpenXmlDll
 
                         {
 
-                            RelationshipId = destinationPPTPart.GetIdOfPart(destinationMasterPart),
+                            RelationshipId = destinationPPTPart?.GetIdOfPart(destinationMasterPart),
 
                             Id = uniqueId
 
@@ -306,7 +302,7 @@ namespace OpenXmlDll
 
                         {
 
-                            destinationPPTPart.Presentation.SlideMasterIdList.Append(newSlideMasterId);
+                            destinationPPTPart?.Presentation?.SlideMasterIdList.Append(newSlideMasterId);
 
                         }
 
@@ -342,7 +338,7 @@ namespace OpenXmlDll
 
         {
 
-            var slideIds = slideIdList.Elements<SlideId>().ToList();
+            var slideIds = slideIdList?.Elements<SlideId>().ToList();
 
             slideIdList.Append(newSlideId);
 
@@ -352,11 +348,11 @@ namespace OpenXmlDll
 
         {
 
-            foreach (SlideMasterPart slideMasterPart in presPart.SlideMasterParts)
+            foreach (SlideMasterPart slideMasterPart in presPart?.SlideMasterParts)
 
             {
 
-                foreach (SlideLayoutId slideLayoutId in slideMasterPart.SlideMaster.SlideLayoutIdList)
+                foreach (SlideLayoutId slideLayoutId in slideMasterPart?.SlideMaster?.SlideLayoutIdList)
 
                 {
 
@@ -382,7 +378,7 @@ namespace OpenXmlDll
 
             {
 
-                foreach (SlideMasterId slideMasterId in slideMasterIdList.Elements<SlideMasterId>())
+                foreach (SlideMasterId slideMasterId in slideMasterIdList?.Elements<SlideMasterId>())
 
                 {
 
@@ -399,7 +395,6 @@ namespace OpenXmlDll
         }
 
         public static uint GetMaxSlideId(SlideIdList slideIdList)
-
         {
 
             uint max = 256;
@@ -408,7 +403,7 @@ namespace OpenXmlDll
 
             {
 
-                foreach (SlideId slide in slideIdList.Elements<SlideId>())
+                foreach (SlideId slide in slideIdList?.Elements<SlideId>())
 
                 {
 
@@ -831,19 +826,19 @@ namespace OpenXmlDll
             {
                 using (PresentationDocument destinationDoc = PresentationDocument.Open(destPresentation, true))
                 {
-                    PresentationPart destinationPresPart = destinationDoc.PresentationPart;
+                    PresentationPart destinationPresPart = destinationDoc?.PresentationPart;
 
                     if (destinationPresPart.Presentation.SlideIdList == null)
                         destinationPresPart.Presentation.SlideIdList = new SlideIdList();
 
                     using (PresentationDocument sourceDoc = PresentationDocument.Open(sourcePresentation, true))
                     {
-                        PresentationPart sourcePresPart = sourceDoc.PresentationPart;
+                        PresentationPart sourcePresPart = sourceDoc?.PresentationPart;
 
                         uniqueId = GetMaxSlideMasterId(destinationPresPart.Presentation.SlideMasterIdList);
                         uint maxSlideId = GetMaxSlideId(destinationPresPart.Presentation.SlideIdList);
 
-                        var sourceSlideIds = sourcePresPart.Presentation.SlideIdList.Elements<SlideId>().ToList();
+                        var sourceSlideIds = sourcePresPart?.Presentation?.SlideIdList?.Elements<SlideId>().ToList();
 
                         if (insertIndex.Length > sourceSlideIds.Count)
                             throw new ArgumentException("Not enough slides in source to match insert positions");
@@ -858,7 +853,7 @@ namespace OpenXmlDll
 
                             SlidePart destinationSlidePart = destinationPresPart.AddPart<SlidePart>(sourceSlidePart, relId);
 
-                            SlideMasterPart destinationMasterPart = destinationSlidePart.SlideLayoutPart.SlideMasterPart;
+                            SlideMasterPart destinationMasterPart = destinationSlidePart?.SlideLayoutPart?.SlideMasterPart;
                             destinationPresPart.AddPart(destinationMasterPart);
 
                             uniqueId++;
@@ -870,7 +865,7 @@ namespace OpenXmlDll
 
                             if (!destinationPresPart.Presentation.SlideMasterIdList.Elements<SlideMasterId>().Any(x => x.RelationshipId == newSlideMasterId.RelationshipId))
                             {
-                                destinationPresPart.Presentation.SlideMasterIdList.Append(newSlideMasterId);
+                                destinationPresPart?.Presentation?.SlideMasterIdList.Append(newSlideMasterId);
                             }
 
                             maxSlideId++;
@@ -993,11 +988,18 @@ namespace OpenXmlDll
 
         static bool DoesSlideExist(PresentationDocument presentationDoc, int slideIndex)
         {
-            // Get the SlideIdList from the PresentationPart
-            var slideIdList = presentationDoc.PresentationPart?.Presentation.SlideIdList;
+            try
+            {
+                // Get the SlideIdList from the PresentationPart
+                var slideIdList = presentationDoc?.PresentationPart?.Presentation?.SlideIdList;
 
-            // Check if the slide index is valid and the SlideId exists
-            return slideIdList != null && slideIndex > 0 && slideIndex <= slideIdList.Count();
+                // Check if the slide index is valid and the SlideId exists
+                return slideIdList != null && slideIndex > 0 && slideIndex <= slideIdList.Count();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public static void DeleteSlideFromPPT(string filePath, int slideNo)
@@ -1006,22 +1008,21 @@ namespace OpenXmlDll
             {
                 using (PresentationDocument destinationDoc = PresentationDocument.Open(filePath, true))
                 {
-
                     if (DoesSlideExist(destinationDoc, slideNo))
                     {
-                        PresentationPart presentationPart = destinationDoc.PresentationPart;
+                        PresentationPart presentationPart = destinationDoc?.PresentationPart;
 
                         // Get the presentation from the presentation part
-                        Presentation presentation = presentationPart.Presentation;
+                        Presentation presentation = presentationPart?.Presentation;
 
                         // Get the slide ID list
-                        SlideIdList slideIdList = presentation.SlideIdList;
+                        SlideIdList slideIdList = presentation?.SlideIdList;
 
                         // Get the slide ID of the specified slide
-                        SlideId slideId = slideIdList.ChildElements[slideNo] as SlideId;
+                        SlideId slideId = slideIdList?.ChildElements[slideNo] as SlideId;
 
                         // Get the relationship ID of the slide
-                        string slideRelId = slideId.RelationshipId;
+                        string slideRelId = slideId?.RelationshipId;
 
                         // Remove the slide from the slide list
                         slideIdList.RemoveChild(slideId);
@@ -1044,21 +1045,17 @@ namespace OpenXmlDll
                         }
 
                         // Save the modified presentation
-                        presentation.Save();
+                        presentation?.Save();
 
                         // Remove the slide part
-                        destinationDoc.PresentationPart.DeletePart(slideRelId);
+                        destinationDoc?.PresentationPart?.DeletePart(slideRelId);
                     }
-
-
-
                 }
             }
             catch (Exception)
             {
                 throw;
             }
-
         }
 
 
@@ -1233,7 +1230,7 @@ namespace OpenXmlDll
                 throw;
             }
 
-       
+
 
             //try
             //{

@@ -10,7 +10,7 @@ namespace ExcelChartsBlazorOpenxml.Services
     {
         private readonly HttpClient _httpClient;
 
-        public FitToConceptService(HttpClient httpClient) 
+        public FitToConceptService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
@@ -82,7 +82,7 @@ namespace ExcelChartsBlazorOpenxml.Services
         public async Task<Guid> GenerateReportAsync(ReportGenerationRequest request)
         {
             var response = await _httpClient.PostAsJsonAsync("api/report/generate", request);
-            var result = await response.Content.ReadFromJsonAsync<ReportGenerationResponse>(); 
+            var result = await response.Content.ReadFromJsonAsync<ReportGenerationResponse>();
             return result!.TaskId;
         }
 
@@ -182,7 +182,7 @@ namespace ExcelChartsBlazorOpenxml.Services
         {
             var response = await _httpClient.GetFromJsonAsync<List<TaskLog>>($"api/report/user/taskLogs");
 
-            var userData = response!.Where(x => x.CreatedBy == user).ToList();    
+            var userData = response!.Where(x => x.CreatedBy == user).ToList();
 
             return userData;
         }
@@ -201,25 +201,52 @@ namespace ExcelChartsBlazorOpenxml.Services
             return result!.TaskId;
         }
 
-        //public async Task<List<TaskLog>> SendDLLMergeRequest(List<APIRequestModel> projectWrapperAPIList)
-        //{
-        //    var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", projectWrapperAPIList);
-        //    var result = await response.Content.ReadFromJsonAsync<List<TaskLog>>();
-        //    return result!;
-        //}
-
-        public async Task SendDLLMergeRequest(ReportGenerationRequestDLL request)
+        public async Task<string> SendDLLMergeRequest(List<APIRequestModel> projectWrapperAPIList)
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", request);
-                Console.WriteLine(response);
+                var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", projectWrapperAPIList);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return "Successful";
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return "Bad Request";
+                }
+
+                return "Fail";
+
             }
             catch (Exception)
             {
                 throw;
             }
+
+            //var r = response.Content.ReadFromJsonAsync<string>();
+
+            //Console.WriteLine(r);
+
+            //var result = await response.Content.ReadFromJsonAsync<List<APIRequestModel>>();
+            //return result.ToString();
+
+            //var result = await response.Content.ReadFromJsonAsync<List<TaskLog>>();
+            //return result!;
         }
+
+        //public async Task SendDLLMergeRequest(ReportGenerationRequestDLL request)
+        //{
+        //    try
+        //    {
+        //        var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", request);
+        //        Console.WriteLine(response);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
 
     }
 }

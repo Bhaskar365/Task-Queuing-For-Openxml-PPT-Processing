@@ -64,9 +64,9 @@ namespace ExcelChartsBlazorOpenxml.Services
 
         Task<List<TaskLog>> GetUserLogs(string user);
 
-        //Task<List<TaskLog>> SendDLLMergeRequest(List<APIRequestModel> projectWrapperAPIList);
+        Task<string> SendDLLMergeRequest(List<APIRequestModel> projectWrapperAPIList);
 
-        Task SendDLLMergeRequest(ReportGenerationRequestDLL request);
+        //Task SendDLLMergeRequest(ReportGenerationRequestDLL request);
 
     }
 }
