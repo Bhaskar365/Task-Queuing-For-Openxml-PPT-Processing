@@ -228,13 +228,13 @@
                             <MudButton Variant="Variant.Filled" Class="generateBtnClass buttonload" @onclick="ProcessDLL" disabled="@hasProcessStarted">
                                 @if (currentState == ProcessState.Generating)
                                 {
-                                    <span> Generating...</span>
+                                    <span class="btn btn-primary"> Generating...</span>
 
                                     <i class="fas fa-spinner fa-spin" style="margin-left:3px;"></i>
                                 }
                                 else if (currentState == ProcessState.Done)
                                 {
-                                    <span> Done</span>
+                                    <span>Merge Complete</span>
                                     <i class="fas fa-check" style="margin-left:3px;"></i>
 
                                 }
@@ -484,14 +484,14 @@
     List<APIRequestModel> projectWrapperAPIList = new List<APIRequestModel>
     {
         new APIRequestModel("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "Attribute 1", "Attribute 1", "OVERALL","",""),
-        // new APIRequestModel("RACKEM", "Attribute 2", "Attribute 2", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "Attribute 3", "Attribute 3", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "01 Untrue", "01 Untrue", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "02 Misleading", "02 Misleading", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "03 Exagg", "03 Exagg", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "Memorability", "Memorability", "OVERALL", "", ""),
-        // new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Attribute 1", "Attribute 1", "OVERALL","",""),
+        new APIRequestModel("RACKEM", "Attribute 2", "Attribute 2", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Attribute 3", "Attribute 3", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "01 Untrue", "01 Untrue", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "02 Misleading", "02 Misleading", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "03 Exagg", "03 Exagg", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Memorability", "Memorability", "OVERALL", "", ""),
+        new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
     };
 
     List<string> testNamesList = new List<string>();
@@ -647,15 +647,11 @@
 
                 _ = PollStatusAsync(taskId);
                 StateHasChanged();
-
-                await Task.Delay(5000);
             }
 
-            await WaitUntilAllTasksComplete(taskIdList);
-
-            // finalLogs = await fitToConceptService.GetUserLogs(user);
-
-            //var result = await fitToConceptService.SendDLLMergeRequest(projectWrapperAPIList);
+            var result = await fitToConceptService.SendDLLMergeRequest(projectWrapperAPIList);
+            StateHasChanged();
+            Console.WriteLine(result);
 
             hasProcessStarted = false;
             currentState = ProcessState.Done;
