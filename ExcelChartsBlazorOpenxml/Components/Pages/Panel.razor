@@ -225,16 +225,22 @@
                             @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
 
-                            <MudButton Variant="Variant.Filled" Class="generateBtnClass buttonload" @onclick="ProcessDLL" disabled="@hasProcessStarted">
+                            <MudButton 
+                                    Variant="Variant.Filled" 
+                                    Class="generateBtnClass buttonload" 
+                                    @onclick="ProcessDLL"
+                                    disabled="@hasProcessStarted"
+                                    Color="@buttonColor">
                                 @if (currentState == ProcessState.Generating)
                                 {
-                                    <span class="btn btn-primary"> Generating...</span>
+                                    <span> Generating...</span> 
 
                                     <i class="fas fa-spinner fa-spin" style="margin-left:3px;"></i>
                                 }
                                 else if (currentState == ProcessState.Done)
                                 {
-                                    <span>Merge Complete</span>
+                                    <span>@message</span>
+
                                     <i class="fas fa-check" style="margin-left:3px;"></i>
 
                                 }
@@ -312,9 +318,9 @@
                                         @foreach (var breakdown in lstBreakdown)
                                         {
                                             <MudCheckBox Value="true"
-                                                         Label="@breakdown.strBreakdownName"
-                                                         Color="Color.Primary"
-                                                         Size="Size.Small" Class="custom-checkbox">
+                                            Label="@breakdown.strBreakdownName"
+                                            Color="Color.Primary"
+                                            Size="Size.Small" Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
                                     </div>
@@ -411,6 +417,10 @@
 
     ProcessState currentState = ProcessState.Idle;
     public bool hasProcessStarted = false;
+
+    string message = "";
+
+    private Color buttonColor;
 
     private List<CheckboxItem> checkboxes = new List<CheckboxItem>
     {
@@ -650,6 +660,23 @@
             }
 
             var result = await fitToConceptService.SendDLLMergeRequest(projectWrapperAPIList);
+
+            if (result == "Successful")
+            {
+                buttonColor = Color.Tertiary;
+                message = "Merge Successful";
+            }
+            if (result == "Bad Request")
+            {
+                buttonColor = Color.Warning;
+                message = "Something went wrong";
+            }
+            if (result == "Fail")
+            {
+                buttonColor = Color.Error;
+                message = "Merge Insuccessful";
+            }
+
             StateHasChanged();
             Console.WriteLine(result);
 
