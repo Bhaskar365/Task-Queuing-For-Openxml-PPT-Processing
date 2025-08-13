@@ -7972,7 +7972,7 @@ namespace OpenXmlDLLDotnetFramework
 
                     if (!chartsCompleted.Contains(chart))
                     {
-                        if (objclsPPT.strPageGroupName != "Main Cover")
+                        if (objclsPPT?.strPageGroupName != "Main Cover")
                         {
                             DelLastPage = objclsPPT.intPPTSlideIndexLast;
                             DelFirstPage = objclsPPT.intPPTSlideIndexFirst;
@@ -8027,7 +8027,7 @@ namespace OpenXmlDLLDotnetFramework
 
 
 
-                                if (objclsPPT.strPageGroupName.ToLower() == chart.ToLower() || objclsPPT.strPageGroupName.ToLower() == firstMatchingName.ToLower())
+                                if (objclsPPT?.strPageGroupName?.ToLower() == chart.ToLower() || objclsPPT?.strPageGroupName?.ToLower() == firstMatchingName?.ToLower())
                                 {
                                     for (int k = 0; k <= DelLastPage - DelFirstPage; k++)
                                     {

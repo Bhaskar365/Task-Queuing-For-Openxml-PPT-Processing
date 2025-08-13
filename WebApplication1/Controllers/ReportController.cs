@@ -989,7 +989,7 @@ namespace WebApplicationAPI.Controllers
 
                 foreach (string breakdown in breakdownsList)
                 {
-                     string x = await apiWrapperDllClass.addChartsToFinalTemplate1(project, templateList, finalTemplateName, breakdown);
+                    string x = await apiWrapperDllClass.addChartsToFinalTemplate1(project, templateList, finalTemplateName, breakdown);
                     return Ok(x);
                 }
 
