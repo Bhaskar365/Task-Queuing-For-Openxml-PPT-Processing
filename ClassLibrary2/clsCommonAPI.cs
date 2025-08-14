@@ -7510,7 +7510,7 @@ namespace OpenXmlDLLDotnetFramework
                 {
                     foreach (string chart in charts)
                     {
-                        if (obj.strPageName == chart)
+                        if (obj?.strPageName == chart)
                         {
                             obj.isReportSelectedByUser = true;
 
@@ -7518,7 +7518,7 @@ namespace OpenXmlDLLDotnetFramework
                             //updating Attribute evaluation cover page :
 
 
-                            if (obj.strPageType.ToLower() == "attribute evaluation")
+                            if (obj?.strPageType?.ToLower() == "attribute evaluation")
                             {
                                 if (obj.strPageName.Contains("1"))
                                 {
@@ -7596,17 +7596,17 @@ namespace OpenXmlDLLDotnetFramework
 
                 //in case if the attribute evaluations are not there 
 
-                List<clschartPageDisplayName> lstAtts = lstChartDispNames.Where(p => p.strPageType.ToLower() == "attribute evaluation").ToList();
+                List<clschartPageDisplayName> lstAtts = lstChartDispNames?.Where(p => p?.strPageType?.ToLower() == "attribute evaluation").ToList();
 
 
-                if (!lstAtts.Any(obj => obj.strPageName.Contains("1")) || lstAtts.Any(obj => obj.strPageName.Contains("1") && obj.isReportSelectedByUser == false))
+                if (!lstAtts.Any(obj => obj.strPageName.Contains("1")) || lstAtts.Any(obj => obj.strPageName.Contains("1") && obj?.isReportSelectedByUser == false))
                 {
 
                     await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", "", 38);
 
                 }
 
-                if (!lstAtts.Any(obj => obj.strPageName.Contains("2")) || lstAtts.Any(obj => obj.strPageName.Contains("2") && obj.isReportSelectedByUser == false))
+                if (!lstAtts.Any(obj => obj.strPageName.Contains("2")) || lstAtts.Any(obj => obj.strPageName.Contains("2") && obj?.isReportSelectedByUser == false))
                 {
 
                     await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", "", 38);
@@ -7614,14 +7614,14 @@ namespace OpenXmlDLLDotnetFramework
                 }
 
 
-                if (!lstAtts.Any(obj => obj.strPageName.Contains("3")) || lstAtts.Any(obj => obj.strPageName.Contains("3") && obj.isReportSelectedByUser == false))
+                if (!lstAtts.Any(obj => obj.strPageName.Contains("3")) || lstAtts.Any(obj => obj.strPageName.Contains("3") && obj?.isReportSelectedByUser == false))
                 {
 
                     await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", "", 38);
 
                 }
 
-                if (!lstAtts.Any(obj => obj.strPageName.Contains("4")) || lstAtts.Any(obj => obj.strPageName.Contains("4") && obj.isReportSelectedByUser == false))
+                if (!lstAtts.Any(obj => obj.strPageName.Contains("4")) || lstAtts.Any(obj => obj.strPageName.Contains("4") && obj?.isReportSelectedByUser == false))
                 {
 
                     await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", "", 38);
@@ -7738,7 +7738,7 @@ namespace OpenXmlDLLDotnetFramework
 
                             //if the chart is completed break
 
-                            if (pageGroupNameCompleted.Contains(objclsPPT.strPageGroupName))
+                            if (pageGroupNameCompleted.Contains(objclsPPT?.strPageGroupName))
                             {
                                 break;
                             }
@@ -7746,7 +7746,7 @@ namespace OpenXmlDLLDotnetFramework
 
                             //get the chart group type
 
-                            List<clschartPageDisplayName> lstCheck = lstChartDispNames.Where(p => p.strPageName == chart).ToList();
+                            List<clschartPageDisplayName> lstCheck = lstChartDispNames.Where(p => p?.strPageName == chart)?.ToList();
 
                             bool noproceed = false;
 
@@ -7755,7 +7755,7 @@ namespace OpenXmlDLLDotnetFramework
                             bool isReportSelected = false;
 
 
-                            if (lstChartDispNames.Any(item => item.strPageType == objclsPPT?.strPageGroupType))
+                            if (lstChartDispNames.Any(item => item?.strPageType == objclsPPT?.strPageGroupType))
                             {
 
                                 if (objclsPPT.strPageGroupType.ToLower() == "exaggerative-inappropriate")
