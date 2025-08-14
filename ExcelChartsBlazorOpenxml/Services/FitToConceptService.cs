@@ -196,7 +196,7 @@ namespace ExcelChartsBlazorOpenxml.Services
 
         public async Task<Guid> GenerateReportUsingDLLAsync(ReportGenerationRequestDLL request)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/report/dllgenerate", request).ConfigureAwait(false);
+            var response = await _httpClient.PostAsJsonAsync("api/report/dllgenerate", request);
             var result = await response.Content.ReadFromJsonAsync<ReportGenerationResponse>();
             return result!.TaskId;
         }
@@ -205,7 +205,7 @@ namespace ExcelChartsBlazorOpenxml.Services
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", projectWrapperAPIList).ConfigureAwait(false);
+                var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", projectWrapperAPIList);
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
