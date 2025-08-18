@@ -1,5 +1,6 @@
 ﻿@page "/panel"
 
+
 @using ExcelChartsBlazorOpenxml.Services
 @using MudBlazor
 @using Newtonsoft.Json
@@ -13,17 +14,10 @@
 @inject IFitToConceptService fitToConceptService;
 @inject HttpClient httpClient
 
+@rendermode InteractiveServer
+
 <MudTabs Elevation="3" Rounded="true" Class="my-6" ApplyEffectsToContainer="true" PanelClass="pa-2">
     <MudTabPanel Text="Power Point" Class="mudTabPanelFontSize">
-
-        @if (!isContentLoaded)
-        {
-
-        }
-        else
-        {
-
-        }
 
         <div class="panels-container">
 
@@ -38,9 +32,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="SourceText"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True
-                                               Disabled>
+                                    Variant="Variant.Outlined"
+                                    FitContent=True
+                                    Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -56,8 +50,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="@project"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True>
+                                    Variant="Variant.Outlined"
+                                    FitContent=True>
                                         @if (!isContentLoaded)
                                         {
                                             <MudSelectItem Value="@(project)">
@@ -85,8 +79,8 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="DSITextValue"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True>
+                                    Variant="Variant.Outlined"
+                                    FitContent=True>
                                         <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -102,9 +96,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="HistoricalMeanTextValue"
-                                               Label=""
-                                               Variant="Variant.Outlined"
-                                               FitContent=True Disabled>
+                                    Label=""
+                                    Variant="Variant.Outlined"
+                                    FitContent=True Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -119,9 +113,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="HistoricalMeanDescriptionTextValue"
-                                               Label=""
-                                               Variant="Variant.Outlined"
-                                               FitContent=True Disabled>
+                                    Label=""
+                                    Variant="Variant.Outlined"
+                                    FitContent=True Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -162,9 +156,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="FitToConceptTextValue"
-                                               Label=""
-                                               Variant="Variant.Outlined"
-                                               FitContent=True Disabled>
+                                    Label=""
+                                    Variant="Variant.Outlined"
+                                    FitContent=True Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -193,8 +187,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="FinalPPTTemplateText"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True>
+                                    Variant="Variant.Outlined"
+                                    FitContent=True>
                                         <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -208,16 +202,16 @@
                                 @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
                                 <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
                                     <MudCheckBox @bind-Value="Size_CheckBox1"
-                                                 Size="Size.Small"
-                                                 Color="Color.Primary"
-                                                 Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                            Size="Size.Small"
+                                            Color="Color.Primary"
+                                            Class="custom-label-historical-mean-checkbox"></MudCheckBox>
                                     <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
                                 </MudItem>
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="SpecificHistMean"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True Disabled>
+                                    Variant="Variant.Outlined"
+                                    FitContent=True Disabled>
                                         <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -227,11 +221,10 @@
 
                         @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
-
                         <MudButton Variant="Variant.Filled"
                                    Class="generateBtnClass buttonload"
                                    @onclick="ProcessDLL"
-                                   disabled="@hasProcessStarted"
+                                   disabled="!isContentLoaded"
                                    Color="@buttonColor">
                             @if (currentState == ProcessState.Generating)
                             {
@@ -599,13 +592,8 @@
 
             }).ToList();
 
-
         return lstPg;
-
     }
-
-
-
 
     private async Task<List<clschartBreakdownGroup>> getProjectBreakdowngroupNames(string projectName)
     {
@@ -657,7 +645,7 @@
 
                 var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(request);
 
-                _ = PollStatusAsync(taskId);
+                 _ = PollStatusAsync(taskId);
                 StateHasChanged();
             }
 

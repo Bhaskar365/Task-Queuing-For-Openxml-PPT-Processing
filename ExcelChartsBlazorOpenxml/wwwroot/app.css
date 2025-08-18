@@ -170,8 +170,8 @@ h1:focus {
 
 
     .custom-label-historical-mean-checkbox {*/
-        /*border:2px solid red !important;*/
-    /*}
+/*border:2px solid red !important;*/
+/*}
 
     .responsive-container-paper {
         padding: 6px !important;
@@ -180,8 +180,8 @@ h1:focus {
     .responsive-container-paper-right {
         width: 100% !important;
         height: 76vh !important;*/
-        /*height: 100vh !important;*/
-        /*margin-top: -5px !important;
+/*height: 100vh !important;*/
+/*margin-top: -5px !important;
     }
 
     .left-panel {
@@ -453,197 +453,193 @@ a, .btn-link {
     flex-direction: column;
 }
 
-@media only screen and (min-width:1400px) {
-    .custom-label {
-        font-size: 9px !important;
-        margin-top: 6px !important;
-        white-space: nowrap !important;
-    }
-
-    .custom-label-historical-mean {
-        font-size: 7px !important;
-        margin-top: 6px !important;
-        white-space: nowrap !important;
-    }
-
-    .custom-checkbox .mud-checkbox .mud-icon-root {
-        font-size: 1rem !important;
-        width: 15px !important;
-        height: 15px !important;
-    }
-
-    .progressProjectSpinner {
-        margin-left: 50px;
-    }
-
-    .lds-dual-ring {
-        color: #1c4c5b
-    }
-
-        .lds-dual-ring,
-        .lds-dual-ring:after {
-            box-sizing: border-box;
-        }
-
-    .lds-dual-ring {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-        .lds-dual-ring:after {
-            content: " ";
-            display: block;
-            width: 30px;
-            height: 30px;
-            margin: 8px;
-            border-radius: 50%;
-            border: 2px solid currentColor;
-            border-color: currentColor transparent currentColor transparent;
-            animation: lds-dual-ring 1.2s linear infinite;
-        }
-
-    @keyframes lds-dual-ring {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-    .paramsMudPaperSection .mud-input-control {
-        margin-bottom: -10px !important;
-    }
-
-    .custom-checkbox .mud-typography {
-        margin-left: -10px !important;
-        font-size: small !important;
-        white-space: nowrap;
-    }
-
-    .custom-label-historical-mean-checkbox {
-        /*border:2px solid red !important;*/
-    }
-
-    .responsive-container-paper-right {
-        width: 100% !important;
-        height: 72vh !important;
-        /*height: 100vh !important;*/
-        margin-top: -5px !important;
-    }
-
-    .left-panel {
-        width: 30% !important;
-    }
-
-    .right-panel {
-        width: 70% !important;
-    }
-
-    .mudTabPanelFontSize {
-        font-size: 11px !important;
-    }
-
-    .mudGridSectionOne {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-    }
-
-    .inlineMudItemClass {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-    }
-
-    .historicalMeanMudItem {
-        margin-left: -3px !important;
-        margin-top: 4px !important;
-    }
-
-    .mudGridSectionProjectParams {
-        display: flex !important;
-        flex-direction: row !important;
-        margin: 3px !important;
-        flex: 1 !important;
-        gap: 5px !important;
-        padding: 10px !important;
-        margin-left: -5px !important;
-    }
-
-    .paramsMudPaperSection {
-        width: 24% !important;
-        display: flex !important;
-        flex-direction: column !important;
-        padding: 8px !important;
-        height: 68% !important;
-        height: 100% !important;
-    }
-
-    .btnClass {
-        font-size: 8px !important;
-        margin-top: 5rem !important;
-    }
-
-        .btnClass:hover {
-            background-color: powderblue !important;
-            border: 1px solid darkblue !important;
-        }
-
-    .generateBtnClass {
-        margin-top: 5px !important;
-    }
-
-        .generateBtnClass:hover {
-            background-color: powderblue !important;
-            border: 1px solid darkblue !important;
-        }
-
-    .boxColumnStying {
-        margin-bottom: 8px !important;
-        font-weight: bold !important;
-        text-align: center !important;
-        font-size: 10px !important;
-    }
-
-    #boxColumnBorderStying {
-        flex: 1 !important;
-        overflow-y: auto !important;
-        border: 1px solid #e0e0e0 !important;
-        margin-bottom: 8px !important;
-    }
-
-    .boxColunnLabelStyling {
-        margin-bottom: 8px !important;
-        font-weight: bold !important;
-        text-align: center !important;
-        font-size: 10px !important;
-    }
-
-    .attributeEvalTextStyling {
-        margin-bottom: 7px !important;
-        font-weight: bold !important;
-        text-align: center !important;
-        font-size: 10px !important;
-        white-space: nowrap !important;
-    }
-
-    .fitToBrandPersonalityStyling {
-        margin: 10px 0 8px 0 !important;
-        font-weight: bold !important;
-        text-align: center !important;
-        font-size: 8px !important;
-        white-space: nowrap !important;
-    }
-
+.custom-label {
+    font-size: 9px !important;
+    margin-top: 6px !important;
+    white-space: nowrap !important;
 }
 
-@media (min-width:610px) and (max-width:900px) {
-    .panels-container {
-        border:2px solid red;
+.custom-label-historical-mean {
+    font-size: 9px !important;
+    margin-top: 4px !important;
+    white-space: nowrap !important;
+    margin-left:-8px;
+}
+
+.custom-checkbox .mud-checkbox .mud-icon-root {
+    font-size: 1rem !important;
+    width: 15px !important;
+    height: 15px !important;
+}
+
+.progressProjectSpinner {
+    margin-left: 50px;
+}
+
+.lds-dual-ring {
+    color: #1c4c5b
+}
+
+    .lds-dual-ring,
+    .lds-dual-ring:after {
+        box-sizing: border-box;
+    }
+
+.lds-dual-ring {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .lds-dual-ring:after {
+        content: " ";
+        display: block;
+        width: 30px;
+        height: 30px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 2px solid currentColor;
+        border-color: currentColor transparent currentColor transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+    }
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
     }
 }
+
+.paramsMudPaperSection .mud-input-control {
+    margin-bottom: -10px !important;
+}
+
+.custom-checkbox .mud-typography {
+    margin-left: -10px !important;
+    font-size: small !important;
+    white-space: nowrap;
+}
+
+.custom-label-historical-mean-checkbox {
+    /*border: 2px solid red !important;*/
+    margin-top: 0px !important;
+    margin-left: -12px !important;
+}
+
+.responsive-container-paper-right {
+    width: 100% !important;
+    height: 72vh !important;
+    /*height: 100vh !important;*/
+    margin-top: -5px !important;
+}
+
+.left-panel {
+    width: 30% !important;
+}
+
+.right-panel {
+    width: 70% !important;
+}
+
+.mudTabPanelFontSize {
+    font-size: 11px !important;
+}
+
+.mudGridSectionOne {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+}
+
+.inlineMudItemClass {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+}
+
+.historicalMeanMudItem {
+    margin-left: -3px !important;
+    margin-top: 4px !important;
+}
+
+.mudGridSectionProjectParams {
+    display: flex !important;
+    flex-direction: row !important;
+    margin: 3px !important;
+    flex: 1 !important;
+    gap: 5px !important;
+    padding: 10px !important;
+    margin-left: -5px !important;
+}
+
+.paramsMudPaperSection {
+    width: 24% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 8px !important;
+    height: 68% !important;
+    height: 100% !important;
+}
+
+.btnClass {
+    font-size: 8px !important;
+    margin-top: 5rem !important;
+}
+
+    .btnClass:hover {
+        background-color: powderblue !important;
+        border: 1px solid darkblue !important;
+    }
+
+.generateBtnClass {
+    margin-top: 5px !important;
+}
+
+    .generateBtnClass:hover {
+        background-color: powderblue !important;
+        border: 1px solid darkblue !important;
+    }
+
+.boxColumnStying {
+    margin-bottom: 8px !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    font-size: 10px !important;
+}
+
+#boxColumnBorderStying {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    border: 1px solid #e0e0e0 !important;
+    margin-bottom: 8px !important;
+}
+
+.boxColunnLabelStyling {
+    margin-bottom: 8px !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    font-size: 10px !important;
+}
+
+.attributeEvalTextStyling {
+    margin-bottom: 7px !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    font-size: 10px !important;
+    white-space: nowrap !important;
+}
+
+.fitToBrandPersonalityStyling {
+    margin: 10px 0 8px 0 !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    font-size: 8px !important;
+    white-space: nowrap !important;
+}
+
+
