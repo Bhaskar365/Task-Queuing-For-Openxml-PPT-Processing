@@ -7798,16 +7798,20 @@ namespace OpenXmlDLLDotnetFramework
 
                                     List<clschartPageDisplayName> lstFiltered = lstChartDispNames?.Where(item => item?.strPageType?.ToLower() == "attribute evaluation" || item.strPageType.ToLower() == "attribute evaluation aggregate")?.ToList();
 
-                                    foreach (clschartPageDisplayName obj in lstFiltered)
+                                    if(lstFiltered.Count>0)
                                     {
-                                        if (getNumbersFromString(obj?.strPageName) == getNumbersFromString(objclsPPT?.strPageGroupName))
+                                        foreach (clschartPageDisplayName obj in lstFiltered)
                                         {
-                                            if ((bool)(obj?.isReportSelectedByUser))
+                                            if (getNumbersFromString(obj?.strPageName) == getNumbersFromString(objclsPPT?.strPageGroupName))
                                             {
-                                                isReportSelected = true;
-                                                break;
+                                                if ((bool)(obj?.isReportSelectedByUser))
+                                                {
+                                                    isReportSelected = true;
+                                                    break;
 
+                                                }
                                             }
+
                                         }
 
                                     }
@@ -7820,16 +7824,21 @@ namespace OpenXmlDLLDotnetFramework
                                 {
                                     List<clschartPageDisplayName> lstFiltered = lstChartDispNames?.Where(item => item?.strPageType?.ToLower() == objclsPPT?.strPageGroupName?.ToLower())?.ToList();
 
-                                    foreach (clschartPageDisplayName obj in lstFiltered)
+                                    if(lstFiltered.Count>0)
                                     {
-                                        if ((bool)(obj?.isReportSelectedByUser))
+                                        foreach (clschartPageDisplayName obj in lstFiltered)
                                         {
-                                            isReportSelected = true;
-                                            break;
+                                            if ((bool)(obj?.isReportSelectedByUser))
+                                            {
+                                                isReportSelected = true;
+                                                break;
+
+                                            }
 
                                         }
-
                                     }
+
+                                   
 
                                 }
 
