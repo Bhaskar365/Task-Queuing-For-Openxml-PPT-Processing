@@ -16,13 +16,13 @@
 <MudTabs Elevation="3" Rounded="true" Class="my-6" ApplyEffectsToContainer="true" PanelClass="pa-2">
     <MudTabPanel Text="Power Point" Class="mudTabPanelFontSize">
 
-        @if(!isContentLoaded) 
+        @if (!isContentLoaded)
         {
-        
+
         }
         else
         {
-            
+
         }
 
         <div class="panels-container">
@@ -284,6 +284,7 @@
 
                         <MudGrid class="mudGridSectionProjectParams">
 
+                            @* pages *@
                             <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Pages</MudText>
 
@@ -313,6 +314,7 @@
                                 </MudButton>
                             </MudPaper>
 
+                            @* breakdowns *@
                             <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Breakdowns</MudText>
 
@@ -342,6 +344,7 @@
                                 </MudButton>
                             </MudPaper>
 
+                            @* testnames *@
                             <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Test Names</MudText>
 
@@ -371,6 +374,8 @@
                             </MudPaper>
 
                             <MudPaper Elevation="0" class="paramsMudPaperSection">
+                                
+                                @* attribute evaluation aggregrate *@
                                 <MudText Typo="Typo.subtitle2" Class="attributeEvalTextStyling">Attribute Evaluation Aggregate</MudText>
 
                                 <div id="boxColumnBorderStying">
@@ -383,6 +388,7 @@
                                     Select All/Unselect All
                                 </MudButton>
 
+                                @* fit to brand personality *@
                                 <MudText Typo="Typo.subtitle2" Class="fitToBrandPersonalityStyling">Fit to Brand Personality Aggregate</MudText>
 
                                 <div id="boxColumnBorderStying">
@@ -439,22 +445,6 @@
 
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
-
-    private List<CheckboxItem> checkboxes = new List<CheckboxItem>
-    {
-        new CheckboxItem { Id = 1, Label = "TESTNAME 1", IsChecked = true },
-        new CheckboxItem { Id = 2, Label = "HAMUBFORITOYU", IsChecked = true },
-        new CheckboxItem { Id = 3, Label = "RACKEM", IsChecked = true },
-         new CheckboxItem { Id = 1, Label = "YESIBY", IsChecked = true },
-        new CheckboxItem { Id = 2, Label = "HAMUBFORITOYU", IsChecked = true },
-        new CheckboxItem { Id = 3, Label = "RACKEM", IsChecked = true },
-         new CheckboxItem { Id = 1, Label = "YESIBY", IsChecked = true },
-        new CheckboxItem { Id = 2, Label = "HAMUBFORITOYU", IsChecked = true },
-        new CheckboxItem { Id = 3, Label = "RACKEM", IsChecked = true },
-        new CheckboxItem { Id = 1, Label = "YESIBY", IsChecked = true },
-        new CheckboxItem { Id = 2, Label = "HAMUBFORITOYU", IsChecked = true },
-        new CheckboxItem { Id = 3, Label = "RACKEM", IsChecked = true }
-    };
 
     private string selectedOption = "Excel Charts";
 
@@ -535,6 +525,8 @@
 
     List<clschartBreakdownGroup> lstBreakdown = new List<clschartBreakdownGroup>();
 
+    List<OpenXmlDLLDotnetFramework.DLLTemplate.clschartPageDisplayName> chartPageList = new List<OpenXmlDLLDotnetFramework.DLLTemplate.clschartPageDisplayName>();
+
     bool isDataLoaded = false;
     bool isContentLoaded = false;
 
@@ -545,6 +537,8 @@
     protected override async Task OnInitializedAsync()
     {
         var apiCall = await api.CallAPI("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", "");
+
+        chartPageList = getProjectChartDisplayNames("RACKEM");
 
         XDocument xDoc = XDocument.Parse(apiCall);
         var data = xDoc?.Root?.Value;
@@ -587,6 +581,29 @@
             throw;
         }
     }
+
+    private List<OpenXmlDLLDotnetFramework.DLLTemplate.clschartPageDisplayName> getProjectChartDisplayNames(string projectName)
+    {
+        string realchartName = "";
+
+        System.Data.DataTable dt = clsData.MRData.getDataTable("[dbo].[ExcelChartsPrc_getPages]  " + 1 + ",'" + projectName + "'");
+
+        List<OpenXmlDLLDotnetFramework.DLLTemplate.clschartPageDisplayName> lstPg 
+                                    = dt.AsEnumerable().Select(row => new OpenXmlDLLDotnetFramework.DLLTemplate.clschartPageDisplayName
+            {
+                strPageName = row.Field<string>("strPageName"),
+                strPageType = row.Field<string>("strPageType"),
+                intPageID = row.Field<Int32>("intPageID").ToString(),
+                intPageIndex = row.Field<Int32>("intPageIndex").ToString(),
+                intSurveyID = row.Field<Int32>("intSurveyID").ToString(),
+
+            }).ToList();
+
+
+        return lstPg;
+
+    }
+
 
 
 
