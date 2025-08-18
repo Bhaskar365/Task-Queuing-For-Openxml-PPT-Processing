@@ -7770,20 +7770,23 @@ namespace OpenXmlDLLDotnetFramework
 
                                     List<clschartPageDisplayName> lstFiltered = lstChartDispNames?.Where(item => item?.strPageType?.ToLower() == "exaggerative-inappropriate")?.ToList();
 
-                                    foreach (clschartPageDisplayName obj in lstFiltered)
+                                    if(lstFiltered.Count>0)
                                     {
-                                        if (getNumbersFromString(obj?.strPageName) == getNumbersFromString(objclsPPT?.strPageGroupName))
+                                        foreach (clschartPageDisplayName obj in lstFiltered)
                                         {
-
-                                            if ((bool)(obj?.isReportSelectedByUser))
+                                            if (getNumbersFromString(obj?.strPageName) == getNumbersFromString(objclsPPT?.strPageGroupName))
                                             {
-                                                isReportSelected = true;
-                                                break;
+
+                                                if ((bool)(obj?.isReportSelectedByUser))
+                                                {
+                                                    isReportSelected = true;
+                                                    break;
+
+                                                }
 
                                             }
 
                                         }
-
                                     }
 
 
@@ -8409,15 +8412,13 @@ namespace OpenXmlDLLDotnetFramework
             }
             catch (Exception ex)
             {
+                if(ex.InnerException == null)
+                {
+                    throw new NullReferenceException();
+                }
+
                 throw ex;
             }
-
-
-
-
-
-
-
         }
 
 
