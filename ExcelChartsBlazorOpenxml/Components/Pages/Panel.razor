@@ -290,7 +290,7 @@
                                     {
                                         @foreach (var el in lstPg)
                                         {
-                                            <MudCheckBox @bind-Checked="@el.isChecked"
+                                            <MudCheckBox @bind-Checked="@el.isChecked" 
                                             Label="@el.strPageGroup"
                                             Color="Color.Primary"
                                             Size="Size.Small"
@@ -302,7 +302,7 @@
 
                                 <MudButton Variant="Variant.Filled"
                                 Size="Size.Small"
-                                FullWidth="true" Class="btnClass">
+                                FullWidth="true" Class="btnClass" @onclick="(()=>TogglePagesList(lstPg))">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -332,7 +332,7 @@
 
                                 <MudButton Variant="Variant.Filled"
                                 Size="Size.Small" FullWidth="true"
-                                Class="btnClass" @onclick="(()=> SelectToggleBreakdown(lstBreakdown))">
+                                Class="btnClass" @onclick="(()=> ToggleBreakdownList(lstBreakdown))">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -348,20 +348,21 @@
                                     }
                                     else
                                     {
-                                        @for (int i = 0; i < testNamesList.Count; i++)
+                                        @foreach(var names in lstTestnames)
                                         {
-                                            <MudCheckBox Value="true"
-                                            Label="@testNamesList[i]"
-                                            Color="Color.Primary"
-                                            Size="Size.Small" Class="custom-checkbox">
+                                            <MudCheckBox @bind-Checked="names.isChecked"
+                                                         Label="@names.testNames"
+                                                         Color="Color.Primary"
+                                                         Size="Size.Small" Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
+
                                     }
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small" FullWidth="true"
-                                Class="btnClass">
+                                           Size="Size.Small" FullWidth="true"
+                                           Class="btnClass" @onclick="(()=>ToggleTestnames(lstTestnames))">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -493,6 +494,12 @@
         public bool isChecked { get; set; } = true;
     }
 
+    public class clschartTestnameGroup
+    {
+        public string? testNames { get; set; }
+        public bool isChecked { get; set; } = true;
+    }
+
 
     private List<ReportStatus> reportStatuses = new();
 
@@ -524,6 +531,8 @@
 
     List<clschartBreakdownGroup> lstBreakdown = new List<clschartBreakdownGroup>();
 
+    List<clschartTestnameGroup> lstTestnames = new List<clschartTestnameGroup>();
+
     List<OpenXmlDLLDotnetFramework.DLLTemplate.clschartPageDisplayName> chartPageList = new List<OpenXmlDLLDotnetFramework.DLLTemplate.clschartPageDisplayName>();
 
     bool isDataLoaded = false;
@@ -535,37 +544,72 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var apiCall = await api.CallAPI("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", "");
-
-        chartPageList = getProjectChartDisplayNames("RACKEM");
-
-        XDocument xDoc = XDocument.Parse(apiCall);
-        var data = xDoc?.Root?.Value;
-
-        fitToConceptData = JsonConvert.DeserializeObject<List<FitToConceptModel>>(data!)!;
-
-        project = fitToConceptData.First().ProjectName;
-
-        foreach (var testname in fitToConceptData!)
+        try
         {
-            testNamesList.Add(testname.TestName!);
+
+            var apiCall = await api.CallAPI("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", "");
+
+            chartPageList = getProjectChartDisplayNames("RACKEM");
+
+            XDocument xDoc = XDocument.Parse(apiCall);
+            var data = xDoc?.Root?.Value;
+
+            fitToConceptData = JsonConvert.DeserializeObject<List<FitToConceptModel>>(data!)!;
+
+            project = fitToConceptData.First().ProjectName;
+
+            // foreach (var testname in fitToConceptData!)
+            // {
+            //     lstTestnames.Add(new clschartTestnameGroup
+            //     {
+            //             testNames = testname.TestName!,
+            //             isChecked = true
+            //     });
+            // }
+
+            lstPg = await getProjectPagegroupNames(project!);
+
+            lstBreakdown = await getProjectBreakdowngroupNames(project!);
+
+
+            isDataLoaded = true;
+            isContentLoaded = true;
         }
-        lstPg = await getProjectPagegroupNames(project!);
+        catch (Exception)
+        {
+            
+            throw;
+        }
 
-        lstBreakdown = await getProjectBreakdowngroupNames(project!);
-
-
-        isDataLoaded = true;
-        isContentLoaded = true;
     }
 
-    private void SelectToggleBreakdown(List<clschartBreakdownGroup> lstBreakdown)
+    private void ToggleBreakdownList(List<clschartBreakdownGroup> lstBreakdown)
     {
         foreach(var el in lstBreakdown)
         {
             el.isChecked = !el.isChecked;
         }
     }
+
+
+    private void TogglePagesList(List<clschartPageGroup> lstPg)
+    {
+        foreach(var el in lstPg)
+        {
+            el.isChecked = !el.isChecked;
+        }
+    }
+
+    private void ToggleTestnames(List<clschartTestnameGroup> testnames)
+    {
+        foreach (var el in testnames)
+        {
+            el.isChecked = !el.isChecked;
+        }
+    }
+
+
+
 
     private async Task<List<clschartPageGroup>> getProjectPagegroupNames(string projectName)
     {
