@@ -202,9 +202,9 @@
                                 @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
                                 <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
                                     <MudCheckBox @bind-Value="Size_CheckBox1"
-                                            Size="Size.Small"
-                                            Color="Color.Primary"
-                                            Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                    Size="Size.Small"
+                                    Color="Color.Primary"
+                                    Class="custom-label-historical-mean-checkbox"></MudCheckBox>
                                     <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
                                 </MudItem>
 
@@ -222,10 +222,10 @@
                         @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
                         <MudButton Variant="Variant.Filled"
-                                   Class="generateBtnClass buttonload"
-                                   @onclick="ProcessDLL"
-                                   disabled="!isContentLoaded"
-                                   Color="@buttonColor">
+                        Class="generateBtnClass buttonload"
+                        @onclick="ProcessDLL"
+                        disabled="!isContentLoaded"
+                        Color="@buttonColor">
                             @if (currentState == ProcessState.Generating)
                             {
                                 <span> Generating...</span>
@@ -290,19 +290,19 @@
                                     {
                                         @foreach (var el in lstPg)
                                         {
-                                            <MudCheckBox Value="true"
-                                                         Label="@el.strPageGroup"
-                                                         Color="Color.Primary"
-                                                         Size="Size.Small"
-                                                         Class="custom-checkbox">
+                                            <MudCheckBox @bind-Checked="@el.isChecked"
+                                            Label="@el.strPageGroup"
+                                            Color="Color.Primary"
+                                            Size="Size.Small"
+                                            Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
                                     }
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                           Size="Size.Small"
-                                           FullWidth="true" Class="btnClass">
+                                Size="Size.Small"
+                                FullWidth="true" Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -321,18 +321,18 @@
                                     {
                                         @foreach (var breakdown in lstBreakdown)
                                         {
-                                            <MudCheckBox Value="true"
-                                                         Label="@breakdown.strBreakdownName"
-                                                         Color="Color.Primary"
-                                                         Size="Size.Small" Class="custom-checkbox">
+                                            <MudCheckBox @bind-Checked="@breakdown.isChecked"
+                                            Label="@breakdown.strBreakdownName"
+                                            Color="Color.Primary"
+                                            Size="Size.Small" Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
                                     }
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                           Size="Size.Small" FullWidth="true"
-                                           Class="btnClass">
+                                Size="Size.Small" FullWidth="true"
+                                Class="btnClass" @onclick="(()=> SelectToggleBreakdown(lstBreakdown))">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -351,23 +351,23 @@
                                         @for (int i = 0; i < testNamesList.Count; i++)
                                         {
                                             <MudCheckBox Value="true"
-                                                         Label="@testNamesList[i]"
-                                                         Color="Color.Primary"
-                                                         Size="Size.Small" Class="custom-checkbox">
+                                            Label="@testNamesList[i]"
+                                            Color="Color.Primary"
+                                            Size="Size.Small" Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
                                     }
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                           Size="Size.Small" FullWidth="true"
-                                           Class="btnClass">
+                                Size="Size.Small" FullWidth="true"
+                                Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
 
                             <MudPaper Elevation="0" class="paramsMudPaperSection">
-                                
+
                                 @* attribute evaluation aggregrate *@
                                 <MudText Typo="Typo.subtitle2" Class="attributeEvalTextStyling">Attribute Evaluation Aggregate</MudText>
 
@@ -375,9 +375,9 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                           Size="Size.Small"
-                                           FullWidth="true"
-                                           Class="btnClass">
+                                Size="Size.Small"
+                                FullWidth="true"
+                                Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
 
@@ -388,9 +388,9 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                           Size="Size.Small"
-                                           FullWidth="true"
-                                           Class="btnClass">
+                                Size="Size.Small"
+                                FullWidth="true"
+                                Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -427,6 +427,8 @@
 </div>
 
 
+
+
 @code {
 
     ProcessState currentState = ProcessState.Idle;
@@ -438,8 +440,6 @@
 
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
-
-    private string selectedOption = "Excel Charts";
 
     public string SourceText { get; set; } = "Excel Charts";
 
@@ -480,13 +480,17 @@
     {
         public string strPageGroup { get; set; }
         public string strPageGroupType { get; set; }
+        public bool isChecked { get; set; } = true;
     }
+
+
 
     public class clschartBreakdownGroup
     {
         public int intBreakdownIndex { get; set; }
         public int intBreakdownID { get; set; }
         public string? strBreakdownName { get; set; }
+        public bool isChecked { get; set; } = true;
     }
 
 
@@ -510,6 +514,8 @@
         new APIRequestModel("RACKEM", "Brandex Safety", "Brandex Safety", "OVERALL", "", ""),
         new APIRequestModel("RACKEM", "Brandex Strategic Distinctiveness", "Brandex Strategic Distinctiveness", "OVERALL", "", ""),
     };
+
+    private List<string> selectedItems = new();
 
     List<string> testNamesList = new List<string>();
     List<FitToConceptModel> fitToConceptData = new List<FitToConceptModel>();
@@ -551,6 +557,14 @@
 
         isDataLoaded = true;
         isContentLoaded = true;
+    }
+
+    private void SelectToggleBreakdown(List<clschartBreakdownGroup> lstBreakdown)
+    {
+        foreach(var el in lstBreakdown)
+        {
+            el.isChecked = !el.isChecked;
+        }
     }
 
     private async Task<List<clschartPageGroup>> getProjectPagegroupNames(string projectName)
@@ -620,6 +634,11 @@
 
     private async Task ProcessDLL()
     {
+
+        var selectedPages = lstPg.Where(x => x.isChecked).Select(x => x.strPageGroup).ToList();
+        
+        var selectedBreakdown = lstBreakdown.Where(x => x.isChecked).Select(x => x.strBreakdownName).ToList();
+
         hasProcessStarted = true;
         currentState = ProcessState.Generating;
         StartTime = DateTime.UtcNow;
