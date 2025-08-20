@@ -32,9 +32,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="SourceText"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True
-                                    Disabled>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True
+                                               Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -50,8 +50,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="@project"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
                                         @if (!isContentLoaded)
                                         {
                                             <MudSelectItem Value="@(project)">
@@ -79,8 +79,8 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="DSITextValue"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
                                         <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -96,9 +96,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="HistoricalMeanTextValue"
-                                    Label=""
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
+                                               Label=""
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -113,9 +113,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="HistoricalMeanDescriptionTextValue"
-                                    Label=""
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
+                                               Label=""
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -156,9 +156,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="FitToConceptTextValue"
-                                    Label=""
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
+                                               Label=""
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -187,8 +187,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="FinalPPTTemplateText"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
                                         <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -202,16 +202,16 @@
                                 @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
                                 <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
                                     <MudCheckBox @bind-Value="Size_CheckBox1"
-                                    Size="Size.Small"
-                                    Color="Color.Primary"
-                                    Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                                 Size="Size.Small"
+                                                 Color="Color.Primary"
+                                                 Class="custom-label-historical-mean-checkbox"></MudCheckBox>
                                     <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
                                 </MudItem>
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="SpecificHistMean"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
                                         <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -222,10 +222,10 @@
                         @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
                         <MudButton Variant="Variant.Filled"
-                        Class="generateBtnClass buttonload"
-                        @onclick="ProcessDLL"
-                        disabled="!isContentLoaded"
-                        Color="@buttonColor">
+                                   Class="generateBtnClass buttonload"
+                                   @onclick="ProcessDLL"
+                                   disabled="!isContentLoaded"
+                                   Color="@buttonColor">
                             @if (currentState == ProcessState.Generating)
                             {
                                 <span> Generating...</span>
@@ -290,19 +290,19 @@
                                     {
                                         @foreach (var el in lstPg)
                                         {
-                                            <MudCheckBox @bind-Value="@el.isChecked" 
-                                            Label="@el.strPageGroup"
-                                            Color="Color.Primary"
-                                            Size="Size.Small"
-                                            Class="custom-checkbox">
+                                            <MudCheckBox @bind-Value="@el.isChecked"
+                                                         Label="@el.strPageGroup"
+                                                         Color="Color.Primary"
+                                                         Size="Size.Small"
+                                                         Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
                                     }
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true" Class="btnClass" @onclick="(()=>TogglePagesList(lstPg))">
+                                           Size="Size.Small"
+                                           FullWidth="true" Class="btnClass" @onclick="(()=>TogglePagesList(lstPg))">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -322,17 +322,17 @@
                                         @foreach (var breakdown in lstBreakdown)
                                         {
                                             <MudCheckBox @bind-Value="@breakdown.isChecked"
-                                            Label="@breakdown.strBreakdownName"
-                                            Color="Color.Primary"
-                                            Size="Size.Small" Class="custom-checkbox">
+                                                         Label="@breakdown.strBreakdownName"
+                                                         Color="Color.Primary"
+                                                         Size="Size.Small" Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
                                     }
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small" FullWidth="true"
-                                Class="btnClass" @onclick="(()=> ToggleBreakdownList(lstBreakdown))">
+                                           Size="Size.Small" FullWidth="true"
+                                           Class="btnClass" @onclick="(()=> ToggleBreakdownList(lstBreakdown))">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -348,12 +348,12 @@
                                     }
                                     else
                                     {
-                                        @foreach(var names in lstTestnames)
+                                        @foreach (var names in lstTestnames)
                                         {
                                             <MudCheckBox @bind-Value="names.isChecked"
-                                            Label="@names.testNames"
-                                            Color="Color.Primary"
-                                            Size="Size.Small" Class="custom-checkbox">
+                                                         Label="@names.testNames"
+                                                         Color="Color.Primary"
+                                                         Size="Size.Small" Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
 
@@ -361,8 +361,8 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small" FullWidth="true"
-                                Class="btnClass" @onclick="(()=>ToggleTestnames(lstTestnames))">
+                                           Size="Size.Small" FullWidth="true"
+                                           Class="btnClass" @onclick="(()=>ToggleTestnames(lstTestnames))">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -376,9 +376,9 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true"
-                                Class="btnClass">
+                                           Size="Size.Small"
+                                           FullWidth="true"
+                                           Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
 
@@ -389,9 +389,9 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true"
-                                Class="btnClass">
+                                           Size="Size.Small"
+                                           FullWidth="true"
+                                           Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -561,10 +561,10 @@
             foreach (var testname in fitToConceptData!)
             {
                 lstTestnames.Add(new clschartTestnameGroup
-                {
+                    {
                         testNames = testname.TestName!,
                         isChecked = true
-                });
+                    });
             }
 
             lstPg = await getProjectPagegroupNames(project!);
@@ -585,7 +585,7 @@
 
     private void ToggleBreakdownList(List<clschartBreakdownGroup> lstBreakdown)
     {
-        foreach(var el in lstBreakdown)
+        foreach (var el in lstBreakdown)
         {
             el.isChecked = !el.isChecked;
         }
@@ -594,7 +594,7 @@
 
     private void TogglePagesList(List<clschartPageGroup> lstPg)
     {
-        foreach(var el in lstPg)
+        foreach (var el in lstPg)
         {
             el.isChecked = !el.isChecked;
         }
@@ -639,16 +639,16 @@
 
         System.Data.DataTable dt = clsData.MRData.getDataTable("[dbo].[ExcelChartsPrc_getPages]  " + 1 + ",'" + projectName + "'");
 
-        List<OpenXmlDLLDotnetFramework.DLLTemplate.clschartPageDisplayName> lstPg 
+        List<OpenXmlDLLDotnetFramework.DLLTemplate.clschartPageDisplayName> lstPg
                                     = dt.AsEnumerable().Select(row => new OpenXmlDLLDotnetFramework.DLLTemplate.clschartPageDisplayName
-            {
-                strPageName = row.Field<string>("strPageName"),
-                strPageType = row.Field<string>("strPageType"),
-                intPageID = row.Field<Int32>("intPageID").ToString(),
-                intPageIndex = row.Field<Int32>("intPageIndex").ToString(),
-                intSurveyID = row.Field<Int32>("intSurveyID").ToString(),
+                                        {
+                                            strPageName = row.Field<string>("strPageName"),
+                                            strPageType = row.Field<string>("strPageType"),
+                                            intPageID = row.Field<Int32>("intPageID").ToString(),
+                                            intPageIndex = row.Field<Int32>("intPageIndex").ToString(),
+                                            intSurveyID = row.Field<Int32>("intSurveyID").ToString(),
 
-            }).ToList();
+                                        }).ToList();
 
         return lstPg;
     }
@@ -678,54 +678,65 @@
 
     private async Task ProcessDLL()
     {
-        var selectedPages = lstPg.Where(x => x.isChecked).Select(x => x.strPageGroup).ToList();
-
-        var selectedBreakdown = lstBreakdown.Where(x => x.isChecked).Select(x => x.strBreakdownName).ToList();
-
-        var selectedTestnames = lstTestnames.Where(x => x.isChecked).Select(x => x.testNames).ToList();
-
-        hasProcessStarted = true;
-        currentState = ProcessState.Generating;
-        StartTime = DateTime.UtcNow;
-
-        var taskIdList = new List<Guid>();
-
-        var res = new ReportGenerationRequestDLL
+        try
         {
-                project = "RACKEM",
-                templates = selectedPages,
-                breakdowns = selectedBreakdown!,
-                HistoricalMeanType = "",
-                HistoricalMeanDescription = "",
-                TaskId = Guid.NewGuid()
-        };
-        
-        var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(res);
+            var selectedPages = lstPg.Where(x => x.isChecked).Select(x => x.strPageGroup).ToList();
 
-        _ = PollStatusAsync(taskId);
-        StateHasChanged();
+            var selectedBreakdown = lstBreakdown.Where(x => x.isChecked).Select(x => x.strBreakdownName).ToList();
 
-        var result = await fitToConceptService.SendDLLMergeRequestWithPanel(res);
+            var selectedTestnames = lstTestnames.Where(x => x.isChecked).Select(x => x.testNames).ToList();
 
-        if (result == "Successful")
-        {
-            buttonColor = Color.Tertiary;
-            message = "Merge Successful";
+            hasProcessStarted = true;
+            currentState = ProcessState.Generating;
+            StartTime = DateTime.UtcNow;
+
+            var taskIdList = new List<Guid>();
+
+            var res = new ReportGenerationRequestDLL
+                {
+                    project = "RACKEM",
+                    templates = selectedPages,
+                    breakdowns = selectedBreakdown!,
+                    HistoricalMeanType = "",
+                    HistoricalMeanDescription = "",
+                    TaskId = Guid.NewGuid()
+                };
+
+            var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(res);
+
+            _ = PollStatusAsync(taskId);
+            StateHasChanged();
+
+            var result = await fitToConceptService.SendDLLMergeRequestWithPanel(res);
+
+            if (result == "Successful")
+            {
+                buttonColor = Color.Tertiary;
+                message = "Merge Successful";
+            }
+            if (result == "Bad Request")
+            {
+                buttonColor = Color.Warning;
+                message = "Something went wrong";
+            }
+            if (result == "Fail")
+            {
+                buttonColor = Color.Error;
+                message = "Merge Insuccessful";
+            }
+
+            StateHasChanged();
+            Console.WriteLine(result);
+
+            hasProcessStarted = false;
+            currentState = ProcessState.Done;
+            EndTime = DateTime.UtcNow;
         }
-        if (result == "Bad Request")
+        catch (Exception)
         {
-            buttonColor = Color.Warning;
-            message = "Something went wrong";
+            throw;
         }
-        if (result == "Fail")
-        {
-            buttonColor = Color.Error;
-            message = "Merge Insuccessful";
-        }
-
-        StateHasChanged();
-        Console.WriteLine(result);
-
+       
         try
         {
             // foreach (var projectEl in projectWrapperAPIList)
@@ -770,9 +781,9 @@
             // StateHasChanged();
             // Console.WriteLine(result);
 
-            hasProcessStarted = false;
-            currentState = ProcessState.Done;
-            EndTime = DateTime.UtcNow;
+            // hasProcessStarted = false;
+            // currentState = ProcessState.Done;
+            // EndTime = DateTime.UtcNow;
         }
         catch (Exception ex)
         {
