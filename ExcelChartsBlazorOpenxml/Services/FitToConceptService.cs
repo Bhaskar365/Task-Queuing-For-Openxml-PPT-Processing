@@ -234,6 +234,42 @@ namespace ExcelChartsBlazorOpenxml.Services
             //var result = await response.Content.ReadFromJsonAsync<List<TaskLog>>();
             //return result!;
         }
+        
+
+        public async Task<string> SendDLLMergeRequestWithPanel(ReportGenerationRequestDLL projectWrapperAPIList)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", projectWrapperAPIList);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return "Successful";
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return "Bad Request";
+                }
+
+                return "Fail";
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            //var r = response.Content.ReadFromJsonAsync<string>();
+
+            //Console.WriteLine(r);
+
+            //var result = await response.Content.ReadFromJsonAsync<List<APIRequestModel>>();
+            //return result.ToString();
+
+            //var result = await response.Content.ReadFromJsonAsync<List<TaskLog>>();
+            //return result!;
+        }
+
 
         //public async Task SendDLLMergeRequest(ReportGenerationRequestDLL request)
         //{

@@ -16,7 +16,7 @@ namespace SharedModels.DTO
     {
         public string project { get; set; } = string.Empty;
 
-        public List<string>? templates { get; set; } 
+        public List<string>? templates { get; set; }
 
         public List<string>? breakdowns { get; set; }
 
@@ -26,7 +26,6 @@ namespace SharedModels.DTO
 
         public Guid TaskId { get; set; } = Guid.NewGuid();
     }
-
 
 
 

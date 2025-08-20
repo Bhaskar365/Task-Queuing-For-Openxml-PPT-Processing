@@ -42,48 +42,48 @@ namespace WebApplicationAPI.Controllers
         }
 
 
-        public string destination = "C:\\ExcelChartFiles\\MRRxNaming.pptx";
+        //public string destination = "C:\\ExcelChartFiles\\MRRxNaming.pptx";
 
-        public string sourceFile1 = "C:\\Users\\bdas\\Downloads\\FittoConcept_sample.pptx";
-        public string sourceFile2 = "C:\\Users\\bdas\\Downloads\\OverallImpressions_sample.pptx";
-        public string sourceFile3 = "C:\\Users\\bdas\\Downloads\\PersonalPref_sample.pptx";
-        public string sourceFile4 = "C:\\Users\\bdas\\Downloads\\VerbalUnder_sample.pptx";
-        public string sourceFile5 = "C:\\Users\\bdas\\Downloads\\writtenUnd_sample.pptx";
-        public string sourceFile6 = "C:\\Users\\bdas\\Downloads\\Att1_sample.pptx";
-        public string sourceFile7 = "C:\\Users\\bdas\\Downloads\\Att2_sample.pptx";
-        public string sourceFile8 = "C:\\Users\\bdas\\Downloads\\AttrAggr_sample.pptx";
-        public string sourceFile9 = "C:\\Users\\bdas\\Downloads\\Memorability_sample.pptx";
-        public string sourceFile10 = "C:\\Users\\bdas\\Downloads\\Exaggerative_sample.pptx";
-        public string sourceFile11 = "C:\\Users\\bdas\\Downloads\\SALA_sample.pptx";
-        public string sourceFile12 = "C:\\Users\\bdas\\Downloads\\QTC_sample.pptx";
-        public string sourceFile13 = "C:\\Users\\bdas\\Downloads\\BrandexSafety_sample.pptx";
-        public string sourceFile14 = "C:\\Users\\bdas\\Downloads\\BrandexStrategicDistinctiveness_sample.pptx";
-        public string sourceFile15 = "C:\\Users\\bdas\\Downloads\\MedicalTerms_sample.pptx";
-        public string sourceFile16 = "C:\\Users\\bdas\\Downloads\\NonMedical_sample.pptx";
-        public string sourceFile17 = "C:\\Users\\bdas\\Downloads\\02Misleading_sample.pptx";
-        public string sourceFile18 = "C:\\Users\\bdas\\Downloads\\03Exagg_sample.pptx";
+        //public string sourceFile1 = "C:\\Users\\bdas\\Downloads\\FittoConcept_sample.pptx";
+        //public string sourceFile2 = "C:\\Users\\bdas\\Downloads\\OverallImpressions_sample.pptx";
+        //public string sourceFile3 = "C:\\Users\\bdas\\Downloads\\PersonalPref_sample.pptx";
+        //public string sourceFile4 = "C:\\Users\\bdas\\Downloads\\VerbalUnder_sample.pptx";
+        //public string sourceFile5 = "C:\\Users\\bdas\\Downloads\\writtenUnd_sample.pptx";
+        //public string sourceFile6 = "C:\\Users\\bdas\\Downloads\\Att1_sample.pptx";
+        //public string sourceFile7 = "C:\\Users\\bdas\\Downloads\\Att2_sample.pptx";
+        //public string sourceFile8 = "C:\\Users\\bdas\\Downloads\\AttrAggr_sample.pptx";
+        //public string sourceFile9 = "C:\\Users\\bdas\\Downloads\\Memorability_sample.pptx";
+        //public string sourceFile10 = "C:\\Users\\bdas\\Downloads\\Exaggerative_sample.pptx";
+        //public string sourceFile11 = "C:\\Users\\bdas\\Downloads\\SALA_sample.pptx";
+        //public string sourceFile12 = "C:\\Users\\bdas\\Downloads\\QTC_sample.pptx";
+        //public string sourceFile13 = "C:\\Users\\bdas\\Downloads\\BrandexSafety_sample.pptx";
+        //public string sourceFile14 = "C:\\Users\\bdas\\Downloads\\BrandexStrategicDistinctiveness_sample.pptx";
+        //public string sourceFile15 = "C:\\Users\\bdas\\Downloads\\MedicalTerms_sample.pptx";
+        //public string sourceFile16 = "C:\\Users\\bdas\\Downloads\\NonMedical_sample.pptx";
+        //public string sourceFile17 = "C:\\Users\\bdas\\Downloads\\02Misleading_sample.pptx";
+        //public string sourceFile18 = "C:\\Users\\bdas\\Downloads\\03Exagg_sample.pptx";
 
-        public int[] sourceInput1 = { 38 };
-        public int[] sourceInput2 = { 85 };
-        public int[] sourceInput3 = { 40 };
-        public int[] sourceInput4 = { 41 };
-        public int[] sourceInput5 = { 44 };
-        public int[] sourceInput6 = { 45 };
-        public int[] sourceInput7 = { 46 };
-        public int[] sourceInput8 = { 82 };
-        public int[] sourceInput9 = { 83 };
-        public int[] sourceInput10 = { 87 };
-        public int[] sourceInput11 = { 66, 67, 68, 69 };
-        public int[] sourceInput12 = { 66 };
-        public int[] sourceInput13 = { 66, 67 };
-        public int[] sourceInput14 = { 66, 67, 68 };
-        public int[] sourceInput15 = { 20 };
-        public int[] sourceInput16 = { 16, 17 };
-        public int[] sourceInput17 = { 19, 20, 21 };
-        public int[] sourceInput18 = { 71, 72, 73, 74 };
-        public int[] sourceInput19 = { 76 };
-        public int[] sourceInput20 = { 88 };
-        public int[] sourceInput21 = { 89 };
+        //public int[] sourceInput1 = { 38 };
+        //public int[] sourceInput2 = { 85 };
+        //public int[] sourceInput3 = { 40 };
+        //public int[] sourceInput4 = { 41 };
+        //public int[] sourceInput5 = { 44 };
+        //public int[] sourceInput6 = { 45 };
+        //public int[] sourceInput7 = { 46 };
+        //public int[] sourceInput8 = { 82 };
+        //public int[] sourceInput9 = { 83 };
+        //public int[] sourceInput10 = { 87 };
+        //public int[] sourceInput11 = { 66, 67, 68, 69 };
+        //public int[] sourceInput12 = { 66 };
+        //public int[] sourceInput13 = { 66, 67 };
+        //public int[] sourceInput14 = { 66, 67, 68 };
+        //public int[] sourceInput15 = { 20 };
+        //public int[] sourceInput16 = { 16, 17 };
+        //public int[] sourceInput17 = { 19, 20, 21 };
+        //public int[] sourceInput18 = { 71, 72, 73, 74 };
+        //public int[] sourceInput19 = { 76 };
+        //public int[] sourceInput20 = { 88 };
+        //public int[] sourceInput21 = { 89 };
 
 
 
@@ -960,36 +960,64 @@ namespace WebApplicationAPI.Controllers
 
 
 
+        //[HttpPost("ppt/dllMerge")]
+        //public async Task<ActionResult> MergeUsingDLL([FromBody] List<APIRequestModel> projectWrapperAPIList)
+        //{
+        //    try
+        //    {
+        //        if(projectWrapperAPIList.Count == 0)
+        //        {
+        //            return BadRequest();
+        //        }
+
+        //        APIWrapper apiWrapperDllClass = new APIWrapper();
+
+        //        List<string> templateList = new List<string>();
+        //        List<string> breakdownsList = new List<string>();
+
+        //        foreach (var tem in projectWrapperAPIList)
+        //        {
+        //            templateList.Add(tem.template);
+        //        }
+
+        //        foreach (var br in projectWrapperAPIList)
+        //        {
+        //            breakdownsList.Add(br.breakdown);
+        //        }
+
+        //        string project = projectWrapperAPIList.FirstOrDefault()!.project;
+
+        //        foreach (string breakdown in breakdownsList)
+        //        {
+        //            string x = await apiWrapperDllClass.addChartsToFinalTemplate1(project, templateList, finalTemplateName, breakdown);
+        //            return Ok(x);
+        //        }
+
+        //        return NotFound();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
         [HttpPost("ppt/dllMerge")]
-        public async Task<ActionResult> MergeUsingDLL([FromBody] List<APIRequestModel> projectWrapperAPIList)
+        public async Task<ActionResult> MergeUsingDLL([FromBody] List<ReportGenerationRequestDLL> projectWrapperAPIList)
         {
             try
             {
-                if(projectWrapperAPIList.Count == 0)
+                if (projectWrapperAPIList.Count == 0)
                 {
                     return BadRequest();
                 }
 
                 APIWrapper apiWrapperDllClass = new APIWrapper();
 
-                List<string> templateList = new List<string>();
-                List<string> breakdownsList = new List<string>();
-
-                foreach (var tem in projectWrapperAPIList)
-                {
-                    templateList.Add(tem.template);
-                }
-
-                foreach (var br in projectWrapperAPIList)
-                {
-                    breakdownsList.Add(br.breakdown);
-                }
-
                 string project = projectWrapperAPIList.FirstOrDefault()!.project;
 
-                foreach (string breakdown in breakdownsList)
+                foreach (string breakdown in projectWrapperAPIList.First().breakdowns!)
                 {
-                    string x = await apiWrapperDllClass.addChartsToFinalTemplate1(project, templateList, finalTemplateName, breakdown);
+                    string x = await apiWrapperDllClass.addChartsToFinalTemplate1(project, projectWrapperAPIList.First().templates, finalTemplateName, breakdown);
                     return Ok(x);
                 }
 
@@ -1000,6 +1028,8 @@ namespace WebApplicationAPI.Controllers
                 throw ex;
             }
         }
+
+
 
         //[HttpPost("ppt/dllMerge")]
         //public async Task MergeUsingDLL([FromBody] ReportGenerationRequestDLL request)

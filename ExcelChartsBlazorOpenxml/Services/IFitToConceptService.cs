@@ -68,5 +68,7 @@ namespace ExcelChartsBlazorOpenxml.Services
 
         //Task SendDLLMergeRequest(ReportGenerationRequestDLL request);
 
+        Task<string> SendDLLMergeRequestWithPanel(ReportGenerationRequestDLL projectWrapperAPIList);
+
     }
 }

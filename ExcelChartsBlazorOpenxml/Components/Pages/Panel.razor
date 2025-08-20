@@ -290,7 +290,7 @@
                                     {
                                         @foreach (var el in lstPg)
                                         {
-                                            <MudCheckBox @bind-Checked="@el.isChecked" 
+                                            <MudCheckBox @bind-Value="@el.isChecked" 
                                             Label="@el.strPageGroup"
                                             Color="Color.Primary"
                                             Size="Size.Small"
@@ -321,7 +321,7 @@
                                     {
                                         @foreach (var breakdown in lstBreakdown)
                                         {
-                                            <MudCheckBox @bind-Checked="@breakdown.isChecked"
+                                            <MudCheckBox @bind-Value="@breakdown.isChecked"
                                             Label="@breakdown.strBreakdownName"
                                             Color="Color.Primary"
                                             Size="Size.Small" Class="custom-checkbox">
@@ -350,10 +350,10 @@
                                     {
                                         @foreach(var names in lstTestnames)
                                         {
-                                            <MudCheckBox @bind-Checked="names.isChecked"
-                                                         Label="@names.testNames"
-                                                         Color="Color.Primary"
-                                                         Size="Size.Small" Class="custom-checkbox">
+                                            <MudCheckBox @bind-Value="names.isChecked"
+                                            Label="@names.testNames"
+                                            Color="Color.Primary"
+                                            Size="Size.Small" Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
 
@@ -361,8 +361,8 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                           Size="Size.Small" FullWidth="true"
-                                           Class="btnClass" @onclick="(()=>ToggleTestnames(lstTestnames))">
+                                Size="Size.Small" FullWidth="true"
+                                Class="btnClass" @onclick="(()=>ToggleTestnames(lstTestnames))">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -491,7 +491,7 @@
         public int intBreakdownIndex { get; set; }
         public int intBreakdownID { get; set; }
         public string? strBreakdownName { get; set; }
-        public bool isChecked { get; set; } = true;
+        public bool isChecked { get; set; } = false;
     }
 
     public class clschartTestnameGroup
@@ -558,14 +558,14 @@
 
             project = fitToConceptData.First().ProjectName;
 
-            // foreach (var testname in fitToConceptData!)
-            // {
-            //     lstTestnames.Add(new clschartTestnameGroup
-            //     {
-            //             testNames = testname.TestName!,
-            //             isChecked = true
-            //     });
-            // }
+            foreach (var testname in fitToConceptData!)
+            {
+                lstTestnames.Add(new clschartTestnameGroup
+                {
+                        testNames = testname.TestName!,
+                        isChecked = true
+                });
+            }
 
             lstPg = await getProjectPagegroupNames(project!);
 
@@ -577,7 +577,7 @@
         }
         catch (Exception)
         {
-            
+
             throw;
         }
 
@@ -678,10 +678,11 @@
 
     private async Task ProcessDLL()
     {
-
         var selectedPages = lstPg.Where(x => x.isChecked).Select(x => x.strPageGroup).ToList();
-        
+
         var selectedBreakdown = lstBreakdown.Where(x => x.isChecked).Select(x => x.strBreakdownName).ToList();
+
+        var selectedTestnames = lstTestnames.Where(x => x.isChecked).Select(x => x.testNames).ToList();
 
         hasProcessStarted = true;
         currentState = ProcessState.Generating;
@@ -689,49 +690,85 @@
 
         var taskIdList = new List<Guid>();
 
+        var res = new ReportGenerationRequestDLL
+        {
+                project = "RACKEM",
+                templates = selectedPages,
+                breakdowns = selectedBreakdown!,
+                HistoricalMeanType = "",
+                HistoricalMeanDescription = "",
+                TaskId = Guid.NewGuid()
+        };
+        
+        var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(res);
+
+        _ = PollStatusAsync(taskId);
+        StateHasChanged();
+
+        var result = await fitToConceptService.SendDLLMergeRequestWithPanel(res);
+
+        if (result == "Successful")
+        {
+            buttonColor = Color.Tertiary;
+            message = "Merge Successful";
+        }
+        if (result == "Bad Request")
+        {
+            buttonColor = Color.Warning;
+            message = "Something went wrong";
+        }
+        if (result == "Fail")
+        {
+            buttonColor = Color.Error;
+            message = "Merge Insuccessful";
+        }
+
+        StateHasChanged();
+        Console.WriteLine(result);
+
         try
         {
-            foreach (var projectEl in projectWrapperAPIList)
-            {
-                var request = new ReportGenerationRequestDLL
-                    {
-                        project = projectEl.project,
-                        templates = string.IsNullOrWhiteSpace(projectEl.template) ? new List<string>() : new List<string> { projectEl.template },
-                        breakdowns = string.IsNullOrWhiteSpace(projectEl.breakdown) ? new List<string>() : new List<string> { projectEl.breakdown },
-                        HistoricalMeanType = projectEl.HistoricalMeanType,
-                        HistoricalMeanDescription = projectEl.HistoricalMeanDescription,
-                        TaskId = Guid.NewGuid()
-                    };
+            // foreach (var projectEl in projectWrapperAPIList)
+            // {
+            //     var request = new ReportGenerationRequestDLL
+            //         {
+            //             project = projectEl.project,
+            //             templates = string.IsNullOrWhiteSpace(projectEl.template) ? new List<string>() : new List<string> { projectEl.template },
+            //             breakdowns = string.IsNullOrWhiteSpace(projectEl.breakdown) ? new List<string>() : new List<string> { projectEl.breakdown },
+            //             HistoricalMeanType = projectEl.HistoricalMeanType,
+            //             HistoricalMeanDescription = projectEl.HistoricalMeanDescription,
+            //             TaskId = Guid.NewGuid()
+            //         };
 
-                taskIdList.Add(request.TaskId);
+            //     taskIdList.Add(request.TaskId);
 
 
-                var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(request);
+            //     var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(request);
 
-                 _ = PollStatusAsync(taskId);
-                StateHasChanged();
-            }
+            //      _ = PollStatusAsync(taskId);
+            //     StateHasChanged();
+            // }
 
-            var result = await fitToConceptService.SendDLLMergeRequest(projectWrapperAPIList);
+            // var result = await fitToConceptService.SendDLLMergeRequest(projectWrapperAPIList);
 
-            if (result == "Successful")
-            {
-                buttonColor = Color.Tertiary;
-                message = "Merge Successful";
-            }
-            if (result == "Bad Request")
-            {
-                buttonColor = Color.Warning;
-                message = "Something went wrong";
-            }
-            if (result == "Fail")
-            {
-                buttonColor = Color.Error;
-                message = "Merge Insuccessful";
-            }
+            // if (result == "Successful")
+            // {
+            //     buttonColor = Color.Tertiary;
+            //     message = "Merge Successful";
+            // }
+            // if (result == "Bad Request")
+            // {
+            //     buttonColor = Color.Warning;
+            //     message = "Something went wrong";
+            // }
+            // if (result == "Fail")
+            // {
+            //     buttonColor = Color.Error;
+            //     message = "Merge Insuccessful";
+            // }
 
-            StateHasChanged();
-            Console.WriteLine(result);
+            // StateHasChanged();
+            // Console.WriteLine(result);
 
             hasProcessStarted = false;
             currentState = ProcessState.Done;
