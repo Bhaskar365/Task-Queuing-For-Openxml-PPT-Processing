@@ -1002,22 +1002,22 @@ namespace WebApplicationAPI.Controllers
         //}
 
         [HttpPost("ppt/dllMerge")]
-        public async Task<ActionResult> MergeUsingDLL([FromBody] List<ReportGenerationRequestDLL> projectWrapperAPIList)
+        public async Task<ActionResult> MergeUsingDLL([FromBody] ReportGenerationRequestDLL projectWrapperAPIList)
         {
             try
             {
-                if (projectWrapperAPIList.Count == 0)
+                if (projectWrapperAPIList.templates!.Count==0 || projectWrapperAPIList.breakdowns!.Count==0)
                 {
                     return BadRequest();
                 }
 
                 APIWrapper apiWrapperDllClass = new APIWrapper();
 
-                string project = projectWrapperAPIList.FirstOrDefault()!.project;
+                string project = projectWrapperAPIList.project;
 
-                foreach (string breakdown in projectWrapperAPIList.First().breakdowns!)
+                foreach (string breakdown in projectWrapperAPIList.breakdowns!)
                 {
-                    string x = await apiWrapperDllClass.addChartsToFinalTemplate1(project, projectWrapperAPIList.First().templates, finalTemplateName, breakdown);
+                    string x = await apiWrapperDllClass.addChartsToFinalTemplate1(project, projectWrapperAPIList.templates, finalTemplateName, breakdown);
                     return Ok(x);
                 }
 
