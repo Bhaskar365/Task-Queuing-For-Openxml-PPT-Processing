@@ -12,6 +12,13 @@ namespace SharedModels.DTO
         public Guid TaskId { get; set; } = Guid.NewGuid();
     }
 
+
+    public class ReportGenerationWrapper 
+    {
+        public ReportGenerationRequestDLL? Request { get; set; }
+        public string? FinalPPTSelected { get; set; }
+    }
+
     public class ReportGenerationRequestDLL
     {
         public string project { get; set; } = string.Empty;

@@ -51,7 +51,7 @@ namespace ExcelChartsBlazorOpenxml.Services
 
         Task<Guid> GenerateReportAsync(ReportGenerationRequest request);
 
-        Task<Guid> GenerateReportUsingDLLAsync(ReportGenerationRequestDLL request);
+        Task<Guid> GenerateReportUsingDLLAsync(ReportGenerationRequestDLL request,string finalPPTSelected);
 
 
         Task<List<TaskLog>> MergeSlides(List<TaskLog> taskLog);
@@ -68,7 +68,7 @@ namespace ExcelChartsBlazorOpenxml.Services
 
         //Task SendDLLMergeRequest(ReportGenerationRequestDLL request);
 
-        Task<string> SendDLLMergeRequestWithPanel(ReportGenerationRequestDLL projectWrapperAPIList);
+        Task<string> SendDLLMergeRequestWithPanel(ReportGenerationRequestDLL request, string finalPPTSelected);
 
     }
 }

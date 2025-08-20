@@ -444,36 +444,36 @@ else
 
         try
         {
-            foreach (var projectEl in projectWrapperAPIList)
-            {
-                var request = new ReportGenerationRequestDLL
-                    {
-                        project = projectEl.project,
-                        templates = string.IsNullOrWhiteSpace(projectEl.template) ? new List<string>() : new List<string> { projectEl.template },
-                        breakdowns = string.IsNullOrWhiteSpace(projectEl.breakdown) ? new List<string>() : new List<string> { projectEl.breakdown },
-                        HistoricalMeanType = projectEl.HistoricalMeanType,
-                        HistoricalMeanDescription = projectEl.HistoricalMeanDescription,
-                        TaskId = Guid.NewGuid()
-                    };
+            // foreach (var projectEl in projectWrapperAPIList)
+            // {
+            //     var request = new ReportGenerationRequestDLL
+            //         {
+            //             project = projectEl.project,
+            //             templates = string.IsNullOrWhiteSpace(projectEl.template) ? new List<string>() : new List<string> { projectEl.template },
+            //             breakdowns = string.IsNullOrWhiteSpace(projectEl.breakdown) ? new List<string>() : new List<string> { projectEl.breakdown },
+            //             HistoricalMeanType = projectEl.HistoricalMeanType,
+            //             HistoricalMeanDescription = projectEl.HistoricalMeanDescription,
+            //             TaskId = Guid.NewGuid()
+            //         };
 
-                taskIdList.Add(request.TaskId);
+            //     taskIdList.Add(request.TaskId);
 
-                var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(request);
+            //     var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(request);
 
-                reportStatuses.Add(new ReportStatus
-                    {
-                        ProjectName = request.project,
-                        Templates = new List<string> { projectEl.template },
-                        TaskId = taskId,
-                        Status = "Queued"
-                    });
+            //     reportStatuses.Add(new ReportStatus
+            //         {
+            //             ProjectName = request.project,
+            //             Templates = new List<string> { projectEl.template },
+            //             TaskId = taskId,
+            //             Status = "Queued"
+            //         });
 
-                hasProcessStarted = false;
-                _ = PollStatusAsync(taskId);
-                StateHasChanged();
+            //     hasProcessStarted = false;
+            //     _ = PollStatusAsync(taskId);
+            //     StateHasChanged();
 
-                // await fitToConceptService.SendDLLMergeRequest(request);
-            }
+            //     // await fitToConceptService.SendDLLMergeRequest(request);
+            // }
             // await WaitUntilAllTasksComplete(taskIdList);
 
             // foreach (var projectEl in projectWrapperAPIList)

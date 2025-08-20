@@ -194,9 +194,17 @@ namespace ExcelChartsBlazorOpenxml.Services
             return result!;
         }
 
-        public async Task<Guid> GenerateReportUsingDLLAsync(ReportGenerationRequestDLL request)
+        
+
+        public async Task<Guid> GenerateReportUsingDLLAsync(ReportGenerationRequestDLL request, string finalPPTSelected)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/report/dllgenerate", request);
+            var payload = new ReportGenerationWrapper
+            {
+                Request = request,
+                FinalPPTSelected = finalPPTSelected
+            };
+
+            var response = await _httpClient.PostAsJsonAsync("api/report/dllgenerate", payload);
             var result = await response.Content.ReadFromJsonAsync<ReportGenerationResponse>();
             return result!.TaskId;
         }
@@ -236,11 +244,18 @@ namespace ExcelChartsBlazorOpenxml.Services
         }
         
 
-        public async Task<string> SendDLLMergeRequestWithPanel(ReportGenerationRequestDLL projectWrapperAPIList)
+        public async Task<string> SendDLLMergeRequestWithPanel(ReportGenerationRequestDLL request, string finalPPTSelected)
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", projectWrapperAPIList);
+
+                var payload = new ReportGenerationWrapper
+                {
+                    Request = request,
+                    FinalPPTSelected = finalPPTSelected
+                };
+
+                var response = await _httpClient.PostAsJsonAsync("api/report/ppt/dllMerge", payload);
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {

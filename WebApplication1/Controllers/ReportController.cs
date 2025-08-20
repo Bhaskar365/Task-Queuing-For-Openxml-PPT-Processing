@@ -848,7 +848,7 @@ namespace WebApplicationAPI.Controllers
         public string finalTemplateName = "MR-Rx Naming";
 
         [HttpPost("dllgenerate")]
-        public async Task<IActionResult> GenerateReportUsingDLL([FromBody] ReportGenerationRequestDLL request) 
+        public async Task<IActionResult> GenerateReportUsingDLL([FromBody] ReportGenerationWrapper request) 
         {
             try
             {
@@ -858,13 +858,13 @@ namespace WebApplicationAPI.Controllers
                 var connectionString = _configuration.GetConnectionString("DBConnection");
                 string user = "testUser";
 
-                _tracker.SetStatus(request.TaskId, "Queued");
+                _tracker.SetStatus(request.Request!.TaskId, "Queued");
 
                 await _queue.EnqueueAsync(async token =>
                 {
                     try
                     {
-                        _tracker.SetStatus(request.TaskId, "Processing");
+                        _tracker.SetStatus(request.Request!.TaskId, "Processing");
 
                         using var scope = _scopeFactory.CreateScope();
                         var repository = scope.ServiceProvider.GetRequiredService<IDataRepository>();
@@ -873,26 +873,26 @@ namespace WebApplicationAPI.Controllers
 
                         TaskLog taskLog = new TaskLog
                         {
-                            TaskId = request.TaskId,
+                            TaskId = request.Request!.TaskId,
                             CreatedOn = DateTime.UtcNow,
-                            ProjectType = request.project,
+                            ProjectType = request.Request!.project,
                             CreatedBy = user,
                             CurrentStatus = "Processing"
                         };
 
 
                         _taskLogging.InsertTask(taskLog, connectionString!);
-                        _taskLogging.SetTaskStatusState(request.TaskId, "Processing", connectionString!, user);
+                        _taskLogging.SetTaskStatusState(request.Request!.TaskId, "Processing", connectionString!, user);
 
                         //dll call - individual chart generation
-                        await apiWrapperDllClass.OpenXMLParallelProcess(request.project, request.templates, request.breakdowns, request.HistoricalMeanType, request.HistoricalMeanDescription, finalTemplateName);
+                        await apiWrapperDllClass.OpenXMLParallelProcess(request.Request!.project, request.Request!.templates, request.Request!.breakdowns, request.Request!.HistoricalMeanType, request.Request!.HistoricalMeanDescription, request.FinalPPTSelected);
 
                         taskLog.CompletedOn = DateTime.UtcNow;
-                        _taskLogging.MarkTaskAsCompleted(request.TaskId.ToString(), (DateTime)taskLog.CompletedOn, connectionString!, "Done");
+                        _taskLogging.MarkTaskAsCompleted(request.Request!.TaskId.ToString(), (DateTime)taskLog.CompletedOn, connectionString!, "Done");
 
-                        _tracker.SetStatus(request.TaskId, "Done");
+                        _tracker.SetStatus(request.Request!.TaskId, "Done");
 
-                        _taskLogging.SetTaskStatusState(request.TaskId, "Done", connectionString!, user);
+                        _taskLogging.SetTaskStatusState(request.Request!.TaskId, "Done", connectionString!, user);
 
                     }
                     catch (Exception ex)
@@ -903,8 +903,8 @@ namespace WebApplicationAPI.Controllers
 
                 return Ok(new ReportStatusDto
                 {
-                    ProjectType = request.project,
-                    TaskId = request.TaskId,
+                    ProjectType = request.Request!.project,
+                    TaskId = request.Request!.TaskId,
                 });
             }
             catch (Exception)
@@ -1002,22 +1002,22 @@ namespace WebApplicationAPI.Controllers
         //}
 
         [HttpPost("ppt/dllMerge")]
-        public async Task<ActionResult> MergeUsingDLL([FromBody] ReportGenerationRequestDLL projectWrapperAPIList)
+        public async Task<ActionResult> MergeUsingDLL([FromBody] ReportGenerationWrapper request)
         {
             try
             {
-                if (projectWrapperAPIList.templates!.Count==0 || projectWrapperAPIList.breakdowns!.Count==0)
+                if (request.Request!.templates!.Count==0 || request.Request!.breakdowns!.Count==0)
                 {
                     return BadRequest();
                 }
 
                 APIWrapper apiWrapperDllClass = new APIWrapper();
 
-                string project = projectWrapperAPIList.project;
+                string project = request.Request.project;
 
-                foreach (string breakdown in projectWrapperAPIList.breakdowns!)
+                foreach (string breakdown in request.Request.breakdowns!)
                 {
-                    string x = await apiWrapperDllClass.addChartsToFinalTemplate1(project, projectWrapperAPIList.templates, finalTemplateName, breakdown);
+                    string x = await apiWrapperDllClass.addChartsToFinalTemplate1(project, request.Request.templates, request.FinalPPTSelected, breakdown);
                     return Ok(x);
                 }
 
