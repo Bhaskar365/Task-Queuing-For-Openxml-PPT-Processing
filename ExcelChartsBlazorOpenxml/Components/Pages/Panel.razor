@@ -30,11 +30,11 @@
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label" Color="Color.Error">Select Data Source</MudText>
                                 </MudItem>
-                                <MudItem xs="12" sm="7">
+                                <MudItem xs="12" sm="7" >
                                     <MudSelect @bind-Value="SourceText"
                                     Variant="Variant.Outlined"
                                     FitContent=True
-                                    Disabled>
+                                               Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -50,8 +50,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="@project"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
                                         @if (!isContentLoaded)
                                         {
                                             <MudSelectItem Value="@(project)">
@@ -60,7 +60,7 @@
                                         }
                                         else
                                         {
-                                            <MudSelectItem Value="@(project)"></MudSelectItem>
+                                            <MudSelectItem Value="@(project)" ></MudSelectItem>
                                         }
 
                                     </MudSelect>
@@ -262,7 +262,7 @@
 
 
                                     <MudCheckBox @bind-Value="Size_CheckBox3" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
-                                    <MudText Class="custom-label">Use OpenXml</MudText>
+                                    <MudText Class="custom-label useOpenxmlElement">Use OpenXml</MudText>
                                 </MudItem>
                             </MudGrid>
                         </MudPaper>

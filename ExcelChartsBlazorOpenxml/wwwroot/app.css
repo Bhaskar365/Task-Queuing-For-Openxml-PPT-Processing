@@ -205,11 +205,12 @@ a, .btn-link {
     white-space: nowrap !important;
 }
 
+
 .custom-label-historical-mean {
     font-size: 9px !important;
     margin-top: 4px !important;
     white-space: nowrap !important;
-    margin-left:-8px;
+    margin-left: -8px;
 }
 
 .custom-checkbox .mud-checkbox .mud-icon-root {
@@ -388,12 +389,54 @@ a, .btn-link {
     white-space: nowrap !important;
 }
 
-
-@media only screen and (max-width:1400px) {
-
-    .panels-container {
-        border:2px solid red;
-    }
-
+.useOpenxmlElement {
+    margin-top: 2px !important;
 }
 
+@media only screen and (max-width:1330px) {
+
+    .custom-label {
+        font-size: 9px !important;
+    }
+
+    .custom-label-historical-mean {
+        font-size: 8px !important;
+    }
+}
+
+@media only screen and (max-width:1250px) {
+
+    .custom-label {
+        font-size: 8px !important;
+    }
+
+    .custom-label-historical-mean {
+        font-size: 7px !important;
+    }
+}
+
+
+@media only screen and (max-width:1220px) {
+
+    .btnClass {
+        font-size: 7px !important;
+    }
+}
+
+@media only screen and (max-width:1200px) {
+
+    .panels-container {
+        border: 2px solid red !important;
+    }
+
+    .generateBtnClass {
+        padding:0.3rem !important;
+    }
+
+    .useOpenxmlElement {
+        margin-top: 2px !important;
+        margin-left: -6px !important;
+    }
+
+
+}
