@@ -34,7 +34,7 @@
                                     <MudSelect @bind-Value="SourceText"
                                     Variant="Variant.Outlined"
                                     FitContent=True
-                                               Disabled>
+                                    Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -50,8 +50,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="@project"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True>
+                                    Variant="Variant.Outlined"
+                                    FitContent=True>
                                         @if (!isContentLoaded)
                                         {
                                             <MudSelectItem Value="@(project)">
@@ -187,8 +187,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="finalPPTOption"
-                                                Variant="Variant.Outlined"
-                                               FitContent=True ShrinkLabel>
+                                    Variant="Variant.Outlined"
+                                    FitContent=True ShrinkLabel>
                                         @foreach (var state in _states)
                                         {
                                             <MudSelectItem Value="state">@state</MudSelectItem>
@@ -252,13 +252,13 @@
                         <MudPaper Class="responsive-container" Elevation="0">
                             @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;">
                                 <MudItem Style="display: flex;flex-direction: row;align-items: center;">*@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="inlineMudItemClass">
+                            <MudGrid AlignItems="Center" Spacing="2" Class="inlineMudItemClass useOpenxmlMudElement">
                                 <MudItem Class="inlineMudItemClass">
                                     <MudCheckBox @bind-Value="Size_CheckBox2" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
                                     <MudText Class="custom-label">Open folder when done</MudText>
                                 </MudItem>
                                 @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
-                                <MudItem xs="12" sm="5" Class="inlineMudItemClass">
+                                <MudItem xs="12" sm="5" Class="inlineMudItemClass ">
 
 
                                     <MudCheckBox @bind-Value="Size_CheckBox3" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
@@ -733,6 +733,8 @@
                 buttonColor = Color.Error;
                 message = "Merge Insuccessful";
             }
+
+            await Task.Delay(12000);
 
             StateHasChanged();
             Console.WriteLine(result);

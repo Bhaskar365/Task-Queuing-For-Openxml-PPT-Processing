@@ -425,10 +425,6 @@ a, .btn-link {
 
 @media only screen and (max-width:1200px) {
 
-    .panels-container {
-        border: 2px solid red !important;
-    }
-
     .generateBtnClass {
         padding:0.3rem !important;
     }
@@ -437,6 +433,28 @@ a, .btn-link {
         margin-top: 2px !important;
         margin-left: -6px !important;
     }
-
-
 }
+
+@media only screen and (max-width:1175px) {
+
+    .generateBtnClass {
+        padding: 0.3rem !important;
+    }
+
+    .useOpenxmlElement {
+        margin-top: 1px !important;
+        margin-left: -10px !important;
+    }
+}
+
+@media only screen and (max-width:1165px) {
+
+    .panels-container {
+        border: 2px solid red !important;
+    }
+
+    .useOpenxmlMudElement {
+        border:2px solid blue !important;
+    }
+}
+
