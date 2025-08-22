@@ -449,12 +449,21 @@ a, .btn-link {
 
 @media only screen and (max-width:1165px) {
 
+    .openxmlCheckboxMudGrid {
+        flex-wrap: nowrap !important;
+        margin-top: 3px !important;
+    }
+}
+
+@media only screen and (max-width:1140px) {
+
     .panels-container {
         border: 2px solid red !important;
     }
 
-    .useOpenxmlMudElement {
-        border:2px solid blue !important;
+    .custom-checkbox .mud-typography {
+        font-size: 11px !important;
     }
+
 }
 
