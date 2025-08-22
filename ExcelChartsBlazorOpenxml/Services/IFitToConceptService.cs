@@ -51,6 +51,8 @@ namespace ExcelChartsBlazorOpenxml.Services
 
         Task<Guid> GenerateReportAsync(ReportGenerationRequest request);
 
+        Task<Guid> GenerateReportAsync2(ReportGenerationRequestDLL request);
+
         Task<Guid> GenerateReportUsingDLLAsync(ReportGenerationRequestDLL request,string finalPPTSelected);
 
 

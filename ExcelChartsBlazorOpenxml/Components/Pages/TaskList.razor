@@ -1,0 +1,175 @@
+﻿@page "/taskList"
+
+@using ExcelChartsBlazorOpenxml.Services
+@using SharedModels.DTO
+
+@inject IFitToConceptService fitToConceptService;
+
+@rendermode InteractiveServer
+
+
+@if (!isDataLoaded)
+{
+    <h2>loading.............</h2>
+}
+else
+{
+    <div>
+        <div class="card card-body">
+            <table class="table  table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Task ID</th>
+                        <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Project Type</th>
+                        <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Created On</th>
+                        <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Completed On</th>
+                        <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Generation Time</th>
+                        <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Created By</th>
+                        <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (LogList == null || LogList.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center">No data</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var data in LogList)
+                        {
+                            <tr>
+                                <td style="font-size:small;white-space:nowrap;text-align:center">@data.TaskId</td>
+                                <td style="font-size:small;white-space:nowrap;text-align:center">@data.ProjectType</td>
+                                <td style="font-size:small;white-space:nowrap;text-align:center">@data.CreatedOn.ToString("dddd, dd MMMM yyyy HH:mm:ss")</td>
+                                <td style="font-size:small;white-space:nowrap;text-align:center">@data.CompletedOn</td>
+                                <td style="font-size:small;white-space:nowrap;text-align:center">
+                                    @{
+                                        var duration = data.CompletedOn - data.CreatedOn;
+                                        string formattedDuration = string.Format("{0:%m}m {0:%s}s", duration);
+                                    }
+                                    @formattedDuration
+                                </td>
+                                <td style="font-size:small;white-space:nowrap;text-align:center">@data.CreatedBy</td>
+                                <td class="@GetStatusClass(data.CurrentStatus)" style="font-size:small;white-space:nowrap;text-align:center">
+                                    @data.CurrentStatus
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @* unfinished reports *@
+
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ProjectType</th>
+                    <th>Task ID</th>
+                    <th>Status</th>
+                    <th>Created By</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (UndoneQueueList == null || UndoneQueueList.Count == 0)
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">No data</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var task in UndoneQueueList)
+                    {
+                        <tr>
+                            <td>@task.ProjectType</td>
+                            <td>@task.TaskId</td>
+                            <td class="@GetStatusClass(task.CurrentStatus)">
+                                @task.CurrentStatus
+                            </td>
+                            <td>@task.CreatedBy</td>
+                            <td class="p-0">
+                                <button class="btn btn-info btn-sm"
+                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                                    Retry
+                                </button>
+                                &nbsp;
+                                <button class="btn btn-danger btn-sm"
+                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+
+@code {
+
+    bool isDataLoaded = false;
+
+    List<TaskLog> LogList;
+
+    List<TaskLog> UndoneQueueList;
+
+
+    private async Task LoadLogs()
+    {
+        LogList = await fitToConceptService.GetLogs();
+        UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
+        StateHasChanged();
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        StateHasChanged();
+        LogList = await fitToConceptService.GetLogs();
+        StateHasChanged();
+
+
+        isDataLoaded = true;
+        StateHasChanged();
+
+        StartHotReload();
+        UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
+    }
+
+    private void StartHotReload()
+    {
+        var timer = new System.Threading.Timer((_) =>
+       {
+           InvokeAsync(async () =>
+           {
+               await LoadLogs();
+               StateHasChanged();
+           });
+       }, null, 0, 5000);
+    }
+
+    public string GetStatusClass(string status)
+    {
+        return status switch
+        {
+            "Done" => "text-info bg-dark",
+            "Processing" => "text-warning bg-dark",
+            "Fail" => "text-danger bg-dark",
+            "Queued" => "text-primary-emphasis bg-dark",
+            "Merging" => "text-info-emphasis",
+            _ => "text-info-emphasis bg-dark"
+        };
+    }
+
+
+
+}

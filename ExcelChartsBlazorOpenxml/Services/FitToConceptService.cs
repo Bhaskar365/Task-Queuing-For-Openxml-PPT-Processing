@@ -285,6 +285,13 @@ namespace ExcelChartsBlazorOpenxml.Services
             //return result!;
         }
 
+        public async Task<Guid> GenerateReportAsync2(ReportGenerationRequestDLL request)
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/report/generate", request);
+            var result = await response.Content.ReadFromJsonAsync<ReportGenerationRequestDLL>();
+            return result!.TaskId;
+        }
+
 
         //public async Task SendDLLMergeRequest(ReportGenerationRequestDLL request)
         //{

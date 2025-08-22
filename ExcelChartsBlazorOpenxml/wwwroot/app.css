@@ -453,17 +453,179 @@ a, .btn-link {
         flex-wrap: nowrap !important;
         margin-top: 3px !important;
     }
+
+    .boxColunnLabelStyling {
+        font-size: 9px !important;
+    }
+
+    .attributeEvalTextStyling {
+        font-size: 8px !important;
+    }
+
+    .fitToBrandPersonalityStyling {
+        font-size: 7px !important;
+    }
+
 }
 
 @media only screen and (max-width:1140px) {
-
-    .panels-container {
-        border: 2px solid red !important;
-    }
 
     .custom-checkbox .mud-typography {
         font-size: 11px !important;
     }
 
+    .btnClass {
+        font-size: 6px !important;
+    }
+
+    .attributeEvalTextStyling {
+        font-size: 7px !important;
+    }
 }
+
+
+@media only screen and (max-width:1100px) {
+
+    .fitToBrandPersonalityStyling {
+        font-size: 7px !important;
+    }
+
+    .attributeEvalTextStyling {
+        font-size: 7px !important;
+    }
+
+    .boxColunnLabelStyling {
+        font-size: 8px !important;
+    }
+
+    .custom-checkbox .mud-typography {
+        font-size: 10px !important;
+    }
+}
+
+@media only screen and (max-width:1085px) {
+
+
+    .custom-label {
+        font-size: 7.5px !important;
+    }
+
+    .custom-label-historical-mean {
+        font-size: 6px !important;
+    }
+}
+
+@media only screen and (max-width:1060px) {
+
+   
+
+    .custom-checkbox .mud-typography {
+        font-size: 9px !important;
+    }
+
+    .generateBtnClass {
+        padding: 0.2rem !important;
+    }
+
+    .btnText {
+        font-size: 11px !important;
+    }
+}
+
+@media only screen and (max-width:1050px) {
+
+    .custom-label {
+        font-size: 7px !important;
+    }
+
+    .attributeEvalTextStyling {
+        margin-bottom: 12px !important;
+        font-size: 6px !important;
+    }
+
+    .responsive-container-paper-right {
+        height: 72.9vh !important;
+        margin-top: -4px !important;
+    }
+
+    .fitToBrandPersonalityStyling {
+        font-size: 6px !important;
+    }
+
+    .btnClass {
+        font-size: 5px !important;
+    }
+}
+
+
+@media only screen and (max-width:1025px) {
+
+    .custom-label {
+        font-size: 6.5px !important;
+    }
+
+    .btnText {
+        font-size: 10px !important;
+    }
+
+    .responsive-container-paper-right {
+        height: 71.7vh !important;
+    }
+}
+
+@media only screen and (max-width:1000px) {
+
+  
+    .custom-label {
+        font-size: 6px !important;
+    }
+}
+
+@media only screen and (max-width:975px) {
+
+    .paramsMudPaperSection {
+        width: 23% !important;
+    }
+
+    .btnClass {
+         white-space: nowrap; 
+        font-size: 5px !important;
+    }
+
+    .fitToBrandPersonalityStyling {
+        font-size: 5px !important;
+    }
+
+    .attributeEvalTextStyling {
+        margin-bottom: 12px !important;
+        font-size: 5px !important;
+    }
+
+    .boxColunnLabelStyling {
+        font-size: 7px !important;
+    }
+
+    .custom-checkbox .mud-typography {
+        font-size: 8px !important;
+    }
+
+    .custom-label-historical-mean {
+        font-size: 5.7px !important;
+    }
+
+    .custom-label {
+        font-size: 5.9px !important;
+    }
+}
+
+@media only screen and (max-width:965px) {
+
+    .panels-container {
+        border: 2px solid red !important;
+    }
+
+
+
+}
+
 

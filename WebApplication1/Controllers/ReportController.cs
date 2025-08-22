@@ -845,8 +845,6 @@ namespace WebApplicationAPI.Controllers
         }
 
 
-        public string finalTemplateName = "MR-Rx Naming";
-
         [HttpPost("dllgenerate")]
         public async Task<IActionResult> GenerateReportUsingDLL([FromBody] ReportGenerationWrapper request) 
         {
