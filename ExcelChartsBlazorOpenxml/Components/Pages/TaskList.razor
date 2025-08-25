@@ -1,5 +1,5 @@
 ﻿@page "/taskList"
-
+@* 
 @using ExcelChartsBlazorOpenxml.Services
 @using SharedModels.DTO
 
@@ -62,9 +62,6 @@ else
             </table>
         </div>
 
-        @* unfinished reports *@
-
-
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -110,65 +107,65 @@ else
             </tbody>
         </table>
     </div>
-}
+} *@
 
 
 
 @code {
 
-    bool isDataLoaded = false;
+    // bool isDataLoaded = false;
 
-    List<TaskLog> LogList;
+    // List<TaskLog> LogList;
 
-    List<TaskLog> UndoneQueueList;
-
-
-    private async Task LoadLogs()
-    {
-        LogList = await fitToConceptService.GetLogs();
-        UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
-        StateHasChanged();
-    }
+    // List<TaskLog> UndoneQueueList;
 
 
-    protected override async Task OnInitializedAsync()
-    {
-        StateHasChanged();
-        LogList = await fitToConceptService.GetLogs();
-        StateHasChanged();
+    // private async Task LoadLogs()
+    // {
+    //     LogList = await fitToConceptService.GetLogs();
+    //     UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
+    //     StateHasChanged();
+    // }
 
 
-        isDataLoaded = true;
-        StateHasChanged();
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     StateHasChanged();
+    //     LogList = await fitToConceptService.GetLogs();
+    //     StateHasChanged();
 
-        StartHotReload();
-        UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
-    }
 
-    private void StartHotReload()
-    {
-        var timer = new System.Threading.Timer((_) =>
-       {
-           InvokeAsync(async () =>
-           {
-               await LoadLogs();
-               StateHasChanged();
-           });
-       }, null, 0, 5000);
-    }
+    //     isDataLoaded = true;
+    //     StateHasChanged();
 
-    public string GetStatusClass(string status)
-    {
-        return status switch
-        {
-            "Done" => "text-info bg-dark",
-            "Processing" => "text-warning bg-dark",
-            "Fail" => "text-danger bg-dark",
-            "Queued" => "text-primary-emphasis bg-dark",
-            "Merging" => "text-info-emphasis",
-            _ => "text-info-emphasis bg-dark"
-        };
-    }
+    //     StartHotReload();
+    //     UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
+    // }
+
+    // private void StartHotReload()
+    // {
+    //     var timer = new System.Threading.Timer((_) =>
+    //    {
+    //        InvokeAsync(async () =>
+    //        {
+    //            await LoadLogs();
+    //            StateHasChanged();
+    //        });
+    //    }, null, 0, 5000);
+    // }
+
+    // public string GetStatusClass(string status)
+    // {
+    //     return status switch
+    //     {
+    //         "Done" => "text-info bg-dark",
+    //         "Processing" => "text-warning bg-dark",
+    //         "Fail" => "text-danger bg-dark",
+    //         "Queued" => "text-primary-emphasis bg-dark",
+    //         "Merging" => "text-info-emphasis",
+    //         _ => "text-info-emphasis bg-dark"
+    //     };
+    // }
 
 
 
