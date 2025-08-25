@@ -1,5 +1,14 @@
 ﻿@page "/counter"
 
+
+@using ExcelChartsBlazorOpenxml.Services
+@using SharedModels.DTO
+
+@inject IFitToConceptService fitToConceptService;
+
+@rendermode InteractiveServer
+
+
 <PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
@@ -15,4 +24,179 @@
     {
         currentCount++;
     }
+}
+
+@* 
+@if (!isDataLoaded)
+{
+    <h2>loading.............</h2>
+}
+else
+{
+    <MudTable Items="@LogList">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Task Logs</MudText>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">TaskId</MudTh>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">ProjectType</MudTh>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CreatedOn</MudTh>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CompletedOn</MudTh>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">Generation Time</MudTh>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CreatedBy</MudTh>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CurrentStatus</MudTh>
+        </HeaderContent>
+
+        <RowTemplate>
+                <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.TaskId</MudTd>
+                <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.ProjectType</MudTd>
+                <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CreatedOn.ToString("dddd, dd MMMM yyyy HH:mm:ss")</MudTd>
+                <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CompletedOn</MudTd>
+                <MudTd style="font-size:small;white-space:nowrap;text-align:center">
+                    @{
+                        var duration = @context.CompletedOn - @context.CreatedOn;
+                        string formattedDuration = string.Format("{0:%m}m {0:%s}s", duration);
+                    }
+                    @formattedDuration
+                </MudTd>
+                <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CreatedBy</MudTd>
+                <MudTd class="@GetStatusClass(context.CurrentStatus)" style="font-size:small;white-space:nowrap;text-align:center">@context.CurrentStatus</MudTd>
+        </RowTemplate>
+
+        <NoRecordsContent>
+            <MudTr>
+                <MudTd ColSpan="7" Class="text-center"
+                       style="font-size:small; white-space:nowrap;">
+                    No data
+                </MudTd>
+            </MudTr>
+        </NoRecordsContent>
+
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, LogList.Count }"
+                           RowsPerPageString="@rowsPerPageString"
+                           InfoFormat="@infoFormat"
+                           AllItemsText="@allItemsText"
+                           HorizontalAlignment="@horizontalAlignment"
+                           HideRowsPerPage="@hideRowsPerPage"
+                           HidePageNumber="@hidePageNumber"
+                           HidePagination="@hidePagination" />
+        </PagerContent>
+    </MudTable>
+
+    <br />
+
+    <MudTable Items="@UndoneQueueList">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Failed Logs</MudText>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">TaskId</MudTh>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">ProjectType</MudTh>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CreatedOn</MudTh>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CompletedOn</MudTh>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">Generation Time</MudTh>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CreatedBy</MudTh>
+            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CurrentStatus</MudTh>
+        </HeaderContent>
+
+        <RowTemplate>
+            <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.TaskId</MudTd>
+            <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.ProjectType</MudTd>
+            <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CreatedOn.ToString("dddd, dd MMMM yyyy HH:mm:ss")</MudTd>
+            <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CompletedOn</MudTd>
+            <MudTd style="font-size:small;white-space:nowrap;text-align:center">
+                @{
+                    var duration = @context.CompletedOn - @context.CreatedOn;
+                    string formattedDuration = string.Format("{0:%m}m {0:%s}s", duration);
+                }
+                @formattedDuration
+            </MudTd>
+            <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CreatedBy</MudTd>
+            <MudTd class="@GetStatusClass(context.CurrentStatus)" style="font-size:small;white-space:nowrap;text-align:center">@context.CurrentStatus</MudTd>
+        </RowTemplate>
+
+        <NoRecordsContent>
+            <MudTr>
+                <MudTd ColSpan="7" Class="text-center"
+                       style="font-size:small; white-space:nowrap;">
+                    No data
+                </MudTd>
+            </MudTr>
+        </NoRecordsContent>
+
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[] { UndoneQueueList.Count, 5, 10, 25, 50, 100 }"
+                           RowsPerPageString="@rowsPerPageString"
+                           InfoFormat="@infoFormat"
+                           AllItemsText="@allItemsText"
+                           HorizontalAlignment="@horizontalAlignment"
+                           HideRowsPerPage="@hideRowsPerPage"
+                           HidePageNumber="@hidePageNumber"
+                           HidePagination="@hidePagination" />
+        </PagerContent>
+    </MudTable>
+}
+ *@
+
+@code {
+
+    private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
+    private bool hidePageNumber;
+    private bool hidePagination;
+    private bool hideRowsPerPage;
+    private string rowsPerPageString = "Rows per page:";
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+    private string allItemsText = "All";
+
+    bool isDataLoaded = false;
+
+    List<TaskLog> LogList;
+    List<TaskLog> UndoneQueueList;
+
+
+    private async Task LoadLogs()
+    {
+        LogList = await fitToConceptService.GetLogs();
+        UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
+        StateHasChanged();
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        LogList = await fitToConceptService.GetLogs();
+
+        UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
+       // StartHotReload();
+        StateHasChanged();
+        isDataLoaded = true;
+    }
+
+    private void StartHotReload()
+    {
+        var timer = new System.Threading.Timer((_) =>
+       {
+           InvokeAsync(async () =>
+           {
+               await LoadLogs();
+               StateHasChanged();
+           });
+       }, null, 0, 5000);
+    }
+
+    public string GetStatusClass(string status)
+    {
+        return status switch
+        {
+            "Done" => "text-info bg-dark",
+            "Processing" => "text-warning bg-dark",
+            "Fail" => "text-danger bg-dark",
+            "Queued" => "text-primary-emphasis bg-dark",
+            "Merging" => "text-info-emphasis",
+            _ => "text-info-emphasis bg-dark"
+        };
+    }
+
+
 }
