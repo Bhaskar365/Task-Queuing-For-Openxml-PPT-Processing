@@ -250,6 +250,9 @@
                             }
                         </MudButton>
 
+                        <div style="color:red;">@pagesErrorMessage</div>
+                        <div style="color:red;">@breakdownErrorMessage</div>
+
                         <MudPaper Class="responsive-container" Elevation="0">
                             @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;">
                                 <MudItem Style="display: flex;flex-direction: row;align-items: center;">*@
@@ -305,7 +308,7 @@
 
                                 <MudButton Variant="Variant.Filled"
                                 Size="Size.Small"
-                                           FullWidth="true" Class="btnClass" @onclick="(()=>TogglePagesList(chartPageList))">
+                                FullWidth="true" Class="btnClass" @onclick="(()=>TogglePagesList(chartPageList))">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -332,6 +335,8 @@
                                         }
                                     }
                                 </div>
+
+
 
                                 <MudButton Variant="Variant.Filled"
                                 Size="Size.Small" FullWidth="true"
@@ -558,7 +563,8 @@
 
     List<selectedPagesListClass> chartPageList = new List<selectedPagesListClass>();
 
-
+    string breakdownErrorMessage = "";
+    string pagesErrorMessage = "";
 
     bool isDataLoaded = false;
     bool isContentLoaded = false;
@@ -593,7 +599,7 @@
                     });
             }
 
-           // lstPg = await getProjectPagegroupNames(project!);
+            // lstPg = await getProjectPagegroupNames(project!);
 
             lstBreakdown = await getProjectBreakdowngroupNames(project!);
 
@@ -709,7 +715,19 @@
 
             var selectedPages = chartPageList.Where(x => x.isChecked).Select(x => x.strPageName).ToList();
 
+            if (selectedPages.Count==0)
+            {
+                pagesErrorMessage = "Select a page";
+                return;
+            }
+
             var selectedBreakdown = lstBreakdown.Where(x => x.isChecked).Select(x => x.strBreakdownName).ToList();
+
+            if(selectedBreakdown.Count==0)
+            {
+                breakdownErrorMessage = "Select a breakdown";
+                return;
+            }
 
             var selectedTestnames = lstTestnames.Where(x => x.isChecked).Select(x => x.testNames).ToList();
 
