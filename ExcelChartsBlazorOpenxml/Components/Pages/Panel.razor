@@ -715,10 +715,17 @@
 
             var selectedPages = chartPageList.Where(x => x.isChecked).Select(x => x.strPageName).ToList();
 
+            selectedPages.Remove("Linguistics");
+
             if (selectedPages.Count==0)
             {
                 pagesErrorMessage = "Select a page";
                 return;
+            }
+
+            if (selectedPages.Count > 0)
+            {
+                pagesErrorMessage = "";
             }
 
             var selectedBreakdown = lstBreakdown.Where(x => x.isChecked).Select(x => x.strBreakdownName).ToList();
@@ -727,6 +734,11 @@
             {
                 breakdownErrorMessage = "Select a breakdown";
                 return;
+            }
+
+            if(selectedBreakdown.Count>0)
+            {
+                breakdownErrorMessage = "";
             }
 
             var selectedTestnames = lstTestnames.Where(x => x.isChecked).Select(x => x.testNames).ToList();
