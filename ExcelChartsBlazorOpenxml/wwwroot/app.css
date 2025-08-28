@@ -448,6 +448,12 @@ a, .btn-link {
     margin-top: 2px !important;
 }
 
+.taskListSpinner {
+    margin-top: 50vh !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
 @media only screen and (max-width:1330px) {
 
     .custom-label {

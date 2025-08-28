@@ -13,41 +13,41 @@
     <div class="container">
         @if (!isDataLoaded)
         {
-            <div style="margin-top: 50vh;display: flex;justify-content: center;">
+            <div class="taskListSpinner">
                 <i class="fas fa-spinner fa-spin"></i>
             </div>
-           
+
         }
         else
         {
-            <MudTable Items="@LogList" Dense="true" Striped="true">
+            <MudTable Items="@LogList" Dense="true" Striped="true" style="overflow-x:auto; width:100%;">
                 <ToolBarContent>
                     <MudText Typo="Typo.h6">Task Logs</MudText>
                 </ToolBarContent>
                 <HeaderContent>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">TaskId</MudTh>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">ProjectType</MudTh>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">CreatedOn</MudTh>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">CompletedOn</MudTh>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">Generation Time</MudTh>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">CreatedBy</MudTh>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">CurrentStatus</MudTh>
+                    <MudTh style="font-size:smaller;white-space:nowrap;text-align:center;">TaskId</MudTh>
+                    <MudTh style="font-size:smaller;white-space:nowrap;text-align:center">ProjectType</MudTh>
+                    <MudTh style="font-size:smaller;white-space:nowrap;text-align:center">CreatedOn</MudTh>
+                    <MudTh style="font-size:smaller;white-space:nowrap;text-align:center">CompletedOn</MudTh>
+                    @* <MudTh style="font-size:smaller;white-space:nowrap;text-align:center">Generation Time</MudTh> *@
+                    <MudTh style="font-size:smaller;white-space:nowrap;text-align:center">CreatedBy</MudTh>
+                    <MudTh style="font-size:smaller;white-space:nowrap;text-align:center">CurrentStatus</MudTh>
                 </HeaderContent>
 
                 <RowTemplate>
-                    <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.TaskId</MudTd>
-                    <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.ProjectType</MudTd>
-                    <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CreatedOn.ToString("dddd, dd MMMM yyyy HH:mm:ss")</MudTd>
-                    <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CompletedOn</MudTd>
-                    <MudTd style="font-size:small;white-space:nowrap;text-align:center">
+                    <MudTd style="font-size:smaller;text-align:center;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">@context.TaskId</MudTd>
+                    <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">@context.ProjectType</MudTd>
+                    <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">@context.CreatedOn.ToString("dd MMMM yyyy HH:mm:ss")</MudTd>
+                    <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">@context.CompletedOn</MudTd>
+                    @*     <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">
                         @{
                             var duration = @context.CompletedOn - @context.CreatedOn;
                             string formattedDuration = string.Format("{0:%m}m {0:%s}s", duration);
                         }
                         @formattedDuration
-                    </MudTd>
-                    <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CreatedBy</MudTd>
-                    <MudTd class="@GetStatusClass(context.CurrentStatus)" style="font-size:small;white-space:nowrap;text-align:center">@context.CurrentStatus</MudTd>
+                    </MudTd> *@
+                    <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">@context.CreatedBy</MudTd>
+                    <MudTd class="@GetStatusClass(context.CurrentStatus)" style="font-size:smaller;white-space:nowrap;text-align:center">@context.CurrentStatus</MudTd>
                 </RowTemplate>
 
                 <NoRecordsContent>
@@ -73,34 +73,34 @@
 
             <br />
 
-            <MudTable Items="@UndoneQueueList" Dense="true" Striped="true">
+            <MudTable Items="@UndoneQueueList" Dense="true" Striped="true" style="overflow-x:auto; width:100%;">
                 <ToolBarContent>
                     <MudText Typo="Typo.h6">Failed Logs</MudText>
                 </ToolBarContent>
                 <HeaderContent>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">TaskId</MudTh>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">ProjectType</MudTh>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">CreatedOn</MudTh>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">CompletedOn</MudTh>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">Generation Time</MudTh>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">CreatedBy</MudTh>
-                    <MudTh style="font-size:small;white-space:nowrap;text-align:center">CurrentStatus</MudTh>
+                    <MudTh style="font-size:smaller;white-space:nowrap;text-align:center">TaskId</MudTh>
+                    <MudTh style="font-size:smaller;white-space:nowrap;text-align:center">ProjectType</MudTh>
+                    <MudTh style="font-size:smaller;white-space:nowrap;text-align:center">CreatedOn</MudTh>
+                    <MudTh style="font-size:smaller;white-space:nowrap;text-align:center">CompletedOn</MudTh>
+                    <MudTh style="font-size:smaller;white-space:nowrap;text-align:center">Generation Time</MudTh>
+                    <MudTh style="font-size:smaller;white-space:nowrap;text-align:center">CreatedBy</MudTh>
+                    <MudTh style="font-size:smaller;white-space:nowrap;text-align:center">CurrentStatus</MudTh>
                 </HeaderContent>
 
                 <RowTemplate>
-                    <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.TaskId</MudTd>
-                    <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.ProjectType</MudTd>
-                    <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CreatedOn.ToString("dddd, dd MMMM yyyy HH:mm:ss")</MudTd>
-                    <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CompletedOn</MudTd>
-                    <MudTd style="font-size:small;white-space:nowrap;text-align:center">
+                    <MudTd style="font-size:smaller;white-space:nowrap;text-align:center;">@context.TaskId</MudTd>
+                    <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">@context.ProjectType</MudTd>
+                    <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">@context.CreatedOn.ToString("dd MMMM yyyy HH:mm:ss")</MudTd>
+                    <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">@context.CompletedOn</MudTd>
+                    <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">
                         @{
                             var duration = @context.CompletedOn - @context.CreatedOn;
                             string formattedDuration = string.Format("{0:%m}m {0:%s}s", duration);
                         }
                         @formattedDuration
                     </MudTd>
-                    <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CreatedBy</MudTd>
-                    <MudTd class="@GetStatusClass(context.CurrentStatus)" style="font-size:small;white-space:nowrap;text-align:center">@context.CurrentStatus</MudTd>
+                    <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">@context.CreatedBy</MudTd>
+                    <MudTd class="@GetStatusClass(context.CurrentStatus)" style="font-size:smaller;white-space:nowrap;text-align:center">@context.CurrentStatus</MudTd>
                 </RowTemplate>
 
                 <NoRecordsContent>
@@ -123,10 +123,12 @@
                                    HidePagination="@hidePagination" />
                 </PagerContent>
             </MudTable>
+
+
         }
     </div>
-    </div>
- 
+</div>
+
 
 @* @if (!isDataLoaded)
 {
@@ -265,11 +267,11 @@ else
         StateHasChanged();
 
 
-        StateHasChanged();
 
-        StartHotReload();
+        //StartHotReload();
         UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
         isDataLoaded = true;
+        StateHasChanged();
     }
 
     private void StartHotReload()
