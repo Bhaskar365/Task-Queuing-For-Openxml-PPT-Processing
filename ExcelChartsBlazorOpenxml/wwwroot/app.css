@@ -454,6 +454,39 @@ a, .btn-link {
     justify-content: center !important;
 }
 
+.tableStyling {
+    overflow-x: auto !important;
+    width: 100% !important;
+}
+
+.tableTaskColumnBodyStyling {
+    font-size: smaller !important;
+    text-align: center !important;
+    max-width: 120px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+    .tableTaskColumnBodyStyling:hover {
+        max-width: fit-content !important;
+        overflow: visible !important;
+        z-index: 555 !important;
+    }
+
+
+.tableBodyStyling {
+    font-size: smaller !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+}
+
+#tableBodyStyling {
+    font-size: smaller !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+}
+
 @media only screen and (max-width:1330px) {
 
     .custom-label {
