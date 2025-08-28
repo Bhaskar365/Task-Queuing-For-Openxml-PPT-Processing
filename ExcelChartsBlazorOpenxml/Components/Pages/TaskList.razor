@@ -35,7 +35,9 @@
                 </HeaderContent>
 
                 <RowTemplate>
-                   <MudTd Class="tableTaskColumnBodyStyling">@context.TaskId</MudTd>
+                    <MudTd Class="tableTaskColumnBodyStyling">
+                        <span class="taskIdText">@context.TaskId</span>
+                    </MudTd>
                     <MudTd Class="tableBodyStyling">@context.ProjectType</MudTd>
                     <MudTd Class="tableBodyStyling">@context.CreatedOn.ToString("dd MMMM yyyy HH:mm:ss")</MudTd>
                     <MudTd Class="tableBodyStyling">@context.CompletedOn</MudTd>
@@ -88,7 +90,9 @@
                 </HeaderContent>
 
                 <RowTemplate>
-                    <MudTd Class="tableBodyStyling">@context.TaskId</MudTd>
+                    <MudTd Class="tableTaskColumnBodyStyling">
+                        <span class="taskIdText">@context.TaskId</span>
+                    </MudTd>
                     <MudTd Class="tableBodyStyling">@context.ProjectType</MudTd>
                     <MudTd Class="tableBodyStyling">@context.CreatedOn.ToString("dd MMMM yyyy HH:mm:ss")</MudTd>
                     <MudTd Class="tableBodyStyling">@context.CompletedOn</MudTd>

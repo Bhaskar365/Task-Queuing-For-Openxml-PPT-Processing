@@ -466,12 +466,30 @@ a, .btn-link {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
+    position: relative !important;
 }
 
     .tableTaskColumnBodyStyling:hover {
-        max-width: fit-content !important;
         overflow: visible !important;
-        z-index: 555 !important;
+        white-space: normal !important; 
+        background: #fff; 
+        z-index: 999 !important;
+    }
+
+.taskIdText {
+    display: inline-block;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+    .taskIdText:hover {
+        max-width: none; /* expand only the hovered item */
+        white-space: nowrap;
+        background: #fff;
+        position: relative;
+        z-index: 999;
     }
 
 
