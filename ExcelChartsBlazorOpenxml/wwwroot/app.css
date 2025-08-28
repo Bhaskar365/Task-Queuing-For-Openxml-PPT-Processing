@@ -339,7 +339,7 @@ a, .btn-link {
 
 .responsive-container-paper-right {
     width: 100% !important;
-    height: 77vh !important;
+    height: 77.5vh !important;
     /*height: 100vh !important;*/
     margin-top: -5px !important;
 }
@@ -433,7 +433,7 @@ a, .btn-link {
 }
 
 .attributeEvalTextStyling {
-    margin-bottom: 7px !important;
+    margin-bottom: 8px !important;
     font-weight: bold !important;
     text-align: center !important;
     font-size: 10px !important;
