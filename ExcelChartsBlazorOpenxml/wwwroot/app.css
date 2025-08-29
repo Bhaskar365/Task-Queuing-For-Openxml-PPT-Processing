@@ -979,7 +979,51 @@ a, .btn-link {
 
 @media only screen and (max-width:600px) {
 
-    .panels-container {
+    .left-panel {
         border: 2px solid red !important;
+        width: 100% !important;
     }
+
+    .right-panel {
+        width: 100% !important;
+    }
+
+    .panels-container {
+        display: grid;
+        justify-content: center;
+        align-content: space-evenly;
+        justify-items: start;
+    }
+
+    .custom-label {
+        font-size: 12px !important;
+    }
+
+    .custom-label-historical-mean {
+        font-size: 17px !important;
+        margin-left: -7px !important;
+        margin-top: 0px !important;
+    }
+
+    .mudGridSectionProjectParams {
+        margin-left: -9px !important;
+    }
+
+    .custom-checkbox .mud-typography {
+        font-size: 8px !important;
+    }
+
+    .btnClass {
+        white-space: nowrap;
+        font-size: 5px !important;
+    }
+
+    .boxColunnLabelStyling {
+        font-size: 8px !important;
+    }
+
+    .paramsMudPaperSection {
+        width: 24% !important;
+    }
+
 }
