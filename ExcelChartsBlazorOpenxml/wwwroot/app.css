@@ -247,7 +247,7 @@ a, .btn-link {
 
 
 .responsive-container-paper {
-    padding: 0px !important;
+    padding: 5px !important;
     /*align-items: stretch !important;*/
     /*max-height: 70% !important;*/
     display: flex;
@@ -255,7 +255,7 @@ a, .btn-link {
 }
 
 .responsive-container {
-    padding:0px !important;
+    padding: 0px !important;
 }
 
 .custom-label {
@@ -339,7 +339,7 @@ a, .btn-link {
 
 .responsive-container-paper-right {
     width: 100% !important;
-    height: 77.5vh !important;
+    height: 79.2vh !important;
     /*height: 100vh !important;*/
     margin-top: -5px !important;
 }
@@ -475,8 +475,8 @@ a, .btn-link {
 
     .tableTaskColumnBodyStyling:hover {
         overflow: visible !important;
-        white-space: normal !important; 
-        background: #fff; 
+        white-space: normal !important;
+        background: #fff;
         z-index: 999 !important;
     }
 
@@ -529,6 +529,11 @@ a, .btn-link {
     .custom-label-historical-mean {
         font-size: 7px !important;
     }
+
+
+    .attributeEvalTextStyling {
+        font-size: 9px !important;
+    }
 }
 
 
@@ -537,37 +542,58 @@ a, .btn-link {
     .btnClass {
         font-size: 7px !important;
     }
+
 }
 
 @media only screen and (max-width:1200px) {
 
     .generateBtnClass {
-        padding: 0.3rem !important;
+        padding: 0.5rem !important;
+        margin-bottom: 8px !important; 
     }
 
     .useOpenxmlElement {
         margin-top: 2px !important;
         margin-left: -6px !important;
     }
+
+    .attributeEvalTextStyling {
+        font-size: 8px !important;
+    }
 }
 
 @media only screen and (max-width:1175px) {
 
     .generateBtnClass {
-        padding: 0.3rem !important;
+        padding: 0.5rem !important;
+        margin-bottom: 8px !important;
     }
 
     .useOpenxmlElement {
         margin-top: 1px !important;
         margin-left: -10px !important;
     }
+
+    .mudGridSectionProjectParams {
+        padding: 14px !important;
+        margin-left: -5px !important;
+    }
+
+    .attributeEvalTextStyling {
+        margin-bottom: 11px !important;
+    }
+
 }
 
 @media only screen and (max-width:1165px) {
 
+    .generateBtnClass {
+        margin-bottom: -5px !important;
+    }
+
     .openxmlCheckboxMudGrid {
         flex-wrap: nowrap !important;
-        margin-top: 3px !important;
+        margin-top: 6px !important;
     }
 
     .boxColunnLabelStyling {
@@ -630,20 +656,10 @@ a, .btn-link {
     }
 }
 
-@media only screen and (max-width:1060px) {
+@media only screen and (max-width:1062px) {
 
-
-
-    .custom-checkbox .mud-typography {
-        font-size: 9px !important;
-    }
-
-    .generateBtnClass {
-        padding: 0.2rem !important;
-    }
-
-    .btnText {
-        font-size: 11px !important;
+    .btnClass {
+        font-size: 5px !important;
     }
 }
 
@@ -653,13 +669,18 @@ a, .btn-link {
         font-size: 7px !important;
     }
 
+    .mudGridSectionProjectParams {
+        padding: 13px !important;
+        margin-left: -11px !important;
+    }
+
     .attributeEvalTextStyling {
         margin-bottom: 12px !important;
         font-size: 6px !important;
     }
 
     .responsive-container-paper-right {
-        height: 72.9vh !important;
+        /*height: 72.9vh !important;*/
         margin-top: -4px !important;
     }
 
@@ -676,24 +697,27 @@ a, .btn-link {
 @media only screen and (max-width:1025px) {
 
     .custom-label {
-        font-size: 6.5px !important;
+        /*font-size: 6.5px !important;*/
     }
 
     .btnText {
-        font-size: 10px !important;
+        font-size: 12px !important;
+    }
+
+    .generateBtnClass {
+        margin-bottom: 2px !important;
     }
 
     .responsive-container-paper-right {
-        height: 71.7vh !important;
+        /*height: 71.7vh !important;*/
     }
 }
 
-@media only screen and (max-width:1000px) {
+@media only screen and (max-width:1018px) {
+
+   
 
 
-    .custom-label {
-        font-size: 6px !important;
-    }
 }
 
 @media only screen and (max-width:975px) {
@@ -733,12 +757,9 @@ a, .btn-link {
     }
 }
 
-@media only screen and (max-width:965px) {
+@media only screen and (max-width:700px) {
 
     .panels-container {
         border: 2px solid red !important;
     }
-
-
-
 }
