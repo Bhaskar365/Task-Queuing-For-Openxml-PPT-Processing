@@ -542,14 +542,13 @@ a, .btn-link {
     .btnClass {
         font-size: 7px !important;
     }
-
 }
 
 @media only screen and (max-width:1200px) {
 
     .generateBtnClass {
         padding: 0.5rem !important;
-        margin-bottom: 8px !important; 
+        margin-bottom: 8px !important;
     }
 
     .useOpenxmlElement {
@@ -582,7 +581,6 @@ a, .btn-link {
     .attributeEvalTextStyling {
         margin-bottom: 11px !important;
     }
-
 }
 
 @media only screen and (max-width:1165px) {
@@ -715,12 +713,55 @@ a, .btn-link {
 
 @media only screen and (max-width:1018px) {
 
-   
-
-
+    .panels-container {
+        gap: 8px !important;
+    }
 }
 
-@media only screen and (max-width:975px) {
+@media only screen and (max-width:1006px) {
+
+    .panels-container {
+        gap: 9px !important;
+    }
+}
+
+@media only screen and (max-width:1002px) {
+
+    .panels-container {
+        gap: 10px !important;
+    }
+
+    .paramsMudPaperSection {
+        width: 23.7% !important;
+    }
+
+    .mudGridSectionProjectParams {
+        margin-left: -9px !important;
+    }
+}
+
+@media only screen and (max-width:999px) {
+
+    .btnText {
+        font-size: 11px !important;
+    }
+
+    .generateBtnClass {
+        margin-bottom: 4px !important;
+    }
+
+    .fitToBrandPersonalityStyling {
+        font-size: 5.5px !important;
+    }
+
+    .panels-container {
+        gap: 16px !important
+    }
+}
+
+
+
+@media only screen and (max-width:980px) {
 
     .paramsMudPaperSection {
         width: 23% !important;
@@ -728,15 +769,6 @@ a, .btn-link {
 
     .btnClass {
         white-space: nowrap;
-        font-size: 5px !important;
-    }
-
-    .fitToBrandPersonalityStyling {
-        font-size: 5px !important;
-    }
-
-    .attributeEvalTextStyling {
-        margin-bottom: 12px !important;
         font-size: 5px !important;
     }
 
@@ -749,17 +781,66 @@ a, .btn-link {
     }
 
     .custom-label-historical-mean {
-        font-size: 5.7px !important;
+        font-size: 6px !important;
+        margin-left: -13px !important;
     }
 
     .custom-label {
-        font-size: 5.9px !important;
+        font-size: 6.6px !important;
     }
 }
 
-@media only screen and (max-width:700px) {
+@media only screen and (max-width:960px) {
 
     .panels-container {
-        border: 2px solid red !important;
+        gap: 18px !important
     }
+}
+
+
+
+@media only screen and (max-width:955px) {
+
+    .panels-container {
+        gap: 20px !important
+    }
+}
+
+@media only screen and (max-width:946px) {
+
+    .panels-container {
+        gap: 22px !important
+    }
+}
+
+@media only screen and (max-width:941px) {
+    
+    .panels-container {
+        gap: 1px !important;
+    }
+
+    .paramsMudPaperSection {
+        width: 24% !important;
+    }
+
+    .boxColunnLabelStyling {
+        font-size: 8px !important;
+    }
+
+    .attributeEvalTextStyling {
+        margin-bottom: 10px !important;
+        font-size: 7px !important;
+    }
+
+    .fitToBrandPersonalityStyling {
+        font-size: 6.5px !important;
+    }
+
+    .btnClass {
+        white-space: nowrap;
+        font-size: 6px !important;
+    }
+
+
+
 }
