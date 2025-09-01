@@ -22,7 +22,7 @@
         {
             <MudTable Items="@LogList" Dense="true" Striped="true" Class="tableStyling" Breakpoint="Breakpoint.None">
                 <ToolBarContent>
-                    <MudText Typo="Typo.h6">Task Logs</MudText>
+                    <MudText Typo="Typo.h6" Class="taskLogHeader">Task Logs</MudText>
                 </ToolBarContent>
                 <HeaderContent>
                     <MudTh Class="tableTaskColumnBodyStyling">TaskId</MudTh>
@@ -77,7 +77,7 @@
 
             <MudTable Items="@UndoneQueueList" Dense="true" Striped="true" Class="tableStyling" Breakpoint="Breakpoint.None">
                 <ToolBarContent>
-                    <MudText Typo="Typo.h6">Failed Logs</MudText>
+                    <MudText Typo="Typo.h6" Class="failedTaskHeader">Failed Logs</MudText>
                 </ToolBarContent>
                 <HeaderContent>
                     <MudTh Class="tableBodyStyling">TaskId</MudTh>
