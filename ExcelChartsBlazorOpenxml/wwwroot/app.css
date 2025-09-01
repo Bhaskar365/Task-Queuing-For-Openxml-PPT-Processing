@@ -972,6 +972,10 @@ a, .btn-link {
         margin-left: -11px !important;
     }
 
+    .paramsMudPaperSection {
+        width: 23.5% !important;
+    }
+
     .btnText {
         font-size: 10px !important;
     }
@@ -979,12 +983,19 @@ a, .btn-link {
 
 @media only screen and (max-width:600px) {
 
+    .btnClass {
+        font-size: 6px !important;
+    }
+
     .left-panel {
-        border: 2px solid red !important;
         width: 100% !important;
     }
 
     .right-panel {
+        width: 100% !important;
+    }
+
+    .responsive-container-paper {
         width: 100% !important;
     }
 
@@ -1010,12 +1021,7 @@ a, .btn-link {
     }
 
     .custom-checkbox .mud-typography {
-        font-size: 8px !important;
-    }
-
-    .btnClass {
-        white-space: nowrap;
-        font-size: 5px !important;
+        font-size: 10px !important;
     }
 
     .boxColunnLabelStyling {
@@ -1024,6 +1030,14 @@ a, .btn-link {
 
     .paramsMudPaperSection {
         width: 24% !important;
+    }
+}
+
+@media only screen and (max-width:599px) {
+
+    .responsive-container-paper {
+        border:2px solid red !important;
+        /*width: 100% !important;*/
     }
 
 }
