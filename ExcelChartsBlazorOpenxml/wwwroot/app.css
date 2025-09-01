@@ -1033,11 +1033,116 @@ a, .btn-link {
     }
 }
 
-@media only screen and (max-width:599px) {
+@media only screen and (max-width:448px) {
 
-    .responsive-container-paper {
-        border:2px solid red !important;
-        /*width: 100% !important;*/
+
+    .mudTabPanelFontSize {
+        font-size: 9px !IMPORTANT;
     }
 
+    .paramsMudPaperSection {
+        width: 23.5% !important;
+    }
+
+    .custom-checkbox .mud-typography {
+        font-size: 8px !important;
+    }
+
+    .btnClass {
+        font-size: 5px !important;
+    }
+
+    .boxColunnLabelStyling {
+        font-size: 7px !important;
+    }
 }
+
+@media only screen and (max-width:432px) {
+
+    .btnClass {
+        font-size: 4px !important;
+    }
+
+    .fitToBrandPersonalityStyling {
+        font-size: 4px !important;
+    }
+
+    .attributeEvalTextStyling {
+        font-size: 4px !important;
+    }
+
+    .boxColunnLabelStyling {
+        font-size: 6px !important;
+    }
+
+    .custom-checkbox .mud-typography {
+        font-size: 7px !important;
+    }
+
+    .paramsMudPaperSection .mud-input-control {
+        margin-bottom: -15px !important;
+    }
+
+    .custom-label {
+        font-size: 10px !important;
+    }
+
+    .custom-label-historical-mean {
+        font-size: 13px !important;
+        margin-left: -7px !important;
+        margin-top: 1px !important;
+    }
+
+    .btnClass {
+        font-size: 4.5px !important;
+    }
+}
+
+@media only screen and (max-width:418px) {
+
+    .custom-checkbox .mud-typography {
+        font-size: 6px !important;
+    }
+
+    .btnClass {
+        font-size: 4px !important;
+    }
+
+    .custom-label-historical-mean {
+        font-size: 11px !important;
+        margin-top: 2px !important;
+    }
+}
+
+@media only screen and (max-width:380px) {
+
+    .custom-label {
+        font-size: 10px !important;
+    }
+
+    .custom-label-historical-mean {
+        font-size: 10px !important;
+    }
+
+    .btnClass {
+        font-size: 4.4px !important;
+    }
+
+    .custom-checkbox .mud-typography {
+        font-size: 7px !important;
+    }
+
+    .boxColunnLabelStyling {
+        font-size: 7px !important;
+    }
+
+    .attributeEvalTextStyling {
+        font-size: 4.2px !important;
+    }
+
+    .custom-label-historical-mean-checkbox {
+        margin-left: -8px !important;
+    }
+}
+
+
