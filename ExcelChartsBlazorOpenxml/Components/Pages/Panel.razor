@@ -34,9 +34,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="SourceText"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True
-                                    Disabled>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True
+                                               Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -55,8 +55,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="@project"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
                                         @if (!isContentLoaded)
                                         {
                                             <MudSelectItem Value="@(project)">
@@ -84,8 +84,8 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="DSITextValue"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
                                         <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -101,9 +101,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="HistoricalMeanTextValue"
-                                    Label=""
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
+                                               Label=""
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -118,9 +118,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="HistoricalMeanDescriptionTextValue"
-                                    Label=""
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
+                                               Label=""
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -161,9 +161,9 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="FitToConceptTextValue"
-                                    Label=""
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
+                                               Label=""
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
                                     </MudSelect>
                                 </MudItem>
 
@@ -192,8 +192,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="finalPPTOption"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True ShrinkLabel>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True ShrinkLabel>
                                         @foreach (var state in _states)
                                         {
                                             <MudSelectItem Value="state">@state</MudSelectItem>
@@ -211,16 +211,16 @@
                                 @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
                                 <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
                                     <MudCheckBox @bind-Value="Size_CheckBox1"
-                                    Size="Size.Small"
-                                    Color="Color.Primary"
-                                    Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                                 Size="Size.Small"
+                                                 Color="Color.Primary"
+                                                 Class="custom-label-historical-mean-checkbox"></MudCheckBox>
                                     <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
                                 </MudItem>
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="SpecificHistMean"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
                                         <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -231,10 +231,10 @@
                         @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
                         <MudButton Variant="Variant.Filled"
-                        Class="generateBtnClass buttonload"
-                        @onclick="ProcessDLL"
-                        disabled="!isContentLoaded"
-                        Color="@buttonColor">
+                                   Class="generateBtnClass buttonload"
+                                   @onclick="ProcessDLL"
+                                   disabled="!isContentLoaded"
+                                   Color="@buttonColor">
                             @if (currentState == ProcessState.Generating)
                             {
                                 <span> Generating...</span>
@@ -301,18 +301,18 @@
                                         @foreach (var el in chartPageList)
                                         {
                                             <MudCheckBox @bind-Value="@el.isChecked"
-                                            Label="@el.strPageName"
-                                            Color="Color.Primary"
-                                            Size="Size.Small"
-                                            Class="custom-checkbox">
+                                                         Label="@el.strPageName"
+                                                         Color="Color.Primary"
+                                                         Size="Size.Small"
+                                                         Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
                                     }
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true" Class="btnClass" @onclick="(()=>TogglePagesList(chartPageList))">
+                                           Size="Size.Small"
+                                           FullWidth="true" Class="btnClass" @onclick="(()=>TogglePagesList(chartPageList))">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -332,9 +332,9 @@
                                         @foreach (var breakdown in lstBreakdown)
                                         {
                                             <MudCheckBox @bind-Value="@breakdown.isChecked"
-                                            Label="@breakdown.strBreakdownName"
-                                            Color="Color.Primary"
-                                            Size="Size.Small" Class="custom-checkbox">
+                                                         Label="@breakdown.strBreakdownName"
+                                                         Color="Color.Primary"
+                                                         Size="Size.Small" Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
                                     }
@@ -343,8 +343,8 @@
 
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small" FullWidth="true"
-                                Class="btnClass" @onclick="(()=> ToggleBreakdownList(lstBreakdown))">
+                                           Size="Size.Small" FullWidth="true"
+                                           Class="btnClass" @onclick="(()=> ToggleBreakdownList(lstBreakdown))">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -363,9 +363,9 @@
                                         @foreach (var names in lstTestnames)
                                         {
                                             <MudCheckBox @bind-Value="names.isChecked"
-                                            Label="@names.testNames"
-                                            Color="Color.Primary"
-                                            Size="Size.Small" Class="custom-checkbox">
+                                                         Label="@names.testNames"
+                                                         Color="Color.Primary"
+                                                         Size="Size.Small" Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
 
@@ -373,8 +373,8 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small" FullWidth="true"
-                                Class="btnClass" @onclick="(()=>ToggleTestnames(lstTestnames))">
+                                           Size="Size.Small" FullWidth="true"
+                                           Class="btnClass" @onclick="(()=>ToggleTestnames(lstTestnames))">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -388,9 +388,9 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true"
-                                Class="btnClass">
+                                           Size="Size.Small"
+                                           FullWidth="true"
+                                           Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
 
@@ -401,9 +401,9 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true"
-                                Class="btnClass">
+                                           Size="Size.Small"
+                                           FullWidth="true"
+                                           Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -432,6 +432,38 @@
     </MudTabPanel>
 
 </MudTabs>
+
+<MudExpansionPanels>
+    <MudExpansionPanel Text="Panel One" Expanded="true">
+
+        <MudTable Items="@reportStatuses" Dense="true" Striped="true" Breakpoint="Breakpoint.None">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6" Class="taskLogHeader">Task Logs</MudText>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh Class="tableTaskColumnBodyStyling">TaskId</MudTh>
+                <MudTh Class="tableBodyStyling">ProjectType</MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+
+            <RowTemplate>
+                <MudTd Class="tableTaskColumnBodyStyling">
+                    <span class="taskIdText">@context.TaskId</span>
+                </MudTd>
+                <MudTd Class="tableBodyStyling">@context.ProjectName</MudTd>
+                <MudTd Class="@GetStatusClass(@context.Status)">@context.Status</MudTd>
+            </RowTemplate>
+        </MudTable>
+
+    </MudExpansionPanel>
+</MudExpansionPanels>
+
+<br />
+
+<hr />
+
+
+
 
 @* 
 <div>
@@ -537,25 +569,6 @@
 
     private List<ReportStatus> reportStatuses = new();
 
-    // List<APIRequestModel> projectWrapperAPIList = new List<APIRequestModel>
-    // {
-    //     new APIRequestModel("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", ""),
-    //     new APIRequestModel("RACKEM", "Attribute 1", "Attribute 1", "OVERALL","",""),
-    //     new APIRequestModel("RACKEM", "Attribute 2", "Attribute 2", "OVERALL", "", ""),
-    //     new APIRequestModel("RACKEM", "Attribute 3", "Attribute 3", "OVERALL", "", ""),
-    //     new APIRequestModel("RACKEM", "01 Untrue", "01 Untrue", "OVERALL", "", ""),
-    //     new APIRequestModel("RACKEM", "02 Misleading", "02 Misleading", "OVERALL", "", ""),
-    //     new APIRequestModel("RACKEM", "03 Exagg", "03 Exagg", "OVERALL", "", ""),
-    //     new APIRequestModel("RACKEM", "Memorability", "Memorability", "OVERALL", "", ""),
-    //     new APIRequestModel("RACKEM", "Overall Impressions", "Overall Impressions", "OVERALL", "", ""),
-
-    //     new APIRequestModel("RACKEM", "Sound Alike-Look Alike", "Sound Alike-Look Alike", "OVERALL", "", ""),
-    //     new APIRequestModel("RACKEM", "Non-Medical Terms Similarity", "Non-Medical Terms Similarity", "OVERALL", "", ""),
-    //     new APIRequestModel("RACKEM", "Medical Terms Similarity", "Medical Terms Similarity", "OVERALL", "", ""),
-    //     new APIRequestModel("RACKEM", "Brandex Safety", "Brandex Safety", "OVERALL", "", ""),
-    //     new APIRequestModel("RACKEM", "Brandex Strategic Distinctiveness", "Brandex Strategic Distinctiveness", "OVERALL", "", ""),
-    // };
-
     private List<string> selectedItems = new();
 
     List<string> testNamesList = new List<string>();
@@ -612,7 +625,6 @@
         }
         catch (Exception)
         {
-
             throw;
         }
 
@@ -643,7 +655,18 @@
         }
     }
 
-
+    public string GetStatusClass(string status)
+    {
+        return status switch
+        {
+            "Done" => "text-info bg-dark",
+            "Processing" => "text-warning bg-dark",
+            "Fail" => "text-danger bg-dark",
+            "Queued" => "text-primary-emphasis bg-dark",
+            "Merging" => "text-info-emphasis",
+            _ => "text-info-emphasis bg-dark"
+        };
+    }
 
 
     private async Task<List<clschartPageGroup>> getProjectPagegroupNames(string projectName)
@@ -721,7 +744,7 @@
 
             selectedPages.Remove("Linguistics");
 
-            if (selectedPages.Count==0)
+            if (selectedPages.Count == 0)
             {
                 pagesErrorMessage = "Select a page";
                 return;
@@ -734,13 +757,13 @@
 
             var selectedBreakdown = lstBreakdown.Where(x => x.isChecked).Select(x => x.strBreakdownName).ToList();
 
-            if(selectedBreakdown.Count==0)
+            if (selectedBreakdown.Count == 0)
             {
                 breakdownErrorMessage = "Select a breakdown";
                 return;
             }
 
-            if(selectedBreakdown.Count>0)
+            if (selectedBreakdown.Count > 0)
             {
                 breakdownErrorMessage = "";
             }
@@ -765,10 +788,30 @@
 
             var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(res, finalPPTOption!);
 
-            _ = PollStatusAsync(taskId);
+
+            foreach (var projectEl in selectedPages)
+            {
+                var request = new ReportGenerationRequestDLL
+                    {
+                        project = projectEl.ToString(),
+                        TaskId = Guid.NewGuid()
+                    };
+
+                taskIdList.Add(request.TaskId);
+
+                reportStatuses.Add(new ReportStatus
+                    {
+                        ProjectName = request.project,
+                        TaskId = request.TaskId,
+                        Status = "Queued"
+                    });
+                _ = PollStatusAsync(taskId);
+            }
+
             // StateHasChanged();
 
             var result = await fitToConceptService.SendDLLMergeRequestWithPanel(res, finalPPTOption!);
+            await Task.Delay(15000);
 
             if (result == "Successful")
             {
@@ -786,7 +829,6 @@
                 message = "Merge Insuccessful";
             }
 
-            await Task.Delay(15000);
 
             StateHasChanged();
             Console.WriteLine(result);

@@ -1,4 +1,8 @@
 ﻿@page "/weather"
+@using Newtonsoft.Json
+@using OpenXmlDLLDotnetFramework
+@using System.Xml.Linq
+@using SharedModels
 
 @* 
 <MudItem xs="12" sm="7">
@@ -14,19 +18,66 @@
 </MudItem>
  *@
 
-<Counter value="_value" _options="_options" projects="projects" />
+<Counter value="_value"
+_options="_options"
+projects="projects"
+ReturnValue="OnOptionsChanged" />
+
+<p>@project</p>
+
+@foreach (var t in lstTestnames)
+{
+    <p>@t.testNames</p>
+}
 
 @code {
 
+    public class clschartTestnameGroup
+    {
+        public string? testNames { get; set; }
+        public bool isChecked { get; set; } = true;
+    }
+
     private string? _value { get; set; }
-    private string? _options { get; set; }
+    private string _options { get; set; }
     List<string> projects = new List<string> { "RACKEM", "MEADOW" };
+    public string? project = "";
 
-    // protected override Task OnInitializedAsync()
-    // {
+    List<FitToConceptModel> fitToConceptData = new List<FitToConceptModel>();
 
-    //     return base.OnInitializedAsync();
-    // }
+    List<clschartTestnameGroup> lstTestnames = new List<clschartTestnameGroup>();
+
+    APIWrapper api = new APIWrapper();
+
+
+    private async Task OnOptionsChanged(string newOptions)
+    {
+        lstTestnames.Clear();
+        _options = newOptions;
+    
+        var apiCall = await api.CallAPI(_options, "Fit to Concept", "Fit to Concept", "OVERALL", "", "");
+
+        XDocument xDoc = XDocument.Parse(apiCall);
+        var data = xDoc?.Root?.Value;
+
+        fitToConceptData = JsonConvert.DeserializeObject<List<FitToConceptModel>>(data!)!;
+
+        project = fitToConceptData.First().ProjectName;
+
+        foreach (var testname in fitToConceptData!)
+        {
+            lstTestnames.Add(new clschartTestnameGroup
+                {
+                    testNames = testname.TestName!,
+                    isChecked = true
+                });
+        }
+
+
+
+        StateHasChanged(); // refresh UI
+
+    }
 
 }
 

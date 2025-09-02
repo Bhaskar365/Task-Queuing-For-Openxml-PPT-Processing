@@ -10,10 +10,8 @@
 
 
 <MudItem xs="12" sm="7">
-    <MudSelect @bind-Value="value"
-               @bind="_options"
-               Variant="Variant.Outlined"
-               FitContent=True>
+    <MudSelect T="string" Variant="Variant.Outlined" FitContent="true"
+               ValueChanged="OnProjectChanged">
         @foreach (var proj in projects!)
         {
             <MudSelectItem Value="@(proj)"></MudSelectItem>
@@ -21,20 +19,25 @@
     </MudSelect>
 </MudItem>
 
-
 <p>@_options</p>
 
 @code {
-
     [Parameter]
     public string? value { get; set; }
 
     [Parameter]
-    public string? _options { get; set; }
+    public string _options { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ReturnValue { get; set; } 
 
     [Parameter]
     public List<string>? projects { get; set; }
 
+    public async Task OnProjectChanged(string selectedProject)
+    {
+        await ReturnValue.InvokeAsync(selectedProject);
+    }
 }
 
 @* 
