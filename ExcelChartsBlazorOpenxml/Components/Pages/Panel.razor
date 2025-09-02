@@ -11,6 +11,7 @@
 @using System.Xml.Linq
 @using System.Data
 @using prjData
+
 @using static ExcelChartsBlazorOpenxml.Components.Pages.TaskQueueCharts
 @inject IFitToConceptService fitToConceptService;
 @inject HttpClient httpClient
@@ -45,6 +46,9 @@
                         <MudPaper Class="responsive-container" Elevation="0">
                             @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+
+                                @* <Home isContentLoaded="isContentLoaded" project="@project" /> *@
+
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label" Color="Color.Error">Project Name</MudText>
                                 </MudItem>

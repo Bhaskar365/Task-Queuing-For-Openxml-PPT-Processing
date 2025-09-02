@@ -1,4 +1,36 @@
 ﻿@page "/weather"
+
+@* 
+<MudItem xs="12" sm="7">
+    <MudSelect @bind-Value="_value"
+               @bind-SelectedValues="_options"
+               Variant="Variant.Outlined"
+               FitContent=True>
+        @foreach (var proj in projects)
+        {
+            <MudSelectItem Value="@(proj)"></MudSelectItem>
+        }
+    </MudSelect>
+</MudItem>
+ *@
+
+<Counter value="_value" _options="_options" projects="projects" />
+
+@code {
+
+    private string? _value { get; set; }
+    private string? _options { get; set; }
+    List<string> projects = new List<string> { "RACKEM", "MEADOW" };
+
+    // protected override Task OnInitializedAsync()
+    // {
+
+    //     return base.OnInitializedAsync();
+    // }
+
+}
+
+@* 
 @attribute [StreamRendering]
 
 <PageTitle>Weather</PageTitle>
@@ -62,3 +94,4 @@ else
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     }
 }
+ *@

@@ -2,10 +2,47 @@
 @using ExcelChartsBlazorOpenxml.Services
 @using SharedModels
 
+@rendermode InteractiveServer
 
+@* 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+ *@
 
+
+<MudItem xs="12" sm="5">
+    <MudText Class="custom-label" Color="Color.Error">Project Name</MudText>
+</MudItem>
+
+<MudItem xs="12" sm="7">
+    <MudSelect @bind-Value="@project"
+    Variant="Variant.Outlined"
+    FitContent=True>
+        @if (!isContentLoaded)
+        {
+            <MudSelectItem Value="@(project)">
+                <i class="fas fa-spinner fa-spin progressProjectSpinner"></i>
+            </MudSelectItem>
+        }
+        else
+        {
+            <MudSelectItem Value="@(project)"></MudSelectItem>
+        }
+
+    </MudSelect>
+</MudItem>
+
+
+
+@code {
+
+    [Parameter]
+    public bool isContentLoaded { get; set; }
+
+    [Parameter]
+    public string?  project { get; set; }
+
+}

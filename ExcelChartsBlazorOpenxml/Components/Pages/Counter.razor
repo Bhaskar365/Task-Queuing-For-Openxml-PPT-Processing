@@ -9,6 +9,36 @@
 @rendermode InteractiveServer
 
 
+<MudItem xs="12" sm="7">
+    <MudSelect @bind-Value="value"
+               @bind="_options"
+               Variant="Variant.Outlined"
+               FitContent=True>
+        @foreach (var proj in projects!)
+        {
+            <MudSelectItem Value="@(proj)"></MudSelectItem>
+        }
+    </MudSelect>
+</MudItem>
+
+
+<p>@_options</p>
+
+@code {
+
+    [Parameter]
+    public string? value { get; set; }
+
+    [Parameter]
+    public string? _options { get; set; }
+
+    [Parameter]
+    public List<string>? projects { get; set; }
+
+}
+
+@* 
+
 <PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
@@ -25,122 +55,6 @@
     {
         currentCount++;
     }
-}
-
-@* 
-@if (!isDataLoaded)
-{
-    <h2>loading.............</h2>
-}
-else
-{
-    <MudTable Items="@LogList">
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">Task Logs</MudText>
-        </ToolBarContent>
-        <HeaderContent>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">TaskId</MudTh>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">ProjectType</MudTh>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CreatedOn</MudTh>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CompletedOn</MudTh>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">Generation Time</MudTh>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CreatedBy</MudTh>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CurrentStatus</MudTh>
-        </HeaderContent>
-
-        <RowTemplate>
-                <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.TaskId</MudTd>
-                <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.ProjectType</MudTd>
-                <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CreatedOn.ToString("dddd, dd MMMM yyyy HH:mm:ss")</MudTd>
-                <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CompletedOn</MudTd>
-                <MudTd style="font-size:small;white-space:nowrap;text-align:center">
-                    @{
-                        var duration = @context.CompletedOn - @context.CreatedOn;
-                        string formattedDuration = string.Format("{0:%m}m {0:%s}s", duration);
-                    }
-                    @formattedDuration
-                </MudTd>
-                <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CreatedBy</MudTd>
-                <MudTd class="@GetStatusClass(context.CurrentStatus)" style="font-size:small;white-space:nowrap;text-align:center">@context.CurrentStatus</MudTd>
-        </RowTemplate>
-
-        <NoRecordsContent>
-            <MudTr>
-                <MudTd ColSpan="7" Class="text-center"
-                       style="font-size:small; white-space:nowrap;">
-                    No data
-                </MudTd>
-            </MudTr>
-        </NoRecordsContent>
-
-        <PagerContent>
-            <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, LogList.Count }"
-                           RowsPerPageString="@rowsPerPageString"
-                           InfoFormat="@infoFormat"
-                           AllItemsText="@allItemsText"
-                           HorizontalAlignment="@horizontalAlignment"
-                           HideRowsPerPage="@hideRowsPerPage"
-                           HidePageNumber="@hidePageNumber"
-                           HidePagination="@hidePagination" />
-        </PagerContent>
-    </MudTable>
-
-    <br />
-
-    <MudTable Items="@UndoneQueueList">
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">Failed Logs</MudText>
-        </ToolBarContent>
-        <HeaderContent>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">TaskId</MudTh>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">ProjectType</MudTh>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CreatedOn</MudTh>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CompletedOn</MudTh>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">Generation Time</MudTh>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CreatedBy</MudTh>
-            <MudTh style="font-size:small;white-space:nowrap;text-align:center">CurrentStatus</MudTh>
-        </HeaderContent>
-
-        <RowTemplate>
-            <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.TaskId</MudTd>
-            <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.ProjectType</MudTd>
-            <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CreatedOn.ToString("dddd, dd MMMM yyyy HH:mm:ss")</MudTd>
-            <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CompletedOn</MudTd>
-            <MudTd style="font-size:small;white-space:nowrap;text-align:center">
-                @{
-                    var duration = @context.CompletedOn - @context.CreatedOn;
-                    string formattedDuration = string.Format("{0:%m}m {0:%s}s", duration);
-                }
-                @formattedDuration
-            </MudTd>
-            <MudTd style="font-size:small;white-space:nowrap;text-align:center">@context.CreatedBy</MudTd>
-            <MudTd class="@GetStatusClass(context.CurrentStatus)" style="font-size:small;white-space:nowrap;text-align:center">@context.CurrentStatus</MudTd>
-        </RowTemplate>
-
-        <NoRecordsContent>
-            <MudTr>
-                <MudTd ColSpan="7" Class="text-center"
-                       style="font-size:small; white-space:nowrap;">
-                    No data
-                </MudTd>
-            </MudTr>
-        </NoRecordsContent>
-
-        <PagerContent>
-            <MudTablePager PageSizeOptions="new int[] { UndoneQueueList.Count, 5, 10, 25, 50, 100 }"
-                           RowsPerPageString="@rowsPerPageString"
-                           InfoFormat="@infoFormat"
-                           AllItemsText="@allItemsText"
-                           HorizontalAlignment="@horizontalAlignment"
-                           HideRowsPerPage="@hideRowsPerPage"
-                           HidePageNumber="@hidePageNumber"
-                           HidePagination="@hidePagination" />
-        </PagerContent>
-    </MudTable>
-}
- *@
-
-@code {
 
     private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
     private bool hidePageNumber;
@@ -200,4 +114,4 @@ else
     }
 
 
-}
+} *@
