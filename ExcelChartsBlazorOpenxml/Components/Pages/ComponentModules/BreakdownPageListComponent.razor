@@ -1,0 +1,55 @@
+﻿@using static ExcelChartsBlazorOpenxml.Components.Pages.Panel
+
+
+<MudPaper Elevation="0" class="paramsMudPaperSection">
+    <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Breakdowns</MudText>
+
+
+    <div id="boxColumnBorderStying">
+        @if (!isContentLoaded)
+        {
+            <p class="lds-dual-ring"></p>
+        }
+        else
+        {
+            @foreach (var breakdown in lstBreakdown)
+            {
+                <MudCheckBox @bind-Value="@breakdown.isChecked"
+                Label="@breakdown.strBreakdownName"
+                Color="Color.Primary"
+                Size="Size.Small" Class="custom-checkbox">
+                </MudCheckBox>
+            }
+        }
+    </div>
+
+
+
+    <MudButton Variant="Variant.Filled"
+    Size="Size.Small" FullWidth="true"
+               Class="btnClass" @onclick="ToggleBreakdownList">
+        Select All/Unselect All
+    </MudButton>
+</MudPaper>
+
+@code {
+
+    [Parameter]
+    public List<clschartBreakdownGroup> lstBreakdown { get; set; }
+
+    [Parameter]
+    public bool isContentLoaded { get; set; }
+
+    [Parameter]
+    public EventCallback<List<clschartBreakdownGroup>> chartPageListChanged { get; set; }
+
+
+    private async Task ToggleBreakdownList()
+    {
+        foreach (var el in lstBreakdown)
+        {
+            el.isChecked = !el.isChecked;
+        }
+    }
+
+}

@@ -59,8 +59,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="@project"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True>
+                                    Variant="Variant.Outlined"
+                                    FitContent=True>
                                         @if (!isContentLoaded)
                                         {
                                             <MudSelectItem Value="@(project)">
@@ -87,8 +87,8 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="DSITextValue"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True>
+                                    Variant="Variant.Outlined"
+                                    FitContent=True>
                                         <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -210,8 +210,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="finalPPTOption"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True ShrinkLabel>
+                                    Variant="Variant.Outlined"
+                                    FitContent=True ShrinkLabel>
                                         @foreach (var state in _states)
                                         {
                                             <MudSelectItem Value="state">@state</MudSelectItem>
@@ -229,17 +229,17 @@
                                 @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
                                 <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
                                     <MudCheckBox @bind-Value="Size_CheckBox1"
-                                                 Size="Size.Small"
-                                                 Color="Color.Primary"
-                                                 Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                    Size="Size.Small"
+                                    Color="Color.Primary"
+                                    Class="custom-label-historical-mean-checkbox"></MudCheckBox>
                                     <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
                                 </MudItem>
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="SpecificHistMean"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True Disabled>
-                                        <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem>
+                                    Variant="Variant.Outlined"
+                                    FitContent=True Disabled>
+                                        <MudSelectItem Value="@SpecificHistMean"></MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
 
@@ -249,10 +249,10 @@
                         @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
                         <MudButton Variant="Variant.Filled"
-                                   Class="generateBtnClass buttonload"
-                                   @onclick="ProcessDLL"
-                                   disabled="!isContentLoaded"
-                                   Color="@buttonColor">
+                        Class="generateBtnClass buttonload"
+                        @onclick="ProcessDLL"
+                        disabled="!isContentLoaded"
+                        Color="@buttonColor">
                             @if (currentState == ProcessState.Generating)
                             {
                                 <span> Generating...</span>
@@ -306,7 +306,10 @@
                         <MudGrid class="mudGridSectionProjectParams">
 
                             @* pages *@
-                            <MudPaper Elevation="0" class="paramsMudPaperSection">
+
+                            <ChartPageListComponent chartPageList="@chartPageList" isContentLoaded="@isContentLoaded" chartPageListChanged="OnChartPageListChanged" />
+
+                            @* <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Pages</MudText>
 
                                 <div id="boxColumnBorderStying">
@@ -333,10 +336,13 @@
                                            FullWidth="true" Class="btnClass" @onclick="(()=>TogglePagesList(chartPageList))">
                                     Select All/Unselect All
                                 </MudButton>
-                            </MudPaper>
+                            </MudPaper> *@
 
                             @* breakdowns *@
-                            <MudPaper Elevation="0" class="paramsMudPaperSection">
+
+                            <BreakdownPageListComponent isContentLoaded="isContentLoaded" lstBreakdown="lstBreakdown" />
+
+                            @* <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Breakdowns</MudText>
 
 
@@ -350,9 +356,9 @@
                                         @foreach (var breakdown in lstBreakdown)
                                         {
                                             <MudCheckBox @bind-Value="@breakdown.isChecked"
-                                                         Label="@breakdown.strBreakdownName"
-                                                         Color="Color.Primary"
-                                                         Size="Size.Small" Class="custom-checkbox">
+                                            Label="@breakdown.strBreakdownName"
+                                            Color="Color.Primary"
+                                            Size="Size.Small" Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
                                     }
@@ -361,11 +367,11 @@
 
 
                                 <MudButton Variant="Variant.Filled"
-                                           Size="Size.Small" FullWidth="true"
-                                           Class="btnClass" @onclick="(()=> ToggleBreakdownList(lstBreakdown))">
+                                Size="Size.Small" FullWidth="true"
+                                Class="btnClass" @onclick="(()=> ToggleBreakdownList(lstBreakdown))">
                                     Select All/Unselect All
                                 </MudButton>
-                            </MudPaper>
+                            </MudPaper> *@
 
                             @* testnames *@
                             <MudPaper Elevation="0" class="paramsMudPaperSection">
@@ -381,9 +387,9 @@
                                         @foreach (var names in lstTestnames)
                                         {
                                             <MudCheckBox @bind-Value="names.isChecked"
-                                                         Label="@names.testNames"
-                                                         Color="Color.Primary"
-                                                         Size="Size.Small" Class="custom-checkbox">
+                                            Label="@names.testNames"
+                                            Color="Color.Primary"
+                                            Size="Size.Small" Class="custom-checkbox">
                                             </MudCheckBox>
                                         }
 
@@ -391,8 +397,8 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                           Size="Size.Small" FullWidth="true"
-                                           Class="btnClass" @onclick="(()=>ToggleTestnames(lstTestnames))">
+                                Size="Size.Small" FullWidth="true"
+                                Class="btnClass" @onclick="(()=>ToggleTestnames(lstTestnames))">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -406,9 +412,9 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                           Size="Size.Small"
-                                           FullWidth="true"
-                                           Class="btnClass">
+                                Size="Size.Small"
+                                FullWidth="true"
+                                Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
 
@@ -419,9 +425,9 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                           Size="Size.Small"
-                                           FullWidth="true"
-                                           Class="btnClass">
+                                Size="Size.Small"
+                                FullWidth="true"
+                                Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -501,6 +507,16 @@
 
 @code {
 
+
+    string breakdownErrorMessage = "";
+    string pagesErrorMessage = "";
+
+    bool isDataLoaded = false;
+    bool isContentLoaded = false;
+
+    public string? project = "";
+    public string? finalPPTOption = "MR-Rx Naming";
+
     ProcessState currentState = ProcessState.Idle;
     public bool hasProcessStarted = false;
 
@@ -527,7 +543,7 @@
 
     public string FitToConceptTextValue { get; set; } = "";
 
-    public string LogoFolderTextValue = $"{project}_MR";
+    public string? LogoFolderTextValue { get; set; }
 
     public string SpecificHistMean = "";
 
@@ -598,15 +614,6 @@
 
     List<selectedPagesListClass> chartPageList = new List<selectedPagesListClass>();
 
-    string breakdownErrorMessage = "";
-    string pagesErrorMessage = "";
-
-    bool isDataLoaded = false;
-    bool isContentLoaded = false;
-
-    public static string? project = "";
-    public string? finalPPTOption = "MR-Rx Naming";
-
     APIWrapper api = new APIWrapper();
 
     protected override async Task OnInitializedAsync()
@@ -624,6 +631,7 @@
 
             project = fitToConceptData.First().ProjectName;
 
+            LogoFolderTextValue = $"{project}_MR";
 
             foreach (var testname in fitToConceptData!)
             {
@@ -752,15 +760,23 @@
         }
     }
 
+    private void OnChartPageListChanged(List<selectedPagesListClass> updatedList)
+    {
+        chartPageList = updatedList;
+    }
+
+    private void OnBreakdownPageListChanged(List<clschartBreakdownGroup> updatedList)
+    {
+        lstBreakdown = updatedList;
+    }
+
     private async Task ProcessDLL()
     {
         try
         {
-            Console.WriteLine(finalPPTOption);
-
             var selectedPages = chartPageList.Where(x => x.isChecked).Select(x => x.strPageName).ToList();
 
-            selectedPages.Remove("Linguistics");
+            //selectedPages.Remove("Linguistics");
 
             if (selectedPages.Count == 0)
             {
@@ -829,7 +845,7 @@
             // StateHasChanged();
 
             var result = await fitToConceptService.SendDLLMergeRequestWithPanel(res, finalPPTOption!);
-            await Task.Delay(20000);
+            await Task.Delay(40000);
 
             if (result == "Successful")
             {

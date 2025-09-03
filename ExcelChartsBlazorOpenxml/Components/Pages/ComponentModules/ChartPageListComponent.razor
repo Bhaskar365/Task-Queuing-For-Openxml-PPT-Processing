@@ -1,0 +1,60 @@
+﻿@using static ExcelChartsBlazorOpenxml.Components.Pages.Panel
+
+
+<MudPaper Elevation="0" class="paramsMudPaperSection">
+    <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Pages</MudText>
+
+    <div id="boxColumnBorderStying">
+        @if (!isContentLoaded)
+        {
+            <p class="lds-dual-ring"></p>
+        }
+        else
+        {
+            @foreach (var el in chartPageList)
+            {
+                <MudCheckBox @bind-Value="@el.isChecked"
+                Label="@el.strPageName"
+                Color="Color.Primary"
+                Size="Size.Small"
+                Class="custom-checkbox">
+                </MudCheckBox>
+            }
+        }
+    </div>
+
+    @* <MudButton Variant="Variant.Filled"
+    Size="Size.Small"
+    FullWidth="true" Class="btnClass" @onclick="(()=>PageToggle(chartPageList))">
+        Select All/Unselect All
+    </MudButton> *@
+
+    <MudButton Variant="Variant.Filled"
+    Size="Size.Small"
+    FullWidth="true" Class="btnClass" @onclick="TogglePagesList">
+        Select All/Unselect All
+    </MudButton>
+</MudPaper>
+
+
+@code {
+
+    [Parameter]
+    public List<selectedPagesListClass> chartPageList { get; set; } = new();
+
+    [Parameter]
+    public bool isContentLoaded { get; set; }
+
+    [Parameter]
+    public EventCallback<List<selectedPagesListClass>> chartPageListChanged { get; set; }
+
+    private async Task TogglePagesList()
+    {
+        foreach(var el in chartPageList)
+        {
+            el.isChecked = !el.isChecked;
+        }
+        await chartPageListChanged.InvokeAsync(chartPageList);
+    }
+
+}
