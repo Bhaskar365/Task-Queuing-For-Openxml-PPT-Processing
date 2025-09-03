@@ -307,7 +307,8 @@
 
                             @* pages *@
 
-                            <ChartPageListComponent chartPageList="@chartPageList" isContentLoaded="@isContentLoaded" chartPageListChanged="OnChartPageListChanged" />
+                            <ChartPageListComponent 
+                            chartPageList="@chartPageList" isContentLoaded="@isContentLoaded" chartPageListChanged="OnChartPageListChanged" />
 
                             @* <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Pages</MudText>
@@ -340,7 +341,8 @@
 
                             @* breakdowns *@
 
-                            <BreakdownPageListComponent isContentLoaded="isContentLoaded" lstBreakdown="lstBreakdown" />
+                            <BreakdownPageListComponent 
+                            isContentLoaded="isContentLoaded" lstBreakdown="lstBreakdown" chartPageListChanged="OnBreakdownPageListChanged" />
 
                             @* <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Breakdowns</MudText>
@@ -374,7 +376,10 @@
                             </MudPaper> *@
 
                             @* testnames *@
-                            <MudPaper Elevation="0" class="paramsMudPaperSection">
+
+                            <TestnamePagesListComponent isContentLoaded="@isContentLoaded" lstTestnames="@lstTestnames" testnameListChanged="OnTestnamePageListChanged" />
+
+                            @* <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Test Names</MudText>
 
                                 <div id="boxColumnBorderStying">
@@ -401,7 +406,7 @@
                                 Class="btnClass" @onclick="(()=>ToggleTestnames(lstTestnames))">
                                     Select All/Unselect All
                                 </MudButton>
-                            </MudPaper>
+                            </MudPaper> *@
 
                             <MudPaper Elevation="0" class="paramsMudPaperSection">
 
@@ -769,6 +774,12 @@
     {
         lstBreakdown = updatedList;
     }
+
+    private void OnTestnamePageListChanged(List<clschartTestnameGroup> testnamesList)
+    {
+        lstTestnames = testnamesList;
+    }
+
 
     private async Task ProcessDLL()
     {
