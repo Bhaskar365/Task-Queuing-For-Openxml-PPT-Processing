@@ -1,0 +1,25 @@
+﻿
+
+<MudPaper Elevation="0">
+    <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+        <MudItem xs="12" sm="5">
+            <MudText Class="custom-label" Color="Color.Error">Select Data Source</MudText>
+        </MudItem>
+        <MudItem xs="12" sm="7">
+            <MudSelect @bind-Value="Text"
+            Variant="Variant.Outlined"
+            FitContent=True
+            Disabled>
+            </MudSelect>
+        </MudItem>
+
+    </MudGrid>
+</MudPaper>
+
+
+@code {
+
+    [Parameter]
+    public string? Text { get; set; }
+
+}

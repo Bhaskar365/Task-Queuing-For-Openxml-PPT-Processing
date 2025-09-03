@@ -1,0 +1,33 @@
+﻿
+
+
+<MudPaper Class="responsive-container" Elevation="0">
+    @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+    <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+        <MudItem xs="12" sm="5">
+            <MudText Class="custom-label">Logo Project Folder</MudText>
+        </MudItem>
+        <MudItem xs="12" sm="7">
+            @if (!isContentLoaded)
+            {
+                <i class="fas fa-spinner fa-spin progressProjectSpinner"></i>
+            }
+            else
+            {
+                <MudTextField @bind-Value="LogoFolderTextValue" Variant="Variant.Outlined" Style="height:25px;"></MudTextField>
+            }
+        </MudItem>
+
+    </MudGrid>
+</MudPaper>
+
+
+@code {
+
+    [Parameter]
+    public string? LogoFolderTextValue { get; set; }
+
+    [Parameter]
+    public bool isContentLoaded { get; set; }
+
+}

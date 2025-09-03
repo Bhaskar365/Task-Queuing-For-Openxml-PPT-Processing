@@ -12,6 +12,8 @@
 @using System.Data
 @using prjData
 
+@using ExcelChartsBlazorOpenxml.Components.Pages.ComponentModules;
+
 @using static ExcelChartsBlazorOpenxml.Components.Pages.TaskQueueCharts
 @inject IFitToConceptService fitToConceptService;
 @inject HttpClient httpClient
@@ -26,8 +28,10 @@
             <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 left-panel">
                 <MudGrid>
                     <MudPaper Elevation="3" Class="responsive-container-paper">
-                        <MudPaper Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+
+                        <DataSourceComponent Text="@SourceText"></DataSourceComponent>
+
+                        @*  <MudPaper Elevation="0">
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label" Color="Color.Error">Select Data Source</MudText>
@@ -41,7 +45,7 @@
                                 </MudItem>
 
                             </MudGrid>
-                        </MudPaper>
+                        </MudPaper> *@
 
                         <MudPaper Class="responsive-container" Elevation="0">
                             @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
@@ -77,7 +81,6 @@
                         </MudPaper>
 
                         <MudPaper Class="responsive-container" Elevation="0">
-                            @*  <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label">DSI Project Name</MudText>
@@ -93,8 +96,9 @@
                             </MudGrid>
                         </MudPaper>
 
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                        <HistoricalMeanComponent />
+
+                        @*  <MudPaper Class="responsive-container" Elevation="0">
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label">Historical Mean Type</MudText>
@@ -108,10 +112,12 @@
                                 </MudItem>
 
                             </MudGrid>
-                        </MudPaper>
+                        </MudPaper> *@
 
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+
+                        <HistoricalMeanDescription />
+
+                        @* <MudPaper Class="responsive-container" Elevation="0">
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label">Historical Mean Description</MudText>
@@ -125,7 +131,9 @@
                                 </MudItem>
 
                             </MudGrid>
-                        </MudPaper>
+                        </MudPaper> *@
+
+
 
                         <MudPaper Class="responsive-container" Elevation="0">
                             @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
@@ -140,8 +148,7 @@
                             </MudGrid>
                         </MudPaper>
 
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                        @* <MudPaper Class="responsive-container" Elevation="0">
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label">Attribute Evaluation Title</MudText>
@@ -151,10 +158,11 @@
                                 </MudItem>
 
                             </MudGrid>
-                        </MudPaper>
+                        </MudPaper> *@
 
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                        <AttributeEvaluationComponent />
+
+                        @*  <MudPaper Class="responsive-container" Elevation="0">
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label">Fit To Concept</MudText>
@@ -168,20 +176,30 @@
                                 </MudItem>
 
                             </MudGrid>
-                        </MudPaper>
+                        </MudPaper> *@
 
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                        <FitToConceptComponent />
+
+                        <ProjectFolderComponent isContentLoaded="@isContentLoaded" LogoFolderTextValue="@LogoFolderTextValue" />
+
+                        @*<MudPaper Class="responsive-container" Elevation="0">
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label">Logo Project Folder</MudText>
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
-                                    <MudTextField @bind-Value="LogoFolderTextValue" Variant="Variant.Outlined" Style="height:25px;"></MudTextField>
+                                    @if (!isContentLoaded)
+                                    {
+                                        <i class="fas fa-spinner fa-spin progressProjectSpinner"></i>
+                                    }
+                                    else
+                                    {
+                                        <MudTextField @bind-Value="LogoFolderTextValue" Variant="Variant.Outlined" Style="height:25px;"></MudTextField>
+                                    }
                                 </MudItem>
 
                             </MudGrid>
-                        </MudPaper>
+                        </MudPaper> *@
 
                         <MudPaper Class="responsive-container" Elevation="0">
                             @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
@@ -509,7 +527,7 @@
 
     public string FitToConceptTextValue { get; set; } = "";
 
-    public string LogoFolderTextValue = "Location";
+    public string LogoFolderTextValue = $"{project}_MR";
 
     public string SpecificHistMean = "";
 
@@ -586,7 +604,7 @@
     bool isDataLoaded = false;
     bool isContentLoaded = false;
 
-    public string? project = "";
+    public static string? project = "";
     public string? finalPPTOption = "MR-Rx Naming";
 
     APIWrapper api = new APIWrapper();
@@ -778,7 +796,7 @@
 
             var res = new ReportGenerationRequestDLL
                 {
-                    project = this.project!,
+                    project = project!,
                     templates = selectedPages,
                     breakdowns = selectedBreakdown!,
                     HistoricalMeanType = "",
@@ -811,7 +829,7 @@
             // StateHasChanged();
 
             var result = await fitToConceptService.SendDLLMergeRequestWithPanel(res, finalPPTOption!);
-            await Task.Delay(15000);
+            await Task.Delay(20000);
 
             if (result == "Successful")
             {

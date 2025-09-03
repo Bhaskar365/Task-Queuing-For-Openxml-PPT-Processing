@@ -1,0 +1,25 @@
+﻿
+<MudPaper Class="responsive-container" Elevation="0">
+    <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+        <MudItem xs="12" sm="5">
+            <MudText Class="custom-label">Historical Mean Description</MudText>
+        </MudItem>
+        <MudItem xs="12" sm="7">
+            <MudSelect @bind-Value="HistoricalMeanDescriptionTextValue"
+                       Label=""
+                       Variant="Variant.Outlined"
+                       FitContent=True Disabled>
+            </MudSelect>
+        </MudItem>
+
+    </MudGrid>
+</MudPaper>
+
+
+@code {
+
+    [Parameter]
+    public string HistoricalMeanDescriptionTextValue { get; set; } = "";
+
+
+}
