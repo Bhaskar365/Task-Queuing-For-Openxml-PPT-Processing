@@ -27,4 +27,7 @@ namespace SharedModels
         Generating,
         Done
     }
+
+
+
 }

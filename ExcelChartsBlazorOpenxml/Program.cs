@@ -9,6 +9,9 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddMudServices();
+
+builder.Services.AddScoped<ReportProcessService>();
+
 builder.Services.AddScoped<IFitToConceptService, FitToConceptService>();    
 
 builder.Services.AddHttpClient<IFitToConceptService,FitToConceptService>(client =>

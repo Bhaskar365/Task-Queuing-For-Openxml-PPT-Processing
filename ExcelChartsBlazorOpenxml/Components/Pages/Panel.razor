@@ -2,6 +2,8 @@
 
 @page "/"
 
+@implements IDisposable;
+
 @using ExcelChartsBlazorOpenxml.Services
 @using MudBlazor
 @using Newtonsoft.Json
@@ -11,6 +13,8 @@
 @using System.Xml.Linq
 @using System.Data
 @using prjData
+
+@inject ReportProcessService ReportService;
 
 @using ExcelChartsBlazorOpenxml.Components.Pages.ComponentModules;
 
@@ -59,8 +63,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="@project"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
                                         @if (!isContentLoaded)
                                         {
                                             <MudSelectItem Value="@(project)">
@@ -87,8 +91,8 @@
                                 </MudItem>
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="DSITextValue"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True>
                                         <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -210,8 +214,8 @@
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="finalPPTOption"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True ShrinkLabel>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True ShrinkLabel>
                                         @foreach (var state in _states)
                                         {
                                             <MudSelectItem Value="state">@state</MudSelectItem>
@@ -229,16 +233,16 @@
                                 @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
                                 <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
                                     <MudCheckBox @bind-Value="Size_CheckBox1"
-                                    Size="Size.Small"
-                                    Color="Color.Primary"
-                                    Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                                 Size="Size.Small"
+                                                 Color="Color.Primary"
+                                                 Class="custom-label-historical-mean-checkbox"></MudCheckBox>
                                     <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
                                 </MudItem>
 
                                 <MudItem xs="12" sm="7">
                                     <MudSelect @bind-Value="SpecificHistMean"
-                                    Variant="Variant.Outlined"
-                                    FitContent=True Disabled>
+                                               Variant="Variant.Outlined"
+                                               FitContent=True Disabled>
                                         <MudSelectItem Value="@SpecificHistMean"></MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
@@ -249,11 +253,11 @@
                         @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
                         <MudButton Variant="Variant.Filled"
-                        Class="generateBtnClass buttonload"
-                        @onclick="ProcessDLL"
-                        disabled="!isContentLoaded"
-                        Color="@buttonColor">
-                            @if (currentState == ProcessState.Generating)
+                                   Class="generateBtnClass buttonload"
+                                   @onclick="ProcessDLL"
+                                   disabled="!isContentLoaded"
+                                   Color="@buttonColor">
+                            @*  @if (currentState == ProcessState.Generating)
                             {
                                 <span> Generating...</span>
 
@@ -269,7 +273,23 @@
                             else
                             {
                                 <span class="btnText">Generate Report</span>
+                            } *@
+
+                            @if (ReportService.CurrentState == ProcessState.Generating)
+                            {
+                                <span>Generating...</span>
+                                <i class="fas fa-spinner fa-spin" style="margin-left:3px;"></i>
                             }
+                            else if (ReportService.CurrentState == ProcessState.Done)
+                            {
+                                <span>@ReportService.Message</span>
+                                <i class="fas fa-check" style="margin-left:3px;"></i>
+                            }
+                            else
+                            {
+                                <span class="btnText">Generate Report</span>
+                            }
+
                         </MudButton>
 
                         <div style="color:red;">@pagesErrorMessage</div>
@@ -307,8 +327,7 @@
 
                             @* pages *@
 
-                            <ChartPageListComponent 
-                            chartPageList="@chartPageList" isContentLoaded="@isContentLoaded" chartPageListChanged="OnChartPageListChanged" />
+                            <ChartPageListComponent chartPageList="@chartPageList" isContentLoaded="@isContentLoaded" chartPageListChanged="OnChartPageListChanged" />
 
                             @* <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Pages</MudText>
@@ -341,8 +360,7 @@
 
                             @* breakdowns *@
 
-                            <BreakdownPageListComponent 
-                            isContentLoaded="isContentLoaded" lstBreakdown="lstBreakdown" chartPageListChanged="OnBreakdownPageListChanged" />
+                            <BreakdownPageListComponent isContentLoaded="isContentLoaded" lstBreakdown="lstBreakdown" chartPageListChanged="OnBreakdownPageListChanged" />
 
                             @* <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Breakdowns</MudText>
@@ -417,9 +435,9 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true"
-                                Class="btnClass">
+                                           Size="Size.Small"
+                                           FullWidth="true"
+                                           Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
 
@@ -430,9 +448,9 @@
                                 </div>
 
                                 <MudButton Variant="Variant.Filled"
-                                Size="Size.Small"
-                                FullWidth="true"
-                                Class="btnClass">
+                                           Size="Size.Small"
+                                           FullWidth="true"
+                                           Class="btnClass">
                                     Select All/Unselect All
                                 </MudButton>
                             </MudPaper>
@@ -653,12 +671,20 @@
 
             isDataLoaded = true;
             isContentLoaded = true;
+
+            ReportService.OnChange += StateHasChanged;
+
         }
         catch (Exception)
         {
             throw;
         }
 
+    }
+
+    public void Dispose()
+    {
+        ReportService.OnChange -= StateHasChanged;
     }
 
     private void ToggleBreakdownList(List<clschartBreakdownGroup> lstBreakdown)
@@ -787,7 +813,7 @@
         {
             var selectedPages = chartPageList.Where(x => x.isChecked).Select(x => x.strPageName).ToList();
 
-            //selectedPages.Remove("Linguistics");
+            selectedPages.Remove("Linguistics");
 
             if (selectedPages.Count == 0)
             {
@@ -817,6 +843,9 @@
 
             hasProcessStarted = true;
             currentState = ProcessState.Generating;
+
+            ReportService.StartProcessing();
+
             StartTime = DateTime.UtcNow;
 
             taskIdList = new List<Guid>();
@@ -880,6 +909,9 @@
 
             hasProcessStarted = false;
             currentState = ProcessState.Done;
+
+            ReportService.CompleteProcessing("Merge Successful");
+
             EndTime = DateTime.UtcNow;
         }
         catch (Exception)
