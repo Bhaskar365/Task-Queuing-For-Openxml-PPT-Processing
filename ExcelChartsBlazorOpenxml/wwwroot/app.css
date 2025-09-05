@@ -212,6 +212,12 @@ a, .btn-link {
     white-space: nowrap !important;
 }
 
+.panelSpinner {
+    z-index: 1111 !important;
+    margin-top: 40vh !important;
+    display: flex !important;
+    justify-content: center !important;
+}
 
 .custom-label-historical-mean {
     font-size: 9px !important;

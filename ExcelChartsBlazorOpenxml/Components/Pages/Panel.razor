@@ -24,18 +24,27 @@
 
 @rendermode InteractiveServer
 
-<MudTabs Elevation="3" Rounded="true" Class="my-6" ApplyEffectsToContainer="true" PanelClass="pa-2">
-    <MudTabPanel Text="Power Point" Class="mudTabPanelFontSize">
+@if (!isMainContentLoaded)
+{
+    <div class="panelSpinner">
+        <i class="fas fa-spinner fa-spin"></i>
+    </div>
+}
+else
+{
 
-        <div class="panels-container">
+    <MudTabs Elevation="3" Rounded="true" Class="my-6" ApplyEffectsToContainer="true" PanelClass="pa-2">
+        <MudTabPanel Text="Power Point" Class="mudTabPanelFontSize">
 
-            <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 left-panel">
-                <MudGrid>
-                    <MudPaper Elevation="3" Class="responsive-container-paper">
+            <div class="panels-container">
 
-                        <DataSourceComponent Text="@SourceText"></DataSourceComponent>
+                <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 left-panel">
+                    <MudGrid>
+                        <MudPaper Elevation="3" Class="responsive-container-paper">
 
-                        @*  <MudPaper Elevation="0">
+                            <DataSourceComponent Text="@SourceText"></DataSourceComponent>
+
+                            @*  <MudPaper Elevation="0">
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label" Color="Color.Error">Select Data Source</MudText>
@@ -51,58 +60,58 @@
                             </MudGrid>
                         </MudPaper> *@
 
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
 
-                                @* <Home isContentLoaded="isContentLoaded" project="@project" /> *@
+                                    @* <Home isContentLoaded="isContentLoaded" project="@project" /> *@
 
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label" Color="Color.Error">Project Name</MudText>
-                                </MudItem>
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label" Color="Color.Error">Project Name</MudText>
+                                    </MudItem>
 
-                                <MudItem xs="12" sm="7">
-                                    <MudSelect @bind-Value="@project"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True>
-                                        @if (!isContentLoaded)
-                                        {
-                                            <MudSelectItem Value="@(project)">
-                                                <i class="fas fa-spinner fa-spin progressProjectSpinner"></i>
-                                            </MudSelectItem>
-                                        }
-                                        else
-                                        {
-                                            <MudSelectItem Value="@(project)"></MudSelectItem>
-                                        }
+                                    <MudItem xs="12" sm="7">
+                                        <MudSelect @bind-Value="@project"
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True>
+                                            @if (!isContentLoaded)
+                                            {
+                                                <MudSelectItem Value="@(project)">
+                                                    <i class="fas fa-spinner fa-spin progressProjectSpinner"></i>
+                                                </MudSelectItem>
+                                            }
+                                            else
+                                            {
+                                                <MudSelectItem Value="@(project)"></MudSelectItem>
+                                            }
 
-                                    </MudSelect>
-                                </MudItem>
+                                        </MudSelect>
+                                    </MudItem>
 
 
 
-                            </MudGrid>
-                        </MudPaper>
+                                </MudGrid>
+                            </MudPaper>
 
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label">DSI Project Name</MudText>
-                                </MudItem>
-                                <MudItem xs="12" sm="7">
-                                    <MudSelect @bind-Value="DSITextValue"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True>
-                                        <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
-                                    </MudSelect>
-                                </MudItem>
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label">DSI Project Name</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="7">
+                                        <MudSelect @bind-Value="DSITextValue"
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True>
+                                            <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
+                                        </MudSelect>
+                                    </MudItem>
 
-                            </MudGrid>
-                        </MudPaper>
+                                </MudGrid>
+                            </MudPaper>
 
-                        <HistoricalMeanComponent />
+                            <HistoricalMeanComponent />
 
-                        @*  <MudPaper Class="responsive-container" Elevation="0">
+                            @*  <MudPaper Class="responsive-container" Elevation="0">
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label">Historical Mean Type</MudText>
@@ -119,9 +128,9 @@
                         </MudPaper> *@
 
 
-                        <HistoricalMeanDescription />
+                            <HistoricalMeanDescription />
 
-                        @* <MudPaper Class="responsive-container" Elevation="0">
+                            @* <MudPaper Class="responsive-container" Elevation="0">
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label">Historical Mean Description</MudText>
@@ -139,20 +148,20 @@
 
 
 
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label">Associations/Likeability %</MudText>
-                                </MudItem>
-                                <MudItem xs="12" sm="7">
-                                    <MudNumericField @bind-Value="associationsValue" Variant="Variant.Outlined" Min="0" Max="10" Style="height:25px;" />
-                                </MudItem>
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label">Associations/Likeability %</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="7">
+                                        <MudNumericField @bind-Value="associationsValue" Variant="Variant.Outlined" Min="0" Max="10" Style="height:25px;" />
+                                    </MudItem>
 
-                            </MudGrid>
-                        </MudPaper>
+                                </MudGrid>
+                            </MudPaper>
 
-                        @* <MudPaper Class="responsive-container" Elevation="0">
+                            @* <MudPaper Class="responsive-container" Elevation="0">
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label">Attribute Evaluation Title</MudText>
@@ -164,9 +173,9 @@
                             </MudGrid>
                         </MudPaper> *@
 
-                        <AttributeEvaluationComponent />
+                            <AttributeEvaluationComponent />
 
-                        @*  <MudPaper Class="responsive-container" Elevation="0">
+                            @*  <MudPaper Class="responsive-container" Elevation="0">
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label">Fit To Concept</MudText>
@@ -182,11 +191,11 @@
                             </MudGrid>
                         </MudPaper> *@
 
-                        <FitToConceptComponent />
+                            <FitToConceptComponent />
 
-                        <ProjectFolderComponent isContentLoaded="@isContentLoaded" LogoFolderTextValue="@LogoFolderTextValue" />
+                            <ProjectFolderComponent isContentLoaded="@isContentLoaded" LogoFolderTextValue="@LogoFolderTextValue" />
 
-                        @*<MudPaper Class="responsive-container" Elevation="0">
+                            @*<MudPaper Class="responsive-container" Elevation="0">
                             <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
                                 <MudItem xs="12" sm="5">
                                     <MudText Class="custom-label">Logo Project Folder</MudText>
@@ -205,59 +214,59 @@
                             </MudGrid>
                         </MudPaper> *@
 
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                <MudItem xs="12" sm="5">
-                                    <MudText Class="custom-label">PPT Final Template</MudText>
-                                </MudItem>
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label">PPT Final Template</MudText>
+                                    </MudItem>
 
-                                <MudItem xs="12" sm="7">
-                                    <MudSelect @bind-Value="finalPPTOption"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True ShrinkLabel>
-                                        @foreach (var state in _states)
-                                        {
-                                            <MudSelectItem Value="state">@state</MudSelectItem>
-                                        }
-                                        @* <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem> *@
-                                    </MudSelect>
-                                </MudItem>
+                                    <MudItem xs="12" sm="7">
+                                        <MudSelect @bind-Value="finalPPTOption"
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True ShrinkLabel>
+                                            @foreach (var state in _states)
+                                            {
+                                                <MudSelectItem Value="state">@state</MudSelectItem>
+                                            }
+                                            @* <MudSelectItem Value="@("Option 1")">No Template</MudSelectItem> *@
+                                        </MudSelect>
+                                    </MudItem>
 
-                            </MudGrid>
-                        </MudPaper>
+                                </MudGrid>
+                            </MudPaper>
 
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-                                @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
-                                <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
-                                    <MudCheckBox @bind-Value="Size_CheckBox1"
-                                                 Size="Size.Small"
-                                                 Color="Color.Primary"
-                                                 Class="custom-label-historical-mean-checkbox"></MudCheckBox>
-                                    <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
-                                </MudItem>
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
+                                    @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
+                                    <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
+                                        <MudCheckBox @bind-Value="Size_CheckBox1"
+                                                     Size="Size.Small"
+                                                     Color="Color.Primary"
+                                                     Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                        <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
+                                    </MudItem>
 
-                                <MudItem xs="12" sm="7">
-                                    <MudSelect @bind-Value="SpecificHistMean"
-                                               Variant="Variant.Outlined"
-                                               FitContent=True Disabled>
-                                        <MudSelectItem Value="@SpecificHistMean"></MudSelectItem>
-                                    </MudSelect>
-                                </MudItem>
+                                    <MudItem xs="12" sm="7">
+                                        <MudSelect @bind-Value="SpecificHistMean"
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True Disabled>
+                                            <MudSelectItem Value="@SpecificHistMean"></MudSelectItem>
+                                        </MudSelect>
+                                    </MudItem>
 
-                            </MudGrid>
-                        </MudPaper>
+                                </MudGrid>
+                            </MudPaper>
 
-                        @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
+                            @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
-                        <MudButton Variant="Variant.Filled"
-                                   Class="generateBtnClass buttonload"
-                                   @onclick="ProcessDLL"
-                                   disabled="!isContentLoaded"
-                                   Color="@buttonColor">
-                            @*  @if (currentState == ProcessState.Generating)
+                            <MudButton Variant="Variant.Filled"
+                                       Class="generateBtnClass buttonload"
+                                       @onclick="ProcessDLL"
+                                       disabled="!isContentLoaded"
+                                       Color="@buttonColor">
+                                @*  @if (currentState == ProcessState.Generating)
                             {
                                 <span> Generating...</span>
 
@@ -275,61 +284,61 @@
                                 <span class="btnText">Generate Report</span>
                             } *@
 
-                            @if (ReportService.CurrentState == ProcessState.Generating)
-                            {
-                                <span>Generating...</span>
-                                <i class="fas fa-spinner fa-spin" style="margin-left:3px;"></i>
-                            }
-                            else if (ReportService.CurrentState == ProcessState.Done)
-                            {
-                                <span>@ReportService.Message</span>
-                                <i class="fas fa-check" style="margin-left:3px;"></i>
-                            }
-                            else
-                            {
-                                <span class="btnText">Generate Report</span>
-                            }
+                                @if (ReportService.CurrentState == ProcessState.Generating)
+                                {
+                                    <span>Generating...</span>
+                                    <i class="fas fa-spinner fa-spin" style="margin-left:3px;"></i>
+                                }
+                                else if (ReportService.CurrentState == ProcessState.Done)
+                                {
+                                    <span>@ReportService.Message</span>
+                                    <i class="fas fa-check" style="margin-left:3px;"></i>
+                                }
+                                else
+                                {
+                                    <span class="btnText">Generate Report</span>
+                                }
 
-                        </MudButton>
+                            </MudButton>
 
-                        <div style="color:red;">@pagesErrorMessage</div>
-                        <div style="color:red;">@breakdownErrorMessage</div>
+                            <div style="color:red;">@pagesErrorMessage</div>
+                            <div style="color:red;">@breakdownErrorMessage</div>
 
-                        <MudPaper Class="responsive-container" Elevation="0">
-                            @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;">
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;">
                                 <MudItem Style="display: flex;flex-direction: row;align-items: center;">*@
-                            <MudGrid AlignItems="Center" Spacing="2" Class="inlineMudItemClass openxmlCheckboxMudGrid">
-                                <MudItem Class="inlineMudItemClass">
-                                    <MudCheckBox @bind-Value="Size_CheckBox2" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
-                                    <MudText Class="custom-label">Open folder when done</MudText>
-                                </MudItem>
-                                @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
-                                <MudItem xs="12" sm="5" Class="inlineMudItemClass">
-                                    <MudCheckBox @bind-Value="Size_CheckBox3" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
-                                    <MudText Class="custom-label useOpenxmlElement">Use OpenXml</MudText>
-                                </MudItem>
-                            </MudGrid>
+                                <MudGrid AlignItems="Center" Spacing="2" Class="inlineMudItemClass openxmlCheckboxMudGrid">
+                                    <MudItem Class="inlineMudItemClass">
+                                        <MudCheckBox @bind-Value="Size_CheckBox2" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
+                                        <MudText Class="custom-label">Open folder when done</MudText>
+                                    </MudItem>
+                                    @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
+                                    <MudItem xs="12" sm="5" Class="inlineMudItemClass">
+                                        <MudCheckBox @bind-Value="Size_CheckBox3" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
+                                        <MudText Class="custom-label useOpenxmlElement">Use OpenXml</MudText>
+                                    </MudItem>
+                                </MudGrid>
+                            </MudPaper>
+
                         </MudPaper>
-
-                    </MudPaper>
-                </MudGrid>
+                    </MudGrid>
 
 
 
 
-            </MudContainer>
+                </MudContainer>
 
-            <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 right-panel" Style="height:max-content;">
-                <MudGrid Class="py-1 px-2" Elevation="0">
-                    <MudPaper Elevation="3" Class="responsive-container-paper-right">
+                <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 right-panel" Style="height:max-content;">
+                    <MudGrid Class="py-1 px-2" Elevation="0">
+                        <MudPaper Elevation="3" Class="responsive-container-paper-right">
 
-                        <MudGrid class="mudGridSectionProjectParams">
+                            <MudGrid class="mudGridSectionProjectParams">
 
-                            @* pages *@
+                                @* pages *@
 
-                            <ChartPageListComponent chartPageList="@chartPageList" isContentLoaded="@isContentLoaded" chartPageListChanged="OnChartPageListChanged" />
+                                <ChartPageListComponent chartPageList="@chartPageList" isContentLoaded="@isContentLoaded" chartPageListChanged="OnChartPageListChanged" />
 
-                            @* <MudPaper Elevation="0" class="paramsMudPaperSection">
+                                @* <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Pages</MudText>
 
                                 <div id="boxColumnBorderStying">
@@ -358,11 +367,11 @@
                                 </MudButton>
                             </MudPaper> *@
 
-                            @* breakdowns *@
+                                @* breakdowns *@
 
-                            <BreakdownPageListComponent isContentLoaded="isContentLoaded" lstBreakdown="lstBreakdown" chartPageListChanged="OnBreakdownPageListChanged" />
+                                <BreakdownPageListComponent isContentLoaded="isContentLoaded" lstBreakdown="lstBreakdown" chartPageListChanged="OnBreakdownPageListChanged" />
 
-                            @* <MudPaper Elevation="0" class="paramsMudPaperSection">
+                                @* <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Breakdowns</MudText>
 
 
@@ -393,11 +402,11 @@
                                 </MudButton>
                             </MudPaper> *@
 
-                            @* testnames *@
+                                @* testnames *@
 
-                            <TestnamePagesListComponent isContentLoaded="@isContentLoaded" lstTestnames="@lstTestnames" testnameListChanged="OnTestnamePageListChanged" />
+                                <TestnamePagesListComponent isContentLoaded="@isContentLoaded" lstTestnames="@lstTestnames" testnameListChanged="OnTestnamePageListChanged" />
 
-                            @* <MudPaper Elevation="0" class="paramsMudPaperSection">
+                                @* <MudPaper Elevation="0" class="paramsMudPaperSection">
                                 <MudText Typo="Typo.subtitle2" Class="boxColunnLabelStyling">Test Names</MudText>
 
                                 <div id="boxColumnBorderStying">
@@ -426,88 +435,90 @@
                                 </MudButton>
                             </MudPaper> *@
 
-                            <MudPaper Elevation="0" class="paramsMudPaperSection">
+                                <MudPaper Elevation="0" class="paramsMudPaperSection">
 
-                                @* attribute evaluation aggregrate *@
-                                <MudText Typo="Typo.subtitle2" Class="attributeEvalTextStyling">Attribute Evaluation Aggregate</MudText>
+                                    @* attribute evaluation aggregrate *@
+                                    <MudText Typo="Typo.subtitle2" Class="attributeEvalTextStyling">Attribute Evaluation Aggregate</MudText>
 
-                                <div id="boxColumnBorderStying">
-                                </div>
+                                    <div id="boxColumnBorderStying">
+                                    </div>
 
-                                <MudButton Variant="Variant.Filled"
-                                           Size="Size.Small"
-                                           FullWidth="true"
-                                           Class="btnClass">
-                                    Select All/Unselect All
-                                </MudButton>
+                                    <MudButton Variant="Variant.Filled"
+                                               Size="Size.Small"
+                                               FullWidth="true"
+                                               Class="btnClass">
+                                        Select All/Unselect All
+                                    </MudButton>
 
-                                @* fit to brand personality *@
-                                <MudText Typo="Typo.subtitle2" Class="fitToBrandPersonalityStyling">Fit to Brand Personality Aggregate</MudText>
+                                    @* fit to brand personality *@
+                                    <MudText Typo="Typo.subtitle2" Class="fitToBrandPersonalityStyling">Fit to Brand Personality Aggregate</MudText>
 
-                                <div id="boxColumnBorderStying">
-                                </div>
+                                    <div id="boxColumnBorderStying">
+                                    </div>
 
-                                <MudButton Variant="Variant.Filled"
-                                           Size="Size.Small"
-                                           FullWidth="true"
-                                           Class="btnClass">
-                                    Select All/Unselect All
-                                </MudButton>
-                            </MudPaper>
+                                    <MudButton Variant="Variant.Filled"
+                                               Size="Size.Small"
+                                               FullWidth="true"
+                                               Class="btnClass">
+                                        Select All/Unselect All
+                                    </MudButton>
+                                </MudPaper>
 
-                        </MudGrid>
-                    </MudPaper>
-                </MudGrid>
-            </MudContainer>
-        </div>
-
-
+                            </MudGrid>
+                        </MudPaper>
+                    </MudGrid>
+                </MudContainer>
+            </div>
 
 
-    </MudTabPanel>
 
-    <MudTabPanel Text="Brandex" BadgeIcon="@Icons.Material.Filled.Check" BadgeColor="Color.Success" Typo="Typo.h6" Class="mudTabPanelFontSize">
-        <MudText>Brandex</MudText>
-    </MudTabPanel>
 
-    <MudTabPanel Text="QTC" Typo="Typo.subtitle1" Class="mudTabPanelFontSize">
-        <MudText>QTC</MudText>
-    </MudTabPanel>
+        </MudTabPanel>
 
-    <MudTabPanel Text="Reports" Typo="Typo.h6" Class="mudTabPanelFontSize">
-        <MudText>Reports</MudText>
-    </MudTabPanel>
+        <MudTabPanel Text="Brandex" BadgeIcon="@Icons.Material.Filled.Check" BadgeColor="Color.Success" Typo="Typo.h6" Class="mudTabPanelFontSize">
+            <MudText>Brandex</MudText>
+        </MudTabPanel>
 
-</MudTabs>
+        <MudTabPanel Text="QTC" Typo="Typo.subtitle1" Class="mudTabPanelFontSize">
+            <MudText>QTC</MudText>
+        </MudTabPanel>
 
-<MudExpansionPanels>
-    <MudExpansionPanel Text="Panel One" Expanded="true">
+        <MudTabPanel Text="Reports" Typo="Typo.h6" Class="mudTabPanelFontSize">
+            <MudText>Reports</MudText>
+        </MudTabPanel>
 
-        <MudTable Items="@reportStatuses" Dense="true" Striped="true" Breakpoint="Breakpoint.None">
-            <ToolBarContent>
-                <MudText Typo="Typo.h6" Class="taskLogHeader">Task Logs</MudText>
-            </ToolBarContent>
-            <HeaderContent>
-                <MudTh Class="tableTaskColumnBodyStyling">TaskId</MudTh>
-                <MudTh Class="tableBodyStyling">ProjectType</MudTh>
-                <MudTh></MudTh>
-            </HeaderContent>
+    </MudTabs>
 
-            <RowTemplate>
-                <MudTd Class="tableTaskColumnBodyStyling">
-                    <span class="taskIdText">@context.TaskId</span>
-                </MudTd>
-                <MudTd Class="tableBodyStyling">@context.ProjectName</MudTd>
-                <MudTd Class="@GetStatusClass(@context.Status)">@context.Status</MudTd>
-            </RowTemplate>
-        </MudTable>
+    <MudExpansionPanels>
+        <MudExpansionPanel Text="Panel One" Expanded="true">
 
-    </MudExpansionPanel>
-</MudExpansionPanels>
+            <MudTable Items="@reportStatuses" Dense="true" Striped="true" Breakpoint="Breakpoint.None">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h6" Class="taskLogHeader">Task Logs</MudText>
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh Class="tableTaskColumnBodyStyling">TaskId</MudTh>
+                    <MudTh Class="tableBodyStyling">ProjectType</MudTh>
+                    <MudTh></MudTh>
+                </HeaderContent>
 
-<br />
+                <RowTemplate>
+                    <MudTd Class="tableTaskColumnBodyStyling">
+                        <span class="taskIdText">@context.TaskId</span>
+                    </MudTd>
+                    <MudTd Class="tableBodyStyling">@context.ProjectName</MudTd>
+                    <MudTd Class="@GetStatusClass(@context.Status)">@context.Status</MudTd>
+                </RowTemplate>
+            </MudTable>
 
-<hr />
+        </MudExpansionPanel>
+    </MudExpansionPanels>
+
+    <br />
+
+    <hr />
+}
+
 
 
 
@@ -639,13 +650,15 @@
 
     APIWrapper api = new APIWrapper();
 
+    bool isMainContentLoaded = false;
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            var apiCall = await api.CallAPI("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", "");
+            var apiCall = await api.CallAPI("MEADOW", "Fit to Concept", "Fit to Concept", "OVERALL", "", "");
 
-            chartPageList = getProjectChartDisplayNames("RACKEM");
+            chartPageList = getProjectChartDisplayNames("MEADOW");
 
             XDocument xDoc = XDocument.Parse(apiCall);
             var data = xDoc?.Root?.Value;
@@ -671,6 +684,7 @@
 
             isDataLoaded = true;
             isContentLoaded = true;
+            isMainContentLoaded = true;
 
             ReportService.OnChange += StateHasChanged;
 
@@ -811,6 +825,8 @@
     {
         try
         {
+            ReportService.Reset();
+
             var selectedPages = chartPageList.Where(x => x.isChecked).Select(x => x.strPageName).ToList();
 
             selectedPages.Remove("Linguistics");
@@ -913,6 +929,8 @@
             ReportService.CompleteProcessing("Merge Successful");
 
             EndTime = DateTime.UtcNow;
+
+
         }
         catch (Exception)
         {
