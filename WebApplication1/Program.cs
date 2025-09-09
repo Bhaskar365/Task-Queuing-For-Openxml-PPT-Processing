@@ -36,12 +36,12 @@ builder.Services.AddHostedService<StuckTaskMonitor>();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDBContext>();
-    var seeder = new CustomSeeder(dbContext);
-    await seeder.SeedAsync();
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dbContext = scope.ServiceProvider.GetRequiredService<AppDBContext>();
+//    var seeder = new CustomSeeder(dbContext);
+//    await seeder.SeedAsync();
+//}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -507,7 +507,7 @@ else
                         <span class="taskIdText">@context.TaskId</span>
                     </MudTd>
                     <MudTd Class="tableBodyStyling">@context.ProjectName</MudTd>
-                    <MudTd Class="@GetStatusClass(@context.Status)">@context.Status</MudTd>
+                    <MudTd>@context.Status</MudTd>
                 </RowTemplate>
             </MudTable>
 
@@ -659,6 +659,8 @@ else
             var apiCall = await api.CallAPI("MEADOW", "Fit to Concept", "Fit to Concept", "OVERALL", "", "");
 
             chartPageList = getProjectChartDisplayNames("MEADOW");
+
+            Console.Write(apiCall);
 
             XDocument xDoc = XDocument.Parse(apiCall);
             var data = xDoc?.Root?.Value;

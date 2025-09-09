@@ -11,8 +11,6 @@ using WebApplicationAPI.TaskLogging;
 using WebApplicationAPI.TaskTracking;
 using ClassLibrary1;
 
-
-
 namespace WebApplicationAPI.Controllers
 {
     [Route("api/[controller]")]
