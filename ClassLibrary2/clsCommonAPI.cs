@@ -9028,19 +9028,22 @@ namespace OpenXmlDLLDotnetFramework
 
             //copyTemplates();
 
-            //WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            string user = "";
 
-            //var x = identity.User;
+            WindowsIdentity identity = WindowsIdentity.GetCurrent();
 
-
-            string user = "testUser";
+            user = identity.Name.Replace("BI\\","").ToString();
 
           //  WindowsIdentity wId = WindowsIdentity.GetCurrent();
           //  var currentUser = wId.User.ToString();
 
-            //var userId = _taskLogging.getUserIdByName(currentUser);
+            var userId = _taskLogging.getUserIdByName(user);
 
-           // var statusId = _taskLogging.GetStatusIdByName("Queued");
+            var statusId = _taskLogging.GetStatusIdByName("Queued");
+
+            var taskId = _taskLogging.GetTaskIdByProjectAndUser(project, userId);
+
+            int subtaskId = 0;
 
             List<Task> taskArr = new List<Task>();
             List<int> guidList = new List<int>();
@@ -9049,26 +9052,31 @@ namespace OpenXmlDLLDotnetFramework
             {
                 foreach (var template in templates)
                 {
-                    //IndividualReportModel taskLog = new IndividualReportModel
-                    //{
-                    //    TemplateName = template,
-                    //    UserID = userId,
-                    //    StatusID = statusId,
-                    //    CreatedOn = DateTime.Now,
-                    //    StatusMessage = "Task Created"
-                    //};
+                    subtaskId = 0;
+
+                    IndividualReportModel taskLog = new IndividualReportModel
+                    {
+                        TemplateName = template,
+                        UserID = userId,
+                        StatusID = statusId,
+                        CreatedOn = DateTime.Now,
+                        StatusMessage = "Task Created",
+                       TaskID = taskId
+                    };
 
                     try
                     {
                         //Guid guid = Guid.NewGuid();
-                     //   _taskLogging.InsertIndividualReportTask(taskLog, currentUser,"Queued");
+                       subtaskId = _taskLogging.InsertIndividualReport(taskLog, user, "Queued");
 
                         APIWrapper wrapper = new APIWrapper(project, template, template, breakdown, HistoricalMeanType, HistoricalMeanDescription, finalTemplateName);
                         taskArr.Add(Task.Run(() => wrapper.Process()));
 
-                        //wrapper.TaskLogging = new TaskLog();
+                        _taskLogging.UpdateIndividualReport(subtaskId, "Processing","In Process");
+                        
 
-                     //   _taskLogging.UpdateStatusForIndividualReportTask(taskLog, "Process Running", "Processing");
+
+                       // _taskLogging.UpdateStatusForIndividualReportTask(taskLog, "Process Running", "Processing");
 
                         // _taskLogging.InsertTask(taskLog);
                         //_taskLogging.SetTaskStatusState(guid, "Queued", user);
@@ -9079,18 +9087,33 @@ namespace OpenXmlDLLDotnetFramework
                     }
                     catch (Exception ex)
                     {
-                //        _taskLogging.UpdateStatusForIndividualReportTask(taskLog, ex.Message, "Failed");
+                        _taskLogging.UpdateIndividualReport(subtaskId, "Fail", ex.Message);
+
+                        //        _taskLogging.UpdateStatusForIndividualReportTask(taskLog, ex.Message, "Failed");
 
                         //taskLog.CompletedOn = DateTime.UtcNow;
                         //wrapper._taskLogging.SetTaskStatusState(guid, "Fail", user);
                         //wrapper._taskLogging.MarkTaskAsCompleted(guid.ToString(), (DateTime)taskLog.CompletedOn, "Fail");
-                        throw;
+                        throw new Exception(ex.Message);
                     }
                 }
             }
+
             await Task.WhenAll(taskArr);
 
             int i = 0;
+
+            foreach(var t in taskArr)
+            {
+                if (t.Status.ToString() == "RanToCompletion")
+                {
+                    _taskLogging.UpdateIndividualReport(subtaskId, "Done", "Completed");
+                }
+                else
+                {
+                    _taskLogging.UpdateIndividualReport(subtaskId, "Fail", "");
+                }
+            }
 
             //foreach (var t in taskArr)
             //{

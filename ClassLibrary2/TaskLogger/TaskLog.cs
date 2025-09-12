@@ -204,16 +204,16 @@ namespace ClassLibrary2.TaskLogger
 
 
         //stored procedure individual insert
-        public int InsertIndividualReport(Guid taskId, int userId, int statusId, string templateName, string statusMessage)
+        public int InsertIndividualReport(IndividualReportModel taskLog, string templateName, string statusMessage)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_InsertIndividualReport", conn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@TaskID", taskId);
-                cmd.Parameters.AddWithValue("@UserID", userId);
-                cmd.Parameters.AddWithValue("@StatusID", statusId);
+                cmd.Parameters.AddWithValue("@TaskID", taskLog.TaskID);
+                cmd.Parameters.AddWithValue("@UserID", taskLog.UserID);
+                cmd.Parameters.AddWithValue("@StatusID", taskLog.StatusID);
                 cmd.Parameters.AddWithValue("@TemplateName", templateName);
                 cmd.Parameters.AddWithValue("@CreatedOn", DateTime.Now);
                 cmd.Parameters.AddWithValue("@StatusMessage", statusMessage);
@@ -226,8 +226,11 @@ namespace ClassLibrary2.TaskLogger
 
 
         //stored procedure individual update
-        public void UpdateIndividualReport(int subtaskId, int statusId, string statusMessage)
+        public void UpdateIndividualReport(int subtaskId, string currentStatus, string statusMessage)
         {
+
+            int statusId = GetStatusIdByName(currentStatus);
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_UpdateIndividualReport", conn))
             {
@@ -411,6 +414,7 @@ namespace ClassLibrary2.TaskLogger
                 }
             }
         }
+
 
 
         //get user ID by name

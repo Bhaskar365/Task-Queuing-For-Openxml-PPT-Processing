@@ -28,11 +28,11 @@ namespace ClassLibrary2.TaskLogger
 
         int GetStatusIdByName(string StatusName);
 
+        Guid GetTaskIdByProjectAndUser(string ProjectName, int UserID);
 
         //stored procedures
         //final insertion
         Guid InsertFinalReport(string projectName, int userId, int statusId);
-
 
 
         //final update
@@ -48,11 +48,11 @@ namespace ClassLibrary2.TaskLogger
 
 
         //individual insertion
-        int InsertIndividualReport(Guid taskId, int userId, int statusId, string templateName, string statusMessage);
+        int InsertIndividualReport(IndividualReportModel taskLog, string templateName, string statusMessage);
 
 
         //individual update
-        void UpdateIndividualReport(int subtaskId, int statusId, string statusMessage);
+        void UpdateIndividualReport(int subtaskId, string currentStatus, string statusMessage);
 
 
         //individual delete
