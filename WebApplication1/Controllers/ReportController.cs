@@ -10,6 +10,7 @@ using WebApplicationAPI.Queueing;
 using WebApplicationAPI.TaskLogging;
 using WebApplicationAPI.TaskTracking;
 using ClassLibrary1;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace WebApplicationAPI.Controllers
 {

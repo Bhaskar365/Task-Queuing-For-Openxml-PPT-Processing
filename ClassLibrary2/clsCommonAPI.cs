@@ -8878,6 +8878,11 @@
 //    }
 //}
 
+using ClassLibrary2.BackgroundServicesDLL;
+using ClassLibrary2.Models;
+using ClassLibrary2.TaskLogger;
+using ClassLibrary2.TaskTrackingDLL;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Presentation;
 using Newtonsoft.Json;
@@ -8889,14 +8894,15 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Principal;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using static OpenXmlDLLDotnetFramework.DLLTemplate;
 
-
 namespace OpenXmlDLLDotnetFramework
 {
+
     public class APIWrapper
     {
         string project = "";
@@ -8911,7 +8917,15 @@ namespace OpenXmlDLLDotnetFramework
         string genPath = "";
         //#pragma warning restore CS0414 // The field 'APIWrapper.genPath' is assigned but its value is never used
 
+        private ITaskLog _taskLogging = new TaskLog();
+
         public APIWrapper() { }
+
+        //public ITaskLog TaskLogging
+        //{
+        //    get => _taskLogging;
+        //    set => _taskLogging = value ?? throw new ArgumentNullException(nameof(TaskLogging));
+        //}
 
         public APIWrapper(string project,
                             string template,
@@ -9001,6 +9015,8 @@ namespace OpenXmlDLLDotnetFramework
             return path;
         }
 
+
+
         public async Task OpenXMLParallelProcess(string project,
                                             List<string> templates,
                                             List<string> breakdowns,
@@ -9012,27 +9028,95 @@ namespace OpenXmlDLLDotnetFramework
 
             //copyTemplates();
 
+            //WindowsIdentity identity = WindowsIdentity.GetCurrent();
+
+            //var x = identity.User;
+
+
+            string user = "testUser";
 
             List<Task> taskArr = new List<Task>();
+            List<Guid> guidList = new List<Guid>();
 
             foreach (var breakdown in breakdowns)
             {
                 foreach (var template in templates)
                 {
+                    Guid guid = Guid.NewGuid();
 
-                    APIWrapper wrapper = new APIWrapper(project, template, template, breakdown, HistoricalMeanType, HistoricalMeanDescription, finalTemplateName);
-                    taskArr.Add(Task.Run(() => wrapper.Process()));
+                    TaskLogDLL taskLog = new TaskLogDLL
+                    {
+                        TaskId = guid,
+                        CreatedOn = DateTime.UtcNow,
+                        ProjectType = template,
+                        CreatedBy = user,
+                        CurrentStatus = "Queued"
+                    };
+
+                    try
+                    {
+                        //Guid guid = Guid.NewGuid();
+
+                        APIWrapper wrapper = new APIWrapper(project, template, template, breakdown, HistoricalMeanType, HistoricalMeanDescription, finalTemplateName);
+                        taskArr.Add(Task.Run(() => wrapper.Process()));
+
+                        //wrapper.TaskLogging = new TaskLog();
+
+                        WindowsIdentity currentUser = WindowsIdentity.GetCurrent();
+                        var u = currentUser.User;
+
+                        _taskLogging.InsertTask(taskLog);
+                        _taskLogging.SetTaskStatusState(guid, "Queued", user);
+
+
+                        guidList.Add(guid);
+
+                        //taskLog.CompletedOn = DateTime.UtcNow;
+                        //wrapper._taskLogging.SetTaskStatusState(guid, "Done", user);
+                        //wrapper._taskLogging.MarkTaskAsCompleted(guid.ToString(), (DateTime)taskLog.CompletedOn, "Done");
+                    }
+                    catch (Exception)
+                    {
+                        //taskLog.CompletedOn = DateTime.UtcNow;
+                        //wrapper._taskLogging.SetTaskStatusState(guid, "Fail", user);
+                        //wrapper._taskLogging.MarkTaskAsCompleted(guid.ToString(), (DateTime)taskLog.CompletedOn, "Fail");
+                        throw;
+                    }
                 }
             }
             await Task.WhenAll(taskArr);
 
+            int i = 0;
 
-
-            //adding the template to the final
-
-
-
+            //foreach (var t in taskArr)
+            //{
+            //    if (t.Status.ToString() == "RanToCompletion")
+            //    {
+            //        _taskLogging.SetTaskStatusState(guidList[i], "Done", user);
+            //        _taskLogging.MarkTaskAsCompleted(guidList[i].ToString(), DateTime.UtcNow, "Done");
+            //    }
+            //    else
+            //    {
+            //        _taskLogging.SetTaskStatusState(guidList[i], "Fail", user);
+            //        _taskLogging.MarkTaskAsCompleted(guidList[i].ToString(), DateTime.UtcNow, "Fail");
+            //    }
+            //    i++;
+            //}
         }
+
+
+        //foreach(var tasks in taskArr)
+        //{
+        //    if(tasks.Status.ToString() == "RanToCompletion")
+        //    {
+
+        //    }
+        //}
+
+        //adding the template to the final
+
+    
+        
 
 
 

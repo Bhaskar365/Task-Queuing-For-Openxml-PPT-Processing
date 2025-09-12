@@ -12,6 +12,10 @@
 @using SharedModels.DTO
 @using System.Xml.Linq
 @using System.Data
+
+
+
+@using System.Security.Principal
 @using prjData
 
 @inject ReportProcessService ReportService;
@@ -72,8 +76,8 @@ else
 
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="@project"
-                                                   Variant="Variant.Outlined"
-                                                   FitContent=True>
+                                        Variant="Variant.Outlined"
+                                        FitContent=True>
                                             @if (!isContentLoaded)
                                             {
                                                 <MudSelectItem Value="@(project)">
@@ -100,8 +104,8 @@ else
                                     </MudItem>
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="DSITextValue"
-                                                   Variant="Variant.Outlined"
-                                                   FitContent=True>
+                                        Variant="Variant.Outlined"
+                                        FitContent=True>
                                             <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
                                         </MudSelect>
                                     </MudItem>
@@ -223,8 +227,8 @@ else
 
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="finalPPTOption"
-                                                   Variant="Variant.Outlined"
-                                                   FitContent=True ShrinkLabel>
+                                        Variant="Variant.Outlined"
+                                        FitContent=True ShrinkLabel>
                                             @foreach (var state in _states)
                                             {
                                                 <MudSelectItem Value="state">@state</MudSelectItem>
@@ -242,16 +246,16 @@ else
                                     @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
                                     <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
                                         <MudCheckBox @bind-Value="Size_CheckBox1"
-                                                     Size="Size.Small"
-                                                     Color="Color.Primary"
-                                                     Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                        Size="Size.Small"
+                                        Color="Color.Primary"
+                                        Class="custom-label-historical-mean-checkbox"></MudCheckBox>
                                         <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
                                     </MudItem>
 
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="SpecificHistMean"
-                                                   Variant="Variant.Outlined"
-                                                   FitContent=True Disabled>
+                                        Variant="Variant.Outlined"
+                                        FitContent=True Disabled>
                                             <MudSelectItem Value="@SpecificHistMean"></MudSelectItem>
                                         </MudSelect>
                                     </MudItem>
@@ -262,10 +266,10 @@ else
                             @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
                             <MudButton Variant="Variant.Filled"
-                                       Class="generateBtnClass buttonload"
-                                       @onclick="ProcessDLL"
-                                       disabled="!isContentLoaded"
-                                       Color="@buttonColor">
+                            Class="generateBtnClass buttonload"
+                            @onclick="ProcessDLL"
+                            disabled="!isContentLoaded"
+                            Color="@buttonColor">
                                 @*  @if (currentState == ProcessState.Generating)
                             {
                                 <span> Generating...</span>
@@ -444,9 +448,9 @@ else
                                     </div>
 
                                     <MudButton Variant="Variant.Filled"
-                                               Size="Size.Small"
-                                               FullWidth="true"
-                                               Class="btnClass">
+                                    Size="Size.Small"
+                                    FullWidth="true"
+                                    Class="btnClass">
                                         Select All/Unselect All
                                     </MudButton>
 
@@ -457,9 +461,9 @@ else
                                     </div>
 
                                     <MudButton Variant="Variant.Filled"
-                                               Size="Size.Small"
-                                               FullWidth="true"
-                                               Class="btnClass">
+                                    Size="Size.Small"
+                                    FullWidth="true"
+                                    Class="btnClass">
                                         Select All/Unselect All
                                     </MudButton>
                                 </MudPaper>
@@ -521,25 +525,11 @@ else
 
 
 
-
-
-@* 
-<div>
-    <p>@StartTime.ToString("dd/MM/yyyy HH:mm:ss")</p>
-    <p>@EndTime.ToString("dd/MM/yyyy HH:mm:ss")</p>
-</div>
-
-@if (taskIdList.Count > 0)
-{
-    @foreach (var l in taskIdList)
-    {
-        <div>@l</div>
-    }
-}
- *@
-
+@inject Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider AuthenticationStateProvider
 
 @code {
+
+
 
 
     string breakdownErrorMessage = "";
@@ -652,10 +642,18 @@ else
 
     bool isMainContentLoaded = false;
 
+    string user = "";
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
+
+            // var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            // var userRes = authState.User;
+
+            // user = userRes.Identity.Name.Replace("BI\\", "");
+
             var apiCall = await api.CallAPI("MEADOW", "Fit to Concept", "Fit to Concept", "OVERALL", "", "");
 
             chartPageList = getProjectChartDisplayNames("MEADOW");
