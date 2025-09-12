@@ -832,18 +832,18 @@ namespace WebApplicationAPI.Controllers
                         };
 
 
-                        _taskLogging.InsertTask(taskLog, connectionString!);
-                        _taskLogging.SetTaskStatusState(request.Request!.TaskId, "Processing", connectionString!, user);
+                      //  _taskLogging.InsertTask(taskLog, connectionString!);
+                      //  _taskLogging.SetTaskStatusState(request.Request!.TaskId, "Processing", connectionString!, user);
 
                         //dll call - individual chart generation
                         await apiWrapperDllClass.OpenXMLParallelProcess(request.Request!.project, request.Request!.templates, request.Request!.breakdowns, request.Request!.HistoricalMeanType, request.Request!.HistoricalMeanDescription, request.FinalPPTSelected);
 
-                        taskLog.CompletedOn = DateTime.UtcNow;
-                        _taskLogging.MarkTaskAsCompleted(request.Request!.TaskId.ToString(), (DateTime)taskLog.CompletedOn, connectionString!, "Done");
+                      //  taskLog.CompletedOn = DateTime.UtcNow;
+                      //  _taskLogging.MarkTaskAsCompleted(request.Request!.TaskId.ToString(), (DateTime)taskLog.CompletedOn, connectionString!, "Done");
 
-                        _tracker.SetStatus(request.Request!.TaskId, "Done");
+                       // _tracker.SetStatus(request.Request!.TaskId, "Done");
 
-                        _taskLogging.SetTaskStatusState(request.Request!.TaskId, "Done", connectionString!, user);
+                       // _taskLogging.SetTaskStatusState(request.Request!.TaskId, "Done", connectionString!, user);
 
                     }
                     catch (Exception ex)

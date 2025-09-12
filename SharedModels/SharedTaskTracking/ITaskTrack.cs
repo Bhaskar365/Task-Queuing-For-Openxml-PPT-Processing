@@ -1,35 +1,17 @@
-﻿using ClassLibrary2.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassLibrary2.TaskLogger
+namespace SharedModels.SharedTaskTracking
 {
-    public interface ITaskLog
+    public interface ITaskTrack
     {
-        void InsertTask(TaskLogDLL task);
-
-        void MarkTaskAsCompleted(string taskId, DateTime completedTime, string status);
-
-        void SetTaskStatusState(Guid taskId, string status, string createdBy);
-
-        Task<IEnumerable<TaskLogDLL>> GetUnfinishedTasks(string createdBy);
-
-        Task<IEnumerable<TaskLogDLL>> GetAllData();
-
-
-        void InsertIndividualReportTask(IndividualReportModel report, string userName, string currentStatus);
-
-        void UpdateStatusForIndividualReportTask(IndividualReportModel report, string StatusMessage, string currentStatus);
-
-        int getUserIdByName(string UserName);
-
-        int GetStatusIdByName(string StatusName);
-
-
         //stored procedures
+
+        ////////////////////////////////////////////////////////final reports//////////////////////////////////////////////////////
+
         //final insertion
         Guid InsertFinalReport(string projectName, int userId, int statusId);
 
@@ -57,7 +39,6 @@ namespace ClassLibrary2.TaskLogger
 
         //individual delete
         void DeleteIndividualReport(int subtaskId);
-
 
     }
 }

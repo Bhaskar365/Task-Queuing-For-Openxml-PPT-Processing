@@ -1,23 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassLibrary2.Models
+namespace SharedModels.DTO
 {
-    public class TaskLogDLL
+    public class Models
     {
-        [Key]
-        public int Id { get; set; }
-        public string ProjectType { get; set; } = string.Empty;
-        public Guid TaskId { get; set; }
-        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
-        public DateTime? CompletedOn { get; set; } = null;
-        public string CreatedBy { get; set; } = string.Empty;
-        public string CurrentStatus { get; set; } = string.Empty;
+
     }
 
     public class IndividualReportModel
@@ -44,7 +37,7 @@ namespace ClassLibrary2.Models
 
     }
 
-    public class UsersModel 
+    public class UsersModel
     {
         [Key]
         public int UserID { get; set; }
@@ -57,7 +50,7 @@ namespace ClassLibrary2.Models
     public class UserRoleModel
     {
         public int RoleID { get; set; }
-    
+
         public string RoleName { get; set; }
     }
 

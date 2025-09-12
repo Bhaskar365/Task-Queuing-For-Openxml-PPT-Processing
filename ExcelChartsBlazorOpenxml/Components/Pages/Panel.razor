@@ -5,6 +5,7 @@
 @implements IDisposable;
 
 @using ExcelChartsBlazorOpenxml.Services
+@using ExcelChartsBlazorOpenxml.SharedTaskTracking
 @using MudBlazor
 @using Newtonsoft.Json
 @using OpenXmlDLLDotnetFramework
@@ -13,7 +14,7 @@
 @using System.Xml.Linq
 @using System.Data
 
-
+@inject ITaskTrackingSp _taskLog;
 
 @using System.Security.Principal
 @using prjData
@@ -654,9 +655,12 @@ else
 
             // user = userRes.Identity.Name.Replace("BI\\", "");
 
-            var apiCall = await api.CallAPI("MEADOW", "Fit to Concept", "Fit to Concept", "OVERALL", "", "");
+            WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
+            user = windowsIdentity.Name.Replace("BI\\", "").ToString();
 
-            chartPageList = getProjectChartDisplayNames("MEADOW");
+            var apiCall = await api.CallAPI("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", "");
+
+            chartPageList = getProjectChartDisplayNames("RACKEM");
 
             Console.Write(apiCall);
 
@@ -866,6 +870,9 @@ else
 
             taskIdList = new List<Guid>();
 
+
+
+
             var res = new ReportGenerationRequestDLL
                 {
                     project = project!,
@@ -876,47 +883,52 @@ else
                     TaskId = Guid.NewGuid()
                 };
 
+            _taskLog.InsertFinalReport(res.project, user, "Queued");
+
             var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(res, finalPPTOption!);
 
 
-            foreach (var projectEl in selectedPages)
-            {
-                var request = new ReportGenerationRequestDLL
-                    {
-                        project = projectEl.ToString(),
-                        TaskId = Guid.NewGuid()
-                    };
+            // foreach (var projectEl in selectedPages)
+            // {
+            //     var request = new ReportGenerationRequestDLL
+            //         {
+            //             project = projectEl.ToString(),
+            //             TaskId = Guid.NewGuid()
+            //         };
 
-                taskIdList.Add(request.TaskId);
+            //     taskIdList.Add(request.TaskId);
 
-                reportStatuses.Add(new ReportStatus
-                    {
-                        ProjectName = request.project,
-                        TaskId = request.TaskId,
-                        Status = "Queued"
-                    });
-                _ = PollStatusAsync(taskId);
-            }
+            //     reportStatuses.Add(new ReportStatus
+            //         {
+            //             ProjectName = request.project,
+            //             TaskId = request.TaskId,
+            //             Status = "Queued"
+            //         });
+            //     _ = PollStatusAsync(taskId);
+            // }
 
             // StateHasChanged();
 
             var result = await fitToConceptService.SendDLLMergeRequestWithPanel(res, finalPPTOption!);
-            //await Task.Delay(40000);
+            await Task.Delay(40000);
 
             if (result == "Successful")
             {
                 buttonColor = Color.Tertiary;
                 message = "Merge Successful";
+                _taskLog.UpdateFinalReport("Success",res.project,user);
             }
             if (result == "Bad Request")
             {
                 buttonColor = Color.Warning;
                 message = "Something went wrong";
+                _taskLog.UpdateFinalReport("Bad Request", res.project, user);
             }
             if (result == "Fail")
             {
                 buttonColor = Color.Error;
                 message = "Merge Insuccessful";
+                _taskLog.UpdateFinalReport("Fail", res.project, user);
             }
 
 

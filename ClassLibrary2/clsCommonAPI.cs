@@ -9035,48 +9035,52 @@ namespace OpenXmlDLLDotnetFramework
 
             string user = "testUser";
 
+          //  WindowsIdentity wId = WindowsIdentity.GetCurrent();
+          //  var currentUser = wId.User.ToString();
+
+            //var userId = _taskLogging.getUserIdByName(currentUser);
+
+           // var statusId = _taskLogging.GetStatusIdByName("Queued");
+
             List<Task> taskArr = new List<Task>();
-            List<Guid> guidList = new List<Guid>();
+            List<int> guidList = new List<int>();
 
             foreach (var breakdown in breakdowns)
             {
                 foreach (var template in templates)
                 {
-                    Guid guid = Guid.NewGuid();
-
-                    TaskLogDLL taskLog = new TaskLogDLL
-                    {
-                        TaskId = guid,
-                        CreatedOn = DateTime.UtcNow,
-                        ProjectType = template,
-                        CreatedBy = user,
-                        CurrentStatus = "Queued"
-                    };
+                    //IndividualReportModel taskLog = new IndividualReportModel
+                    //{
+                    //    TemplateName = template,
+                    //    UserID = userId,
+                    //    StatusID = statusId,
+                    //    CreatedOn = DateTime.Now,
+                    //    StatusMessage = "Task Created"
+                    //};
 
                     try
                     {
                         //Guid guid = Guid.NewGuid();
+                     //   _taskLogging.InsertIndividualReportTask(taskLog, currentUser,"Queued");
 
                         APIWrapper wrapper = new APIWrapper(project, template, template, breakdown, HistoricalMeanType, HistoricalMeanDescription, finalTemplateName);
                         taskArr.Add(Task.Run(() => wrapper.Process()));
 
                         //wrapper.TaskLogging = new TaskLog();
 
-                        WindowsIdentity currentUser = WindowsIdentity.GetCurrent();
-                        var u = currentUser.User;
+                     //   _taskLogging.UpdateStatusForIndividualReportTask(taskLog, "Process Running", "Processing");
 
-                        _taskLogging.InsertTask(taskLog);
-                        _taskLogging.SetTaskStatusState(guid, "Queued", user);
-
-
-                        guidList.Add(guid);
+                        // _taskLogging.InsertTask(taskLog);
+                        //_taskLogging.SetTaskStatusState(guid, "Queued", user);
 
                         //taskLog.CompletedOn = DateTime.UtcNow;
                         //wrapper._taskLogging.SetTaskStatusState(guid, "Done", user);
                         //wrapper._taskLogging.MarkTaskAsCompleted(guid.ToString(), (DateTime)taskLog.CompletedOn, "Done");
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                //        _taskLogging.UpdateStatusForIndividualReportTask(taskLog, ex.Message, "Failed");
+
                         //taskLog.CompletedOn = DateTime.UtcNow;
                         //wrapper._taskLogging.SetTaskStatusState(guid, "Fail", user);
                         //wrapper._taskLogging.MarkTaskAsCompleted(guid.ToString(), (DateTime)taskLog.CompletedOn, "Fail");

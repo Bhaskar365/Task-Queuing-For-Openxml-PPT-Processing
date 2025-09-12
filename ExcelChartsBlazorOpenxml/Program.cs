@@ -1,5 +1,6 @@
 using ExcelChartsBlazorOpenxml.Components;
 using ExcelChartsBlazorOpenxml.Services;
+using ExcelChartsBlazorOpenxml.SharedTaskTracking;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,8 @@ builder.Services.AddRazorComponents()
 builder.Services.AddMudServices();
 
 builder.Services.AddScoped<ReportProcessService>();
+
+builder.Services.AddScoped<ITaskTrackingSp,TaskTrackingSp>();
 
 builder.Services.AddScoped<IFitToConceptService, FitToConceptService>();    
 
