@@ -498,40 +498,50 @@ else
         <MudExpansionPanel Text="Panel One" Expanded="true">
 
 
-            @if(currentTaskModel.Count ==0 || currentTaskModel==null) 
+            @if (currentTaskModel.Count == 0 || currentTaskModel == null)
             {
                 <div>No data</div>
             }
             else
             {
-                @foreach(var t in currentTaskModel)
-                {
-                    <div>@t.SubtaskId</div>
-                    <div>@t.TaskID</div>
-                    <div>@t.UserID</div>
-                    <div>@t.StatusMessage</div>
-                }
+                <MudTable Items="@currentTaskModel" Dense="true" Striped="true" Breakpoint="Breakpoint.None">
+                    <ToolBarContent>
+                        <MudText Typo="Typo.h6" Class="taskLogHeader">Task Logs</MudText>
+                    </ToolBarContent>
+                    <HeaderContent>
+                        <MudTh Class="tableBodyStyling">Subtask Id</MudTh>
+                        <MudTh Class="tableTaskColumnBodyStyling">User</MudTh>
+                        <MudTh Class="tableTaskColumnBodyStyling">Template</MudTh>
+                        <MudTh Class="tableTaskColumnBodyStyling">Created On</MudTh>
+                        <MudTh Class="tableTaskColumnBodyStyling">Completed On</MudTh>
+                        <MudTh Class="tableTaskColumnBodyStyling">Status</MudTh>
+                        <MudTh Class="tableTaskColumnBodyStyling">Remarks</MudTh>
+                    </HeaderContent>
+
+                    <RowTemplate>
+                        <MudTd Class="tableTaskColumnBodyStyling"> @context.SubtaskId</MudTd>
+                        <MudTd Class="tableBodyStyling">@context.UserID</MudTd>
+                        <MudTd Class="tableBodyStyling">@context.TemplateName</MudTd>
+                        <MudTd Class="tableBodyStyling">@context.CreatedOn</MudTd>
+                        <MudTd Class="tableBodyStyling">@context.CompletedOn</MudTd>
+                        <MudTd Class="tableBodyStyling">@context.StatusID</MudTd>
+
+                        @if(@context.StatusMessage == "In Progress")
+                        {
+                            <td class="statusTableEl">
+                                <div class="text-warning bg-dark statusText">@context.StatusMessage</div>
+                                <div class="spinner-border  spinner-border-sm text-info" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </td>
+                        }
+                        else 
+                        {
+                            <MudTd Class="tableBodyStyling">@context.StatusMessage</MudTd>
+                        }
+                    </RowTemplate>
+                </MudTable>
             }
-
-
-            @*     <MudTable Items="@reportStatuses" Dense="true" Striped="true" Breakpoint="Breakpoint.None">
-                <ToolBarContent>
-                    <MudText Typo="Typo.h6" Class="taskLogHeader">Task Logs</MudText>
-                </ToolBarContent>
-                <HeaderContent>
-                    <MudTh Class="tableTaskColumnBodyStyling">TaskId</MudTh>
-                    <MudTh Class="tableBodyStyling">ProjectType</MudTh>
-                    <MudTh></MudTh>
-                </HeaderContent>
-
-                <RowTemplate>
-                    <MudTd Class="tableTaskColumnBodyStyling">
-                        <span class="taskIdText">@context.TaskId</span>
-                    </MudTd>
-                    <MudTd Class="tableBodyStyling">@context.ProjectName</MudTd>
-                    <MudTd>@context.Status</MudTd>
-                </RowTemplate>
-            </MudTable> *@
 
         </MudExpansionPanel>
     </MudExpansionPanels>
@@ -710,6 +720,7 @@ else
 
             ReportService.OnChange += StateHasChanged;
             StartHotReload();
+            StateHasChanged();
         }
         catch (Exception)
         {
@@ -851,7 +862,8 @@ else
                await LoadIndividualLogs();
                StateHasChanged();
            });
-       }, null, 0, 1000);
+       }, null, 0, 200);
+        StateHasChanged();
     }
 
     public async Task LoadIndividualLogs()
@@ -864,7 +876,7 @@ else
     {
         try
         {
-            currentTaskId=new Guid();
+            currentTaskId = new Guid();
 
             ReportService.Reset();
 
@@ -932,7 +944,7 @@ else
             {
                 buttonColor = Color.Tertiary;
                 message = "Merge Successful";
-                _taskLog.UpdateFinalReport("Success",res.project,user);
+                _taskLog.UpdateFinalReport("Success", res.project, user);
             }
             if (result == "Bad Request")
             {
