@@ -9032,10 +9032,7 @@ namespace OpenXmlDLLDotnetFramework
 
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
 
-            user = identity.Name.Replace("BI\\","").ToString();
-
-          //  WindowsIdentity wId = WindowsIdentity.GetCurrent();
-          //  var currentUser = wId.User.ToString();
+            user = identity.Name.Replace("BI\\", "").ToString();
 
             var userId = _taskLogging.getUserIdByName(user);
 
@@ -9046,7 +9043,7 @@ namespace OpenXmlDLLDotnetFramework
             int subtaskId = 0;
 
             List<Task> taskArr = new List<Task>();
-            List<int> guidList = new List<int>();
+            List<int> subTaskIDList = new List<int>();
 
             foreach (var breakdown in breakdowns)
             {
@@ -9061,39 +9058,25 @@ namespace OpenXmlDLLDotnetFramework
                         StatusID = statusId,
                         CreatedOn = DateTime.Now,
                         StatusMessage = "Task Created",
-                       TaskID = taskId
+                        TaskID = taskId
                     };
 
                     try
                     {
-                        //Guid guid = Guid.NewGuid();
-                       subtaskId = _taskLogging.InsertIndividualReport(taskLog, user, "Queued");
+                        subtaskId = _taskLogging.InsertIndividualReport(taskLog, taskLog.TemplateName, "Queued");
+
+                        subTaskIDList.Add(subtaskId);
 
                         APIWrapper wrapper = new APIWrapper(project, template, template, breakdown, HistoricalMeanType, HistoricalMeanDescription, finalTemplateName);
                         taskArr.Add(Task.Run(() => wrapper.Process()));
 
-                        _taskLogging.UpdateIndividualReport(subtaskId, "Processing","In Process");
-                        
+                        _taskLogging.UpdateIndividualReport(subtaskId, "Processing", "In Process");
 
-
-                       // _taskLogging.UpdateStatusForIndividualReportTask(taskLog, "Process Running", "Processing");
-
-                        // _taskLogging.InsertTask(taskLog);
-                        //_taskLogging.SetTaskStatusState(guid, "Queued", user);
-
-                        //taskLog.CompletedOn = DateTime.UtcNow;
-                        //wrapper._taskLogging.SetTaskStatusState(guid, "Done", user);
-                        //wrapper._taskLogging.MarkTaskAsCompleted(guid.ToString(), (DateTime)taskLog.CompletedOn, "Done");
                     }
                     catch (Exception ex)
                     {
                         _taskLogging.UpdateIndividualReport(subtaskId, "Fail", ex.Message);
 
-                        //        _taskLogging.UpdateStatusForIndividualReportTask(taskLog, ex.Message, "Failed");
-
-                        //taskLog.CompletedOn = DateTime.UtcNow;
-                        //wrapper._taskLogging.SetTaskStatusState(guid, "Fail", user);
-                        //wrapper._taskLogging.MarkTaskAsCompleted(guid.ToString(), (DateTime)taskLog.CompletedOn, "Fail");
                         throw new Exception(ex.Message);
                     }
                 }
@@ -9101,50 +9084,33 @@ namespace OpenXmlDLLDotnetFramework
 
             await Task.WhenAll(taskArr);
 
+            Console.WriteLine(taskArr);
+
             int i = 0;
 
-            foreach(var t in taskArr)
+            foreach (var t in taskArr)
             {
-                if (t.Status.ToString() == "RanToCompletion")
+                try
                 {
-                    _taskLogging.UpdateIndividualReport(subtaskId, "Done", "Completed");
+                    if (t.Status.ToString() == "RanToCompletion")
+                    {
+                        _taskLogging.UpdateIndividualReport(subTaskIDList[i], "Success", "Completed");
+                    }
+                    else
+                    {
+                        _taskLogging.UpdateIndividualReport(subTaskIDList[i], "Fail", t.Status.ToString());
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    _taskLogging.UpdateIndividualReport(subtaskId, "Fail", "");
+                    _taskLogging.UpdateIndividualReport(subTaskIDList[i], "Fail", ex.Message);
+                    throw;
                 }
+                i++;
             }
-
-            //foreach (var t in taskArr)
-            //{
-            //    if (t.Status.ToString() == "RanToCompletion")
-            //    {
-            //        _taskLogging.SetTaskStatusState(guidList[i], "Done", user);
-            //        _taskLogging.MarkTaskAsCompleted(guidList[i].ToString(), DateTime.UtcNow, "Done");
-            //    }
-            //    else
-            //    {
-            //        _taskLogging.SetTaskStatusState(guidList[i], "Fail", user);
-            //        _taskLogging.MarkTaskAsCompleted(guidList[i].ToString(), DateTime.UtcNow, "Fail");
-            //    }
-            //    i++;
-            //}
         }
 
-
-        //foreach(var tasks in taskArr)
-        //{
-        //    if(tasks.Status.ToString() == "RanToCompletion")
-        //    {
-
-        //    }
-        //}
-
         //adding the template to the final
-
-    
-        
-
 
 
         public Task<clsFinalPageNumberRange> getPPTFinalPageSettings(string strFinalReport, string year, string chartName)
