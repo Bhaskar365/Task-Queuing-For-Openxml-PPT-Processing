@@ -497,7 +497,24 @@ else
     <MudExpansionPanels>
         <MudExpansionPanel Text="Panel One" Expanded="true">
 
-            <MudTable Items="@reportStatuses" Dense="true" Striped="true" Breakpoint="Breakpoint.None">
+
+            @if(currentTaskModel.Count ==0 || currentTaskModel==null) 
+            {
+                <div>No data</div>
+            }
+            else
+            {
+                @foreach(var t in currentTaskModel)
+                {
+                    <div>@t.SubtaskId</div>
+                    <div>@t.TaskID</div>
+                    <div>@t.UserID</div>
+                    <div>@t.StatusMessage</div>
+                }
+            }
+
+
+            @*     <MudTable Items="@reportStatuses" Dense="true" Striped="true" Breakpoint="Breakpoint.None">
                 <ToolBarContent>
                     <MudText Typo="Typo.h6" Class="taskLogHeader">Task Logs</MudText>
                 </ToolBarContent>
@@ -514,7 +531,7 @@ else
                     <MudTd Class="tableBodyStyling">@context.ProjectName</MudTd>
                     <MudTd>@context.Status</MudTd>
                 </RowTemplate>
-            </MudTable>
+            </MudTable> *@
 
         </MudExpansionPanel>
     </MudExpansionPanels>
@@ -529,9 +546,6 @@ else
 @inject Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider AuthenticationStateProvider
 
 @code {
-
-
-
 
     string breakdownErrorMessage = "";
     string pagesErrorMessage = "";
@@ -645,11 +659,15 @@ else
 
     string user = "";
 
+    Guid currentTaskId { get; set; }
+
+    List<IndividualReportModel> currentTaskModel = new List<IndividualReportModel>();
+
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
-
             // var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             // var userRes = authState.User;
 
@@ -691,7 +709,7 @@ else
             isMainContentLoaded = true;
 
             ReportService.OnChange += StateHasChanged;
-
+            StartHotReload();
         }
         catch (Exception)
         {
@@ -824,11 +842,30 @@ else
         lstTestnames = testnamesList;
     }
 
+    private void StartHotReload()
+    {
+        var timer = new System.Threading.Timer((_) =>
+       {
+           InvokeAsync(async () =>
+           {
+               await LoadIndividualLogs();
+               StateHasChanged();
+           });
+       }, null, 0, 1000);
+    }
+
+    public async Task LoadIndividualLogs()
+    {
+        currentTaskModel = _taskLog.GetIndividualUserReport(currentTaskId);
+        StateHasChanged();
+    }
 
     private async Task ProcessDLL()
     {
         try
         {
+            currentTaskId=new Guid();
+
             ReportService.Reset();
 
             var selectedPages = chartPageList.Where(x => x.isChecked).Select(x => x.strPageName).ToList();
@@ -870,9 +907,6 @@ else
 
             taskIdList = new List<Guid>();
 
-
-
-
             var res = new ReportGenerationRequestDLL
                 {
                     project = project!,
@@ -883,33 +917,15 @@ else
                     TaskId = Guid.NewGuid()
                 };
 
-            _taskLog.InsertFinalReport(res.project, user, "Queued");
-
-            var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(res, finalPPTOption!);
+            currentTaskId = _taskLog.InsertFinalReport(res.project, user, "Queued");
 
 
-            // foreach (var projectEl in selectedPages)
-            // {
-            //     var request = new ReportGenerationRequestDLL
-            //         {
-            //             project = projectEl.ToString(),
-            //             TaskId = Guid.NewGuid()
-            //         };
-
-            //     taskIdList.Add(request.TaskId);
-
-            //     reportStatuses.Add(new ReportStatus
-            //         {
-            //             ProjectName = request.project,
-            //             TaskId = request.TaskId,
-            //             Status = "Queued"
-            //         });
-            //     _ = PollStatusAsync(taskId);
-            // }
-
-            // StateHasChanged();
+            await fitToConceptService.GenerateReportUsingDLLAsync(res, finalPPTOption!);
 
             var result = await fitToConceptService.SendDLLMergeRequestWithPanel(res, finalPPTOption!);
+
+            Console.WriteLine(123);
+
             await Task.Delay(40000);
 
             if (result == "Successful")
@@ -946,6 +962,7 @@ else
         }
         catch (Exception)
         {
+            _taskLog.UpdateFinalReport("Fail", this.project!, user);
             throw;
         }
 

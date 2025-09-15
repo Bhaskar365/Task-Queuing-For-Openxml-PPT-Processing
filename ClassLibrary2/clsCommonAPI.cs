@@ -9084,8 +9084,6 @@ namespace OpenXmlDLLDotnetFramework
 
             await Task.WhenAll(taskArr);
 
-            Console.WriteLine(taskArr);
-
             int i = 0;
 
             foreach (var t in taskArr)

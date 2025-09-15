@@ -1,4 +1,6 @@
-﻿namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
+﻿using SharedModels.DTO;
+
+namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
 {
     public interface ITaskTrackingSp
     {
@@ -36,5 +38,9 @@
 
 
         Guid GetTaskIdByProjectAndUser(string ProjectName, int UserID);
+
+
+        List<IndividualReportModel> GetIndividualUserReport(Guid taskId);
+
     }
 }

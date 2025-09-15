@@ -23,8 +23,6 @@ builder.Services.AddHttpClient<IFitToConceptService,FitToConceptService>(client 
     client.Timeout = TimeSpan.FromMinutes(20);
 });
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

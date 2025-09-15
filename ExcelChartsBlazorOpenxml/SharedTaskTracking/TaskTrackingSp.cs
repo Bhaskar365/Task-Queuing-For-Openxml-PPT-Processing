@@ -1,5 +1,6 @@
 ﻿using System.Data.SqlClient;
 using System.Data;
+using SharedModels.DTO;
 
 namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
 {
@@ -212,7 +213,40 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
             }
         }
 
+        public List<IndividualReportModel> GetIndividualUserReport(Guid taskId)
+        {
+            var reports = new List<IndividualReportModel>();
 
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetIndividualUserReports", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@TaskID", taskId);
+
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        reports.Add(new IndividualReportModel
+                        {
+                            SubtaskId = reader.GetInt32(reader.GetOrdinal("SubtaskId")),
+                            TaskID = reader.GetGuid(reader.GetOrdinal("TaskID")),
+                            UserID = reader.GetInt16(reader.GetOrdinal("UserID")),
+                            StatusID = reader.GetInt16(reader.GetOrdinal("StatusID")),
+                            TemplateName = reader.GetString(reader.GetOrdinal("TemplateName")),
+                            CreatedOn = reader.GetDateTime(reader.GetOrdinal("CreatedOn")),
+                            CompletedOn = reader.GetDateTime(reader.GetOrdinal("CompletedOn")),
+                            StatusMessage = reader.IsDBNull(reader.GetOrdinal("StatusMessage"))
+                                            ? null
+                                            : reader.GetString(reader.GetOrdinal("StatusMessage"))
+                        });
+                    }
+                }
+            }
+
+            return reports;
+        }
     }
 }
 
