@@ -968,15 +968,24 @@ namespace WebApplicationAPI.Controllers
 
                 foreach (string breakdown in request.Request.breakdowns!)
                 {
-                    string x = await apiWrapperDllClass.addChartsToFinalTemplate1(project, request.Request.templates, request.FinalPPTSelected, breakdown);
-                    return Ok(x);
+                    try
+                    {
+                        string x = await apiWrapperDllClass.addChartsToFinalTemplate1(project, request.Request.templates, request.FinalPPTSelected, breakdown);
+                        return Ok(x);
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+
+                    
                 }
 
                 return NotFound();
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 

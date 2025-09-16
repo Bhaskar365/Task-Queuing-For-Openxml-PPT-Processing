@@ -37,6 +37,10 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
         void DeleteIndividualReport(int subtaskId);
 
 
+        // get user  name from id stored procedure
+        string GetUserNameFromIdSp(int userId);
+
+
         Guid GetTaskIdByProjectAndUser(string ProjectName, int UserID);
 
         Guid GetTaskIdByProjectAndUserSp(string projectName, int userId);

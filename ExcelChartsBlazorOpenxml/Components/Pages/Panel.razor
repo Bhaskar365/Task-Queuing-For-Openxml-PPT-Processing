@@ -77,8 +77,8 @@ else
 
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="@project"
-                                                   Variant="Variant.Outlined"
-                                                   FitContent=True>
+                                        Variant="Variant.Outlined"
+                                        FitContent=True>
                                             @if (!isContentLoaded)
                                             {
                                                 <MudSelectItem Value="@(project)">
@@ -105,8 +105,8 @@ else
                                     </MudItem>
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="DSITextValue"
-                                                   Variant="Variant.Outlined"
-                                                   FitContent=True>
+                                        Variant="Variant.Outlined"
+                                        FitContent=True>
                                             <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
                                         </MudSelect>
                                     </MudItem>
@@ -228,8 +228,8 @@ else
 
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="finalPPTOption"
-                                                   Variant="Variant.Outlined"
-                                                   FitContent=True ShrinkLabel>
+                                        Variant="Variant.Outlined"
+                                        FitContent=True ShrinkLabel>
                                             @foreach (var state in _states)
                                             {
                                                 <MudSelectItem Value="state">@state</MudSelectItem>
@@ -247,16 +247,16 @@ else
                                     @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
                                     <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
                                         <MudCheckBox @bind-Value="Size_CheckBox1"
-                                                     Size="Size.Small"
-                                                     Color="Color.Primary"
-                                                     Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                        Size="Size.Small"
+                                        Color="Color.Primary"
+                                        Class="custom-label-historical-mean-checkbox"></MudCheckBox>
                                         <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
                                     </MudItem>
 
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="SpecificHistMean"
-                                                   Variant="Variant.Outlined"
-                                                   FitContent=True Disabled>
+                                        Variant="Variant.Outlined"
+                                        FitContent=True Disabled>
                                             <MudSelectItem Value="@SpecificHistMean"></MudSelectItem>
                                         </MudSelect>
                                     </MudItem>
@@ -267,10 +267,10 @@ else
                             @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
                             <MudButton Variant="Variant.Filled"
-                                       Class="generateBtnClass buttonload"
-                                       @onclick="ProcessDLL"
-                                       disabled="!isContentLoaded"
-                                       Color="@buttonColor">
+                            Class="generateBtnClass buttonload"
+                            @onclick="ProcessDLL"
+                            disabled="!isContentLoaded"
+                            Color="@buttonColor">
                                 @*  @if (currentState == ProcessState.Generating)
                             {
                                 <span> Generating...</span>
@@ -449,9 +449,9 @@ else
                                     </div>
 
                                     <MudButton Variant="Variant.Filled"
-                                               Size="Size.Small"
-                                               FullWidth="true"
-                                               Class="btnClass">
+                                    Size="Size.Small"
+                                    FullWidth="true"
+                                    Class="btnClass">
                                         Select All/Unselect All
                                     </MudButton>
 
@@ -462,9 +462,9 @@ else
                                     </div>
 
                                     <MudButton Variant="Variant.Filled"
-                                               Size="Size.Small"
-                                               FullWidth="true"
-                                               Class="btnClass">
+                                    Size="Size.Small"
+                                    FullWidth="true"
+                                    Class="btnClass">
                                         Select All/Unselect All
                                     </MudButton>
                                 </MudPaper>
@@ -579,22 +579,20 @@ else
                         <MudTh Class="tableTaskColumnBodyStyling">Template</MudTh>
                         <MudTh Class="tableTaskColumnBodyStyling">Created On</MudTh>
                         <MudTh Class="tableTaskColumnBodyStyling">Completed On</MudTh>
-                        <MudTh Class="tableTaskColumnBodyStyling">Status</MudTh>
                         <MudTh Class="tableTaskColumnBodyStyling">Remarks</MudTh>
                     </HeaderContent>
 
                     <RowTemplate>
                         <MudTd Class="tableTaskColumnBodyStyling"> @context.SubtaskId</MudTd>
-                        <MudTd Class="tableBodyStyling">@context.UserID</MudTd>
+                        <MudTd Class="tableBodyStyling">@_taskLog.GetUserNameFromIdSp(@context.UserID)</MudTd>
                         <MudTd Class="tableBodyStyling">@context.TemplateName</MudTd>
                         <MudTd Class="tableBodyStyling">@context.CreatedOn</MudTd>
                         <MudTd Class="tableBodyStyling">@context.CompletedOn</MudTd>
-                        <MudTd Class="tableBodyStyling">@context.StatusID</MudTd>
 
-                        <MudTd>
+                        <MudTd class="bg-dark ms-5">
                             @if (context?.StatusMessage == "In Process")
                             {
-                                <span class="text-primary-emphasis bg-dark ms-5">@context.StatusMessage</span>
+                                <span class="mud-secondary-text">@context.StatusMessage</span>
                                 <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Small" />
                             }
                             else if (context?.StatusMessage == "Completed")
@@ -794,7 +792,8 @@ else
             isMainContentLoaded = true;
 
             ReportService.OnChange += StateHasChanged;
-            StartHotReload();
+            await StartHotReload();
+            //await  LoadIndividualLogs();
             StateHasChanged();
         }
         catch (Exception)
@@ -928,7 +927,7 @@ else
         lstTestnames = testnamesList;
     }
 
-    private void StartHotReload()
+    private async Task StartHotReload()
     {
         var timer = new System.Threading.Timer((_) =>
        {

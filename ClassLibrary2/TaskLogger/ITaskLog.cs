@@ -30,6 +30,10 @@ namespace ClassLibrary2.TaskLogger
 
         Guid GetTaskIdByProjectAndUser(string ProjectName, int UserID);
 
+
+        //get project user taskid stored procedure
+        Guid GetTaskIdByProjectAndUserSp(string projectName, int userId);
+
         //stored procedures
         //final insertion
         Guid InsertFinalReport(string projectName, int userId, int statusId);

@@ -9038,7 +9038,7 @@ namespace OpenXmlDLLDotnetFramework
 
             var statusId = _taskLogging.GetStatusIdByName("Queued");
 
-            var taskId = _taskLogging.GetTaskIdByProjectAndUser(project, userId);
+            var taskId = _taskLogging.GetTaskIdByProjectAndUserSp(project, userId);
 
             int subtaskId = 0;
 
@@ -11921,9 +11921,19 @@ namespace OpenXmlDLLDotnetFramework
 
         public async Task<string> addChartsToFinalTemplate1(string project, List<string> charts, string finalTemplate, string BreakDown)
         {
-            //hello
-            await Task.Run(() => fnaddChartsToFinalTemplate1(project, charts, finalTemplate, BreakDown));
-            return "Process sucessful";
+
+            try
+            {
+                //hello
+                await Task.Run(() => fnaddChartsToFinalTemplate1(project, charts, finalTemplate, BreakDown));
+                return "Process sucessful";
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+          
         }
 
 
