@@ -9034,9 +9034,9 @@ namespace OpenXmlDLLDotnetFramework
 
             user = identity.Name.Replace("BI\\", "").ToString();
 
-            var userId = _taskLogging.getUserIdByName(user);
+            var userId = _taskLogging.GetUserIdByNameSp(user);
 
-            var statusId = _taskLogging.GetStatusIdByName("Queued");
+            var statusId = _taskLogging.GetStatusIdByNameSp("Queued");
 
             var taskId = _taskLogging.GetTaskIdByProjectAndUserSp(project, userId);
 

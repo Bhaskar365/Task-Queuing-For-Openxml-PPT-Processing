@@ -274,7 +274,7 @@ namespace ClassLibrary2.TaskLogger
         // insert individual reports
         public void InsertIndividualReportTask(IndividualReportModel report,string userName,string currentStatus)
         {
-            report.UserID = getUserIdByName(userName);
+            report.UserID = GetUserIdByNameSp(userName);
 
             report.StatusID = GetStatusIdByName(currentStatus);
 
@@ -436,6 +436,25 @@ namespace ClassLibrary2.TaskLogger
             }
         }
 
+        //get user id from name stored procedures
+        public int GetUserIdByNameSp(string UserName)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetUserByName", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UserName", UserName);
+
+                conn.Open();
+
+                object result = cmd.ExecuteScalar();
+
+                if (result == null || result == DBNull.Value)
+                    throw new Exception($"No status was found for {UserName}");
+
+                return Convert.ToInt16(result);
+            }
+        }
 
 
         //get user ID by name
@@ -484,7 +503,26 @@ namespace ClassLibrary2.TaskLogger
             }
         }
 
-       
+
+        //get status id from name stored procedure
+        public int GetStatusIdByNameSp(string StatusName)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetStatusIdFromName"))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@StatusName", StatusName);
+
+                conn.Open();
+
+                object result = cmd.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                    throw new Exception($"No status was found for {StatusName}");
+
+                return Convert.ToInt16(result);
+            }
+        }
+
 
 
     }

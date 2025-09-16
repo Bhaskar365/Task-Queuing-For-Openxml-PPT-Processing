@@ -1,6 +1,7 @@
 ﻿using System.Data.SqlClient;
 using System.Data;
 using SharedModels.DTO;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
 {
@@ -14,9 +15,9 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
         public Guid InsertFinalReport(string projectName,string userName,string currentStatus)
         {
 
-            int userId = getUserIdByName(userName);
+            int userId = GetUserIdByNameSp(userName);
 
-            int statusId = GetStatusIdByName(currentStatus);
+            int statusId = GetStatusIdByNameSp(currentStatus);
 
 
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -40,9 +41,9 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
         //stored procedure update final
         public void UpdateFinalReport(string status,string projectName,string userName)
         {
-            int statusId = GetStatusIdByName(status);
+            int statusId = GetStatusIdByNameSp(status);
 
-            int userId = getUserIdByName(userName);
+            int userId = GetUserIdByNameSp(userName);
 
             Guid taskId = GetTaskIdByProjectAndUserSp(projectName, userId);
 
@@ -161,6 +162,26 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
         }
 
 
+        //get user id from name stored procedures
+        public int GetUserIdByNameSp(string UserName) 
+        {
+            using(SqlConnection conn = new SqlConnection(connectionString))
+                using(SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetUserByName",conn)) 
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UserName", UserName);
+
+                conn.Open();
+
+                object result = cmd.ExecuteScalar();
+
+                if (result == null || result == DBNull.Value)
+                    throw new Exception($"No status was found for {UserName}");
+
+                return Convert.ToInt16(result);
+            }
+        }
+
 
         //get status id by name
         public int GetStatusIdByName(string StatusName)
@@ -184,6 +205,25 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
             }
         }
 
+
+        //get status id from name stored procedure
+        public int GetStatusIdByNameSp(string StatusName)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetStatusIdFromName")) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@StatusName",StatusName);
+
+                    conn.Open();
+
+                    object result = cmd.ExecuteScalar();
+                    if (result == null || result == DBNull.Value)
+                     throw new Exception($"No status was found for {StatusName}");
+
+                return Convert.ToInt16(result);
+            }
+        }
 
 
         //get status name by id stored procedure

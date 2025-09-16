@@ -46,7 +46,7 @@ namespace ClassLibrary2.TaskLogger
         //final delete
         void DeleteFinalReport(Guid taskId);
 
-
+        int GetUserIdByNameSp(string UserName);
 
         //////////////////////////// /////////////////individual reports //////////////////////////// ////////////////////////////
 
@@ -62,6 +62,9 @@ namespace ClassLibrary2.TaskLogger
         //individual delete
         void DeleteIndividualReport(int subtaskId);
 
+
+        //get status id from name
+        int GetStatusIdByNameSp(string StatusName);
 
     }
 }
