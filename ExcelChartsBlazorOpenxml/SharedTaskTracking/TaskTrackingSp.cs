@@ -44,7 +44,7 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
 
             int userId = getUserIdByName(userName);
 
-            Guid taskId = GetTaskIdByProjectAndUser(projectName, userId);
+            Guid taskId = GetTaskIdByProjectAndUserSp(projectName, userId);
 
 
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -213,6 +213,29 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
             }
         }
 
+
+
+        // get project details by project and user stored procedure
+        public Guid GetTaskIdByProjectAndUserSp(string projectName, int userId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetTaskIdByProjectAndUser", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ProjectName", projectName);
+                cmd.Parameters.AddWithValue("@UserID", userId);
+
+                conn.Open();
+
+                object result = cmd.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                    throw new Exception($"No FinalReport found for project {projectName} and user {userId}.");
+
+                return (Guid)result;
+            }
+        }
+
+        // get individual user report by task id stored procedure
         public List<IndividualReportModel> GetIndividualUserReport(Guid taskId)
         {
             var reports = new List<IndividualReportModel>();
