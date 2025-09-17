@@ -950,8 +950,6 @@ else
     {
         try
         {
-            currentTaskId = new Guid();
-
             ReportService.Reset();
 
             var selectedPages = chartPageList.Where(x => x.isChecked).Select(x => x.strPageName).ToList();
@@ -1006,13 +1004,13 @@ else
             currentTaskId = _taskLog.InsertFinalReport(res.project, user, "Queued");
 
 
-            await fitToConceptService.GenerateReportUsingDLLAsync(res, finalPPTOption!);
+            var id = await fitToConceptService.GenerateReportUsingDLLAsync(res, finalPPTOption!);
 
             var result = await fitToConceptService.SendDLLMergeRequestWithPanel(res, finalPPTOption!);
 
             Console.WriteLine(123);
 
-            await Task.Delay(40000);
+            //await Task.Delay(40000);
 
             if (result == "Successful")
             {

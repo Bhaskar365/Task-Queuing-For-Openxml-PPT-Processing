@@ -14,26 +14,33 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
         //stored procedure insert final
         public Guid InsertFinalReport(string projectName,string userName,string currentStatus)
         {
-
-            int userId = GetUserIdByNameSp(userName);
-
-            int statusId = GetStatusIdByNameSp(currentStatus);
-
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_InsertFinalReport", conn))
+            try
             {
-                cmd.CommandType = CommandType.StoredProcedure;
+                int userId = GetUserIdByNameSp(userName);
 
-                // Add parameters
-                cmd.Parameters.AddWithValue("@ProjectName", projectName);
-                cmd.Parameters.AddWithValue("@UserID", userId);
-                cmd.Parameters.AddWithValue("@StatusID", statusId);
+                int statusId = GetStatusIdByNameSp(currentStatus);
 
-                conn.Open();
 
-                // Because we used OUTPUT INSERTED.TaskID in SQL, ExecuteScalar() returns TaskID
-                return (Guid)cmd.ExecuteScalar();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_InsertFinalReport", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Add parameters
+                    cmd.Parameters.AddWithValue("@ProjectName", projectName);
+                    cmd.Parameters.AddWithValue("@UserID", userId);
+                    cmd.Parameters.AddWithValue("@StatusID", statusId);
+
+                    conn.Open();
+
+                    // Because we used OUTPUT INSERTED.TaskID in SQL, ExecuteScalar() returns TaskID
+                    return (Guid)cmd.ExecuteScalar();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
@@ -330,6 +337,37 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
                 }
             }
 
+            return reports;
+        }
+
+        public List<FinalReportModel> GetFinalReportsByName(int UserID)
+        {
+            var reports = new List<FinalReportModel>();
+
+            using(SqlConnection conn = new SqlConnection(connectionString))
+                using(SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetAllFinalReportsByName", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UserID", UserID);
+
+                conn.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader()) 
+                {
+                    while (reader.Read()) 
+                    {
+                        reports.Add(new FinalReportModel 
+                        {
+                            UserID = reader.GetInt16(reader.GetOrdinal("UserID")),
+                            TaskID = reader.GetGuid(reader.GetOrdinal("TaskID")),
+                            StatusID = reader.GetInt16(reader.GetOrdinal("StatusID")),
+                            CompletedOn = reader.GetDateTime(reader.GetOrdinal("CompletedOn")),
+                            CreatedOn = reader.GetDateTime(reader.GetOrdinal("CreatedOn")),
+                            ProjectName = reader.GetString(reader.GetOrdinal("ProjectName"))
+                        });
+                    }
+                }
+            }
             return reports;
         }
     }

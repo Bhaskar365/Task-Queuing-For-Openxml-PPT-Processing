@@ -1,12 +1,15 @@
 ﻿@page "/taskList"
 
 @using ExcelChartsBlazorOpenxml.Services
+@using ExcelChartsBlazorOpenxml.SharedTaskTracking
 @using SharedModels.DTO
+@using System.Security.Principal
 
 @inject IFitToConceptService fitToConceptService;
 
 @rendermode InteractiveServer
 
+@inject ITaskTrackingSp _taskLog;
 
 <div>
 
@@ -55,7 +58,7 @@
                 <NoRecordsContent>
                     <MudTr>
                         <MudTd ColSpan="7" Class="text-center"
-                               style="font-size:small; white-space:nowrap;">
+                        style="font-size:small; white-space:nowrap;">
                             No data
                         </MudTd>
                     </MudTr>
@@ -63,13 +66,13 @@
 
                 <PagerContent>
                     <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, LogList.Count }"
-                                   RowsPerPageString="@rowsPerPageString"
-                                   InfoFormat="@infoFormat"
-                                   AllItemsText="@allItemsText"
-                                   HorizontalAlignment="@horizontalAlignment"
-                                   HideRowsPerPage="@hideRowsPerPage"
-                                   HidePageNumber="@hidePageNumber"
-                                   HidePagination="@hidePagination" />
+                    RowsPerPageString="@rowsPerPageString"
+                    InfoFormat="@infoFormat"
+                    AllItemsText="@allItemsText"
+                    HorizontalAlignment="@horizontalAlignment"
+                    HideRowsPerPage="@hideRowsPerPage"
+                    HidePageNumber="@hidePageNumber"
+                    HidePagination="@hidePagination" />
                 </PagerContent>
             </MudTable>
 
@@ -110,7 +113,7 @@
                 <NoRecordsContent>
                     <MudTr>
                         <MudTd ColSpan="7" Class="text-center"
-                               style="font-size:small; white-space:nowrap;">
+                        style="font-size:small; white-space:nowrap;">
                             No data
                         </MudTd>
                     </MudTr>
@@ -118,13 +121,13 @@
 
                 <PagerContent>
                     <MudTablePager PageSizeOptions="new int[] { UndoneQueueList.Count, 5, 10, 25, 50, 100 }"
-                                   RowsPerPageString="@rowsPerPageString"
-                                   InfoFormat="@infoFormat"
-                                   AllItemsText="@allItemsText"
-                                   HorizontalAlignment="@horizontalAlignment"
-                                   HideRowsPerPage="@hideRowsPerPage"
-                                   HidePageNumber="@hidePageNumber"
-                                   HidePagination="@hidePagination" />
+                    RowsPerPageString="@rowsPerPageString"
+                    InfoFormat="@infoFormat"
+                    AllItemsText="@allItemsText"
+                    HorizontalAlignment="@horizontalAlignment"
+                    HideRowsPerPage="@hideRowsPerPage"
+                    HidePageNumber="@hidePageNumber"
+                    HidePagination="@hidePagination" />
                 </PagerContent>
             </MudTable>
 
@@ -254,7 +257,9 @@ else
     List<TaskLog> LogList;
 
     List<TaskLog> UndoneQueueList;
+    string user = "";
 
+    List<FinalReportModel> finalReportList = new List<FinalReportModel>();
 
     private async Task LoadLogs()
     {
@@ -266,14 +271,22 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+
+        WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
+        user = windowsIdentity.Name.Replace("BI\\", "").ToString();
+
+        int userId = _taskLog.GetUserIdByNameSp(user);
+
+        finalReportList = _taskLog.GetFinalReportsByName(userId);
+
         StateHasChanged();
-        LogList = await fitToConceptService.GetLogs();
+       // LogList = await fitToConceptService.GetLogs();
         StateHasChanged();
 
 
 
         //StartHotReload();
-        UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
+       // UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
         isDataLoaded = true;
         StateHasChanged();
     }

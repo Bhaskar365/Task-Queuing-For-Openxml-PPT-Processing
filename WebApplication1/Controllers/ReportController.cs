@@ -809,18 +809,17 @@ namespace WebApplicationAPI.Controllers
                 var connectionString = _configuration.GetConnectionString("DBConnection");
                 string user = "testUser";
 
-                _tracker.SetStatus(request.Request!.TaskId, "Queued");
+               // _tracker.SetStatus(request.Request!.TaskId, "Queued");
 
                 await _queue.EnqueueAsync(async token =>
                 {
                     try
                     {
-                        _tracker.SetStatus(request.Request!.TaskId, "Processing");
+                      //  _tracker.SetStatus(request.Request!.TaskId, "Processing");
 
                         using var scope = _scopeFactory.CreateScope();
                         var repository = scope.ServiceProvider.GetRequiredService<IDataRepository>();
                         var dll = new DLLCls();
-                        string sourcePath = "";
 
                         TaskLog taskLog = new TaskLog
                         {

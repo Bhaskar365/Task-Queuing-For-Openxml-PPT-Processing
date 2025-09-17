@@ -11,7 +11,7 @@ namespace ClassLibrary2.TaskLogger
 {
     public class TaskLog : ITaskLog
     {
-        string connectionString = "Data Source=SQL02;Initial Catalog=BI_Methodology;Persist Security Info=True;User ID=mrcharts;Password='pwdmrchae0_d';Connect Timeout=0";
+        string connectionString = "Data Source=SQL02;Initial Catalog=BI_Methodology;Persist Security Info=True;User ID=mrcharts;Password='pwdmrchae0_d';Connect Timeout=0;TrustServerCertificate=True;";
 
         public void InsertTask(TaskLogDLL task)
         {
