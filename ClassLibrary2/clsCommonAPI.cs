@@ -9024,88 +9024,98 @@ namespace OpenXmlDLLDotnetFramework
                                             string HistoricalMeanDescription, string finalTemplateName)
         {
 
-            //copy the template folder to the local system
-
-            //copyTemplates();
-
-            string user = "";
-
-            WindowsIdentity identity = WindowsIdentity.GetCurrent();
-
-            user = identity.Name.Replace("BI\\", "").ToString();
-
-            var userId = _taskLogging.GetUserIdByNameSp(user);
-
-            var statusId = _taskLogging.GetStatusIdByNameSp("Queued");
-
-            var taskId = _taskLogging.GetTaskIdByProjectAndUserSp(project, userId);
-
-            int subtaskId = 0;
-
-            List<Task> taskArr = new List<Task>();
-            List<int> subTaskIDList = new List<int>();
-
-            foreach (var breakdown in breakdowns)
+            try
             {
-                foreach (var template in templates)
+                //copy the template folder to the local system
+
+                //copyTemplates();
+
+                string user = "";
+
+                WindowsIdentity identity = WindowsIdentity.GetCurrent();
+
+                user = identity.Name.Replace("BI\\", "").ToString();
+
+                var userId = _taskLogging.GetUserIdByNameSp(user);
+
+                var statusId = _taskLogging.GetStatusIdByNameSp("Queued");
+
+                var taskId = _taskLogging.GetTaskIdByProjectAndUserSp(project, userId);
+
+                int subtaskId = 0;
+
+                List<Task> taskArr = new List<Task>();
+                List<int> subTaskIDList = new List<int>();
+
+                foreach (var breakdown in breakdowns)
                 {
-                    subtaskId = 0;
-
-                    IndividualReportModel taskLog = new IndividualReportModel
+                    foreach (var template in templates)
                     {
-                        TemplateName = template,
-                        UserID = userId,
-                        StatusID = statusId,
-                        CreatedOn = DateTime.Now,
-                        StatusMessage = "Task Created",
-                        TaskID = taskId
-                    };
+                        subtaskId = 0;
 
+                        IndividualReportModel taskLog = new IndividualReportModel
+                        {
+                            TemplateName = template,
+                            UserID = userId,
+                            StatusID = statusId,
+                            CreatedOn = DateTime.Now,
+                            StatusMessage = "Task Created",
+                            TaskID = taskId
+                        };
+
+                        try
+                        {
+                            subtaskId = _taskLogging.InsertIndividualReport(taskLog, taskLog.TemplateName, "Queued");
+
+                            subTaskIDList.Add(subtaskId);
+
+                            APIWrapper wrapper = new APIWrapper(project, template, template, breakdown, HistoricalMeanType, HistoricalMeanDescription, finalTemplateName);
+                            taskArr.Add(Task.Run(() => wrapper.Process()));
+
+                            _taskLogging.UpdateIndividualReport(subtaskId, "Processing", "In Process");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            _taskLogging.UpdateIndividualReport(subtaskId, "Fail", ex.Message);
+
+                            throw new Exception(ex.Message);
+                        }
+                    }
+                }
+
+                await Task.WhenAll(taskArr);
+
+                int i = 0;
+
+                foreach (var t in taskArr)
+                {
                     try
                     {
-                        subtaskId = _taskLogging.InsertIndividualReport(taskLog, taskLog.TemplateName, "Queued");
-
-                        subTaskIDList.Add(subtaskId);
-
-                        APIWrapper wrapper = new APIWrapper(project, template, template, breakdown, HistoricalMeanType, HistoricalMeanDescription, finalTemplateName);
-                        taskArr.Add(Task.Run(() => wrapper.Process()));
-
-                        _taskLogging.UpdateIndividualReport(subtaskId, "Processing", "In Process");
-
+                        if (t.Status.ToString() == "RanToCompletion")
+                        {
+                            _taskLogging.UpdateIndividualReport(subTaskIDList[i], "Success", "Completed");
+                        }
+                        else
+                        {
+                            _taskLogging.UpdateIndividualReport(subTaskIDList[i], "Fail", t.Status.ToString());
+                        }
                     }
                     catch (Exception ex)
                     {
-                        _taskLogging.UpdateIndividualReport(subtaskId, "Fail", ex.Message);
-
-                        throw new Exception(ex.Message);
+                        _taskLogging.UpdateIndividualReport(subTaskIDList[i], "Fail", ex.Message);
+                        throw;
                     }
+                    i++;
                 }
             }
-
-            await Task.WhenAll(taskArr);
-
-            int i = 0;
-
-            foreach (var t in taskArr)
+            catch (Exception)
             {
-                try
-                {
-                    if (t.Status.ToString() == "RanToCompletion")
-                    {
-                        _taskLogging.UpdateIndividualReport(subTaskIDList[i], "Success", "Completed");
-                    }
-                    else
-                    {
-                        _taskLogging.UpdateIndividualReport(subTaskIDList[i], "Fail", t.Status.ToString());
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _taskLogging.UpdateIndividualReport(subTaskIDList[i], "Fail", ex.Message);
-                    throw;
-                }
-                i++;
+
+                throw;
             }
+
+         
         }
 
         //adding the template to the final

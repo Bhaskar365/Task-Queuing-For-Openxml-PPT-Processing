@@ -508,7 +508,7 @@ namespace ClassLibrary2.TaskLogger
         public int GetStatusIdByNameSp(string StatusName)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetStatusIdFromName"))
+            using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetStatusIdFromName",conn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@StatusName", StatusName);
