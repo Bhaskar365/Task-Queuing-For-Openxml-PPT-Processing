@@ -33,9 +33,7 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
         void UpdateIndividualReport(int subtaskId, int statusId, string statusMessage);
 
 
-        //get status id from name
-        int GetStatusIdByNameSp(string StatusName);
-
+        string GetStatusNameFromIdSp(int statusId);
 
         //individual delete
         void DeleteIndividualReport(int subtaskId);

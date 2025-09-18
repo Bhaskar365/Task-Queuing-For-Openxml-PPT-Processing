@@ -29,6 +29,8 @@
 
 @rendermode InteractiveServer
 
+@inject Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider AuthenticationStateProvider
+
 @if (!isMainContentLoaded)
 {
     <div class="panelSpinner">
@@ -65,11 +67,8 @@ else
                             </MudGrid>
                         </MudPaper> *@
 
-                            <MudPaper Class="responsive-container" Elevation="0">
-                                @* <MudGrid AlignItems="Center" Spacing="2" Style="display: flex;flex-direction: row;align-items: center;margin-top: 4px;"> *@
+                            @*  <MudPaper Class="responsive-container" Elevation="0">
                                 <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
-
-                                    @* <Home isContentLoaded="isContentLoaded" project="@project" /> *@
 
                                     <MudItem xs="12" sm="5">
                                         <MudText Class="custom-label" Color="Color.Error">Project Name</MudText>
@@ -78,7 +77,7 @@ else
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="@project"
                                         Variant="Variant.Outlined"
-                                        FitContent=True>
+                                        FitContent=True @bind-SelectedValues="_options">
                                             @if (!isContentLoaded)
                                             {
                                                 <MudSelectItem Value="@(project)">
@@ -87,16 +86,51 @@ else
                                             }
                                             else
                                             {
-                                                <MudSelectItem Value="@(project)"></MudSelectItem>
+                                                @foreach (var projectEl in projectList)
+                                                {
+                                                    <MudSelectItem Value="@(projectEl)"></MudSelectItem>
+                                                }
+
+
                                             }
 
                                         </MudSelect>
                                     </MudItem>
+                                </MudGrid>
+                            </MudPaper> *@
 
+                            <MudPaper Class="responsive-container" Elevation="0">
+                                <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
 
+                                    <MudItem xs="12" sm="5">
+                                        <MudText Class="custom-label" Color="Color.Error">Project Name</MudText>
+                                    </MudItem>
 
+                                    <MudItem xs="12" sm="7">
+                                        <MudSelect T="string"
+                                        Value="@project"
+                                        ValueChanged="OnProjectChanged"
+                                        Variant="Variant.Outlined"
+                                        FitContent="true">
+
+                                            @if (!isContentLoaded || isProjectPageLoading)
+                                            {
+                                                <MudSelectItem Value="@(project)">
+                                                    <i class="fas fa-spinner fa-spin progressProjectSpinner"></i>
+                                                </MudSelectItem>
+                                            }
+                                            else
+                                            {
+                                                @foreach (var projectEl in projectList)
+                                                {
+                                                    <MudSelectItem Value="@projectEl">@projectEl</MudSelectItem>
+                                                }
+                                            }
+                                        </MudSelect>
+                                    </MudItem>
                                 </MudGrid>
                             </MudPaper>
+
 
                             <MudPaper Class="responsive-container" Elevation="0">
                                 <MudGrid AlignItems="Center" Spacing="2" Class="mudGridSectionOne">
@@ -626,17 +660,27 @@ else
 
 
 
-@inject Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider AuthenticationStateProvider
+@foreach (var t in _options)
+{
+    <div>@t</div>
+}
+
 
 @code {
 
     string breakdownErrorMessage = "";
     string pagesErrorMessage = "";
 
+    // string ww = "";
+    private IEnumerable<string> _options = new HashSet<string> { "RACKEM" };
+
     bool isDataLoaded = false;
     bool isContentLoaded = false;
 
     public string? project = "";
+
+    List<string> projectList = new List<string>();
+
     public string? finalPPTOption = "MR-Rx Naming";
 
     ProcessState currentState = ProcessState.Idle;
@@ -696,6 +740,13 @@ else
         public bool isChecked { get; set; } = true;
     }
 
+    public class ChartDataModel
+    {
+        public string strExcelChartsProjectName { get; set; }
+        public int intExcelChartsProjectID { get; set; }
+    }
+
+
     public class clschartBreakdownGroup
     {
         public int intBreakdownIndex { get; set; }
@@ -722,6 +773,7 @@ else
         public bool isChecked { get; set; } = true;
     }
 
+    List<ChartDataModel> pageListData = new List<ChartDataModel>();
 
     private List<ReportStatus> reportStatuses = new();
 
@@ -759,18 +811,9 @@ else
             WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
             user = windowsIdentity.Name.Replace("BI\\", "").ToString();
 
-            var apiCall = await api.CallAPI("RACKEM", "Fit to Concept", "Fit to Concept", "OVERALL", "", "");
+            project = _options.Last();
 
-            chartPageList = getProjectChartDisplayNames("RACKEM");
-
-            Console.Write(apiCall);
-
-            XDocument xDoc = XDocument.Parse(apiCall);
-            var data = xDoc?.Root?.Value;
-
-            fitToConceptData = JsonConvert.DeserializeObject<List<FitToConceptModel>>(data!)!;
-
-            project = fitToConceptData.First().ProjectName;
+            chartPageList = getProjectChartDisplayNames(project);
 
             LogoFolderTextValue = $"{project}_MR";
 
@@ -783,17 +826,27 @@ else
                     });
             }
 
-            // lstPg = await getProjectPagegroupNames(project!);
+            pageListData = GetProjectData().Result;
 
-            lstBreakdown = await getProjectBreakdowngroupNames(project!);
+            foreach (var project in pageListData)
+            {
+                projectList.Add(project.strExcelChartsProjectName);
+            }
+
+            // lstPg = await getProjectPagegroupNames(project!);
+            StateHasChanged();
+            lstBreakdown = await getProjectBreakdowngroupNames(project);
 
             isDataLoaded = true;
             isContentLoaded = true;
             isMainContentLoaded = true;
 
+            StateHasChanged();
+
             ReportService.OnChange += StateHasChanged;
             await StartHotReload();
             //await  LoadIndividualLogs();
+
             StateHasChanged();
         }
         catch (Exception)
@@ -802,6 +855,26 @@ else
         }
 
     }
+
+    public bool isProjectPageLoading = false;
+
+    private async Task OnProjectChanged(string newProject)
+    {
+        isProjectPageLoading = true;
+
+        project = newProject;
+
+        // Refresh dependent data
+        chartPageList = getProjectChartDisplayNames(project);
+        LogoFolderTextValue = $"{project}_MR";
+        lstBreakdown = await getProjectBreakdowngroupNames(project);
+
+        // Re-render
+        StateHasChanged();
+
+        isProjectPageLoading = false;
+    }
+
 
     public void Dispose()
     {
@@ -868,6 +941,24 @@ else
             throw;
         }
     }
+
+
+    private async Task<List<ChartDataModel>> GetProjectData()
+    {
+        System.Data.DataTable dt = clsData.MRData.getDataTable("[dbo].[ExcelCharts_getExcelChartsProjects]");
+
+
+        List<ChartDataModel> lstPg = dt.AsEnumerable().Select(row => new ChartDataModel
+            {
+                strExcelChartsProjectName = row.Field<string>("strExcelChartsProjectName")!,
+                intExcelChartsProjectID = row.Field<int>("intExcelChartsProjectID")!
+            }).ToList();
+
+
+        return lstPg;
+    }
+
+
 
     private List<selectedPagesListClass> getProjectChartDisplayNames(string projectName)
     {
@@ -987,9 +1078,9 @@ else
 
             ReportService.StartProcessing();
 
-            StartTime = DateTime.UtcNow;
+            //StartTime = DateTime.UtcNow;
 
-            taskIdList = new List<Guid>();
+            //taskIdList = new List<Guid>();
 
             var res = new ReportGenerationRequestDLL
                 {
@@ -1008,9 +1099,9 @@ else
 
             var result = await fitToConceptService.SendDLLMergeRequestWithPanel(res, finalPPTOption!);
 
-            Console.WriteLine(123);
+            //   Console.WriteLine(123);
 
-            //await Task.Delay(40000);
+            await Task.Delay(40000);
 
             if (result == "Successful")
             {
@@ -1040,12 +1131,13 @@ else
 
             ReportService.CompleteProcessing("Merge Successful");
 
-            EndTime = DateTime.UtcNow;
+            // EndTime = DateTime.UtcNow;
 
 
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Console.WriteLine(ex);
             _taskLog.UpdateFinalReport("Fail", this.project!, user);
             throw;
         }

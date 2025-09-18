@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDBContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DBConnection")));
 
 builder.Services.AddScoped<IDataRepository, DataRepository>();
-builder.Services.AddScoped<ITaskLogging, TaskLogging>();
+//builder.Services.AddScoped<ITaskLogging, TaskLogging>();
 
 builder.Services.AddCors(option =>
 {
@@ -28,7 +28,7 @@ builder.Services.AddCors(option =>
 
 builder.Services.AddSingleton<IBackgroundTaskQueue,BackgroundTaskQueue>();
 
-builder.Services.AddSingleton<ITaskStatusTracker, TaskStatusTracker>();
+//builder.Services.AddSingleton<ITaskStatusTracker, TaskStatusTracker>();
 
 builder.Services.AddHostedService<QueuedHostedService>();
 

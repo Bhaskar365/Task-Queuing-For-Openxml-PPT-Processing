@@ -7,12 +7,12 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
 {
     public class TaskTrackingSp : ITaskTrackingSp
     {
-        string connectionString = "Data Source=SQL02;Initial Catalog=BI_Methodology;Persist Security Info=True;User ID=mrcharts;Password='pwdmrchae0_d';Connect Timeout=0;TrustServerCertificate=True;";
+        //string connectionString = "Data Source=SQL02;Initial Catalog=BI_Methodology;Persist Security Info=True;User ID=mrcharts;Password='pwdmrchae0_d';Connect Timeout=0;TrustServerCertificate=True;";
 
-
+        string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=OpenxmlCharts;Integrated Security=True;";
 
         //stored procedure insert final
-        public Guid InsertFinalReport(string projectName,string userName,string currentStatus)
+        public Guid InsertFinalReport(string projectName, string userName, string currentStatus)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
 
 
         //stored procedure update final
-        public void UpdateFinalReport(string status,string projectName,string userName)
+        public void UpdateFinalReport(string status, string projectName, string userName)
         {
             int statusId = GetStatusIdByNameSp(status);
 
@@ -170,10 +170,10 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
 
 
         //get user id from name stored procedures
-        public int GetUserIdByNameSp(string UserName) 
+        public int GetUserIdByNameSp(string UserName)
         {
-            using(SqlConnection conn = new SqlConnection(connectionString))
-                using(SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetUserByName",conn)) 
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetUserByName", conn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@UserName", UserName);
@@ -190,43 +190,20 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
         }
 
 
-        //get status id by name
-        public int GetStatusIdByName(string StatusName)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                string sql = @"SELECT StatusID FROM xlChartGenerationPortal.Status WHERE StatusName=@StatusName";
-
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@StatusName", StatusName);
-                    conn.Open();
-
-                    object result = cmd.ExecuteScalar();
-                    if (result == null)
-                    {
-                        throw new Exception($"Status {StatusName} not found");
-                    }
-                    return Convert.ToInt32(result);
-                }
-            }
-        }
-
-
         //get status id from name stored procedure
         public int GetStatusIdByNameSp(string StatusName)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
-                using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetStatusIdFromName",conn)) 
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@StatusName",StatusName);
+            using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetStatusIdFromName", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@StatusName", StatusName);
 
-                    conn.Open();
+                conn.Open();
 
-                    object result = cmd.ExecuteScalar();
-                    if (result == null || result == DBNull.Value)
-                     throw new Exception($"No status was found for {StatusName}");
+                object result = cmd.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                    throw new Exception($"No status was found for {StatusName}");
 
                 return Convert.ToInt16(result);
             }
@@ -344,19 +321,19 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
         {
             var reports = new List<FinalReportModel>();
 
-            using(SqlConnection conn = new SqlConnection(connectionString))
-                using(SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetAllFinalReportsByName", conn))
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetAllFinalReportsByName", conn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@UserID", UserID);
 
                 conn.Open();
 
-                using (SqlDataReader reader = cmd.ExecuteReader()) 
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read()) 
+                    while (reader.Read())
                     {
-                        reports.Add(new FinalReportModel 
+                        reports.Add(new FinalReportModel
                         {
                             UserID = reader.GetInt16(reader.GetOrdinal("UserID")),
                             TaskID = reader.GetGuid(reader.GetOrdinal("TaskID")),
@@ -370,6 +347,27 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
             }
             return reports;
         }
+
+        public string GetStatusNameFromIdSp(int StatusID)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetStatusNameFromId", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@StatusID", StatusID);
+
+                conn.Open();
+
+                object result = cmd.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                    throw new Exception($"No status was found for {StatusID}");
+
+                return Convert.ToString(result)!;
+            }
+        }
+
+
     }
 }
+
 

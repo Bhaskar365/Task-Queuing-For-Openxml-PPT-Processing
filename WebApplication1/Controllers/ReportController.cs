@@ -19,24 +19,22 @@ namespace WebApplicationAPI.Controllers
     public class ReportController : ControllerBase
     {
         private readonly IBackgroundTaskQueue _queue;
-        private readonly ITaskStatusTracker _tracker;
+        //private readonly ITaskStatusTracker _tracker;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IConfiguration _configuration;
-        private readonly ITaskLogging _taskLogging;
+       // private readonly ITaskLogging _taskLogging;
         private readonly IDataRepository _repository;
 
         public ReportController(IBackgroundTaskQueue queue,
-                                ITaskStatusTracker tracker,
                                 IServiceScopeFactory scopeFactory,
                                 IConfiguration configuration,
-                                ITaskLogging taskLogging,
                                 IDataRepository repository)
         {
             _queue = queue;
-            _tracker = tracker;
+           // _tracker = tracker;
             _scopeFactory = scopeFactory;
             _configuration = configuration;
-            _taskLogging = taskLogging;
+           // _taskLogging = taskLogging;
             _repository = repository;
         }
 
@@ -47,13 +45,13 @@ namespace WebApplicationAPI.Controllers
             var connectionString = _configuration.GetConnectionString("DBConnection");
             string user = "testUser";
 
-            _tracker.SetStatus(request.TaskId, "Queued");
+          //  _tracker.SetStatus(request.TaskId, "Queued");
 
             await _queue.EnqueueAsync(async token =>
             {
                 try
                 {
-                    _tracker.SetStatus(request.TaskId, "Processing");
+                 //   _tracker.SetStatus(request.TaskId, "Processing");
 
                     using var scope = _scopeFactory.CreateScope();
                     var repository = scope.ServiceProvider.GetRequiredService<IDataRepository>();
@@ -70,8 +68,8 @@ namespace WebApplicationAPI.Controllers
                     };
 
 
-                    _taskLogging.InsertTask(taskLog, connectionString!);
-                    _taskLogging.SetTaskStatusState(request.TaskId, "Processing", connectionString!, user);
+                   // _taskLogging.InsertTask(taskLog, connectionString!);
+                  //  _taskLogging.SetTaskStatusState(request.TaskId, "Processing", connectionString!, user);
 
                     switch (request.ProjectTemplateType)
                     {
@@ -762,17 +760,17 @@ namespace WebApplicationAPI.Controllers
                     }
 
                     taskLog.CompletedOn = DateTime.UtcNow;
-                    _taskLogging.MarkTaskAsCompleted(request.TaskId.ToString(), (DateTime)taskLog.CompletedOn, connectionString!, "Done");
+              //      _taskLogging.MarkTaskAsCompleted(request.TaskId.ToString(), (DateTime)taskLog.CompletedOn, connectionString!, "Done");
 
-                    _tracker.SetStatus(request.TaskId, "Done");
+                  //  _tracker.SetStatus(request.TaskId, "Done");
 
-                    _taskLogging.SetTaskStatusState(request.TaskId, "Done", connectionString!, user);
+                //    _taskLogging.SetTaskStatusState(request.TaskId, "Done", connectionString!, user);
 
                 }
                 catch (Exception ex)
                 {
-                    _taskLogging.SetTaskStatusState(request.TaskId, "Fail", connectionString!, user);
-                    _tracker.SetStatus(request.TaskId, $"Error: {ex.Message}");
+                 //   _taskLogging.SetTaskStatusState(request.TaskId, "Fail", connectionString!, user);
+                  //  _tracker.SetStatus(request.TaskId, $"Error: {ex.Message}");
                 }
             });
 
@@ -799,7 +797,7 @@ namespace WebApplicationAPI.Controllers
 
 
         [HttpPost("dllgenerate")]
-        public async Task<IActionResult> GenerateReportUsingDLL([FromBody] ReportGenerationWrapper request) 
+        public async Task<IActionResult> GenerateReportUsingDLL([FromBody] ReportGenerationWrapper request)
         {
             try
             {
@@ -813,13 +811,12 @@ namespace WebApplicationAPI.Controllers
 
                 await _queue.EnqueueAsync(async token =>
                 {
-                    try
-                    {
-                      //  _tracker.SetStatus(request.Request!.TaskId, "Processing");
+                       // _tracker.SetStatus(request.Request!.TaskId, "Processing");
 
                         using var scope = _scopeFactory.CreateScope();
                         var repository = scope.ServiceProvider.GetRequiredService<IDataRepository>();
                         var dll = new DLLCls();
+                        string sourcePath = "";
 
                         TaskLog taskLog = new TaskLog
                         {
@@ -831,24 +828,19 @@ namespace WebApplicationAPI.Controllers
                         };
 
 
-                      //  _taskLogging.InsertTask(taskLog, connectionString!);
-                      //  _taskLogging.SetTaskStatusState(request.Request!.TaskId, "Processing", connectionString!, user);
+                        //_taskLogging.InsertTask(taskLog, connectionString!);
+                        //_taskLogging.SetTaskStatusState(request.Request!.TaskId, "Processing", connectionString!, user);
 
                         //dll call - individual chart generation
                         await apiWrapperDllClass.OpenXMLParallelProcess(request.Request!.project, request.Request!.templates, request.Request!.breakdowns, request.Request!.HistoricalMeanType, request.Request!.HistoricalMeanDescription, request.FinalPPTSelected);
 
-                      //  taskLog.CompletedOn = DateTime.UtcNow;
-                      //  _taskLogging.MarkTaskAsCompleted(request.Request!.TaskId.ToString(), (DateTime)taskLog.CompletedOn, connectionString!, "Done");
+                        //taskLog.CompletedOn = DateTime.UtcNow;
+                        //_taskLogging.MarkTaskAsCompleted(request.Request!.TaskId.ToString(), (DateTime)taskLog.CompletedOn, connectionString!, "Done");
 
-                       // _tracker.SetStatus(request.Request!.TaskId, "Done");
+                        //_tracker.SetStatus(request.Request!.TaskId, "Done");
 
-                       // _taskLogging.SetTaskStatusState(request.Request!.TaskId, "Done", connectionString!, user);
+                        //_taskLogging.SetTaskStatusState(request.Request!.TaskId, "Done", connectionString!, user);
 
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception(ex.Message);
-                    }
                 });
 
                 return Ok(new ReportStatusDto
@@ -862,6 +854,7 @@ namespace WebApplicationAPI.Controllers
                 throw;
             }
         }
+
 
 
         [HttpPost("ppt/merge")]
@@ -887,7 +880,7 @@ namespace WebApplicationAPI.Controllers
 
                 try
                 {
-                    _tracker.SetStatus(taskLog.TaskId, "Queued");
+                   // _tracker.SetStatus(taskLog.TaskId, "Queued");
 
                     await _queue.EnqueueAsync(async token =>
                     {
@@ -897,8 +890,8 @@ namespace WebApplicationAPI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    _taskLogging.SetTaskStatusState(taskLog.TaskId, "Fail", connectionString!, taskLog.CreatedBy);
-                    _tracker.SetStatus(taskLog.TaskId, $"Error: {ex.Message}");
+                //    _taskLogging.SetTaskStatusState(taskLog.TaskId, "Fail", connectionString!, taskLog.CreatedBy);
+                    //_tracker.SetStatus(taskLog.TaskId, $"Error: {ex.Message}");
                     throw new Exception(ex.Message);
                 }
             }
@@ -1023,13 +1016,13 @@ namespace WebApplicationAPI.Controllers
         [HttpGet("status/{taskId}")]
         public IActionResult GetStatus(Guid taskId)
         {
-            var status = _tracker.GetStatus(taskId);
+        //    var status = _tracker.GetStatus(taskId);
             //return Ok(new { taskId, status });
 
             return Ok(new ReportStatusDto
             {
-                TaskId = taskId,
-                Status = status ?? "Unknown",
+                //TaskId = taskId,
+                //Status = status ?? "Unknown",
             });
 
         }
@@ -1047,9 +1040,9 @@ namespace WebApplicationAPI.Controllers
             try
             {
                 string conn = _configuration.GetConnectionString("DBConnection")!;
-
-                var userLogs = await _taskLogging.GetUnfinishedTasks(conn, user);
-                return Ok(userLogs);
+                return new List<TaskLog>() { };
+           //     var userLogs = await _taskLogging.GetUnfinishedTasks(conn, user);
+          //      return Ok(userLogs);
             }
             catch (Exception ex)
             {
@@ -1065,15 +1058,15 @@ namespace WebApplicationAPI.Controllers
             string user = task.CreatedBy;
             Guid taskId = task.TaskId;
 
-            _tracker.SetStatus(task.TaskId, "Queued");
-            _taskLogging.SetTaskStatusState(taskId, "Queued", connectionString!, user);
+         //   _tracker.SetStatus(task.TaskId, "Queued");
+          //  _taskLogging.SetTaskStatusState(taskId, "Queued", connectionString!, user);
 
             await _queue.EnqueueAsync(async token =>
             {
                 try
                 {
-                    _taskLogging.SetTaskStatusState(taskId, "Processing", connectionString!, user);
-                    _tracker.SetStatus(task.TaskId, "Processing");
+                //    _taskLogging.SetTaskStatusState(taskId, "Processing", connectionString!, user);
+                  //  _tracker.SetStatus(task.TaskId, "Processing");
 
                     using var scope = _scopeFactory.CreateScope();
                     var repository = scope.ServiceProvider.GetRequiredService<IDataRepository>();
@@ -1151,18 +1144,18 @@ namespace WebApplicationAPI.Controllers
                     }
 
                     task.CompletedOn = DateTime.UtcNow;
-                    _taskLogging.MarkTaskAsCompleted(task.TaskId.ToString(), (DateTime)task.CompletedOn, connectionString!, "Done");
+                //    _taskLogging.MarkTaskAsCompleted(task.TaskId.ToString(), (DateTime)task.CompletedOn, connectionString!, "Done");
 
-                    _taskLogging.SetTaskStatusState(taskId, "Done", connectionString!, user);
+                //    _taskLogging.SetTaskStatusState(taskId, "Done", connectionString!, user);
 
-                    _tracker.SetStatus(taskId, "Done");
+                //    _tracker.SetStatus(taskId, "Done");
 
 
                 }
                 catch (Exception ex)
                 {
-                    _taskLogging.SetTaskStatusState(taskId, "Fail", connectionString!, user);
-                    _tracker.SetStatus(taskId, $"Fail: {ex.Message}");
+                //    _taskLogging.SetTaskStatusState(taskId, "Fail", connectionString!, user);
+                //    _tracker.SetStatus(taskId, $"Fail: {ex.Message}");
                 }
             });
 
@@ -1175,14 +1168,16 @@ namespace WebApplicationAPI.Controllers
         {
             var connectionString = _configuration.GetConnectionString("DBConnection");
 
-            var getAllTaskIds = await _taskLogging.GetAllData(connectionString!);
+          //  var getAllTaskIds = await _taskLogging.GetAllData(connectionString!);
 
             List<TaskLog> taskLogs = new List<TaskLog>();
 
-            if (getAllTaskIds != null)
-            {
-                taskLogs = getAllTaskIds.Where(x => x.TaskId == task.TaskId).ToList();
-            }
+            //if (getAllTaskIds != null)
+            //{
+            //    taskLogs = getAllTaskIds.Where(x => x.TaskId == task.TaskId).ToList();
+            //}
+            //return Ok(taskLogs);
+
             return Ok(taskLogs);
         }
 

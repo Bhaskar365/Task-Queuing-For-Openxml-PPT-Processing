@@ -77,4 +77,26 @@ namespace SharedModels.DTO
         [ForeignKey("StatusID")]
         public int StatusID { get; set; }
     }
+
+    public class FinalReportModelDTO
+    {
+        [Key]
+        public Guid TaskID { get; set; }
+
+        public string ProjectName { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime CompletedOn { get; set; }
+
+        [ForeignKey("UserID")]
+        public int UserID { get; set; }
+
+        public string UserName { get; set; }
+
+        [ForeignKey("StatusID")]
+        public int StatusID { get; set; }
+
+        public string StatusName { get; set; }
+    }
 }

@@ -23,7 +23,17 @@
         }
         else
         {
-            <MudTable Items="@LogList" Dense="true" Striped="true" Class="tableStyling" Breakpoint="Breakpoint.None">
+ @*            foreach (var lst in finalReportModelDTO)
+            {
+                <div>@lst.UserName</div>
+                <div>@lst.ProjectName</div>
+                <div>@lst.TaskID</div>
+                <div>@lst.StatusName</div>
+                <div>@lst.CreatedOn</div>
+                <div>@lst.CompletedOn</div>
+            }
+ *@
+            <MudTable Items="@finalReportModelDTO" Dense="true" Striped="true" Class="tableStyling" Breakpoint="Breakpoint.None">
                 <ToolBarContent>
                     <MudText Typo="Typo.h6" Class="taskLogHeader">Task Logs</MudText>
                 </ToolBarContent>
@@ -32,7 +42,55 @@
                     <MudTh Class="tableBodyStyling">ProjectType</MudTh>
                     <MudTh Class="tableBodyStyling">CreatedOn</MudTh>
                     <MudTh Class="tableBodyStyling">CompletedOn</MudTh>
-                    @* <MudTh Class="tableBodyStyling">Generation Time</MudTh> *@
+                    <MudTh Class="tableBodyStyling">CreatedBy</MudTh>
+                    <MudTh Class="tableBodyStyling">CurrentStatus</MudTh>
+                </HeaderContent>
+
+                <RowTemplate>
+                    <MudTd Class="tableTaskColumnBodyStyling">
+                        <span class="taskIdText">@context.TaskID</span>
+                    </MudTd>
+                    <MudTd Class="tableBodyStyling">@context.ProjectName</MudTd>
+                    <MudTd Class="tableBodyStyling">@context.CreatedOn.ToString("dd MMMM yyyy HH:mm:ss")</MudTd>
+                    <MudTd Class="tableBodyStyling">@context.CompletedOn</MudTd>
+
+                    <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">@context.UserName</MudTd>
+                    <MudTd class="@GetStatusClass(context.StatusName)" style="font-size:smaller;white-space:nowrap;text-align:center">@context.StatusName</MudTd>
+                </RowTemplate>
+
+                <NoRecordsContent>
+                    <MudTr>
+                        <MudTd ColSpan="7" Class="text-center"
+                               style="font-size:small; white-space:nowrap;">
+                            No data
+                        </MudTd>
+                    </MudTr>
+                </NoRecordsContent>
+
+                <PagerContent>
+                    <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, finalReportModelDTO.Count }"
+                                   RowsPerPageString="@rowsPerPageString"
+                                   InfoFormat="@infoFormat"
+                                   AllItemsText="@allItemsText"
+                                   HorizontalAlignment="@horizontalAlignment"
+                                   HideRowsPerPage="@hideRowsPerPage"
+                                   HidePageNumber="@hidePageNumber"
+                                   HidePagination="@hidePagination" />
+                </PagerContent>
+            </MudTable>
+
+
+
+
+            @*     <MudTable Items="@LogList" Dense="true" Striped="true" Class="tableStyling" Breakpoint="Breakpoint.None">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h6" Class="taskLogHeader">Task Logs</MudText>
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh Class="tableTaskColumnBodyStyling">TaskId</MudTh>
+                    <MudTh Class="tableBodyStyling">ProjectType</MudTh>
+                    <MudTh Class="tableBodyStyling">CreatedOn</MudTh>
+                    <MudTh Class="tableBodyStyling">CompletedOn</MudTh>
                     <MudTh Class="tableBodyStyling">CreatedBy</MudTh>
                     <MudTh Class="tableBodyStyling">CurrentStatus</MudTh>
                 </HeaderContent>
@@ -44,13 +102,7 @@
                     <MudTd Class="tableBodyStyling">@context.ProjectType</MudTd>
                     <MudTd Class="tableBodyStyling">@context.CreatedOn.ToString("dd MMMM yyyy HH:mm:ss")</MudTd>
                     <MudTd Class="tableBodyStyling">@context.CompletedOn</MudTd>
-                    @*     <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">
-                        @{
-                            var duration = @context.CompletedOn - @context.CreatedOn;
-                            string formattedDuration = string.Format("{0:%m}m {0:%s}s", duration);
-                        }
-                        @formattedDuration
-                    </MudTd> *@
+
                     <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">@context.CreatedBy</MudTd>
                     <MudTd class="@GetStatusClass(context.CurrentStatus)" style="font-size:smaller;white-space:nowrap;text-align:center">@context.CurrentStatus</MudTd>
                 </RowTemplate>
@@ -58,7 +110,7 @@
                 <NoRecordsContent>
                     <MudTr>
                         <MudTd ColSpan="7" Class="text-center"
-                        style="font-size:small; white-space:nowrap;">
+                               style="font-size:small; white-space:nowrap;">
                             No data
                         </MudTd>
                     </MudTr>
@@ -66,13 +118,13 @@
 
                 <PagerContent>
                     <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, LogList.Count }"
-                    RowsPerPageString="@rowsPerPageString"
-                    InfoFormat="@infoFormat"
-                    AllItemsText="@allItemsText"
-                    HorizontalAlignment="@horizontalAlignment"
-                    HideRowsPerPage="@hideRowsPerPage"
-                    HidePageNumber="@hidePageNumber"
-                    HidePagination="@hidePagination" />
+                                   RowsPerPageString="@rowsPerPageString"
+                                   InfoFormat="@infoFormat"
+                                   AllItemsText="@allItemsText"
+                                   HorizontalAlignment="@horizontalAlignment"
+                                   HideRowsPerPage="@hideRowsPerPage"
+                                   HidePageNumber="@hidePageNumber"
+                                   HidePagination="@hidePagination" />
                 </PagerContent>
             </MudTable>
 
@@ -113,7 +165,7 @@
                 <NoRecordsContent>
                     <MudTr>
                         <MudTd ColSpan="7" Class="text-center"
-                        style="font-size:small; white-space:nowrap;">
+                               style="font-size:small; white-space:nowrap;">
                             No data
                         </MudTd>
                     </MudTr>
@@ -121,15 +173,15 @@
 
                 <PagerContent>
                     <MudTablePager PageSizeOptions="new int[] { UndoneQueueList.Count, 5, 10, 25, 50, 100 }"
-                    RowsPerPageString="@rowsPerPageString"
-                    InfoFormat="@infoFormat"
-                    AllItemsText="@allItemsText"
-                    HorizontalAlignment="@horizontalAlignment"
-                    HideRowsPerPage="@hideRowsPerPage"
-                    HidePageNumber="@hidePageNumber"
-                    HidePagination="@hidePagination" />
+                                   RowsPerPageString="@rowsPerPageString"
+                                   InfoFormat="@infoFormat"
+                                   AllItemsText="@allItemsText"
+                                   HorizontalAlignment="@horizontalAlignment"
+                                   HideRowsPerPage="@hideRowsPerPage"
+                                   HidePageNumber="@hidePageNumber"
+                                   HidePagination="@hidePagination" />
                 </PagerContent>
-            </MudTable>
+            </MudTable> *@
 
 
         }
@@ -261,10 +313,32 @@ else
 
     List<FinalReportModel> finalReportList = new List<FinalReportModel>();
 
+    List<FinalReportModelDTO> finalReportModelDTO = new List<FinalReportModelDTO>();
+
     private async Task LoadLogs()
     {
-        LogList = await fitToConceptService.GetLogs();
-        UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
+        int userId = _taskLog.GetUserIdByNameSp(user);
+
+        finalReportList = _taskLog.GetFinalReportsByName(userId);
+
+        finalReportModelDTO.Clear();
+
+        foreach(var data in finalReportList)
+        {
+            string username = _taskLog.GetUserNameFromIdSp(data.UserID);
+            string status = _taskLog.GetStatusNameFromIdSp(data.StatusID);
+
+            finalReportModelDTO.Add(new FinalReportModelDTO
+            {
+                TaskID = data.TaskID,
+                StatusName = status,
+                UserName = username,
+                ProjectName = data.ProjectName,
+                CreatedOn = data.CreatedOn,
+                CompletedOn = data.CompletedOn,
+            });
+        }
+
         StateHasChanged();
     }
 
@@ -275,18 +349,14 @@ else
         WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
         user = windowsIdentity.Name.Replace("BI\\", "").ToString();
 
-        int userId = _taskLog.GetUserIdByNameSp(user);
+        await LoadLogs();
 
-        finalReportList = _taskLog.GetFinalReportsByName(userId);
-
-        StateHasChanged();
-       // LogList = await fitToConceptService.GetLogs();
         StateHasChanged();
 
 
 
         //StartHotReload();
-       // UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
+        // UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
         isDataLoaded = true;
         StateHasChanged();
     }

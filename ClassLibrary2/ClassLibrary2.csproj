@@ -78,6 +78,12 @@
     <Compile Include="TaskTrackingDLL\PageTracking.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Files\MrConsumerMedDevice.pptx" />
+    <None Include="Files\MRLogo.pptx" />
+    <None Include="Files\MR-Rx Naming.pptx" />
+    <None Include="Files\MRRxNaming.pptx" />
+    <None Include="Files\MRSuffix.pptx" />
+    <None Include="Files\Nonprop.pptx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
