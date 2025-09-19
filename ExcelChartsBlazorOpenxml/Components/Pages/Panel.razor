@@ -113,7 +113,7 @@ else
                                         Variant="Variant.Outlined"
                                         FitContent="true">
 
-                                            @if (!isContentLoaded || isProjectPageLoading)
+                                            @if (!isContentLoaded)
                                             {
                                                 <MudSelectItem Value="@(project)">
                                                     <i class="fas fa-spinner fa-spin progressProjectSpinner"></i>
@@ -121,11 +121,22 @@ else
                                             }
                                             else
                                             {
-                                                @foreach (var projectEl in projectList)
+                                                @if (isProjectPageLoading)
                                                 {
-                                                    <MudSelectItem Value="@projectEl">@projectEl</MudSelectItem>
+                                                    <MudSelectItem Value="@(project)">
+                                                        <i class="fas fa-spinner fa-spin progressProjectSpinner"></i>
+                                                    </MudSelectItem>
+                                                }
+                                                else
+                                                {
+                                                    @foreach (var projectEl in projectList)
+                                                    {
+                                                        <MudSelectItem Value="@projectEl">@projectEl</MudSelectItem>
+                                                    }
                                                 }
                                             }
+
+                                           
                                         </MudSelect>
                                     </MudItem>
                                 </MudGrid>
