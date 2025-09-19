@@ -746,6 +746,12 @@ else
         public int intExcelChartsProjectID { get; set; }
     }
 
+    public class TestnameDataModel
+    {
+        public string strTestName { get; set; }
+    }
+
+
 
     public class clschartBreakdownGroup
     {
@@ -836,6 +842,8 @@ else
             // lstPg = await getProjectPagegroupNames(project!);
             StateHasChanged();
             lstBreakdown = await getProjectBreakdowngroupNames(project);
+            
+            var x = GetTestnameListData(project);
 
             isDataLoaded = true;
             isContentLoaded = true;
@@ -848,6 +856,8 @@ else
             //await  LoadIndividualLogs();
 
             StateHasChanged();
+
+
         }
         catch (Exception)
         {
@@ -958,6 +968,18 @@ else
         return lstPg;
     }
 
+
+    public async Task<List<TestnameDataModel>> GetTestnameListData(string strTestname)
+    {
+        System.Data.DataTable dt = clsData.MRData.getDataTable($"[dbo].[ExcelChartsPrc_getTestNames]  1, '{strTestname}'");
+
+        List<TestnameDataModel> lstPg = dt.AsEnumerable().Select(row => new TestnameDataModel
+            {
+                strTestName = row.Field<string>("strTestName")!,
+            }).ToList();
+
+        return lstPg;
+    }
 
 
     private List<selectedPagesListClass> getProjectChartDisplayNames(string projectName)
