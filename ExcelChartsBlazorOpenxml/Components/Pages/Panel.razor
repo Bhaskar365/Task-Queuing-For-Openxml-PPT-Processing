@@ -804,6 +804,7 @@ else
 
     List<IndividualReportModel> currentTaskModel = new List<IndividualReportModel>();
 
+    List<string> testnameLst = new List<string>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -823,14 +824,7 @@ else
 
             LogoFolderTextValue = $"{project}_MR";
 
-            foreach (var testname in fitToConceptData!)
-            {
-                lstTestnames.Add(new clschartTestnameGroup
-                    {
-                        testNames = testname.TestName!,
-                        isChecked = true
-                    });
-            }
+            TestnameDataCommonMethod(project);
 
             pageListData = GetProjectData().Result;
 
@@ -842,8 +836,7 @@ else
             // lstPg = await getProjectPagegroupNames(project!);
             StateHasChanged();
             lstBreakdown = await getProjectBreakdowngroupNames(project);
-            
-            var x = GetTestnameListData(project);
+
 
             isDataLoaded = true;
             isContentLoaded = true;
@@ -866,6 +859,31 @@ else
 
     }
 
+
+    public void TestnameDataCommonMethod(string project)
+    {
+        lstTestnames.Clear();
+        testnameLst.Clear();
+
+        var x = GetTestnameListData(project).Result;
+
+        foreach (var t in x)
+        {
+            testnameLst.Add(t.strTestName);
+        }
+
+
+        foreach (var testname in testnameLst!)
+        {
+            lstTestnames.Add(new clschartTestnameGroup
+                {
+                    testNames = testname,
+                    isChecked = true
+                });
+        }
+    }
+
+
     public bool isProjectPageLoading = false;
 
     private async Task OnProjectChanged(string newProject)
@@ -878,6 +896,9 @@ else
         chartPageList = getProjectChartDisplayNames(project);
         LogoFolderTextValue = $"{project}_MR";
         lstBreakdown = await getProjectBreakdowngroupNames(project);
+
+        TestnameDataCommonMethod(project);
+
 
         // Re-render
         StateHasChanged();
