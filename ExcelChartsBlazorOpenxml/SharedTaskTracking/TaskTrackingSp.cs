@@ -282,7 +282,7 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
         }
 
         // get individual user report by task id stored procedure
-        public List<IndividualReportModel> GetIndividualUserReport(Guid taskId)
+        public async Task<List<IndividualReportModel>> GetIndividualUserReport(Guid taskId)
         {
             var reports = new List<IndividualReportModel>();
 
@@ -292,8 +292,8 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@TaskID", taskId);
 
-                conn.Open();
-                using (SqlDataReader reader = cmd.ExecuteReader())
+               await conn.OpenAsync();
+                using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                 {
                     while (reader.Read())
                     {

@@ -48,7 +48,9 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
 
         Guid GetTaskIdByProjectAndUserSp(string projectName, int userId);
 
-        List<IndividualReportModel> GetIndividualUserReport(Guid taskId);
+        //List<IndividualReportModel> GetIndividualUserReport(Guid taskId);
+
+        Task<List<IndividualReportModel>> GetIndividualUserReport(Guid taskId);
 
 
         List<FinalReportModel> GetFinalReportsByName(int UserID);

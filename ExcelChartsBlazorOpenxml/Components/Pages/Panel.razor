@@ -108,10 +108,10 @@ else
 
                                     <MudItem xs="12" sm="7">
                                         <MudSelect T="string"
-                                        Value="@project"
-                                        ValueChanged="OnProjectChanged"
-                                        Variant="Variant.Outlined"
-                                        FitContent="true">
+                                                   Value="@project"
+                                                   ValueChanged="OnProjectChanged"
+                                                   Variant="Variant.Outlined"
+                                                   FitContent="true">
 
                                             @if (!isContentLoaded)
                                             {
@@ -136,7 +136,7 @@ else
                                                 }
                                             }
 
-                                           
+
                                         </MudSelect>
                                     </MudItem>
                                 </MudGrid>
@@ -150,8 +150,8 @@ else
                                     </MudItem>
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="DSITextValue"
-                                        Variant="Variant.Outlined"
-                                        FitContent=True>
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True>
                                             <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
                                         </MudSelect>
                                     </MudItem>
@@ -273,8 +273,8 @@ else
 
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="finalPPTOption"
-                                        Variant="Variant.Outlined"
-                                        FitContent=True ShrinkLabel>
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True ShrinkLabel>
                                             @foreach (var state in _states)
                                             {
                                                 <MudSelectItem Value="state">@state</MudSelectItem>
@@ -292,16 +292,16 @@ else
                                     @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
                                     <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
                                         <MudCheckBox @bind-Value="Size_CheckBox1"
-                                        Size="Size.Small"
-                                        Color="Color.Primary"
-                                        Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                                     Size="Size.Small"
+                                                     Color="Color.Primary"
+                                                     Class="custom-label-historical-mean-checkbox"></MudCheckBox>
                                         <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
                                     </MudItem>
 
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="SpecificHistMean"
-                                        Variant="Variant.Outlined"
-                                        FitContent=True Disabled>
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True Disabled>
                                             <MudSelectItem Value="@SpecificHistMean"></MudSelectItem>
                                         </MudSelect>
                                     </MudItem>
@@ -312,10 +312,10 @@ else
                             @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
                             <MudButton Variant="Variant.Filled"
-                            Class="generateBtnClass buttonload"
-                            @onclick="ProcessDLL"
-                            disabled="!isContentLoaded"
-                            Color="@buttonColor">
+                                       Class="generateBtnClass buttonload"
+                                       @onclick="ProcessDLL"
+                                       disabled="!isContentLoaded"
+                                       Color="@buttonColor">
                                 @*  @if (currentState == ProcessState.Generating)
                             {
                                 <span> Generating...</span>
@@ -494,9 +494,9 @@ else
                                     </div>
 
                                     <MudButton Variant="Variant.Filled"
-                                    Size="Size.Small"
-                                    FullWidth="true"
-                                    Class="btnClass">
+                                               Size="Size.Small"
+                                               FullWidth="true"
+                                               Class="btnClass">
                                         Select All/Unselect All
                                     </MudButton>
 
@@ -507,9 +507,9 @@ else
                                     </div>
 
                                     <MudButton Variant="Variant.Filled"
-                                    Size="Size.Small"
-                                    FullWidth="true"
-                                    Class="btnClass">
+                                               Size="Size.Small"
+                                               FullWidth="true"
+                                               Class="btnClass">
                                         Select All/Unselect All
                                     </MudButton>
                                 </MudPaper>
@@ -539,80 +539,23 @@ else
 
     </MudTabs>
 
-    <MudExpansionPanels>
-        <MudExpansionPanel Text="Panel One" Expanded="true">
 
+    <p class="d-inline-flex gap-1">
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            See Running Processes
+        </button>
+    </p>
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+
+            @* content *@
 
             @if (currentTaskModel.Count == 0 || currentTaskModel == null)
             {
-                <div>No data</div>
+                <div>No data yet.Wait for some time if generation started.....</div>
             }
             else
             {
-
-                @*  <div class="card card-body">
-                    <table class="table  table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Task ID</th>
-                                <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Project Type</th>
-                                <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Created On</th>
-                                <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Completed On</th>
-                                <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Created By</th>
-                                <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Status</th>
-                                <th scope="col" style="font-size:small;white-space:nowrap;text-align:center">Status Message</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (currentTaskModel == null || currentTaskModel.Count == 0)
-                            {
-                                <tr>
-                                    <td colspan="7" class="text-center">No data</td>
-                                </tr>
-                            }
-                            else
-                            {
-                                foreach (var data in currentTaskModel)
-                                {
-                                    <tr>
-                                        <td style="font-size:small;white-space:nowrap;text-align:center">@data.SubtaskId</td>
-                                        <td style="font-size:small;white-space:nowrap;text-align:center">@data.TemplateName</td>
-                                        <td style="font-size:small;white-space:nowrap;text-align:center">@data.CreatedOn.ToString("dddd, dd MMMM yyyy HH:mm:ss")</td>
-                                        <td style="font-size:small;white-space:nowrap;text-align:center">@data.CompletedOn</td>
-
-                                        <td style="font-size:small;white-space:nowrap;text-align:center">@data.UserID</td>
-                                        <td style="font-size:small;white-space:nowrap;text-align:center">@data.StatusID</td>
-
-                                        <td style="font-size:small;white-space:nowrap;text-align:center; background:black; color:white;">
-                                            @if (data?.StatusMessage == "In Process")
-                                            {
-                                                <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Small" />
-                                                <span style="margin-left:5px;">@data.StatusMessage</span>
-                                            }
-                                            else if (data?.StatusMessage == "Completed")
-                                            {
-                                                <span style="color:limegreen;">@data.StatusMessage</span>
-                                            }
-                                            else if (data?.StatusMessage == "Failed")
-                                            {
-                                                <span style="color:red;">@data.StatusMessage</span>
-                                            }
-                                            else if (data?.StatusMessage == "Queued")
-                                            {
-                                                <span style="color:orange;">@data?.StatusMessage</span>
-                                            }
-                                            else
-                                            {
-                                                <span>@data?.StatusMessage</span>
-                                            }
-                                        </td>
-
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-                </div> *@
 
                 <MudTable Items="@currentTaskModel" Dense="true" Striped="true" Breakpoint="Breakpoint.None">
                     <ToolBarContent>
@@ -661,20 +604,53 @@ else
                 </MudTable>
             }
 
-        </MudExpansionPanel>
-    </MudExpansionPanels>
+
+        </div>
+    </div>
 
     <br />
+
+
 
     <hr />
 }
 
 
 
+@* 
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">UserId</th>
+            <th scope="col">StatusId</th>
+            <th scope="col">Complemted On</th>
+            <th scope="col">Template</th>
+            <th scope="col">Subtask Id</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var y in currentTaskModel)
+        {
+            <tr>
+                <td>@y.UserID</td>
+                <td>@y.StatusID</td>
+                <td>@_taskLog.GetStatusNameFromIdSp(@y.StatusID)</td>
+                <td>@y.CompletedOn</td>
+                <td>@y.TemplateName</td>
+                <td>@y.SubtaskId</td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+
+
 @foreach (var t in _options)
 {
     <div>@t</div>
 }
+ *@
 
 
 @code {
@@ -835,7 +811,6 @@ else
 
             LogoFolderTextValue = $"{project}_MR";
 
-            TestnameDataCommonMethod(project);
 
             pageListData = GetProjectData().Result;
 
@@ -848,6 +823,7 @@ else
             StateHasChanged();
             lstBreakdown = await getProjectBreakdowngroupNames(project);
 
+            TestnameDataCommonMethod(project);
 
             isDataLoaded = true;
             isContentLoaded = true;
@@ -856,7 +832,7 @@ else
             StateHasChanged();
 
             ReportService.OnChange += StateHasChanged;
-            await StartHotReload();
+            StartHotReload();
             //await  LoadIndividualLogs();
 
             StateHasChanged();
@@ -1078,16 +1054,26 @@ else
        {
            InvokeAsync(async () =>
            {
-               await LoadIndividualLogs();
+               await Task.Run(async () => await LoadIndividualLogs());
                StateHasChanged();
            });
-       }, null, 0, 5000);
-        StateHasChanged();
+       }, null, 0, 100);
     }
 
     public async Task LoadIndividualLogs()
     {
-        currentTaskModel = _taskLog.GetIndividualUserReport(currentTaskId);
+        try
+        {
+
+            currentTaskModel = await _taskLog.GetIndividualUserReport(currentTaskId);
+            Console.WriteLine($"Reloaded logs: {currentTaskModel?.Count} rows for {currentTaskId}");
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"HotReload error: {ex}");
+            throw;
+        }
         StateHasChanged();
     }
 
@@ -1150,6 +1136,9 @@ else
 
 
             var id = await fitToConceptService.GenerateReportUsingDLLAsync(res, finalPPTOption!);
+
+            await StartHotReload();
+            StateHasChanged();
 
             var result = await fitToConceptService.SendDLLMergeRequestWithPanel(res, finalPPTOption!);
 
