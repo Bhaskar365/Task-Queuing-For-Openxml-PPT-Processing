@@ -106,7 +106,7 @@ else
                                         <MudText Class="custom-label" Color="Color.Error">Project Name</MudText>
                                     </MudItem>
 
-                                    <MudItem xs="12" sm="7">
+                                    @* <MudItem xs="12" sm="7">
                                         <MudSelect T="string"
                                                    Value="@project"
                                                    ValueChanged="OnProjectChanged"
@@ -138,7 +138,26 @@ else
 
 
                                         </MudSelect>
+                                    </MudItem> *@
+
+                                    <MudItem xs="12" sm="7">
+                                        <MudAutocomplete T="string" Value="project"
+                                        SearchFunc="@Search1"
+                                        ValueChanged="OnProjectChanged"
+                                        Variant="Variant.Outlined"
+                                        ProgressIndicatorColor="SelectedColor"
+                                        MaxItems="projectList.Count">
+                                            <ProgressIndicatorInPopoverTemplate>
+                                                <MudList T="string" ReadOnly>
+                                                    <MudListItem>
+                                                        Loading...
+                                                    </MudListItem>
+                                                </MudList>
+                                            </ProgressIndicatorInPopoverTemplate>
+                                        </MudAutocomplete>
                                     </MudItem>
+
+
                                 </MudGrid>
                             </MudPaper>
 
@@ -150,8 +169,8 @@ else
                                     </MudItem>
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="DSITextValue"
-                                                   Variant="Variant.Outlined"
-                                                   FitContent=True>
+                                        Variant="Variant.Outlined"
+                                        FitContent=True>
                                             <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
                                         </MudSelect>
                                     </MudItem>
@@ -273,8 +292,8 @@ else
 
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="finalPPTOption"
-                                                   Variant="Variant.Outlined"
-                                                   FitContent=True ShrinkLabel>
+                                        Variant="Variant.Outlined"
+                                        FitContent=True ShrinkLabel>
                                             @foreach (var state in _states)
                                             {
                                                 <MudSelectItem Value="state">@state</MudSelectItem>
@@ -292,16 +311,16 @@ else
                                     @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
                                     <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
                                         <MudCheckBox @bind-Value="Size_CheckBox1"
-                                                     Size="Size.Small"
-                                                     Color="Color.Primary"
-                                                     Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                        Size="Size.Small"
+                                        Color="Color.Primary"
+                                        Class="custom-label-historical-mean-checkbox"></MudCheckBox>
                                         <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
                                     </MudItem>
 
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="SpecificHistMean"
-                                                   Variant="Variant.Outlined"
-                                                   FitContent=True Disabled>
+                                        Variant="Variant.Outlined"
+                                        FitContent=True Disabled>
                                             <MudSelectItem Value="@SpecificHistMean"></MudSelectItem>
                                         </MudSelect>
                                     </MudItem>
@@ -312,10 +331,10 @@ else
                             @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
                             <MudButton Variant="Variant.Filled"
-                                       Class="generateBtnClass buttonload"
-                                       @onclick="ProcessDLL"
-                                       disabled="!isContentLoaded"
-                                       Color="@buttonColor">
+                            Class="generateBtnClass buttonload"
+                            @onclick="ProcessDLL"
+                            disabled="!isContentLoaded"
+                            Color="@buttonColor">
                                 @*  @if (currentState == ProcessState.Generating)
                             {
                                 <span> Generating...</span>
@@ -494,9 +513,9 @@ else
                                     </div>
 
                                     <MudButton Variant="Variant.Filled"
-                                               Size="Size.Small"
-                                               FullWidth="true"
-                                               Class="btnClass">
+                                    Size="Size.Small"
+                                    FullWidth="true"
+                                    Class="btnClass">
                                         Select All/Unselect All
                                     </MudButton>
 
@@ -507,9 +526,9 @@ else
                                     </div>
 
                                     <MudButton Variant="Variant.Filled"
-                                               Size="Size.Small"
-                                               FullWidth="true"
-                                               Class="btnClass">
+                                    Size="Size.Small"
+                                    FullWidth="true"
+                                    Class="btnClass">
                                         Select All/Unselect All
                                     </MudButton>
                                 </MudPaper>
@@ -658,6 +677,8 @@ else
     string breakdownErrorMessage = "";
     string pagesErrorMessage = "";
 
+    public Color SelectedColor { get; set; } = Color.Error;
+
     // string ww = "";
     private IEnumerable<string> _options = new HashSet<string> { "RACKEM" };
 
@@ -768,7 +789,6 @@ else
 
     List<ChartDataModel> pageListData = new List<ChartDataModel>();
 
-    private List<ReportStatus> reportStatuses = new();
 
     private List<string> selectedItems = new();
 
@@ -819,6 +839,8 @@ else
                 projectList.Add(project.strExcelChartsProjectName);
             }
 
+            projectList.Sort();
+
             // lstPg = await getProjectPagegroupNames(project!);
             StateHasChanged();
             lstBreakdown = await getProjectBreakdowngroupNames(project);
@@ -832,7 +854,7 @@ else
             StateHasChanged();
 
             ReportService.OnChange += StateHasChanged;
-            StartHotReload();
+            await StartHotReload();
             //await  LoadIndividualLogs();
 
             StateHasChanged();
@@ -844,6 +866,36 @@ else
             throw;
         }
 
+    }
+
+
+
+    private async Task<IEnumerable<string>> Search1(string value)
+    {
+        await Task.Delay(50);
+
+        var sorted = projectList.OrderBy(x => x).ToList();
+
+        if (string.IsNullOrWhiteSpace(value))
+            return sorted;
+
+        if (string.Equals(value, project, StringComparison.InvariantCultureIgnoreCase))
+        {
+            int idx = sorted.FindIndex(x => string.Equals(x, project, StringComparison.InvariantCultureIgnoreCase));
+            if (idx >= 0)
+            {
+                return sorted.Skip(idx).Concat(sorted.Take(idx));
+
+                // Option 2: everything before RACKEM, then RACKEM, then everything after
+            }
+        }
+
+        return sorted.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    public void OnColorSelected(Color value)
+    {
+        SelectedColor = value;
     }
 
 
@@ -1057,7 +1109,7 @@ else
                await Task.Run(async () => await LoadIndividualLogs());
                StateHasChanged();
            });
-       }, null, 0, 100);
+       }, null, 0, 1000);
     }
 
     public async Task LoadIndividualLogs()
@@ -1240,47 +1292,47 @@ else
     }
 
 
-    private async Task PollStatusAsync(Guid taskId)
-    {
-        while (true)
-        {
-            //var response = await http.GetFromJsonAsync<ReportStatus>($"api/report/status/{taskId}");
-            var status = await fitToConceptService.GetReportStatusAsync(taskId);
+    // private async Task PollStatusAsync(Guid taskId)
+    // {
+    //     while (true)
+    //     {
+    //         //var response = await http.GetFromJsonAsync<ReportStatus>($"api/report/status/{taskId}");
+    //         var status = await fitToConceptService.GetReportStatusAsync(taskId);
 
-            var task = reportStatuses.FirstOrDefault(x => x.TaskId == taskId);
-            if (task != null) task.Status = status;
+    //         var task = reportStatuses.FirstOrDefault(x => x.TaskId == taskId);
+    //         if (task != null) task.Status = status;
 
-            if (status == "Done" || status.StartsWith("Error")) break;
-            StateHasChanged();
-        }
+    //         if (status == "Done" || status.StartsWith("Error")) break;
+    //         StateHasChanged();
+    //     }
 
-        StateHasChanged();
-    }
+    //     StateHasChanged();
+    // }
 
 
-    private async Task WaitUntilAllTasksComplete(List<Guid> taskIds)
-    {
-        bool allDone = false;
+    // private async Task WaitUntilAllTasksComplete(List<Guid> taskIds)
+    // {
+    //     bool allDone = false;
 
-        while (!allDone)
-        {
-            allDone = true;
+    //     while (!allDone)
+    //     {
+    //         allDone = true;
 
-            foreach (var taskId in taskIds)
-            {
-                var status = await fitToConceptService.GetReportStatusAsync(taskId);
-                var existing = reportStatuses.FirstOrDefault(x => x.TaskId == taskId);
-                if (existing != null) existing.Status = status;
+    //         foreach (var taskId in taskIds)
+    //         {
+    //             var status = await fitToConceptService.GetReportStatusAsync(taskId);
+    //             var existing = reportStatuses.FirstOrDefault(x => x.TaskId == taskId);
+    //             if (existing != null) existing.Status = status;
 
-                if (!(status == "Done" || status.StartsWith("Processing") || status == "Fail"))
-                {
-                    allDone = false;
-                }
-            }
+    //             if (!(status == "Done" || status.StartsWith("Processing") || status == "Fail"))
+    //             {
+    //                 allDone = false;
+    //             }
+    //         }
 
-            StateHasChanged(); // Refresh the UI table
-            await Task.Delay(10); // Wait a bit before next check
-        }
-    }
+    //         StateHasChanged(); // Refresh the UI table
+    //         await Task.Delay(10); // Wait a bit before next check
+    //     }
+    // }
 
 }
