@@ -331,10 +331,10 @@ else
                             @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
                             <MudButton Variant="Variant.Filled"
-                            Class="generateBtnClass buttonload"
-                            @onclick="ProcessDLL"
-                            disabled="!isContentLoaded"
-                            Color="@buttonColor">
+                                        Class="generateBtnClass buttonload"
+                                        @onclick="ProcessDLL"
+                                        disabled="hasProcessStarted"
+                                        Color="@buttonColor">
                                 @*  @if (currentState == ProcessState.Generating)
                             {
                                 <span> Generating...</span>
@@ -1112,6 +1112,7 @@ else
        }, null, 0, 1000);
     }
 
+
     public async Task LoadIndividualLogs()
     {
         try
@@ -1137,7 +1138,7 @@ else
 
             var selectedPages = chartPageList.Where(x => x.isChecked).Select(x => x.strPageName).ToList();
 
-            selectedPages.Remove("Linguistics");
+           // selectedPages.Remove("Linguistics");
 
             if (selectedPages.Count == 0)
             {
