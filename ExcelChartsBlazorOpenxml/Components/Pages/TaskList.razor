@@ -23,7 +23,7 @@
         }
         else
         {
- @*            foreach (var lst in finalReportModelDTO)
+            @*            foreach (var lst in finalReportModelDTO)
             {
                 <div>@lst.UserName</div>
                 <div>@lst.ProjectName</div>
@@ -52,7 +52,17 @@
                     </MudTd>
                     <MudTd Class="tableBodyStyling">@context.ProjectName</MudTd>
                     <MudTd Class="tableBodyStyling">@context.CreatedOn.ToString("dd MMMM yyyy HH:mm:ss")</MudTd>
-                    <MudTd Class="tableBodyStyling">@context.CompletedOn</MudTd>
+                    <MudTd Class="tableBodyStyling">
+                        @if(@context.CompletedOn==null)
+                        {
+                            <p>null</p>
+                        } 
+                        else
+                        {
+                            @context.CompletedOn
+                        }
+
+                    </MudTd>
 
                     <MudTd style="font-size:smaller;white-space:nowrap;text-align:center">@context.UserName</MudTd>
                     <MudTd class="@GetStatusClass(context.StatusName)" style="font-size:smaller;white-space:nowrap;text-align:center">@context.StatusName</MudTd>
@@ -345,20 +355,28 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        try
+        {
+            WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
+            user = windowsIdentity.Name.Replace("BI\\", "").ToString();
 
-        WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
-        user = windowsIdentity.Name.Replace("BI\\", "").ToString();
+            await LoadLogs();
 
-        await LoadLogs();
-
-        StateHasChanged();
+            StateHasChanged();
 
 
 
-        //StartHotReload();
-        // UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
-        isDataLoaded = true;
-        StateHasChanged();
+            //StartHotReload();
+            // UndoneQueueList = await fitToConceptService.GetUnfinishedLogs("testUser");
+            isDataLoaded = true;
+            StateHasChanged();
+        }
+        catch (Exception)
+        {
+            
+            throw;
+        }
+       
     }
 
     private void StartHotReload()

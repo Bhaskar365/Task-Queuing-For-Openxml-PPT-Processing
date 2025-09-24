@@ -69,7 +69,7 @@ namespace SharedModels.DTO
 
         public DateTime CreatedOn { get; set; }
 
-        public DateTime CompletedOn { get; set; }
+        public DateTime? CompletedOn { get; set; }
 
         [ForeignKey("UserID")]
         public int UserID { get; set; }
@@ -87,7 +87,7 @@ namespace SharedModels.DTO
 
         public DateTime CreatedOn { get; set; }
 
-        public DateTime CompletedOn { get; set; }
+        public DateTime? CompletedOn { get; set; }
 
         [ForeignKey("UserID")]
         public int UserID { get; set; }

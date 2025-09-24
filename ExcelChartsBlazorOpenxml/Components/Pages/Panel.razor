@@ -563,7 +563,10 @@ else
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
             See Running Processes
         </button>
+        &nbsp;
+        <button class="btn btn-info" @onclick="LoadIndividualLogs">Refresh</button>
     </p>
+
     <div class="collapse" id="collapseExample">
         <div class="card card-body">
 
@@ -1117,7 +1120,6 @@ else
     {
         try
         {
-
             currentTaskModel = await _taskLog.GetIndividualUserReport(currentTaskId);
             Console.WriteLine($"Reloaded logs: {currentTaskModel?.Count} rows for {currentTaskId}");
             StateHasChanged();

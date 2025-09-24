@@ -305,7 +305,7 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
                             StatusID = reader.GetInt16(reader.GetOrdinal("StatusID")),
                             TemplateName = reader.GetString(reader.GetOrdinal("TemplateName")),
                             CreatedOn = reader.GetDateTime(reader.GetOrdinal("CreatedOn")),
-                            CompletedOn = reader.GetDateTime(reader.GetOrdinal("CompletedOn")),
+                            CompletedOn = (DateTime)(reader.IsDBNull(reader.GetOrdinal("CompletedOn")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("CompletedOn"))),
                             StatusMessage = reader.IsDBNull(reader.GetOrdinal("StatusMessage"))
                                             ? null
                                             : reader.GetString(reader.GetOrdinal("StatusMessage"))
@@ -319,33 +319,41 @@ namespace ExcelChartsBlazorOpenxml.SharedTaskTracking
 
         public List<FinalReportModel> GetFinalReportsByName(int UserID)
         {
-            var reports = new List<FinalReportModel>();
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetAllFinalReportsByName", conn))
+            try
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@UserID", UserID);
+                var reports = new List<FinalReportModel>();
 
-                conn.Open();
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand("xlChartGenerationPortal.sp_GetAllFinalReportsByName", conn))
                 {
-                    while (reader.Read())
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@UserID", UserID);
+
+                    conn.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        reports.Add(new FinalReportModel
+                        while (reader.Read())
                         {
-                            UserID = reader.GetInt16(reader.GetOrdinal("UserID")),
-                            TaskID = reader.GetGuid(reader.GetOrdinal("TaskID")),
-                            StatusID = reader.GetInt16(reader.GetOrdinal("StatusID")),
-                            CompletedOn = reader.GetDateTime(reader.GetOrdinal("CompletedOn")),
-                            CreatedOn = reader.GetDateTime(reader.GetOrdinal("CreatedOn")),
-                            ProjectName = reader.GetString(reader.GetOrdinal("ProjectName"))
-                        });
+                            reports.Add(new FinalReportModel
+                            {
+                                UserID = reader.GetInt16(reader.GetOrdinal("UserID")),
+                                TaskID = reader.GetGuid(reader.GetOrdinal("TaskID")),
+                                StatusID = reader.GetInt16(reader.GetOrdinal("StatusID")),
+                                CompletedOn = (reader.IsDBNull(reader.GetOrdinal("CompletedOn")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("CompletedOn"))),
+                                CreatedOn = reader.GetDateTime(reader.GetOrdinal("CreatedOn")),
+                                ProjectName = reader.GetString(reader.GetOrdinal("ProjectName"))
+                            });
+                        }
                     }
                 }
+                return reports;
             }
-            return reports;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public string GetStatusNameFromIdSp(int StatusID)
