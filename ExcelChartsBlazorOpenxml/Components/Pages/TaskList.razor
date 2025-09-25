@@ -40,8 +40,8 @@
                 <HeaderContent>
                     <MudTh Class="tableTaskColumnBodyStyling">TaskId</MudTh>
                     <MudTh Class="tableBodyStyling">ProjectType</MudTh>
-                    <MudTh Class="tableBodyStyling">CreatedOn</MudTh>
-                    <MudTh Class="tableBodyStyling">CompletedOn</MudTh>
+                    <MudTh Class="tableBodyStyling">CreatedOn (dd-mm-yyyy)</MudTh>
+                    <MudTh Class="tableBodyStyling">CompletedOn (dd-mm-yyyy)</MudTh>
                     <MudTh Class="tableBodyStyling">CreatedBy</MudTh>
                     <MudTh Class="tableBodyStyling">CurrentStatus</MudTh>
                 </HeaderContent>
@@ -51,7 +51,7 @@
                         <span class="taskIdText">@context.TaskID</span>
                     </MudTd>
                     <MudTd Class="tableBodyStyling">@context.ProjectName</MudTd>
-                    <MudTd Class="tableBodyStyling">@context.CreatedOn.ToString("dd MMMM yyyy HH:mm:ss")</MudTd>
+                    <MudTd Class="tableBodyStyling">@context.CreatedOn.ToString("dd/MM/yyyy H:mm:ss")</MudTd>
                     <MudTd Class="tableBodyStyling">
                         @if(@context.CompletedOn==null)
                         {

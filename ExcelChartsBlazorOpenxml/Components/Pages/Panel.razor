@@ -596,8 +596,8 @@ else
                         <MudTd Class="tableTaskColumnBodyStyling"> @context.SubtaskId</MudTd>
                         <MudTd Class="tableBodyStyling">@_taskLog.GetUserNameFromIdSp(@context.UserID)</MudTd>
                         <MudTd Class="tableBodyStyling">@context.TemplateName</MudTd>
-                        <MudTd Class="tableBodyStyling">@context.CreatedOn</MudTd>
-                        <MudTd Class="tableBodyStyling">@context.CompletedOn</MudTd>
+                        <MudTd Class="tableBodyStyling">@context.CreatedOn.ToString("MM/dd/yyyy H:mm:ss")</MudTd>
+                        <MudTd Class="tableBodyStyling">@context.CompletedOn.ToString("MM/dd/yyyy H:mm:ss")</MudTd>
 
                         <MudTd class="bg-dark ms-5">
                             @if (context?.StatusMessage == "In Process")
