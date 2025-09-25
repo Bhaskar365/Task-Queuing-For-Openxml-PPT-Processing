@@ -33,17 +33,32 @@
                 <div>@lst.CompletedOn</div>
             }
  *@
-            <MudTable Items="@finalReportModelDTO" Dense="true" Striped="true" Class="tableStyling" Breakpoint="Breakpoint.None">
+            <MudTable Items="@finalReportModelDTO" Dense="true" Striped="true"
+                      Class="tableStyling" Breakpoint="Breakpoint.None" Filter="(FilterFunc1)" SortLabel="Sort By">
                 <ToolBarContent>
                     <MudText Typo="Typo.h6" Class="taskLogHeader">Task Logs</MudText>
+                    <MudSpacer />
+                    <MudTextField @bind-Value="searchString1"
+                                  Placeholder="Search"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Search"
+                                  IconSize="Size.Medium"
+                                  Class="mt-0"></MudTextField>
                 </ToolBarContent>
                 <HeaderContent>
-                    <MudTh Class="tableTaskColumnBodyStyling">TaskId</MudTh>
-                    <MudTh Class="tableBodyStyling">ProjectType</MudTh>
-                    <MudTh Class="tableBodyStyling">CreatedOn (dd-mm-yyyy)</MudTh>
+                   @*  <MudTh Class="tableTaskColumnBodyStyling">TaskId</MudTh>
+                    <MudTh Class="tableBodyStyling">ProjectType</MudTh> 
+                     <MudTh Class="tableBodyStyling">CreatedOn (dd-mm-yyyy)</MudTh>
                     <MudTh Class="tableBodyStyling">CompletedOn (dd-mm-yyyy)</MudTh>
                     <MudTh Class="tableBodyStyling">CreatedBy</MudTh>
-                    <MudTh Class="tableBodyStyling">CurrentStatus</MudTh>
+                    <MudTh Class="tableBodyStyling">CurrentStatus</MudTh> *@
+
+                    <MudTh Class="tableTaskColumnBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.TaskID)">TaskId</MudTableSortLabel></MudTh>
+                    <MudTh Class="tableBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.ProjectName)">ProjectName</MudTableSortLabel></MudTh>
+                    <MudTh Class="tableBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.CreatedOn)">CreatedOn</MudTableSortLabel></MudTh>
+                    <MudTh Class="tableBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.CompletedOn!)">CompletedOn</MudTableSortLabel></MudTh>
+                    <MudTh Class="tableBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.UserName)">UserName</MudTableSortLabel></MudTh>
+                    <MudTh Class="tableBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.StatusName)">StatusName</MudTableSortLabel></MudTh>
                 </HeaderContent>
 
                 <RowTemplate>
@@ -53,10 +68,10 @@
                     <MudTd Class="tableBodyStyling">@context.ProjectName</MudTd>
                     <MudTd Class="tableBodyStyling">@context.CreatedOn.ToString("dd/MM/yyyy H:mm:ss")</MudTd>
                     <MudTd Class="tableBodyStyling">
-                        @if(@context.CompletedOn==null)
+                        @if (@context.CompletedOn == null)
                         {
                             <p>null</p>
-                        } 
+                        }
                         else
                         {
                             @context.CompletedOn
@@ -320,10 +335,40 @@ else
 
     List<TaskLog> UndoneQueueList;
     string user = "";
+    private string searchString1 = "";
 
     List<FinalReportModel> finalReportList = new List<FinalReportModel>();
 
     List<FinalReportModelDTO> finalReportModelDTO = new List<FinalReportModelDTO>();
+
+
+    private bool FilterFunc1(FinalReportModelDTO element) => FilterFunc(element, searchString1);
+
+    private bool FilterFunc(FinalReportModelDTO element, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (element.TaskID.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.CreatedOn.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.CompletedOn.ToString()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.StatusName.ToString()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.ProjectName.ToString()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if ($"{element.CreatedOn.ToString()} {element.TaskID.ToString()} {element.CompletedOn.ToString()!} {element.StatusName.ToString()!} {element.ProjectName.ToString()}".Contains(searchString))
+            return true;
+
+        var combined = $"{element.CreatedOn} {element.TaskID} {element.CompletedOn} {element.StatusName} {element.ProjectName}";
+        if (combined.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    }
+
 
     private async Task LoadLogs()
     {
@@ -333,20 +378,20 @@ else
 
         finalReportModelDTO.Clear();
 
-        foreach(var data in finalReportList)
+        foreach (var data in finalReportList)
         {
             string username = _taskLog.GetUserNameFromIdSp(data.UserID);
             string status = _taskLog.GetStatusNameFromIdSp(data.StatusID);
 
             finalReportModelDTO.Add(new FinalReportModelDTO
-            {
-                TaskID = data.TaskID,
-                StatusName = status,
-                UserName = username,
-                ProjectName = data.ProjectName,
-                CreatedOn = data.CreatedOn,
-                CompletedOn = data.CompletedOn,
-            });
+                {
+                    TaskID = data.TaskID,
+                    StatusName = status,
+                    UserName = username,
+                    ProjectName = data.ProjectName,
+                    CreatedOn = data.CreatedOn,
+                    CompletedOn = data.CompletedOn,
+                });
         }
 
         StateHasChanged();
@@ -373,10 +418,10 @@ else
         }
         catch (Exception)
         {
-            
+
             throw;
         }
-       
+
     }
 
     private void StartHotReload()
