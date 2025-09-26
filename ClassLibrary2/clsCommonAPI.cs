@@ -8994,12 +8994,14 @@ namespace OpenXmlDLLDotnetFramework
 
         public string CreateTargetPath(string myTemplate)
         {
-            string path = $"C:\\excelfiles\\{this.project}";
+            //string path = $"C:\\excelfiles\\{this.project}";
+            string path = $"\\miafs02\\IS\\Apps\\ExcelChartsOnline\\FinalReports\\excelfiles\\{this.project}";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
-            path = $"C:\\excelfiles\\{this.project}\\{this.template}_{this.breakdown}.pptx";
+            //path = $"C:\\excelfiles\\{this.project}\\{this.template}_{this.breakdown}.pptx";
+            path = $"\\miafs02\\IS\\Apps\\ExcelChartsOnline\\FinalReports\\excelfiles\\{this.project}\\{this.template}_{this.breakdown}.pptx";
             File.Copy(myTemplate, path, true);
             return path;
         }
@@ -11959,7 +11961,7 @@ namespace OpenXmlDLLDotnetFramework
 
         public async Task fnaddChartsToFinalTemplate1(string project, List<string> charts, string finalTemplate, string breakDown)
         {
-            path = "D:\\OpenXMLWebAPI\\WebApplication1\\ClassLibrary2\\Files\\" + finalTemplate + ".pptx";
+            //path = "D:\\OpenXMLWebAPI\\WebApplication1\\ClassLibrary2\\Files\\" + finalTemplate + ".pptx";
 
             if (!Directory.Exists($"C:\\excelfiles\\{project}\\Final"))
             {
@@ -11968,7 +11970,7 @@ namespace OpenXmlDLLDotnetFramework
 
             //temp copy the final template file to the path 
 
-            //File.Copy("\\\\miafs02\\Market Research\\MR Programs\\ExcelCharts_Chartsdll\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
+            File.Copy("\\\\miafs02\\Market Research\\MR Programs\\ExcelCharts_Chartsdll\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
             File.Copy($"{path}", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
 
             //get all the pagegroup names for the chart 

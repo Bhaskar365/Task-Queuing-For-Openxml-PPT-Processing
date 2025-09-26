@@ -42,7 +42,7 @@
                                   Placeholder="Search"
                                   Adornment="Adornment.Start"
                                   AdornmentIcon="@Icons.Material.Filled.Search"
-                                  IconSize="Size.Medium"
+                                  IconSize="Size.Medium" Immediate="true"
                                   Class="mt-0"></MudTextField>
                 </ToolBarContent>
                 <HeaderContent>
@@ -55,8 +55,8 @@
 
                     <MudTh Class="tableTaskColumnBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.TaskID)">TaskId</MudTableSortLabel></MudTh>
                     <MudTh Class="tableBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.ProjectName)">ProjectName</MudTableSortLabel></MudTh>
-                    <MudTh Class="tableBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.CreatedOn)">CreatedOn</MudTableSortLabel></MudTh>
-                    <MudTh Class="tableBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.CompletedOn!)">CompletedOn</MudTableSortLabel></MudTh>
+                    <MudTh Class="tableBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.CreatedOn)">CreatedOn (dd-mm-yyyy)</MudTableSortLabel></MudTh>
+                    <MudTh Class="tableBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.CompletedOn!)">CompletedOn (dd-mm-yyyy)</MudTableSortLabel></MudTh>
                     <MudTh Class="tableBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.UserName)">UserName</MudTableSortLabel></MudTh>
                     <MudTh Class="tableBodyStyling"><MudTableSortLabel SortBy="new Func<FinalReportModelDTO, object>(x=>x.StatusName)">StatusName</MudTableSortLabel></MudTh>
                 </HeaderContent>
