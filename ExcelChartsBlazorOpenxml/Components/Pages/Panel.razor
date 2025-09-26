@@ -142,11 +142,11 @@ else
 
                                     <MudItem xs="12" sm="7">
                                         <MudAutocomplete T="string" Value="project"
-                                        SearchFunc="@Search1"
-                                        ValueChanged="OnProjectChanged"
-                                        Variant="Variant.Outlined"
-                                        ProgressIndicatorColor="SelectedColor"
-                                        MaxItems="projectList.Count">
+                                                         SearchFunc="@Search1"
+                                                         ValueChanged="OnProjectChanged"
+                                                         Variant="Variant.Outlined"
+                                                         ProgressIndicatorColor="SelectedColor"
+                                                         MaxItems="projectList.Count">
                                             <ProgressIndicatorInPopoverTemplate>
                                                 <MudList T="string" ReadOnly>
                                                     <MudListItem>
@@ -169,8 +169,8 @@ else
                                     </MudItem>
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="DSITextValue"
-                                        Variant="Variant.Outlined"
-                                        FitContent=True>
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True>
                                             <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
                                         </MudSelect>
                                     </MudItem>
@@ -292,8 +292,8 @@ else
 
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="finalPPTOption"
-                                        Variant="Variant.Outlined"
-                                        FitContent=True ShrinkLabel>
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True ShrinkLabel>
                                             @foreach (var state in _states)
                                             {
                                                 <MudSelectItem Value="state">@state</MudSelectItem>
@@ -311,16 +311,16 @@ else
                                     @* <MudItem xs="12" sm="5" Style="display: flex;flex-direction: row;align-items: center;"> *@
                                     <MudItem xs="12" sm="5" Class="inlineMudItemClass historicalMeanMudItem">
                                         <MudCheckBox @bind-Value="Size_CheckBox1"
-                                        Size="Size.Small"
-                                        Color="Color.Primary"
-                                        Class="custom-label-historical-mean-checkbox"></MudCheckBox>
+                                                     Size="Size.Small"
+                                                     Color="Color.Primary"
+                                                     Class="custom-label-historical-mean-checkbox"></MudCheckBox>
                                         <MudText Class="custom-label-historical-mean">Use specific Hist. Mean</MudText>
                                     </MudItem>
 
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="SpecificHistMean"
-                                        Variant="Variant.Outlined"
-                                        FitContent=True Disabled>
+                                                   Variant="Variant.Outlined"
+                                                   FitContent=True Disabled>
                                             <MudSelectItem Value="@SpecificHistMean"></MudSelectItem>
                                         </MudSelect>
                                     </MudItem>
@@ -331,10 +331,10 @@ else
                             @* <MudButton Variant="Variant.Filled" Class="generateBtnClass" @onclick="ProcessDLL">Generate Power Point</MudButton> *@
 
                             <MudButton Variant="Variant.Filled"
-                                        Class="generateBtnClass buttonload"
-                                        @onclick="ProcessDLL"
-                                        disabled="hasProcessStarted"
-                                        Color="@buttonColor">
+                                       Class="generateBtnClass buttonload"
+                                       @onclick="ProcessDLL"
+                                       disabled="hasProcessStarted"
+                                       Color="@buttonColor">
                                 @*  @if (currentState == ProcessState.Generating)
                             {
                                 <span> Generating...</span>
@@ -513,9 +513,9 @@ else
                                     </div>
 
                                     <MudButton Variant="Variant.Filled"
-                                    Size="Size.Small"
-                                    FullWidth="true"
-                                    Class="btnClass">
+                                               Size="Size.Small"
+                                               FullWidth="true"
+                                               Class="btnClass">
                                         Select All/Unselect All
                                     </MudButton>
 
@@ -526,9 +526,9 @@ else
                                     </div>
 
                                     <MudButton Variant="Variant.Filled"
-                                    Size="Size.Small"
-                                    FullWidth="true"
-                                    Class="btnClass">
+                                               Size="Size.Small"
+                                               FullWidth="true"
+                                               Class="btnClass">
                                         Select All/Unselect All
                                     </MudButton>
                                 </MudPaper>
@@ -816,6 +816,8 @@ else
 
     List<string> testnameLst = new List<string>();
 
+    System.Timers.Timer refreshTimer = new System.Timers.Timer(1000);
+
     protected override async Task OnInitializedAsync()
     {
         try
@@ -857,7 +859,7 @@ else
             StateHasChanged();
 
             ReportService.OnChange += StateHasChanged;
-            await StartHotReload();
+            //  await StartHotReload();
             //await  LoadIndividualLogs();
 
             StateHasChanged();
@@ -992,6 +994,14 @@ else
         };
     }
 
+    private async Task GetIndividualTasks(Guid currentTaskId)
+    {
+        currentTaskModel = await _taskLog.GetIndividualUserReport(currentTaskId);
+
+        await InvokeAsync(StateHasChanged);
+
+
+    }
 
     private async Task<List<clschartPageGroup>> getProjectPagegroupNames(string projectName)
     {
@@ -1140,7 +1150,7 @@ else
 
             var selectedPages = chartPageList.Where(x => x.isChecked).Select(x => x.strPageName).ToList();
 
-           // selectedPages.Remove("Linguistics");
+            // selectedPages.Remove("Linguistics");
 
             if (selectedPages.Count == 0)
             {
@@ -1189,10 +1199,15 @@ else
 
             currentTaskId = _taskLog.InsertFinalReport(res.project, user, "Queued");
 
+            refreshTimer.Elapsed += async (sender, e) =>
+               {
+                   await GetIndividualTasks(currentTaskId);
+               };
 
             var id = await fitToConceptService.GenerateReportUsingDLLAsync(res, finalPPTOption!);
 
-            await StartHotReload();
+            refreshTimer.Start();
+            //  await StartHotReload();
             StateHasChanged();
 
             var result = await fitToConceptService.SendDLLMergeRequestWithPanel(res, finalPPTOption!);
@@ -1236,6 +1251,7 @@ else
         catch (Exception ex)
         {
             Console.WriteLine(ex);
+            refreshTimer.Stop();
             _taskLog.UpdateFinalReport("Fail", this.project!, user);
             throw;
         }
@@ -1290,8 +1306,10 @@ else
         }
         catch (Exception ex)
         {
+            refreshTimer.Stop();
             throw new Exception(ex.Message);
         }
+         refreshTimer.Stop();
     }
 
 
