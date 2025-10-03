@@ -8992,16 +8992,22 @@ namespace OpenXmlDLLDotnetFramework
             }
         }
 
+
+       
+
         public string CreateTargetPath(string myTemplate)
         {
-            //string path = $"C:\\excelfiles\\{this.project}";
-            string path = $"\\miafs02\\IS\\Apps\\ExcelChartsOnline\\FinalReports\\excelfiles\\{this.project}";
+            WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
+            user = windowsIdentity.Name.Replace("BI\\", "").ToString();
+
+            string path = $"C:\\excelfiles\\{user}\\{this.project}";
+            //string path = $"\\miafs02\\IS\\Apps\\ExcelChartsOnline\\FinalReports\\excelfiles\\{this.project}";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
-            //path = $"C:\\excelfiles\\{this.project}\\{this.template}_{this.breakdown}.pptx";
-            path = $"\\miafs02\\IS\\Apps\\ExcelChartsOnline\\FinalReports\\excelfiles\\{this.project}\\{this.template}_{this.breakdown}.pptx";
+            path = $"C:\\excelfiles\\{user}\\{this.project}\\{this.template}_{this.breakdown}.pptx";
+            //path = $"\\miafs02\\IS\\Apps\\ExcelChartsOnline\\FinalReports\\excelfiles\\{this.project}\\{this.template}_{this.breakdown}.pptx";
             File.Copy(myTemplate, path, true);
             return path;
         }
@@ -11956,22 +11962,25 @@ namespace OpenXmlDLLDotnetFramework
 
         }
 
-        public string path = ""; 
-
+        public string path = "";
+        string user = "";
 
         public async Task fnaddChartsToFinalTemplate1(string project, List<string> charts, string finalTemplate, string breakDown)
         {
-            //path = "D:\\OpenXMLWebAPI\\WebApplication1\\ClassLibrary2\\Files\\" + finalTemplate + ".pptx";
+             path = "D:\\OpenXMLWebAPI\\WebApplication1\\ClassLibrary2\\Files\\" + finalTemplate + ".pptx";
 
-            if (!Directory.Exists($"C:\\excelfiles\\{project}\\Final"))
+            WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
+            user = windowsIdentity.Name.Replace("BI\\", "").ToString();
+
+            if (!Directory.Exists($"C:\\excelfiles\\{user}\\{project}\\Final"))
             {
-                Directory.CreateDirectory($"C:\\excelfiles\\{project}\\Final");
+                Directory.CreateDirectory($"C:\\excelfiles\\{user}\\{project}\\Final");
             }
 
             //temp copy the final template file to the path 
 
-            File.Copy("\\\\miafs02\\Market Research\\MR Programs\\ExcelCharts_Chartsdll\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
-            File.Copy($"{path}", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
+           // File.Copy("\\\\miafs02\\Market Research\\MR Programs\\ExcelCharts_Chartsdll\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", true);
+           File.Copy($"{path}", $"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", true);
 
             //get all the pagegroup names for the chart 
 
@@ -12015,7 +12024,7 @@ namespace OpenXmlDLLDotnetFramework
 
             //copy a final in the path
 
-            createFolder($"C:\\excelfiles\\{project}\\Final");
+            createFolder($"C:\\excelfiles\\{user}\\{project}\\Final");
             copyFile("C:\\ExcelChartsTemplatesNew\\ExcelCharts_ChartTemplates\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx", $"C:\\excelfiles\\{project}\\Final\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx");
 
 
@@ -12048,7 +12057,7 @@ namespace OpenXmlDLLDotnetFramework
                                 string repText = getAttributeTitle(project, chart);
 
 
-                                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", repText, 38);
+                                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", repText, 38);
 
 
 
@@ -12063,7 +12072,7 @@ namespace OpenXmlDLLDotnetFramework
 
                                 string repText = getAttributeTitle(project, chart);
 
-                                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", repText, 38);
+                                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", repText, 38);
 
                                 // await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "Attribute", repText, 38);
 
@@ -12079,7 +12088,7 @@ namespace OpenXmlDLLDotnetFramework
                                 string repText = getAttributeTitle(project, chart);
 
 
-                                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", repText, 38);
+                                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", repText, 38);
 
                                 //  await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "Attribute", repText, 38);
 
@@ -12094,7 +12103,7 @@ namespace OpenXmlDLLDotnetFramework
 
                                 string repText = getAttributeTitle(project, chart);
 
-                                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", repText, 38);
+                                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", repText, 38);
 
                                 //  await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "Attribute", repText, 38);
 
@@ -12123,14 +12132,14 @@ namespace OpenXmlDLLDotnetFramework
             if (!lstAtts.Any(obj => obj.strPageName.Contains("1")) || lstAtts.Any(obj => obj.strPageName.Contains("1") && obj.isReportSelectedByUser == false))
             {
 
-                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", "", 38);
+                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", "", 38);
 
             }
 
             if (!lstAtts.Any(obj => obj.strPageName.Contains("2")) || lstAtts.Any(obj => obj.strPageName.Contains("2") && obj.isReportSelectedByUser == false))
             {
 
-                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", "", 38);
+                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", "", 38);
 
             }
 
@@ -12138,14 +12147,14 @@ namespace OpenXmlDLLDotnetFramework
             if (!lstAtts.Any(obj => obj.strPageName.Contains("3")) || lstAtts.Any(obj => obj.strPageName.Contains("3") && obj.isReportSelectedByUser == false))
             {
 
-                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", "", 38);
+                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", "", 38);
 
             }
 
             if (!lstAtts.Any(obj => obj.strPageName.Contains("4")) || lstAtts.Any(obj => obj.strPageName.Contains("4") && obj.isReportSelectedByUser == false))
             {
 
-                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", "", 38);
+                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", "", 38);
 
             }
 
@@ -12179,15 +12188,15 @@ namespace OpenXmlDLLDotnetFramework
                 {
                     DateTime currentDate = DateTime.Now;
 
-                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "ProjectName", project, 0);
+                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "ProjectName", project, 0);
 
-                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<", "", 0);
+                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "<<", "", 0);
 
-                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", ">>", "", 0);
+                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", ">>", "", 0);
 
-                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "Month", currentDate.ToString("MMMM"), 0);
+                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "Month", currentDate.ToString("MMMM"), 0);
 
-                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "Year", DateTime.Now.Year.ToString(), 0);
+                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "Year", DateTime.Now.Year.ToString(), 0);
 
 
                     //replacing the attribute evaluation cover page :
@@ -12221,9 +12230,9 @@ namespace OpenXmlDLLDotnetFramework
                         {
                             for (int k = 0; k <= DelLastPage - DelFirstPage; k++)
                             {
-                                if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{user}\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
                                 {
-                                    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+                                    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{user}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
 
                                 }
 
@@ -12235,9 +12244,9 @@ namespace OpenXmlDLLDotnetFramework
                         {
                             for (int k = 0; k < DelLastPage - DelFirstPage + 1; k++)
                             {
-                                if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{user}\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
                                 {
-                                    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+                                    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{user}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
 
                                 }
 
@@ -12419,9 +12428,9 @@ namespace OpenXmlDLLDotnetFramework
                             {
                                 for (int k = 0; k <= DelLastPage - DelFirstPage; k++)
                                 {
-                                    if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                    if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{user}\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
                                     {
-                                        op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+                                        op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{user}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
 
                                     }
 
@@ -12433,9 +12442,9 @@ namespace OpenXmlDLLDotnetFramework
                             {
                                 for (int k = 0; k < DelLastPage - DelFirstPage + 1; k++)
                                 {
-                                    if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                    if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{user}\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
                                     {
-                                        op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+                                        op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{user}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
 
                                     }
 
@@ -12576,7 +12585,7 @@ namespace OpenXmlDLLDotnetFramework
                                 {
                                     for (int k = 0; k <= DelLastPage - DelFirstPage; k++)
                                     {
-                                        op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+                                        op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{user}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
                                         //Thread.Sleep(100);
                                     }
 
@@ -12591,7 +12600,7 @@ namespace OpenXmlDLLDotnetFramework
 
                                     if (File.Exists(getIndividualChartPath(chart, project, breakDown)))
                                     {
-                                        op = await clsMisc.MergeSlideWithSlideArrayAsync1(getIndividualChartPath(chart, project, breakDown), $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", intChartPages.ToArray(), DelLastPage - 1);
+                                        op = await clsMisc.MergeSlideWithSlideArrayAsync1(getIndividualChartPath(chart, project, breakDown), $"C:\\excelfiles\\\\{user}\\{project}\\Final\\MRRxNaming.pptx", intChartPages.ToArray(), DelLastPage - 1);
 
 
                                     }
@@ -12686,7 +12695,7 @@ namespace OpenXmlDLLDotnetFramework
                                     resPageType = "Attribute Evaluation 3";
                                     DelLastPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 3", "LastPage");
                                     DelFirstPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 3", "FirstPage");
-                                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", "Attribute #3", 38);
+                                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", "Attribute #3", 38);
 
                                     //if (!checkParticularAttributeEvaluationIsSelected(lstChartDispNames, 1))
                                     //{
@@ -12718,7 +12727,7 @@ namespace OpenXmlDLLDotnetFramework
                                     resPageType = "Attribute Evaluation 4";
                                     DelLastPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 4", "LastPage");
                                     DelFirstPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 4", "FirstPage");
-                                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", "Attribute #4", 38);
+                                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", "Attribute #4", 38);
 
                                     //if (!checkParticularAttributeEvaluationIsSelected(lstChartDispNames, 1))
                                     //{
@@ -12805,14 +12814,14 @@ namespace OpenXmlDLLDotnetFramework
                                 if (resPageType == "01 Untrue")
                                 {
 
-                                    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - 1);
+                                    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{user}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - 1);
                                 }
 
                                 else
                                 {
                                     for (int k = 0; k <= DelLastPage - DelFirstPage; k++)
                                     {
-                                        op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+                                        op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{user}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
                                         //Thread.Sleep(100);
                                     }
                                 }
@@ -12918,17 +12927,17 @@ namespace OpenXmlDLLDotnetFramework
 
             //get the final file in  the folder
 
-            createFolder($"C:\\excelfiles\\{project}\\PPT");
-            createFolder($"C:\\excelfiles\\{project}\\PPT\\01 Final");
+            createFolder($"C:\\excelfiles\\{user}\\{project}\\PPT");
+            createFolder($"C:\\excelfiles\\{user}\\{project}\\PPT\\01 Final");
 
 
             while (true)
             {
 
 
-                if (File.Exists($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx"))
+                if (File.Exists($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx"))
                 {
-                    copyFile($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\PPT\\01 Final\\ {project}_{finalTemplate}_{breakDown}.pptx");
+                    copyFile($"C:\\excelfiles\\{user}\\{project}\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{user}\\{project}\\PPT\\01 Final\\ {project}_{finalTemplate}_{breakDown}.pptx");
 
 
                     break;
