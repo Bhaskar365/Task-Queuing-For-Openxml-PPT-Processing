@@ -11152,7 +11152,8 @@ namespace OpenXmlDLLDotnetFramework
                         }
                         else
                         {
-                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\NonMedicalTermsPlaceholder.pptx";
+                            //sourcePath = $"C:\\ExcelChartFiles\\Templates\\NonMedicalTermsPlaceholder.pptx";
+                            sourcePath = $"C:\\ExcelChartFiles\\Templates\\NonMedicalTermsPlaceholderRow.pptx";
                             dLLClass.NonMedicalTermsMethod(CreateTargetPath(sourcePath), nonMedicalData);
                         }
                         break;
