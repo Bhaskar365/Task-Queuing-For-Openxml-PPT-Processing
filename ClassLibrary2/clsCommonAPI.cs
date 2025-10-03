@@ -12025,7 +12025,7 @@ namespace OpenXmlDLLDotnetFramework
             //copy a final in the path
 
             createFolder($"C:\\excelfiles\\{user}\\{project}\\Final");
-            copyFile("C:\\ExcelChartsTemplatesNew\\ExcelCharts_ChartTemplates\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx", $"C:\\excelfiles\\{project}\\Final\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx");
+            copyFile("C:\\ExcelChartsTemplatesNew\\ExcelCharts_ChartTemplates\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx", $"C:\\excelfiles\\{user}\\{project}\\Final\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx");
 
 
             lstPPTFinalSettings = lstPPTFinalSettings.OrderByDescending(p => p.intPPTSlideIndexFirst).ToList();
@@ -13137,7 +13137,9 @@ namespace OpenXmlDLLDotnetFramework
 
 
 
-            string outputpath = $"C:\\excelfiles\\{projectName}\\{chart}_{breakDown}.pptx";
+            //string outputpath = $"C:\\excelfiles\\{projectName}\\{chart}_{breakDown}.pptx";
+
+            string outputpath = $"C:\\excelfiles\\{user}\\{projectName}\\{chart}_{breakDown}.pptx";
 
 
             //get the right chart name 
