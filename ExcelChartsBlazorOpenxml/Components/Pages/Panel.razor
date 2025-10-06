@@ -31,6 +31,20 @@
 
 @inject Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider AuthenticationStateProvider
 
+<style>
+    .custom-autocomplete .mud-input-root {
+        font-size: 0.8rem !important; /* Adjust font size (smaller than default) */
+        font-family: 'Arial', sans-serif; /* Change font family */
+    }
+
+    /* Optional: Style the dropdown items */
+    .custom-autocomplete .mud-autocomplete-options .mud-list-item {
+        font-size: 0.8rem !important; /* Adjust font size for dropdown items */
+        font-family: 'Arial', sans-serif; /* Change font family for dropdown items */
+    }
+
+</style>
+
 @if (!isMainContentLoaded)
 {
     <div class="panelSpinner">
@@ -146,7 +160,8 @@ else
                                                          ValueChanged="OnProjectChanged"
                                                          Variant="Variant.Outlined"
                                                          ProgressIndicatorColor="SelectedColor"
-                                                         MaxItems="projectList.Count">
+                                                         MaxItems="projectList.Count"
+                                                         Class="custom-autocomplete">
                                             <ProgressIndicatorInPopoverTemplate>
                                                 <MudList T="string" ReadOnly>
                                                     <MudListItem>
@@ -170,6 +185,7 @@ else
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="DSITextValue"
                                                    Variant="Variant.Outlined"
+                                                   Class="custom-autocomplete"
                                                    FitContent=True>
                                             <MudSelectItem Value="@("Option 1")">1062_HC_MR</MudSelectItem>
                                         </MudSelect>
@@ -224,7 +240,10 @@ else
                                         <MudText Class="custom-label">Associations/Likeability %</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="7">
-                                        <MudNumericField @bind-Value="associationsValue" Variant="Variant.Outlined" Min="0" Max="10" Style="height:25px;" />
+                                        <MudNumericField @bind-Value="associationsValue"
+                                                         Class="custom-autocomplete" 
+                                                         Variant="Variant.Outlined"
+                                                         Min="0" Max="10" Style="height:25px;" />
                                     </MudItem>
 
                                 </MudGrid>
@@ -293,6 +312,7 @@ else
                                     <MudItem xs="12" sm="7">
                                         <MudSelect @bind-Value="finalPPTOption"
                                                    Variant="Variant.Outlined"
+                                                   Class="custom-autocomplete"
                                                    FitContent=True ShrinkLabel>
                                             @foreach (var state in _states)
                                             {
