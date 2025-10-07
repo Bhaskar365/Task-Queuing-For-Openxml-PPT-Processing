@@ -27,7 +27,7 @@
 
     <MudButton Variant="Variant.Filled"
     Size="Size.Small" FullWidth="true"
-               Class="btnClass" @onclick="ToggleBreakdownList">
+    Class="btnClass" @onclick="ToggleBreakdownList">
         Select All/Unselect All
     </MudButton>
 </MudPaper>
@@ -43,13 +43,26 @@
     [Parameter]
     public EventCallback<List<clschartBreakdownGroup>> chartPageListChanged { get; set; }
 
+    public bool isBreakdownChecked = true;
 
     private async Task ToggleBreakdownList()
     {
-        foreach (var el in lstBreakdown)
+
+        if (isBreakdownChecked)
         {
-            el.isChecked = !el.isChecked;
+            foreach (var el in lstBreakdown)
+            {
+                el.isChecked = false;
+            }
+            isBreakdownChecked = false;
+        }
+        else
+        {
+            foreach (var el in lstBreakdown)
+            {
+                el.isChecked = true;
+            }
+            isBreakdownChecked = true;
         }
     }
-
 }
