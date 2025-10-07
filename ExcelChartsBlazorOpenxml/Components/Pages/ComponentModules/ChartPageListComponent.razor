@@ -48,12 +48,27 @@
     [Parameter]
     public EventCallback<List<selectedPagesListClass>> chartPageListChanged { get; set; }
 
+    public bool isPageChecked = true;
+
     private async Task TogglePagesList()
     {
-        foreach(var el in chartPageList)
+        if (isPageChecked)
         {
-            el.isChecked = !el.isChecked;
+            foreach (var el in chartPageList)
+            {
+                el.isChecked = false;
+            }
+            isPageChecked = false;
         }
+        else
+        {
+            foreach (var el in chartPageList)
+            {
+                el.isChecked = true;
+            }
+            isPageChecked = true;
+        }
+        
         await chartPageListChanged.InvokeAsync(chartPageList);
     }
 
