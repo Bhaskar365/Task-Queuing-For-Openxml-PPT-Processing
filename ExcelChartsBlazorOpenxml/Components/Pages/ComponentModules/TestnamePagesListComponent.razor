@@ -30,8 +30,8 @@
     </MudButton> *@
 
     <MudButton Variant="Variant.Filled"
-               Size="Size.Small" FullWidth="true"
-               Class="btnClass" @onclick="ToggleTestnamesList">
+    Size="Size.Small" FullWidth="true"
+    Class="btnClass" @onclick="ToggleTestnamesList">
         Select All/Unselect All
     </MudButton>
 </MudPaper>
@@ -48,12 +48,25 @@
     [Parameter]
     public EventCallback<List<clschartTestnameGroup>> testnameListChanged { get; set; }
 
+    public bool isBoxChecked = true;
+
     private async Task ToggleTestnamesList()
     {
-        foreach (var el in lstTestnames)
+        if (isBoxChecked)
         {
-            el.isChecked = !el.isChecked;
+            foreach (var el in lstTestnames)
+            {
+                el.isChecked = false;
+            }
+            isBoxChecked = false;
+        }
+        else
+        {
+            foreach (var el in lstTestnames)
+            {
+                el.isChecked = true;
+            }
+            isBoxChecked = true;
         }
     }
-
 }
