@@ -155,7 +155,7 @@ else
                                     </MudItem> *@
 
                                     <MudItem xs="12" sm="7">
-                                        <MudAutocomplete T="string" Value="project"
+                                        <MudAutocomplete T="string" Value="project" Dense="true"
                                                          SearchFunc="@Search1"
                                                          ValueChanged="OnProjectChanged"
                                                          Variant="Variant.Outlined"
@@ -892,8 +892,6 @@ else
         }
 
     }
-
-
 
     private async Task<IEnumerable<string>> Search1(string value)
     {

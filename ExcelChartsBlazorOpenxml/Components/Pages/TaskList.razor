@@ -34,19 +34,19 @@
             }
  *@
             <MudTable Items="@finalReportModelDTO" Dense="true" Striped="true"
-                      Class="tableStyling" Breakpoint="Breakpoint.None" Filter="(FilterFunc1)" SortLabel="Sort By">
+            Class="tableStyling" Breakpoint="Breakpoint.None" Filter="(FilterFunc1)" SortLabel="Sort By">
                 <ToolBarContent>
                     <MudText Typo="Typo.h6" Class="taskLogHeader">Task Logs</MudText>
                     <MudSpacer />
                     <MudTextField @bind-Value="searchString1"
-                                  Placeholder="Search"
-                                  Adornment="Adornment.Start"
-                                  AdornmentIcon="@Icons.Material.Filled.Search"
-                                  IconSize="Size.Medium" Immediate="true"
-                                  Class="mt-0"></MudTextField>
+                    Placeholder="Search"
+                    Adornment="Adornment.Start"
+                    AdornmentIcon="@Icons.Material.Filled.Search"
+                    IconSize="Size.Medium" Immediate="true"
+                    Class="mt-0"></MudTextField>
                 </ToolBarContent>
                 <HeaderContent>
-                   @*  <MudTh Class="tableTaskColumnBodyStyling">TaskId</MudTh>
+                    @*  <MudTh Class="tableTaskColumnBodyStyling">TaskId</MudTh>
                     <MudTh Class="tableBodyStyling">ProjectType</MudTh> 
                      <MudTh Class="tableBodyStyling">CreatedOn (dd-mm-yyyy)</MudTh>
                     <MudTh Class="tableBodyStyling">CompletedOn (dd-mm-yyyy)</MudTh>
@@ -86,7 +86,7 @@
                 <NoRecordsContent>
                     <MudTr>
                         <MudTd ColSpan="7" Class="text-center"
-                               style="font-size:small; white-space:nowrap;">
+                        style="font-size:small; white-space:nowrap;">
                             No data
                         </MudTd>
                     </MudTr>
@@ -94,13 +94,13 @@
 
                 <PagerContent>
                     <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, finalReportModelDTO.Count }"
-                                   RowsPerPageString="@rowsPerPageString"
-                                   InfoFormat="@infoFormat"
-                                   AllItemsText="@allItemsText"
-                                   HorizontalAlignment="@horizontalAlignment"
-                                   HideRowsPerPage="@hideRowsPerPage"
-                                   HidePageNumber="@hidePageNumber"
-                                   HidePagination="@hidePagination" />
+                    RowsPerPageString="@rowsPerPageString"
+                    InfoFormat="@infoFormat"
+                    AllItemsText="@allItemsText"
+                    HorizontalAlignment="@horizontalAlignment"
+                    HideRowsPerPage="@hideRowsPerPage"
+                    HidePageNumber="@hidePageNumber"
+                    HidePagination="@hidePagination" />
                 </PagerContent>
             </MudTable>
 
@@ -358,8 +358,10 @@ else
             return true;
         if (element.ProjectName.ToString()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
+        if (element.UserName.ToString()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
 
-        if ($"{element.CreatedOn.ToString()} {element.TaskID.ToString()} {element.CompletedOn.ToString()!} {element.StatusName.ToString()!} {element.ProjectName.ToString()}".Contains(searchString))
+        if ($"{element.CreatedOn.ToString()} {element.TaskID.ToString()} {element.CompletedOn.ToString()!} {element.StatusName.ToString()!} {element.ProjectName.ToString()} {element.UserName.ToString()}".Contains(searchString))
             return true;
 
         var combined = $"{element.CreatedOn} {element.TaskID} {element.CompletedOn} {element.StatusName} {element.ProjectName}";
@@ -368,6 +370,7 @@ else
 
         return false;
     }
+
 
 
     private async Task LoadLogs()
@@ -418,7 +421,6 @@ else
         }
         catch (Exception)
         {
-
             throw;
         }
 
@@ -434,6 +436,7 @@ else
                StateHasChanged();
            });
        }, null, 0, 5000);
+
     }
 
     public string GetStatusClass(string status)
