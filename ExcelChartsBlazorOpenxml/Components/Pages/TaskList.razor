@@ -346,29 +346,45 @@ else
 
     private bool FilterFunc(FinalReportModelDTO element, string searchString)
     {
+        // if (string.IsNullOrWhiteSpace(searchString))
+        //     return true;
+        // if (element.TaskID.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+        // if (element.CreatedOn.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+        // if (element.CompletedOn.ToString()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+        // if (element.StatusName.ToString()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+        // if (element.ProjectName.ToString()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+        // if (element.UserName.ToString()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+
+        // if ($"{element.CreatedOn.ToString()} {element.TaskID.ToString()} {element.CompletedOn.ToString()!} {element.StatusName.ToString()!} {element.ProjectName.ToString()} {element.UserName.ToString()}".Contains(searchString))
+        //     return true;
+
+        // var combined = $"{element.CreatedOn} {element.TaskID} {element.CompletedOn} {element.StatusName} {element.ProjectName}";
+        // if (combined.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+
+        // return false;
+
+
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
-        if (element.TaskID.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (element.CreatedOn.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (element.CompletedOn.ToString()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (element.StatusName.ToString()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (element.ProjectName.ToString()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (element.UserName.ToString()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
 
-        if ($"{element.CreatedOn.ToString()} {element.TaskID.ToString()} {element.CompletedOn.ToString()!} {element.StatusName.ToString()!} {element.ProjectName.ToString()} {element.UserName.ToString()}".Contains(searchString))
-            return true;
+        string createdOnStr = element.CreatedOn.ToString() ?? "null";
+        string completedOnStr = element.CompletedOn?.ToString() ?? "null";
+        string statusNameStr = element.StatusName ?? "null";
+        string projectNameStr = element.ProjectName ?? "null";
+        string userNameStr = element.UserName ?? "null";
 
-        var combined = $"{element.CreatedOn} {element.TaskID} {element.CompletedOn} {element.StatusName} {element.ProjectName}";
-        if (combined.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
+        // Combine all searchable fields into one string
+        string combined = $"{element.TaskID} {createdOnStr} {completedOnStr} {statusNameStr} {userNameStr} {projectNameStr}";
 
-        return false;
+        // Case-insensitive search
+        return combined.Contains(searchString, StringComparison.OrdinalIgnoreCase);
     }
 
 
