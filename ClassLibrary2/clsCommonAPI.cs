@@ -9273,6 +9273,7 @@ namespace OpenXmlDLLDotnetFramework
                 switch (this.templateType)
                 {
                     case "Fit to Concept":
+                    case "FTC":
 
 
                         List<DLLTemplate.FitToConceptModel> fitToConceptData = new List<DLLTemplate.FitToConceptModel>();
@@ -10590,6 +10591,7 @@ namespace OpenXmlDLLDotnetFramework
                         break;
 
                     case "Ease Of Pronounciation":
+                    case "Ease Of Pron":
                     case "Ease of Pronunciation":
 
 
