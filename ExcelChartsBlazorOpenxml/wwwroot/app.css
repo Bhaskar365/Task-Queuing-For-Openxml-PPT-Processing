@@ -407,6 +407,7 @@ a, .btn-link {
 }
 
 .taskListSpinner {
+    border:2px solid red !important;
     margin-top: 50vh !important;
     display: flex !important;
     justify-content: center !important;
