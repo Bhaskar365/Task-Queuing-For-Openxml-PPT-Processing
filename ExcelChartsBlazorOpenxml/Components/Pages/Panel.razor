@@ -655,47 +655,34 @@ else
 
 
     <hr />
+
+    <MudOverlay Visible="visible" DarkBackground="true" Absolute="true" Style="display:flex;align-items:center;flex-direction:column;">
+
+        @* Do not navigate outside page while generating. It will reset panel. Click here to close message. *@
+
+        <MudCard>
+            <MudCardContent>
+                @* <MudChip T="string" Color="Color.Info">Do not navigate outside page while generating. It will reset panel. Click here to close message</MudChip> *@
+                <MudText Typo="Typo.body2">Do not navigate outside page while generating. It will reset panel. Click here to close message</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Filled" Color="Color.Info" OnClick="@(e => ToggleOverlay(false))">Click to close</MudButton>
+            </MudCardActions>
+        </MudCard>
+
+    </MudOverlay>
+
 }
-
-
-
-@* 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">UserId</th>
-            <th scope="col">StatusId</th>
-            <th scope="col">Complemted On</th>
-            <th scope="col">Template</th>
-            <th scope="col">Subtask Id</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var y in currentTaskModel)
-        {
-            <tr>
-                <td>@y.UserID</td>
-                <td>@y.StatusID</td>
-                <td>@_taskLog.GetStatusNameFromIdSp(@y.StatusID)</td>
-                <td>@y.CompletedOn</td>
-                <td>@y.TemplateName</td>
-                <td>@y.SubtaskId</td>
-            </tr>
-        }
-
-
-    </tbody>
-</table>
-
-
-@foreach (var t in _options)
-{
-    <div>@t</div>
-}
- *@
 
 
 @code {
+
+    private bool visible;
+
+    public void ToggleOverlay(bool value)
+    {
+        visible = value;
+    }
 
     string breakdownErrorMessage = "";
     string pagesErrorMessage = "";
@@ -1164,6 +1151,8 @@ else
     {
         try
         {
+            ToggleOverlay(true);
+
             ReportService.Reset();
 
             var selectedPages = chartPageList.Where(x => x.isChecked).Select(x => x.strPageName).ToList();
