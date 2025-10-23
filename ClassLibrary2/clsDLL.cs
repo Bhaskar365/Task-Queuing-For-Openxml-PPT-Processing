@@ -110,7 +110,7 @@ namespace OpenXmlDLLDotnetFramework
 
 #pragma warning disable CS0436 // Type conflicts with imported type
  // Async method lacks 'await' operators and will run synchronously
-        public async void EaseOfPronounicationMethod(string destination, List<DLLTemplate.FitToConceptModel> apiData, string HistoricalMeanType, string HistoricalMeanDescription)
+        public async void EaseOfPronounicationMethod(string destination, List<DLLTemplate.FitToConceptNewModel> apiData, string HistoricalMeanType, string HistoricalMeanDescription)
  // Async method lacks 'await' operators and will run synchronously
 #pragma warning restore CS0436 // Type conflicts with imported type
         {

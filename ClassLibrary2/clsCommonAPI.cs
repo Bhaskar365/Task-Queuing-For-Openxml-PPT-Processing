@@ -10596,8 +10596,8 @@ namespace OpenXmlDLLDotnetFramework
 
 
 
-                        List<DLLTemplate.FitToConceptModel> easeOfPronounicationData = new List<DLLTemplate.FitToConceptModel>();
-                        easeOfPronounicationData = JsonConvert.DeserializeObject<List<DLLTemplate.FitToConceptModel>>(data, jsonSettings);
+                        List<DLLTemplate.FitToConceptNewModel> easeOfPronounicationData = new List<DLLTemplate.FitToConceptNewModel>();
+                        easeOfPronounicationData = JsonConvert.DeserializeObject<List<DLLTemplate.FitToConceptNewModel>>(data, jsonSettings);
 
                         if (easeOfPronounicationData.Count == 0)
                         {
