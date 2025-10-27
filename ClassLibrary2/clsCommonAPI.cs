@@ -11938,7 +11938,13 @@ namespace OpenXmlDLLDotnetFramework
             try
             {
                 //hello
-                await Task.Run(() => fnaddChartsToFinalTemplate1(project, charts, finalTemplate, BreakDown));
+                //await Task.Run(() => fnaddChartsToFinalTemplate1(project, charts, finalTemplate, BreakDown));
+
+                WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
+                user = windowsIdentity.Name.Replace("BI\\", "").ToString();
+
+                await Task.Run(() => fnaddChartsToFinalTemplate2(project, charts, finalTemplate, BreakDown, user));
+
                 return "Process sucessful";
             }
             catch (Exception)
@@ -12957,6 +12963,1108 @@ namespace OpenXmlDLLDotnetFramework
 
 
         }
+
+
+        public async Task fnaddChartsToFinalTemplate2(string project, List<string> charts, string finalTemplate, string breakDown, string user)
+        {
+            path = "D:\\OpenXMLWebAPI\\WebApplication1\\ClassLibrary2\\Files\\" + finalTemplate + ".pptx";
+
+            //WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
+            //username = windowsIdentity.Name.Replace("BI\\", "").ToString();
+
+            string username = user;
+
+            // original 
+            //if (!Directory.Exists($"C:\\excelfiles\\{project}\\Final"))
+            //{
+            //    Directory.CreateDirectory($"C:\\excelfiles\\{project}\\Final");
+            //}
+
+            if (!Directory.Exists($"C:\\excelfiles\\{username}\\{project}\\Final"))
+            {
+                Directory.CreateDirectory($"C:\\excelfiles\\{username}\\{project}\\Final");
+            }
+
+            //temp copy the final template file to the path  // original 
+
+            //File.Copy("\\\\miafs02\\Market Research\\MR Programs\\ExcelCharts_Chartsdll\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
+
+            //File.Copy("\\\\miafs02\\Market Research\\MR Programs\\ExcelCharts_Chartsdll\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", true);
+
+            // File.Copy($"{path}", $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", true);
+            File.Copy($"{path}", $"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", true);
+            //get all the pagegroup names for the chart 
+
+            List<clschartPageGroup> lstPg = getProjectPagegroupNames(project);
+
+
+            //get the display names of the charts in excel sheet app
+
+            List<clschartPageDisplayName> lstChartDispNames = getProjectChartDisplayNames(project);
+
+            string op = "";
+
+            //get the page settings for the template 
+
+            System.Data.DataTable dt = clsData.MRData.getDataTable("ExcelChartsPrc_getPPTFinalSettings " + "'" + finalTemplate + "'," + "'" + "BI - 2024" + "'");
+            List<clsPPTFinalSettings> lstPPTFinalSettings = new List<clsPPTFinalSettings>();
+
+            int DelLastPage = 0;
+            int DelFirstPage = 0;
+            List<int> intChartPages = new List<int>();
+
+
+            foreach (DataRow row in dt.Rows)
+            {
+                // Create a new object for each row and add it to the list
+                clsPPTFinalSettings data1 = new clsPPTFinalSettings
+                {
+                    intPPTSlideIndexFirst = Convert.ToInt32(row["intPPTSlideIndexFirst"]),
+                    intPPTSlideIndexLast = Convert.ToInt32(row["intPPTSlideIndexLast"]),
+                    strTemplateName = Convert.ToString(row["strTemplateName"]),
+                    strTemplateSourcePath = Convert.ToString(row["strTemplateSourcePath"]),
+                    strPageGroupName = Convert.ToString(row["strPageGroupName"]),
+                    strPageGroupType = Convert.ToString(row["strPageGroupType"]),
+                };
+                lstPPTFinalSettings.Add(data1);
+            }
+
+
+
+            int specialChartTypeCount = 0;
+
+            //copy a final in the path
+
+            // original 
+            //createFolder($"C:\\excelfiles\\{project}\\Final");
+            //copyFile("C:\\ExcelChartsTemplatesNew\\ExcelCharts_ChartTemplates\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx", $"C:\\excelfiles\\{project}\\Final\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx");
+
+            createFolder($"C:\\excelfiles\\{username}\\{project}\\Final");
+            copyFile("C:\\ExcelChartsTemplatesNew\\ExcelCharts_ChartTemplates\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx", $"C:\\excelfiles\\{username}\\{project}\\Final\\" + finalTemplate.Replace(" ", "").Trim() + ".pptx");
+
+
+            lstPPTFinalSettings = lstPPTFinalSettings.OrderByDescending(p => p.intPPTSlideIndexFirst).ToList();
+            int chartsCompCount = 0;
+            List<string> chartsCompleted = new List<string>();
+            List<string> pageGroupNameCompleted = new List<string>();
+            List<clsChartDislayNamePageGroupName> lstchartDispPageGroupName = new List<clsChartDislayNamePageGroupName>();
+
+
+            //
+            foreach (clschartPageDisplayName obj in lstChartDispNames)
+            {
+                foreach (string chart in charts)
+                {
+                    if (obj.strPageName == chart)
+                    {
+                        obj.isReportSelectedByUser = true;
+
+
+                        //updating Attribute evaluation cover page :
+
+
+                        if (obj.strPageType.ToLower() == "attribute evaluation")
+                        {
+                            if (obj.strPageName.Contains("1"))
+                            {
+                                //update the slide 38
+
+                                string repText = getAttributeTitle(project, chart);
+
+                                //original
+                                //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", repText, 38);
+
+                                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", repText, 38);
+
+
+                                //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "AttributeEvaluationTitle1", repText, 38);
+
+
+                            }
+
+                            if (obj.strPageName.Contains("2"))
+                            {
+                                //update the slide 38
+
+                                string repText = getAttributeTitle(project, chart);
+
+                                //original
+                                //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", repText, 38);
+
+                                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", repText, 38);
+
+                                // await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "Attribute", repText, 38);
+
+                                //  await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "AttributeEvaluationTitle2", repText, 38);
+
+
+                            }
+
+                            if (obj.strPageName.Contains("3"))
+                            {
+                                //update the slide 38
+
+                                string repText = getAttributeTitle(project, chart);
+
+                                //original
+                                //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", repText, 38);
+
+                                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", repText, 38);
+
+                                //  await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "Attribute", repText, 38);
+
+                                //  await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "AttributeEvaluationTitle3", repText, 38);
+
+
+                            }
+
+                            if (obj.strPageName.Contains("4"))
+                            {
+                                //update the slide 38
+
+                                string repText = getAttributeTitle(project, chart);
+
+                                //original
+                                //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", repText, 38);
+
+                                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", repText, 38);
+
+
+                                //  await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "Attribute", repText, 38);
+
+                                // await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "AttributeEvaluationTitle4", repText, 38);
+
+
+                            }
+
+
+                        }
+
+
+
+                    }
+
+                }
+
+            }
+
+
+            //in case if the attribute evaluations are not there 
+
+            List<clschartPageDisplayName> lstAtts = lstChartDispNames.Where(p => p.strPageType.ToLower() == "attribute evaluation").ToList();
+
+
+            if (!lstAtts.Any(obj => obj.strPageName.Contains("1")) || lstAtts.Any(obj => obj.strPageName.Contains("1") && obj.isReportSelectedByUser == false))
+            {
+                //original
+                //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", "", 38);
+
+                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", "", 38);
+
+            }
+
+            if (!lstAtts.Any(obj => obj.strPageName.Contains("2")) || lstAtts.Any(obj => obj.strPageName.Contains("2") && obj.isReportSelectedByUser == false))
+            {
+                //original
+                //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", "", 38);
+
+                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", "", 38);
+
+
+            }
+
+
+            if (!lstAtts.Any(obj => obj.strPageName.Contains("3")) || lstAtts.Any(obj => obj.strPageName.Contains("3") && obj.isReportSelectedByUser == false))
+            {
+                //original
+                //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", "", 38);
+
+                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", "", 38);
+
+
+            }
+
+            if (!lstAtts.Any(obj => obj.strPageName.Contains("4")) || lstAtts.Any(obj => obj.strPageName.Contains("4") && obj.isReportSelectedByUser == false))
+            {
+
+                //original
+                //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", "", 38);
+
+                await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", "", 38);
+
+
+            }
+
+
+
+
+
+
+            //merge
+
+
+            //bool first chart name replaced
+
+            bool firstChartTextReplaced = false;
+            foreach (clsPPTFinalSettings objclsPPT in lstPPTFinalSettings)
+            {
+                if (chartsCompCount == charts.Count())
+                {
+                    break;
+                }
+
+                specialChartTypeCount = 0;
+                //check if chart type is selected  
+
+                bool ifThePageTypeIsSelected = true;
+
+
+                //first chart project name and details change 
+
+                if (!firstChartTextReplaced)
+                {
+                    DateTime currentDate = DateTime.Now;
+
+                    //original
+                    //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "ProjectName", project, 0);
+
+                    //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<", "", 0);
+
+                    //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", ">>", "", 0);
+
+                    //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "Month", currentDate.ToString("MMMM"), 0);
+
+                    //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "Year", DateTime.Now.Year.ToString(), 0);
+
+
+                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "ProjectName", project, 0);
+
+                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "<<", "", 0);
+
+                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", ">>", "", 0);
+
+                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "Month", currentDate.ToString("MMMM"), 0);
+
+                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "Year", DateTime.Now.Year.ToString(), 0);
+
+
+
+                    //replacing the attribute evaluation cover page :
+
+                    firstChartTextReplaced = true;
+
+                }
+
+
+
+                //delete the slides that are not part of the report 
+
+
+                if (!lstChartDispNames.Any(p => p.strPageType == objclsPPT.strPageGroupType))
+                {
+
+                    // skip the Attribute Evaluation Cover if the report has Attribute eavluation
+
+                    if (pageGroupNameCompleted.Any(z => z.Contains("Attribute")) && objclsPPT.strPageGroupType == "Attribute Evaluation Cover")
+                    {
+                        continue;
+                    }
+
+                    else
+                    {
+                        DelLastPage = objclsPPT.intPPTSlideIndexLast;
+                        DelFirstPage = objclsPPT.intPPTSlideIndexFirst;
+
+
+                        if (DelLastPage - DelFirstPage == 0)
+                        {
+                            for (int k = 0; k <= DelLastPage - DelFirstPage; k++)
+                            {
+                                //original
+                                //if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                //{
+                                //    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                //}
+
+                                if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{username}\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                {
+                                    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{username}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                }
+
+                            }
+
+                        }
+
+                        else
+                        {
+                            for (int k = 0; k < DelLastPage - DelFirstPage + 1; k++)
+                            {
+                                //original
+                                //if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                //{
+                                //    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                //}
+
+                                if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{username}\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                {
+                                    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{username}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                }
+
+                            }
+
+                        }
+
+
+                        continue;
+
+                    }
+
+
+
+
+
+                }
+
+
+
+                foreach (string chart in charts)
+                {
+
+                    //if the chart is completed break
+
+                    if (pageGroupNameCompleted.Contains(objclsPPT.strPageGroupName))
+                    {
+                        break;
+                    }
+
+
+
+
+
+                    //get the chart group type
+
+                    List<clschartPageDisplayName> lstCheck = lstChartDispNames.Where(p => p.strPageName == chart).ToList();
+
+                    bool noproceed = false;
+
+                    //delete the slides from the template if a report is not selected .
+
+                    bool isReportSelected = false;
+
+
+                    if (lstChartDispNames.Any(item => item.strPageType == objclsPPT.strPageGroupType))
+                    {
+
+                        if (objclsPPT.strPageGroupType.ToLower() == "exaggerative-inappropriate")
+                        {
+
+                            //if( lstChartDispNames.Any(item =>item.strPageType.ToLower() == "exaggerative-inappropriate" && getNumbersFromString(item.strPageName)==getNumbersFromString(chart)))
+                            //{
+                            //     isReportSelected = true;
+                            //}
+
+
+
+                            List<clschartPageDisplayName> lstFiltered = lstChartDispNames.Where(item => item.strPageType.ToLower() == "exaggerative-inappropriate").ToList();
+
+                            foreach (clschartPageDisplayName obj in lstFiltered)
+                            {
+                                if (getNumbersFromString(obj.strPageName) == getNumbersFromString(objclsPPT.strPageGroupName))
+                                {
+
+                                    if (obj.isReportSelectedByUser)
+                                    {
+                                        isReportSelected = true;
+                                        break;
+
+                                    }
+
+                                }
+
+                            }
+
+
+                        }
+
+                        else if (objclsPPT.strPageGroupType.ToLower() == "attribute evaluation")
+                        {
+
+
+                            List<clschartPageDisplayName> lstFiltered = lstChartDispNames.Where(item => item.strPageType.ToLower() == "attribute evaluation" || item.strPageType.ToLower() == "attribute evaluation aggregate").ToList();
+
+                            foreach (clschartPageDisplayName obj in lstFiltered)
+                            {
+                                if (getNumbersFromString(obj.strPageName) == getNumbersFromString(objclsPPT.strPageGroupName))
+                                {
+
+
+                                    if (obj.isReportSelectedByUser)
+                                    {
+                                        isReportSelected = true;
+                                        break;
+
+                                    }
+                                }
+
+                            }
+
+
+
+                        }
+
+                        else
+                        {
+                            List<clschartPageDisplayName> lstFiltered = lstChartDispNames.Where(item => item.strPageType.ToLower() == objclsPPT.strPageGroupName.ToLower()).ToList();
+
+                            foreach (clschartPageDisplayName obj in lstFiltered)
+                            {
+                                if (obj.isReportSelectedByUser)
+                                {
+                                    isReportSelected = true;
+                                    break;
+
+                                }
+
+                            }
+
+                        }
+
+
+                    }
+
+
+                    //if (lstChartDispNames.Any(item => item.strPageType == objclsPPT.strPageGroupType))
+                    //{
+                    //    foreach (clschartPageDisplayName item in lstChartDispNames)
+                    //    {
+                    //        if (item.strPageType == objclsPPT.strPageGroupType && item.strPageName==chart)
+                    //        {
+                    //            if (!item.isReportSelectedByUser)
+                    //            {
+                    //                isReportSelected = false;
+                    //                break;
+                    //            }
+                    //        }
+                    //    }
+
+
+                    //}
+
+                    //else
+                    //{
+                    //    isReportSelected = false;
+
+
+                    //}
+
+
+                    if (!isReportSelected)
+                    {
+                        //delete if the project is not checked 
+                        DelLastPage = objclsPPT.intPPTSlideIndexLast;
+                        DelFirstPage = objclsPPT.intPPTSlideIndexFirst;
+
+                        if (DelLastPage - DelFirstPage == 1 && objclsPPT.strPageGroupName.ToLower() == "attribute evaluation cover")
+                        {
+                            List<clschartPageDisplayName> lstFiltered = lstChartDispNames.Where(item => item.strPageType.ToLower() == "attribute evaluation" && item.isReportSelectedByUser == true).ToList();
+
+                            if (lstFiltered.Count > 0)
+                            {
+                                break;
+                            }
+
+                            else
+                            {
+                                DelLastPage = DelFirstPage;
+                            }
+
+
+                        }
+
+                        if (!pageGroupNameCompleted.Contains(objclsPPT.strPageGroupName) && (DelLastPage != 0 && DelFirstPage != 0))
+                        {
+
+                            if (DelLastPage - DelFirstPage == 0)
+                            {
+                                for (int k = 0; k <= DelLastPage - DelFirstPage; k++)
+                                {
+                                    //original
+                                    //if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                    //{
+                                    //    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                    //}
+
+                                    if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{username}\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                    {
+                                        op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{username}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                    }
+
+                                }
+
+                            }
+
+                            else
+                            {
+                                for (int k = 0; k < DelLastPage - DelFirstPage + 1; k++)
+                                {
+                                    //original
+                                    //if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                    //{
+                                    //    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                    //}
+
+                                    if (DelLastPage - k - 1 < CountSlides($"C:\\\\excelfiles\\\\{username}\\\\{project}\\\\Final\\\\MRRxNaming.pptx"))
+                                    {
+                                        op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{username}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                    }
+
+                                }
+
+                            }
+
+
+                        }
+
+
+                        break;
+
+
+                    }
+
+
+
+                    foreach (clschartPageDisplayName oj in lstCheck)
+                    {
+
+                        if (objclsPPT.strPageGroupType.ToLower() == "exaggerative-inappropriate" || objclsPPT.strPageGroupType.ToLower() == "attribute evaluation")
+                        {
+
+                            if (oj.strPageName.ToLower() == "attribute evaluation aggregate")
+                            {
+                                oj.strPageType = "Attribute Evaluation";
+                            }
+
+                            if ((oj.strPageType == objclsPPT.strPageGroupType) && (oj.strPageName == chart) && (getNumbersFromString(objclsPPT.strPageGroupName) == getNumbersFromString(chart)))
+                            {
+                                noproceed = false;
+                                break;
+
+                            }
+
+                            else
+                            {
+                                noproceed = true;
+                                break;
+
+                            }
+
+                        }
+
+                        else
+                        {
+                            if ((oj.strPageType == objclsPPT.strPageGroupType) && (oj.strPageName == chart))
+                            {
+                                noproceed = false;
+                                break;
+
+                            }
+
+                            else
+                            {
+                                noproceed = true;
+                                break;
+
+                            }
+
+
+                        }
+
+
+
+
+
+                    }
+
+                    if (noproceed)
+                    {
+                        continue;
+                    }
+
+
+
+
+                    if (!chartsCompleted.Contains(chart))
+                    {
+
+                        if (objclsPPT.strPageGroupName != "Main Cover")
+                        {
+                            DelLastPage = objclsPPT.intPPTSlideIndexLast;
+                            DelFirstPage = objclsPPT.intPPTSlideIndexFirst;
+
+
+                            //add
+
+                            string firstMatchingName = lstPg
+                           .Where(p => p.strPageGroup == chart)
+                           .Select(p => p.strPageGroupType)
+                           .FirstOrDefault();
+
+
+                            if (objclsPPT.strPageGroupType != "Attribute Evaluation" && objclsPPT.strPageGroupType != "Exaggerative-Inappropriate")
+                            {
+                                //item array of pages with slide numbers 
+                                intChartPages = new List<int>();
+
+                                if (DelLastPage > DelFirstPage)
+                                {
+                                    if (objclsPPT.strPageGroupType == "Phonetic Testing" || objclsPPT.strPageGroupType == "JSCAN")
+                                    {
+                                        intChartPages.Add(DelLastPage);
+
+                                    }
+
+                                    else if (objclsPPT.strPageGroupType == "Sound Alike-Look Alike" || objclsPPT.strPageGroupType == "Medical Terms Similarity" || objclsPPT.strPageGroupType == "Non-Medical Terms Similarity" || objclsPPT.strPageGroupType == "Brandex Strategic Distinctiveness" || objclsPPT.strPageGroupType == "Brandex Safety")
+                                    {
+                                        for (int l = 0; l <= DelLastPage - DelFirstPage; l++)
+                                        {
+                                            intChartPages.Add(DelFirstPage + l);
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        for (int l = 0; l <= DelLastPage - DelFirstPage; l++)
+                                        {
+                                            intChartPages.Add(DelFirstPage + l - 1);
+                                        }
+
+
+                                    }
+
+
+
+                                }
+                                else
+                                {
+                                    intChartPages.Add(DelLastPage);
+                                }
+
+
+
+                                if (objclsPPT.strPageGroupName.ToLower() == chart.ToLower() || objclsPPT.strPageGroupName.ToLower() == firstMatchingName.ToLower())
+                                {
+                                    for (int k = 0; k <= DelLastPage - DelFirstPage; k++)
+                                    {
+                                        //op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                        op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{username}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+                                        //Thread.Sleep(100);
+                                    }
+
+                                    if (CountSlides(getIndividualChartPath(chart, project, breakDown)) < intChartPages.Count && CountSlides(getIndividualChartPath(chart, project, breakDown)) != 0)
+                                    {
+                                        for (int i = intChartPages.Count - 1; i >= CountSlides(getIndividualChartPath(chart, project, breakDown)); i--)
+                                        {
+                                            intChartPages.RemoveAt(i);
+                                        }
+
+                                    }
+
+                                    if (File.Exists(getIndividualChartPath(chart, project, breakDown)))
+                                    {
+                                        //op = await clsMisc.MergeSlideWithSlideArrayAsync1(getIndividualChartPath(chart, project, breakDown), $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", intChartPages.ToArray(), DelLastPage - 1);
+
+                                        op = await clsMisc.MergeSlideWithSlideArrayAsync1(getIndividualChartPath(chart, project, breakDown), $"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", intChartPages.ToArray(), DelLastPage - 1);
+
+                                    }
+
+
+                                    chartsCompCount = chartsCompCount + 1;
+
+                                    lstchartDispPageGroupName.Add(new clsChartDislayNamePageGroupName(chart, objclsPPT.strPageGroupName));
+
+                                    chartsCompleted.Add(chart);
+
+                                    pageGroupNameCompleted.Add(objclsPPT.strPageGroupName);
+                                }
+
+
+                            }
+
+                            else
+                            {
+                                //item array of pages with slide numbers 
+                                intChartPages = new List<int>();
+
+                                if (DelLastPage > DelFirstPage && DelLastPage - DelFirstPage > 1)
+                                {
+                                    for (int l = 0; l <= DelLastPage - DelFirstPage; l++)
+                                    {
+                                        intChartPages.Add(DelFirstPage + l - 1);
+                                    }
+
+                                }
+                                else
+                                {
+                                    intChartPages.Add(DelLastPage);
+                                }
+
+                                //get the attribute evaluation category and Exaggerative 
+
+                                string PageType = lstChartDispNames.FirstOrDefault(item => item.strPageName == chart)?.strPageType;
+
+                                string resPageType = "";
+
+                                op = "";
+
+                                if (PageType == "Attribute Evaluation" && chart.Contains("1"))
+                                {
+
+                                    resPageType = "Attribute Evaluation 1";
+                                    DelLastPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 1", "LastPage");
+                                    DelFirstPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 1", "FirstPage");
+
+
+
+
+
+                                }
+
+                                else if (PageType == "Attribute Evaluation" && chart.Contains("2"))
+                                {
+                                    resPageType = "Attribute Evaluation 2";
+                                    DelLastPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 2", "LastPage");
+                                    DelFirstPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 2", "FirstPage");
+                                    // await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", "Attribute #2", 38);
+
+                                    //if (!checkParticularAttributeEvaluationIsSelected(lstChartDispNames, 1))
+                                    //{
+                                    //    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", "", 38);
+
+
+                                    //}
+
+                                    //if (!checkParticularAttributeEvaluationIsSelected(lstChartDispNames, 3))
+                                    //{
+                                    //    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", "", 38);
+
+
+                                    //}
+
+                                    //if (!checkParticularAttributeEvaluationIsSelected(lstChartDispNames, 4))
+                                    //{
+                                    //    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", "", 38);
+
+
+                                    //}
+
+
+
+                                }
+
+                                else if (PageType == "Attribute Evaluation" && chart.Contains("3"))
+                                {
+
+                                    resPageType = "Attribute Evaluation 3";
+                                    DelLastPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 3", "LastPage");
+                                    DelFirstPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 3", "FirstPage");
+                                    //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", "Attribute #3", 38);
+
+                                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", "Attribute #3", 38);
+
+
+                                    //if (!checkParticularAttributeEvaluationIsSelected(lstChartDispNames, 1))
+                                    //{
+                                    //    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", "", 38);
+
+
+                                    //}
+
+                                    //if (!checkParticularAttributeEvaluationIsSelected(lstChartDispNames, 2))
+                                    //{
+                                    //    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", "", 38);
+
+
+                                    //}
+
+                                    //if (!checkParticularAttributeEvaluationIsSelected(lstChartDispNames, 4))
+                                    //{
+                                    //    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", "", 38);
+
+
+                                    //}
+
+
+
+                                }
+
+                                else if (PageType == "Attribute Evaluation" && chart.Contains("4"))
+                                {
+                                    resPageType = "Attribute Evaluation 4";
+                                    DelLastPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 4", "LastPage");
+                                    DelFirstPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 4", "FirstPage");
+                                    //await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", "Attribute #4", 38);
+
+                                    await clsMisc.repTextInSlideAsync($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle4>>", "Attribute #4", 38);
+
+
+                                    //if (!checkParticularAttributeEvaluationIsSelected(lstChartDispNames, 1))
+                                    //{
+                                    //    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", "", 38);
+                                    //    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "", "", 38);
+
+
+                                    //    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", "", 38);
+
+
+                                    //}
+
+                                    //if (!checkParticularAttributeEvaluationIsSelected(lstChartDispNames, 2))
+                                    //{
+                                    //    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle2>>", "", 38);
+
+
+                                    //}
+
+                                    //if (!checkParticularAttributeEvaluationIsSelected(lstChartDispNames, 3))
+                                    //{
+                                    //    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle3>>", "", 38);
+
+
+                                    //}
+
+
+                                }
+
+
+                                else if (PageType.Contains("Attribute Evaluation") && chart.Contains("Aggregate") && chart.Contains("Attribute"))
+                                {
+                                    resPageType = "Attribute Evaluation Aggregate";
+                                    DelLastPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation Aggregate", "LastPage");
+                                    DelFirstPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation Aggregate", "FirstPage");
+
+
+                                }
+
+
+                                else if (PageType == "Exaggerative-Inappropriate" && (getNumbersFromString(chart) == "1" || getNumbersFromString(chart) == "01"))
+                                {
+                                    resPageType = "01 Untrue";
+
+                                    DelLastPage = getPageIndex(lstPPTFinalSettings, "01 Untrue", "LastPage");
+
+                                    // DelFirstPage = getPageIndex(lstPPTFinalSettings, "01 Untrue", "FirstPage");
+
+                                    DelFirstPage = DelLastPage;
+
+
+                                }
+
+
+                                else if (PageType == "Exaggerative-Inappropriate" && (getNumbersFromString(chart) == "2" || getNumbersFromString(chart) == "02"))
+                                {
+
+                                    resPageType = "02 Mislead";
+
+                                    DelLastPage = getPageIndex(lstPPTFinalSettings, "02 Mislead", "LastPage");
+
+                                    DelFirstPage = getPageIndex(lstPPTFinalSettings, "02 Mislead", "FirstPage");
+
+
+                                }
+
+
+                                else if (PageType == "Exaggerative-Inappropriate" && (getNumbersFromString(chart) == "3" || getNumbersFromString(chart) == "03"))
+                                {
+
+                                    resPageType = "03 Exagg";
+
+                                    DelLastPage = getPageIndex(lstPPTFinalSettings, "03 Exagg", "LastPage");
+
+                                    DelFirstPage = getPageIndex(lstPPTFinalSettings, "03 Exagg", "FirstPage");
+
+
+                                }
+
+                                //if (objclsPPT.strPageGroupName.ToLower() == resPageType.ToLower())
+                                //{
+
+
+                                if (resPageType == "01 Untrue")
+                                {
+                                    //original
+                                    //op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - 1);
+
+                                    op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{username}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - 1);
+                                }
+
+                                else
+                                {
+                                    for (int k = 0; k <= DelLastPage - DelFirstPage; k++)
+                                    {
+                                        //original
+                                        //op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+
+                                        op = await clsMisc.DeleteSlideFromPPTAsync1($"C:\\\\excelfiles\\\\{username}\\\\{project}\\\\Final\\\\MRRxNaming.pptx", DelLastPage - k - 1);
+                                        //Thread.Sleep(100);
+                                    }
+                                }
+
+
+
+
+                                if (CountSlides(getIndividualChartPath(chart, project, breakDown)) < intChartPages.Count && CountSlides(getIndividualChartPath(chart, project, breakDown)) != 0)
+                                {
+                                    for (int i = intChartPages.Count - 1; i >= CountSlides(getIndividualChartPath(chart, project, breakDown)); i--)
+                                    {
+                                        intChartPages.RemoveAt(i);
+                                    }
+
+                                }
+
+                                //op = await clsMisc.MergeSlideWithSlideArrayAsync1(getIndividualChartPath(chart, project, breakDown), $"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", intChartPages.ToArray(), DelLastPage - 1);
+
+                                op = await clsMisc.MergeSlideWithSlideArrayAsync1(getIndividualChartPath(chart, project, breakDown), $"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", intChartPages.ToArray(), DelLastPage - 1);
+
+
+
+                                if (PageType == "Attribute Evaluation" && chart.Contains("1"))
+                                {
+
+                                    resPageType = "Attribute Evaluation 1";
+                                    DelLastPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 1", "LastPage");
+                                    DelFirstPage = getPageIndex(lstPPTFinalSettings, "Attribute Evaluation 1", "FirstPage");
+
+                                    //update the slide 38
+
+                                    //update the slide 38
+
+                                    string repText = "";
+                                    System.Data.DataTable dt1 = clsData.MRData.getDataTable("[dbo].[ExcelChartsPrc_getAttributeEvaluationTitle] " + "'" + project + "'," + "'" + chart + "'");
+
+                                    foreach (DataRow row in dt1.Rows)
+                                    {
+                                        repText = Convert.ToString(row["strAttributeEvaluationTitle"]);
+                                    }
+
+
+
+
+
+
+                                    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "<<AttributeEvaluationTitle1>>", repText, 38);
+
+                                    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "Attribute", repText, 38);
+
+                                    await clsMisc.repTextInSlideAsync("C:\\excelfiles\\RACKEM\\Final\\MRRxNaming.pptx", "AttributeEvaluationTitle1", repText, 38);
+
+
+
+                                    chartsCompCount = chartsCompCount + 1;
+
+                                    lstchartDispPageGroupName.Add(new clsChartDislayNamePageGroupName(chart, objclsPPT.strPageGroupName));
+
+                                    chartsCompleted.Add(chart);
+
+                                    pageGroupNameCompleted.Add(objclsPPT.strPageGroupName);
+
+                                }
+                                // }
+
+
+
+
+                            }
+
+
+
+
+
+
+
+
+
+                        }
+
+
+
+
+
+                    }
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+
+            //get the final file in  the folder
+
+            //original
+            //createFolder($"C:\\excelfiles\\{project}\\PPT");
+            //createFolder($"C:\\excelfiles\\{project}\\PPT\\01 Final");
+
+
+            createFolder($"C:\\excelfiles\\{username}\\{project}\\PPT");
+            createFolder($"C:\\excelfiles\\{username}\\{project}\\PPT\\01 Final");
+
+
+
+            while (true)
+            {
+
+                //original
+                //if (File.Exists($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx"))
+                //{
+                //    copyFile($"C:\\excelfiles\\{project}\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{project}\\PPT\\01 Final\\ {project}_{finalTemplate}_{breakDown}.pptx");
+
+
+                //    break;
+
+                //}
+
+                if (File.Exists($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx"))
+                {
+                    copyFile($"C:\\excelfiles\\{username}\\{project}\\Final\\MRRxNaming.pptx", $"C:\\excelfiles\\{username}\\{project}\\PPT\\01 Final\\ {project}_{finalTemplate}_{breakDown}.pptx");
+
+
+                    break;
+
+                }
+
+            }
+
+
+
+
+
+
+
+
+        }
+
+
 
 
 

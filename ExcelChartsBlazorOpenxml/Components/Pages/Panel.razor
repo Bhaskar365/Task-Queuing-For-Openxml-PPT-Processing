@@ -578,6 +578,10 @@ else
 
     </MudTabs>
 
+    @if (!errorMessageHidden)
+    {
+        <div class="alert alert-danger" role="alert">@errorMessage</div>
+    }
 
     <p class="d-inline-flex gap-1">
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -686,6 +690,9 @@ else
 
     string breakdownErrorMessage = "";
     string pagesErrorMessage = "";
+
+    string errorMessage = "";
+    bool errorMessageHidden = true;
 
     public Color SelectedColor { get; set; } = Color.Error;
 
@@ -1233,12 +1240,20 @@ else
             {
                 buttonColor = Color.Warning;
                 message = "Something went wrong";
+
+                errorMessage = "Bad Request";
+                errorMessageHidden = false;
+
                 _taskLog.UpdateFinalReport("Bad Request", res.project, user);
             }
             if (result == "Fail")
             {
                 buttonColor = Color.Error;
                 message = "Merge Insuccessful";
+
+                errorMessage = "Request Fail";
+                errorMessageHidden = false;
+
                 _taskLog.UpdateFinalReport("Fail", res.project, user);
             }
 
@@ -1260,6 +1275,10 @@ else
             Console.WriteLine(ex);
             refreshTimer.Stop();
             _taskLog.UpdateFinalReport("Fail", this.project!, user);
+
+            errorMessage = ex.Message;
+            errorMessageHidden = false;
+
             throw;
         }
 
