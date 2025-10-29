@@ -241,7 +241,7 @@ else
                                     </MudItem>
                                     <MudItem xs="12" sm="7">
                                         <MudNumericField @bind-Value="associationsValue"
-                                                         Class="custom-autocomplete" 
+                                                         Class="custom-autocomplete"
                                                          Variant="Variant.Outlined"
                                                          Min="0" Max="10" Style="height:25px;" />
                                     </MudItem>
@@ -697,7 +697,7 @@ else
     public Color SelectedColor { get; set; } = Color.Error;
 
     // string ww = "";
-    private IEnumerable<string> _options = new HashSet<string> { "RACKEM" };
+    private IEnumerable<string> _options = new HashSet<string> { "" };
 
     bool isDataLoaded = false;
     bool isContentLoaded = false;
@@ -875,6 +875,8 @@ else
             ReportService.OnChange += StateHasChanged;
             //  await StartHotReload();
             //await  LoadIndividualLogs();
+
+            ToggleOverlay(true);
 
             StateHasChanged();
 
@@ -1158,7 +1160,7 @@ else
     {
         try
         {
-            ToggleOverlay(true);
+
 
             ReportService.Reset();
 
@@ -1335,7 +1337,7 @@ else
             refreshTimer.Stop();
             throw new Exception(ex.Message);
         }
-         refreshTimer.Stop();
+        refreshTimer.Stop();
     }
 
 
