@@ -1,48 +1,48 @@
-﻿@* @page "/" *@
+﻿@page "/bootstrapTest"
+
 @using ExcelChartsBlazorOpenxml.Services
 @using SharedModels
 
 @rendermode InteractiveServer
 
-@* 
-<PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+    <MudTabPanel Text="Tab One">
+        <MudText>
+            <div class="container text-center">    
+                <div class="row">
+                    <div class="col-4">
+                        <div class="container" style="border:2px solid red;">
+                            <!-- Content here -->
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="container" style="border:2px solid blue;">
+                            <!-- Content here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            
+        </MudText>
+    </MudTabPanel>
 
-Welcome to your new app.
- *@
+    <MudTabPanel Text="Brandex" BadgeIcon="@Icons.Material.Filled.Check" BadgeColor="Color.Success" Typo="Typo.h6" Class="mudTabPanelFontSize">
+        <MudText>Brandex</MudText>
+    </MudTabPanel>
 
+    <MudTabPanel Text="QTC" Typo="Typo.subtitle1" Class="mudTabPanelFontSize">
+        <MudText>QTC</MudText>
+    </MudTabPanel>
 
-<MudItem xs="12" sm="5">
-    <MudText Class="custom-label" Color="Color.Error">Project Name</MudText>
-</MudItem>
-
-<MudItem xs="12" sm="7">
-    <MudSelect @bind-Value="@project"
-    Variant="Variant.Outlined"
-    FitContent=True>
-        @if (!isContentLoaded)
-        {
-            <MudSelectItem Value="@(project)">
-                <i class="fas fa-spinner fa-spin progressProjectSpinner"></i>
-            </MudSelectItem>
-        }
-        else
-        {
-            <MudSelectItem Value="@(project)"></MudSelectItem>
-        }
-
-    </MudSelect>
-</MudItem>
-
+    <MudTabPanel Text="Reports" Typo="Typo.h6" Class="mudTabPanelFontSize">
+        <MudText>Reports</MudText>
+    </MudTabPanel>
+</MudTabs>
 
 
 @code {
 
-    [Parameter]
-    public bool isContentLoaded { get; set; }
-
-    [Parameter]
-    public string?  project { get; set; }
 
 }
