@@ -7,24 +7,187 @@
 
 
 <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
-    <MudTabPanel Text="Tab One">
+    <MudTabPanel Text="Power Point">
         <MudText>
-            <div class="container text-center">    
+
+            <div class="container text-center">
                 <div class="row">
-                    <div class="col-4">
-                        <div class="container" style="border:2px solid red;">
-                            <!-- Content here -->
+                    <div class="col-sm-5 p-2 border shadow">
+                        <div class="">
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label for="inputPassword6"
+                                               class="col-form-label text-wrap text-danger" id="textSize">Select Data Source</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <select class="form-select form-select-sm" id="selectBoxID" disabled>
+                                            <option selected>Excel Charts</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap text-danger" id="textSize">Project Name</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <select class="form-select form-select-sm" id="selectBoxID">
+                                            <option selected>Proj Name</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap" id="textSize">DSI Project</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <select class="form-select form-select-sm" id="selectBoxID">
+                                            <option selected>DSI_MR</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap" id="textSizeHist">Historical Mean Type</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <select class="form-select form-select-sm" id="selectBoxID" disabled>
+                                            <option selected></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap"
+                                               id="textSizeHist">Historical Mean Description</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidthHistoricalDescription">
+                                        <select class="form-select form-select-sm" id="selectBoxID" disabled>
+                                            <option selected></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap"
+                                               id="textSizeAssociations">Associations/Likeability %</label>
+                                    </div>
+                                    <div class="col-auto" id="selectIntegerBoxWidth">
+                                        <input type="number" class="form-control" id="integerBoxID" value="0.0" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap"
+                                               id="textSize">Attribute Evaluation Title</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <input type="text" class="form-control" id="selectBoxID" disabled>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap"
+                                               id="textSize">Fit To Category</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <select class="form-select form-select-sm" id="selectBoxID" disabled>
+                                            <option selected></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap"
+                                               id="textSize">Logo Project Folder</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <input type="text" class="form-control" id="selectBoxID" value="Folder">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap"
+                                               id="textSize">PPT Final Template</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <select class="form-select form-select-sm" id="selectBoxID">
+                                            <option selected>MR-Rx Naming</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <input class="form-check-input" id="checkboxSpecificHistMean" type="checkbox" checked>
+                                        <label class="col-form-label text-wrap"
+                                               id="textSizeSpecificHistMean">Use specific Hist. Mean</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidthSpecificHistMean">
+                                        <select class="form-select form-select-sm" id="useSpecifiedHisMeanID">
+                                            <option selected></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-secondary" type="button">Generate Power Point</button>
+                            </div>
+
                         </div>
+
                     </div>
-                    <div class="col-8">
-                        <div class="container" style="border:2px solid blue;">
-                            <!-- Content here -->
+                    <div class="col-sm-7">
+                        <div class="container border shadow">
+                            <div class="border row">
+                                <div class="col">col</div>
+                                <div class="col">col</div>
+                                <div class="col">col</div>
+                                <div class="col">col</div>
+                            </div>
+                            <div>some text</div>
                         </div>
                     </div>
                 </div>
             </div>
-           
-            
+
+
         </MudText>
     </MudTabPanel>
 
@@ -40,7 +203,6 @@
         <MudText>Reports</MudText>
     </MudTabPanel>
 </MudTabs>
-
 
 @code {
 

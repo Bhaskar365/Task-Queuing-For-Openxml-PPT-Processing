@@ -1,4 +1,54 @@
 
+#textSize {
+    font-size: 9px !important;
+}
+
+#textSizeAssociations {
+    font-size: 8px !important;
+}
+
+#textSizeSpecificHistMean {
+    font-size: 8px !important;
+}
+
+#textSizeHist {
+    font-size: 8px !important;
+}
+
+.selectBoxWidth {
+    width: 68.5% !important;
+}
+
+.selectBoxWidthHistoricalDescription {
+    width: 68.5% !important;
+}
+
+.selectBoxWidthSpecificHistMean {
+    width: 68.5% !important;
+}
+
+#selectIntegerBoxWidth {
+    width: 68.5% !important;
+}
+
+#integerBoxID {
+    line-height: 0px !important;
+    height: 30px !important;
+}
+
+#selectBoxID {
+    /*    line-height: 0px !important;*/
+    height: 27px !important;
+}
+
+#useSpecifiedHisMeanID {
+
+}
+
+#checkboxSpecificHistMean {
+    font-size: medium !important;
+}
+
 
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
@@ -407,7 +457,7 @@ a, .btn-link {
 }
 
 .taskListSpinner {
-    border:2px solid red !important;
+    border: 2px solid red !important;
     margin-top: 50vh !important;
     display: flex !important;
     justify-content: center !important;
@@ -832,7 +882,7 @@ a, .btn-link {
 
 @media (width:1024px) and (height:1366px) and (orientation:portrait) {
 
-    
+
 
     .responsive-container-paper {
         row-gap: 43.6px;
@@ -986,16 +1036,16 @@ a, .btn-link {
 @media only screen and (max-width:600px) {
 
     .tableStyling {
-        font-size:13px !important;
-    }
-
-    .tableStyling .taskLogHeader {
-        font-size: 15px !important;
-    }
-
-    .tableStyling .failedTaskHeader {
         font-size: 13px !important;
     }
+
+        .tableStyling .taskLogHeader {
+            font-size: 15px !important;
+        }
+
+        .tableStyling .failedTaskHeader {
+            font-size: 13px !important;
+        }
 
     .btnClass {
         font-size: 6px !important;
@@ -1053,13 +1103,13 @@ a, .btn-link {
         font-size: 11px !important;
     }
 
-    .tableStyling .taskLogHeader {
-        font-size: 12px !important;
-    }
+        .tableStyling .taskLogHeader {
+            font-size: 12px !important;
+        }
 
-    .tableStyling .failedTaskHeader {
-        font-size: 12px !important;
-    }
+        .tableStyling .failedTaskHeader {
+            font-size: 12px !important;
+        }
 
     .mudTabPanelFontSize {
         font-size: 9px !IMPORTANT;
@@ -1129,13 +1179,13 @@ a, .btn-link {
         font-size: 10px !important;
     }
 
-    .tableStyling .taskLogHeader {
-        font-size: 11px !important;
-    }
+        .tableStyling .taskLogHeader {
+            font-size: 11px !important;
+        }
 
-    .tableStyling .failedTaskHeader {
-        font-size: 11px !important;
-    }
+        .tableStyling .failedTaskHeader {
+            font-size: 11px !important;
+        }
 
     .custom-checkbox .mud-typography {
         font-size: 6px !important;
