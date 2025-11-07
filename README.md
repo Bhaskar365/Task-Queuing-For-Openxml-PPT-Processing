@@ -10,15 +10,18 @@
 - `UI/` - Blazor UI
 - `Shared/` - Shared .NET library used across API and UI
 
-## Getting Started
-1. Clone the repo
-2. Open `MySolution.sln`
-3. Build and run via Visual Studio or `dotnet` CLI
-4. Remove Migrations, create own migrations using migration commands after changing the connectionstrings in application.json file. Auto seeding code in place to put data for 2 tables in db. Rest need to put sample data for other tables
-5. Put a 100% stacked bar chart in source path in system to see data in ppt.
 
 
-<img width="599" height="607" alt="image" src="https://github.com/user-attachments/assets/529bce4d-63a9-45ad-abd5-1b1262ab9f99" />
+<img width="1883" height="863" alt="image" src="https://github.com/user-attachments/assets/6b8cd5be-00e6-4abc-90cd-02db2edde86b" />
 
 
-<img width="517" height="515" alt="image" src="https://github.com/user-attachments/assets/9d304f9c-885f-4f2b-af0b-23345e7b6ee3" />
+<img width="1591" height="799" alt="image" src="https://github.com/user-attachments/assets/af04e729-acf2-4cb3-b714-5af83d992dbf" />
+
+
+<img width="1539" height="803" alt="image" src="https://github.com/user-attachments/assets/85cb7ddd-b13b-4212-836b-f792b7fbe0c6" />
+
+
+<img width="1539" height="821" alt="image" src="https://github.com/user-attachments/assets/21966f0b-e53e-4736-af4a-1a4739ddfd07" />
+
+
+<img width="1617" height="787" alt="image" src="https://github.com/user-attachments/assets/45926e50-a2cc-4044-b41e-734507cd64c1" />
