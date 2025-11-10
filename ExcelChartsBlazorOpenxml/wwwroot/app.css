@@ -9,7 +9,7 @@
 }
 
 #attributeTextSize {
-    font-size: 9px !important;
+    font-size: 7px !important;
 }
 
 .attributeTextClass {
@@ -37,15 +37,15 @@
 
 .pageBoxSize {
     height: 270px !important;
-    width: 140px !important;
-    white-space:nowrap;
+    max-width: 140px !important;
+    white-space: nowrap;
     overflow-x: scroll;
     overflow-y: scroll;
 }
 
 .breakdownBoxSize {
     height: 270px !important;
-    width: 130px !important;
+    max-width: 130px !important;
     white-space: nowrap;
     overflow-x: scroll;
     overflow-y: scroll;
@@ -54,7 +54,7 @@
 
 .testnameBoxSize {
     height: 270px !important;
-    width: 130px !important;
+    max-width: 130px !important;
     white-space: nowrap;
     overflow-x: scroll;
     overflow-y: scroll;
