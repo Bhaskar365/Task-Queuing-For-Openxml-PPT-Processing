@@ -1,187 +1,289 @@
 ﻿@page "/bootstrapTest"
 
+@implements IDisposable;
+
 @using ExcelChartsBlazorOpenxml.Services
+@using ExcelChartsBlazorOpenxml.SharedTaskTracking
+@using MudBlazor
+@using Newtonsoft.Json
+@using OpenXmlDLLDotnetFramework
 @using SharedModels
+@using SharedModels.DTO
+@using System.Xml.Linq
+@using System.Data
+
+@inject ITaskTrackingSp _taskLog;
+
+@using System.Security.Principal
+@using prjData
+
+@inject ReportProcessService ReportService;
+
+@using ExcelChartsBlazorOpenxml.Components.Pages.ComponentModules;
+
+@using static ExcelChartsBlazorOpenxml.Components.Pages.TaskQueueCharts
+@inject IFitToConceptService fitToConceptService;
+@inject HttpClient httpClient
 
 @rendermode InteractiveServer
 
+@inject Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider AuthenticationStateProvider
+
 
 <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
-    <MudTabPanel Text="Power Point">
+    <MudTabPanel Text="Power Point" Class="mudTabPanelFontSize">
         <MudText>
 
             <div class="container text-center">
                 <div class="row">
-                    <div class="col-sm-5 p-2 border shadow">
-                        <div class="">
-                            <div class="p-1">
-                                <div class="row g-3 justify-content-between">
-                                    <div class="col-auto">
-                                        <label for="inputPassword6"
-                                               class="col-form-label text-wrap text-danger" id="textSize">Select Data Source</label>
-                                    </div>
-                                    <div class="col-auto selectBoxWidth">
-                                        <select class="form-select form-select-sm" id="selectBoxID" disabled>
-                                            <option selected>Excel Charts</option>
-                                        </select>
-                                    </div>
+                    <div class="col-sm-4 p-2 border shadow">
+                        <div class="p-1">
+                            <div class="row g-3 justify-content-between">
+                                <div class="col-auto">
+                                    <label for="inputPassword6"
+                                           class="col-form-label text-wrap text-danger" id="textSize">Select Data Source</label>
+                                </div>
+                                <div class="col-auto selectBoxWidth">
+                                    <select class="form-select form-select-sm" id="selectBoxID" disabled>
+                                        <option selected>Excel Charts</option>
+                                    </select>
                                 </div>
                             </div>
-
-
-                            <div class="p-1">
-                                <div class="row g-3 justify-content-between">
-                                    <div class="col-auto">
-                                        <label class="col-form-label text-wrap text-danger" id="textSize">Project Name</label>
-                                    </div>
-                                    <div class="col-auto selectBoxWidth">
-                                        <select class="form-select form-select-sm" id="selectBoxID">
-                                            <option selected>Proj Name</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="p-1">
-                                <div class="row g-3 justify-content-between">
-                                    <div class="col-auto">
-                                        <label class="col-form-label text-wrap" id="textSize">DSI Project</label>
-                                    </div>
-                                    <div class="col-auto selectBoxWidth">
-                                        <select class="form-select form-select-sm" id="selectBoxID">
-                                            <option selected>DSI_MR</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                            <div class="p-1">
-                                <div class="row g-3 justify-content-between">
-                                    <div class="col-auto">
-                                        <label class="col-form-label text-wrap" id="textSizeHist">Historical Mean Type</label>
-                                    </div>
-                                    <div class="col-auto selectBoxWidth">
-                                        <select class="form-select form-select-sm" id="selectBoxID" disabled>
-                                            <option selected></option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="p-1">
-                                <div class="row g-3 justify-content-between">
-                                    <div class="col-auto">
-                                        <label class="col-form-label text-wrap"
-                                               id="textSizeHist">Historical Mean Description</label>
-                                    </div>
-                                    <div class="col-auto selectBoxWidthHistoricalDescription">
-                                        <select class="form-select form-select-sm" id="selectBoxID" disabled>
-                                            <option selected></option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="p-1">
-                                <div class="row g-3 justify-content-between">
-                                    <div class="col-auto">
-                                        <label class="col-form-label text-wrap"
-                                               id="textSizeAssociations">Associations/Likeability %</label>
-                                    </div>
-                                    <div class="col-auto" id="selectIntegerBoxWidth">
-                                        <input type="number" class="form-control" id="integerBoxID" value="0.0" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="p-1">
-                                <div class="row g-3 justify-content-between">
-                                    <div class="col-auto">
-                                        <label class="col-form-label text-wrap"
-                                               id="textSize">Attribute Evaluation Title</label>
-                                    </div>
-                                    <div class="col-auto selectBoxWidth">
-                                        <input type="text" class="form-control" id="selectBoxID" disabled>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="p-1">
-                                <div class="row g-3 justify-content-between">
-                                    <div class="col-auto">
-                                        <label class="col-form-label text-wrap"
-                                               id="textSize">Fit To Category</label>
-                                    </div>
-                                    <div class="col-auto selectBoxWidth">
-                                        <select class="form-select form-select-sm" id="selectBoxID" disabled>
-                                            <option selected></option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="p-1">
-                                <div class="row g-3 justify-content-between">
-                                    <div class="col-auto">
-                                        <label class="col-form-label text-wrap"
-                                               id="textSize">Logo Project Folder</label>
-                                    </div>
-                                    <div class="col-auto selectBoxWidth">
-                                        <input type="text" class="form-control" id="selectBoxID" value="Folder">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="p-1">
-                                <div class="row g-3 justify-content-between">
-                                    <div class="col-auto">
-                                        <label class="col-form-label text-wrap"
-                                               id="textSize">PPT Final Template</label>
-                                    </div>
-                                    <div class="col-auto selectBoxWidth">
-                                        <select class="form-select form-select-sm" id="selectBoxID">
-                                            <option selected>MR-Rx Naming</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="p-1">
-                                <div class="row g-3 justify-content-between">
-                                    <div class="col-auto">
-                                        <input class="form-check-input" id="checkboxSpecificHistMean" type="checkbox" checked>
-                                        <label class="col-form-label text-wrap"
-                                               id="textSizeSpecificHistMean">Use specific Hist. Mean</label>
-                                    </div>
-                                    <div class="col-auto selectBoxWidthSpecificHistMean">
-                                        <select class="form-select form-select-sm" id="useSpecifiedHisMeanID">
-                                            <option selected></option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-outline-secondary" type="button">Generate Power Point</button>
-                            </div>
-
                         </div>
 
-                    </div>
-                    <div class="col-sm-7">
-                        <div class="container border shadow">
-                            <div class="border row">
-                                <div class="col">col</div>
-                                <div class="col">col</div>
-                                <div class="col">col</div>
-                                <div class="col">col</div>
+
+                        <div class="p-1">
+                            <div class="row g-3 justify-content-between">
+                                <div class="col-auto">
+                                    <label class="col-form-label text-wrap text-danger" id="textSize">Project Name</label>
+                                </div>
+                                <div class="col-auto selectBoxWidth">
+                                    <select class="form-select form-select-sm" id="selectBoxID" @onchange="OnProjectChangedBootstrap">
+
+                                        @foreach (var proj in projectList)
+                                        {
+                                            <option value="@proj">@proj</option>
+                                        }
+
+                                    </select>
+                                </div>
                             </div>
-                            <div>some text</div>
+                        </div>
+
+                        <div class="p-1">
+                            <div class="row g-3 justify-content-between">
+                                <div class="col-auto">
+                                    <label class="col-form-label text-wrap" id="textSize">DSI Project</label>
+                                </div>
+                                <div class="col-auto selectBoxWidth">
+                                    <select class="form-select form-select-sm" id="selectBoxID">
+                                        <option selected>@LogoFolderTextValue</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="p-1">
+                            <div class="row g-3 justify-content-between">
+                                <div class="col-auto">
+                                    <label class="col-form-label text-wrap" id="textSizeHist">Historical Mean Type</label>
+                                </div>
+                                <div class="col-auto selectBoxWidth">
+                                    <select class="form-select form-select-sm" id="selectBoxID" disabled>
+                                        <option selected></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="p-1">
+                            <div class="row g-3 justify-content-between">
+                                <div class="col-auto">
+                                    <label class="col-form-label text-wrap"
+                                           id="textSizeHist">Historical Mean Description</label>
+                                </div>
+                                <div class="col-auto selectBoxWidthHistoricalDescription">
+                                    <select class="form-select form-select-sm" id="selectBoxID" disabled>
+                                        <option selected></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-1">
+                            <div class="row g-3 justify-content-between">
+                                <div class="col-auto">
+                                    <label class="col-form-label text-wrap"
+                                           id="textSizeAssociations">Associations/Likeability %</label>
+                                </div>
+                                <div class="col-auto" id="selectIntegerBoxWidth">
+                                    <input type="number" class="form-control" id="integerBoxID" value="1.0" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-1">
+                            <div class="row g-3 justify-content-between">
+                                <div class="col-auto">
+                                    <label class="col-form-label text-wrap"
+                                           id="textSize">Attribute Evaluation Title</label>
+                                </div>
+                                <div class="col-auto selectBoxWidth">
+                                    <input type="text" class="form-control" id="selectBoxID" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="p-1">
+                            <div class="row g-3 justify-content-between">
+                                <div class="col-auto">
+                                    <label class="col-form-label text-wrap"
+                                           id="textSize">Fit To Category</label>
+                                </div>
+                                <div class="col-auto selectBoxWidth">
+                                    <select class="form-select form-select-sm" id="selectBoxID" disabled>
+                                        <option selected></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-1">
+                            <div class="row g-3 justify-content-between">
+                                <div class="col-auto">
+                                    <label class="col-form-label text-wrap"
+                                           id="textSize">Logo Project Folder</label>
+                                </div>
+                                <div class="col-auto selectBoxWidth">
+                                    <input type="text" class="form-control" id="selectBoxID" value="@LogoFolderTextValue">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-1">
+                            <div class="row g-3 justify-content-between">
+                                <div class="col-auto">
+                                    <label class="col-form-label text-wrap"
+                                           id="textSize">PPT Final Template</label>
+                                </div>
+                                <div class="col-auto selectBoxWidth">
+                                    <select class="form-select form-select-sm" id="selectBoxID">
+                                        <option selected>MR-Rx Naming</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="p-1">
+                            <div class="row g-3 justify-content-between">
+                                <div class="col-auto">
+                                    <input class="form-check-input" id="checkboxSpecificHistMean" type="checkbox" checked>
+                                    <label class="col-form-label text-wrap"
+                                           id="textSizeSpecificHistMean">Use specific Hist. Mean</label>
+                                </div>
+                                <div class="col-auto selectBoxWidthSpecificHistMean">
+                                    <select class="form-select form-select-sm" id="useSpecifiedHisMeanID">
+                                        <option selected></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-secondary" type="button">Generate Power Point</button>
+                        </div>
+                    </div>
+
+              
+
+                    <div class="col-sm-8">
+                        <div class="container shadow">
+                            <div class="row containerBox">
+                                <div class="col testnameBtnBox">
+                                    <div class="pageTextClass pagesTextSize">Pages</div>
+                                    <div class="border container-sm w-100 pageBoxSize">
+
+                                        @foreach (var el in chartPageList)
+                                        {
+                                            <div class="form-check">
+                                                <input 
+                                                    class="form-check-input"
+                                                       type="checkbox" id="@el.strPageName" @bind="@el.isChecked">
+                                                <label class="form-check-label pagesTextSize"
+                                                       for="@el.strPageName">@el.strPageName</label>
+                                            </div>
+                                        }
+
+                                    </div>
+                                    <button class="btn btn-outline-primary select pageSelectUnselectButton w-100"
+                                            id="selectBtnSizeId" @onclick="TogglePagesList">
+                                        Select/Unselect All
+                                    </button>
+
+                                </div>
+
+                                <div class="col testnameBtnBox">
+                                    <div id="breakdownTextSize" class="breakdownTextClass">Breakdowns</div>
+                                    <div class="border container-sm w-100 breakdownBoxSize">
+                                        
+                                        @foreach (var el in lstBreakdown)
+                                        {
+                                            <div class="form-check">
+                                                <input class="form-check-input"
+                                                       type="checkbox" id="@el.strBreakdownName" @bind="@el.isChecked">
+                                                <label class="form-check-label pagesTextSize"
+                                                       id="breakdownTextSize" for="@el.strBreakdownName">@el.strBreakdownName</label>
+                                            </div>
+                                        }
+
+                                    </div>
+                                    <button class="btn btn-outline-primary breakdownSelectUnselectButton w-100"
+                                            id="selectBtnSizeId" @onclick="ToggleBreakdownList">
+                                        Select/Unselect All
+                                    </button>
+                                </div>
+
+                                <div class="col testnameBtnBox">
+                                    <div id="testnameTextSize" class="testnameTextClass">Test Names</div>
+                                    <div class="border container-sm w-100 testnameBoxSize">
+
+                                        @foreach (var el in lstTestnames)
+                                        {
+                                            <div class="form-check">
+                                                <input class="form-check-input"
+                                                       type="checkbox" id="@el.testNames" @bind="@el.isChecked">
+                                                <label class="form-check-label pagesTextSize"
+                                                       id="testnameTextSize" for="@el.testNames">@el.testNames</label>
+                                            </div>
+                                        }
+
+
+                                    </div>
+                                    <button class="btn btn-outline-primary testnameSelectUnselectButton w-100" 
+                                            id="selectBtnSizeId" @onclick="ToggleTestnamesList">Select/Unselect All</button>
+                                </div>
+
+                                <div class="col">
+                                    <div id="attributeTextSize" class="attributeTextClass">Attribute Evaluation Aggregrate</div>
+                                    <div class="flex-column col">
+                                        <div class="border container-sm w-100 attributeBox">
+                                        </div>
+                                        <button class="btn btn-outline-primary w-100 attributeSelectUnselectBtn" id="selectBtnSizeId">Select/Unselect All</button>
+                                    </div>
+
+
+                                    <div id="fitToBrandAggTextSize">Fit To Brand Personality Aggregrate</div>
+                                    <div class="border container-sm w-100 fitToBrandBox">
+                                    </div>
+                                    <button class="btn btn-outline-primary w-100 fitToBrandSelectUnselectBtn" id="selectBtnSizeId">Select/Unselect All</button>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -206,5 +308,816 @@
 
 @code {
 
+    private bool visible;
+
+    public void ToggleOverlay(bool value)
+    {
+        visible = value;
+    }
+
+    string breakdownErrorMessage = "";
+    string pagesErrorMessage = "";
+
+    string errorMessage = "";
+    bool errorMessageHidden = true;
+
+    public Color SelectedColor { get; set; } = Color.Error;
+
+    // string ww = "";
+    private IEnumerable<string> _options = new HashSet<string> { "" };
+
+    bool isDataLoaded = false;
+    bool isContentLoaded = false;
+
+    public string? project = "";
+
+    List<string> projectList = new List<string>();
+
+    public string? finalPPTOption = "MR-Rx Naming";
+
+    ProcessState currentState = ProcessState.Idle;
+    public bool hasProcessStarted = false;
+
+    string message = "";
+
+    private Color buttonColor;
+
+    private List<Guid> taskIdList = new List<Guid>();
+
+    public DateTime StartTime { get; set; }
+    public DateTime EndTime { get; set; }
+
+    public string SourceText { get; set; } = "Excel Charts";
+
+    public string DSITextValue { get; set; } = "1062_HC_MR";
+
+    public string HistoricalMeanTextValue { get; set; } = "";
+
+    public string HistoricalMeanDescriptionTextValue { get; set; } = "";
+
+    public double associationsValue { get; set; } = 1.0;
+
+    public string AttributeTextValue { get; set; } = "";
+
+    public string FitToConceptTextValue { get; set; } = "";
+
+    public string? LogoFolderTextValue { get; set; }
+
+    public string SpecificHistMean = "";
+
+    public bool Size_CheckBox1 = false;
+
+    public bool Size_CheckBox2 = true;
+
+    public bool Size_CheckBox3 = true;
+
+    public bool Label_CheckBox2 { get; set; } = true;
+
+    private readonly string[] _states =
+       {
+         "MR-Rx Naming"
+    };
+
+    public class CheckboxItem
+    {
+        public int Id { get; set; }
+        public string? Label { get; set; }
+        public bool IsChecked { get; set; }
+    }
+
+    public class clschartPageGroup
+    {
+        public string strPageGroup { get; set; }
+        public string strPageGroupType { get; set; }
+        public bool isChecked { get; set; } = true;
+    }
+
+    public class ChartDataModel
+    {
+        public string strExcelChartsProjectName { get; set; }
+        public int intExcelChartsProjectID { get; set; }
+    }
+
+    public class TestnameDataModel
+    {
+        public string strTestName { get; set; }
+    }
+
+
+
+    public class clschartBreakdownGroup
+    {
+        public int intBreakdownIndex { get; set; }
+        public int intBreakdownID { get; set; }
+        public string? strBreakdownName { get; set; }
+        public bool isChecked { get; set; } = false;
+    }
+
+    public class clschartTestnameGroup
+    {
+        public string? testNames { get; set; }
+        public bool isChecked { get; set; } = true;
+    }
+
+
+    public class selectedPagesListClass
+    {
+        public string intPageID { get; set; }
+        public string intSurveyID { get; set; }
+        public string strPageName { get; set; }
+        public string strPageType { get; set; }
+        public string intPageIndex { get; set; }
+        public bool isReportSelectedByUser { get; set; } = false;
+        public bool isChecked { get; set; } = true;
+    }
+
+    List<ChartDataModel> pageListData = new List<ChartDataModel>();
+
+
+    private List<string> selectedItems = new();
+
+    List<string> testNamesList = new List<string>();
+    List<FitToConceptModel> fitToConceptData = new List<FitToConceptModel>();
+
+    List<clschartBreakdownGroup> lstBreakdown = new List<clschartBreakdownGroup>();
+
+    List<clschartTestnameGroup> lstTestnames = new List<clschartTestnameGroup>();
+
+    List<selectedPagesListClass> chartPageList = new List<selectedPagesListClass>();
+
+    APIWrapper api = new APIWrapper();
+
+    bool isMainContentLoaded = false;
+
+    string user = "";
+
+    Guid currentTaskId { get; set; }
+
+    List<IndividualReportModel> currentTaskModel = new List<IndividualReportModel>();
+
+    List<string> testnameLst = new List<string>();
+
+    System.Timers.Timer refreshTimer = new System.Timers.Timer(1000);
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
+            user = windowsIdentity.Name.Replace("BI\\", "").ToString();
+
+
+            //added by lok 9/29/2025
+            //   var authState = await GetUsername();
+            //  user = authState.ToString();
+            //  Console.WriteLine($"currentUserName: {user}");
+            //  user = user.Replace("BI\\", "");
+
+
+
+            int userId = _taskLog.GetUserIdByNameSp(user);
+
+            var lastUserProject = _taskLog.GetFinalReportsByName(userId).Take(1);
+
+            if (lastUserProject != null)
+            {
+
+                if (lastUserProject.Count() > 0)
+                {
+                    var projectSelected = lastUserProject.First().ProjectName;
+
+                    if (projectSelected != null)
+                    {
+                        project = projectSelected;
+                    }
+                    else
+                    {
+                        project = "";
+                    }
+
+                }
+
+
+
+
+
+            }
+            else
+            {
+                project = "";
+            }
+
+            chartPageList = getProjectChartDisplayNames(project);
+
+            LogoFolderTextValue = $"{project}_MR";
+
+            TestnameDataCommonMethod(project);
+
+            pageListData = GetProjectData().Result;
+
+            foreach (var project in pageListData)
+            {
+                projectList.Add(project.strExcelChartsProjectName);
+            }
+
+            StateHasChanged();
+
+            lstBreakdown = await getProjectBreakdowngroupNames(project!);
+
+            StateHasChanged();
+
+            isDataLoaded = true;
+            isContentLoaded = true;
+            isMainContentLoaded = true;
+
+            StateHasChanged();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+
+    private async Task<IEnumerable<string>> Search1(string value)
+    {
+        await Task.Delay(50);
+
+        var sorted = projectList.OrderBy(x => x).ToList();
+
+        if (string.IsNullOrWhiteSpace(value))
+            return sorted;
+
+        if (string.Equals(value, project, StringComparison.InvariantCultureIgnoreCase))
+        {
+            int idx = sorted.FindIndex(x => string.Equals(x, project, StringComparison.InvariantCultureIgnoreCase));
+            if (idx >= 0)
+            {
+                return sorted.Skip(idx).Concat(sorted.Take(idx));
+
+                // Option 2: everything before RACKEM, then RACKEM, then everything after
+            }
+        }
+
+        return sorted.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    public void OnColorSelected(Color value)
+    {
+        SelectedColor = value;
+    }
+
+
+    public void TestnameDataCommonMethod(string project)
+    {
+        lstTestnames.Clear();
+        testnameLst.Clear();
+
+        var x = GetTestnameListData(project).Result;
+
+        foreach (var t in x)
+        {
+            testnameLst.Add(t.strTestName);
+        }
+
+
+        foreach (var testname in testnameLst!)
+        {
+            lstTestnames.Add(new clschartTestnameGroup
+                {
+                    testNames = testname,
+                    isChecked = true
+                });
+        }
+    }
+
+
+    public bool isProjectPageLoading = false;
+
+    private async Task OnProjectChanged(string newProject)
+    {
+        isProjectPageLoading = true;
+
+        project = newProject;
+
+        // Refresh dependent data
+        chartPageList = getProjectChartDisplayNames(project);
+        LogoFolderTextValue = $"{project}_MR";
+        lstBreakdown = await getProjectBreakdowngroupNames(project);
+
+        TestnameDataCommonMethod(project);
+
+
+        // Re-render
+        StateHasChanged();
+
+        isProjectPageLoading = false;
+    }
+
+    private async Task OnProjectChangedBootstrap(ChangeEventArgs e) 
+    {
+        isProjectPageLoading = true;
+
+        project = e?.Value?.ToString();
+
+        // Refresh dependent data
+        chartPageList = getProjectChartDisplayNames(project!);
+        LogoFolderTextValue = $"{project}_MR";
+        lstBreakdown = await getProjectBreakdowngroupNames(project);
+
+        TestnameDataCommonMethod(project);
+
+
+        // Re-render
+        StateHasChanged();
+
+        isProjectPageLoading = false;
+    }
+
+
+    public void Dispose()
+    {
+        ReportService.OnChange -= StateHasChanged;
+    }
+
+    private void ToggleBreakdownList(List<clschartBreakdownGroup> lstBreakdown)
+    {
+        foreach (var el in lstBreakdown)
+        {
+            el.isChecked = !el.isChecked;
+        }
+    }
+
+
+    private void TogglePagesList(List<selectedPagesListClass> lstPg)
+    {
+        foreach (var el in lstPg)
+        {
+            el.isChecked = !el.isChecked;
+        }
+    }
+
+    private void ToggleTestnames(List<clschartTestnameGroup> testnames)
+    {
+        foreach (var el in testnames)
+        {
+            el.isChecked = !el.isChecked;
+        }
+    }
+
+     public bool isPageChecked = true;
+
+    private async Task TogglePagesList()
+    {
+        if (isPageChecked)
+        {
+            foreach (var el in chartPageList)
+            {
+                el.isChecked = false;
+            }
+            isPageChecked = false;
+        }
+        else
+        {
+            foreach (var el in chartPageList)
+            {
+                el.isChecked = true;
+            }
+            isPageChecked = true;
+        }
+    }
+
+    public bool isBreakdownChecked = true;
+
+    private async Task ToggleBreakdownList()
+    {
+        if (isBreakdownChecked)
+        {
+            foreach (var el in lstBreakdown)
+            {
+                el.isChecked = false;
+            }
+            isBreakdownChecked = false;
+        }
+        else
+        {
+            foreach (var el in lstBreakdown)
+            {
+                el.isChecked = true;
+            }
+            isBreakdownChecked = true;
+        }
+    }
+
+    public bool isTestnamesChecked = true;
+
+    private async Task ToggleTestnamesList()
+    {
+        if (isTestnamesChecked)
+        {
+            foreach (var el in lstTestnames)
+            {
+                el.isChecked = false;
+            }
+            isTestnamesChecked = false;
+        }
+        else
+        {
+            foreach (var el in lstTestnames)
+            {
+                el.isChecked = true;
+            }
+            isTestnamesChecked = true;
+        }
+    }
+
+    public string GetStatusClass(string status)
+    {
+        return status switch
+        {
+            "Success" => "text-info bg-dark",
+            "Processing" => "text-warning bg-dark",
+            "Fail" => "text-danger bg-dark",
+            "In Progress" => "text-primary-emphasis bg-dark",
+            "Completed" => "text-info-emphasis",
+            _ => "text-info-emphasis bg-dark"
+        };
+    }
+
+    private async Task GetIndividualTasks(Guid currentTaskId)
+    {
+        currentTaskModel = await _taskLog.GetIndividualUserReport(currentTaskId);
+
+        await InvokeAsync(StateHasChanged);
+
+
+    }
+
+    private async Task<List<clschartPageGroup>> getProjectPagegroupNames(string projectName)
+    {
+        try
+        {
+            System.Data.DataTable dt = clsData.MRData.getDataTable("[xlv1].[getPageGroupsForProject]  " + "'" + projectName + "'");
+
+
+            List<clschartPageGroup> lstPg = dt.AsEnumerable().Select(row => new clschartPageGroup
+                {
+                    strPageGroup = row.Field<string>("strPageGroup")!,
+                    strPageGroupType = row.Field<string>("strPageGroupType")!
+                }).ToList();
+
+
+            return lstPg;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+
+    private async Task<List<ChartDataModel>> GetProjectData()
+    {
+        System.Data.DataTable dt = clsData.MRData.getDataTable("[dbo].[ExcelCharts_getExcelChartsProjects]");
+
+
+        List<ChartDataModel> lstPg = dt.AsEnumerable().Select(row => new ChartDataModel
+            {
+                strExcelChartsProjectName = row.Field<string>("strExcelChartsProjectName")!,
+                intExcelChartsProjectID = row.Field<int>("intExcelChartsProjectID")!
+            }).ToList();
+
+
+        return lstPg;
+    }
+
+
+    public async Task<List<TestnameDataModel>> GetTestnameListData(string strTestname)
+    {
+        System.Data.DataTable dt = clsData.MRData.getDataTable($"[dbo].[ExcelChartsPrc_getTestNames]  1, '{strTestname}'");
+
+        List<TestnameDataModel> lstPg = dt.AsEnumerable().Select(row => new TestnameDataModel
+            {
+                strTestName = row.Field<string>("strTestName")!,
+            }).ToList();
+
+        return lstPg;
+    }
+
+
+    private List<selectedPagesListClass> getProjectChartDisplayNames(string projectName)
+    {
+        string realchartName = "";
+
+        System.Data.DataTable dt = clsData.MRData.getDataTable("[dbo].[ExcelChartsPrc_getPages]  " + 1 + ",'" + projectName + "'");
+
+        List<selectedPagesListClass> lstPg
+                                    = dt.AsEnumerable().Select(row => new selectedPagesListClass
+                                        {
+                                            strPageName = row.Field<string>("strPageName"),
+                                            strPageType = row.Field<string>("strPageType"),
+                                            intPageID = row.Field<Int32>("intPageID").ToString(),
+                                            intPageIndex = row.Field<Int32>("intPageIndex").ToString(),
+                                            intSurveyID = row.Field<Int32>("intSurveyID").ToString(),
+
+                                        }).ToList();
+
+        return lstPg;
+    }
+
+    private async Task<List<clschartBreakdownGroup>> getProjectBreakdowngroupNames(string projectName)
+    {
+        try
+        {
+            System.Data.DataTable dt = clsData.MRData.getDataTable("[xlv1].[getBreakDownForProject]  " + "'" + projectName + "'");
+
+
+            List<clschartBreakdownGroup> lstPg = dt.AsEnumerable().Select(row => new clschartBreakdownGroup
+                {
+                    intBreakdownID = row.Field<int>("intBreakdownID")!,
+                    intBreakdownIndex = row.Field<int>("intBreakdownIndex")!,
+                    strBreakdownName = row.Field<string>("strBreakdownName")!,
+                }).ToList();
+
+
+            return lstPg;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    private void OnChartPageListChanged(List<selectedPagesListClass> updatedList)
+    {
+        chartPageList = updatedList;
+    }
+
+    private void OnBreakdownPageListChanged(List<clschartBreakdownGroup> updatedList)
+    {
+        lstBreakdown = updatedList;
+    }
+
+    private void OnTestnamePageListChanged(List<clschartTestnameGroup> testnamesList)
+    {
+        lstTestnames = testnamesList;
+    }
+
+    private async Task StartHotReload()
+    {
+        var timer = new System.Threading.Timer((_) =>
+       {
+           InvokeAsync(async () =>
+           {
+               await Task.Run(async () => await LoadIndividualLogs());
+               StateHasChanged();
+           });
+       }, null, 0, 1000);
+    }
+
+
+    public async Task LoadIndividualLogs()
+    {
+        try
+        {
+            currentTaskModel = await _taskLog.GetIndividualUserReport(currentTaskId);
+            Console.WriteLine($"Reloaded logs: {currentTaskModel?.Count} rows for {currentTaskId}");
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"HotReload error: {ex}");
+            throw;
+        }
+        StateHasChanged();
+    }
+
+    private async Task ProcessDLL()
+    {
+        try
+        {
+
+
+            ReportService.Reset();
+
+            var selectedPages = chartPageList.Where(x => x.isChecked).Select(x => x.strPageName).ToList();
+
+            // selectedPages.Remove("Linguistics");
+
+            if (selectedPages.Count == 0)
+            {
+                pagesErrorMessage = "Select a page";
+                return;
+            }
+
+            if (selectedPages.Count > 0)
+            {
+                pagesErrorMessage = "";
+            }
+
+            var selectedBreakdown = lstBreakdown.Where(x => x.isChecked).Select(x => x.strBreakdownName).ToList();
+
+            if (selectedBreakdown.Count == 0)
+            {
+                breakdownErrorMessage = "Select a breakdown";
+                return;
+            }
+
+            if (selectedBreakdown.Count > 0)
+            {
+                breakdownErrorMessage = "";
+            }
+
+            var selectedTestnames = lstTestnames.Where(x => x.isChecked).Select(x => x.testNames).ToList();
+
+            hasProcessStarted = true;
+            currentState = ProcessState.Generating;
+
+            ReportService.StartProcessing();
+
+            //StartTime = DateTime.UtcNow;
+
+            //taskIdList = new List<Guid>();
+
+            var res = new ReportGenerationRequestDLL
+                {
+                    project = project!,
+                    templates = selectedPages,
+                    breakdowns = selectedBreakdown!,
+                    HistoricalMeanType = "",
+                    HistoricalMeanDescription = "",
+                    TaskId = Guid.NewGuid()
+                };
+
+            currentTaskId = _taskLog.InsertFinalReport(res.project, user, "Queued");
+
+            refreshTimer.Elapsed += async (sender, e) =>
+               {
+                   await GetIndividualTasks(currentTaskId);
+               };
+
+            var id = await fitToConceptService.GenerateReportUsingDLLAsync(res, finalPPTOption!);
+
+            refreshTimer.Start();
+            //  await StartHotReload();
+            StateHasChanged();
+
+            var result = await fitToConceptService.SendDLLMergeRequestWithPanel(res, finalPPTOption!);
+
+            //   Console.WriteLine(123);
+
+            await Task.Delay(40000);
+
+            if (result == "Successful")
+            {
+                buttonColor = Color.Tertiary;
+                message = "Merge Successful";
+                _taskLog.UpdateFinalReport("Success", res.project, user);
+            }
+            if (result == "Bad Request")
+            {
+                buttonColor = Color.Warning;
+                message = "Something went wrong";
+
+                errorMessage = "Bad Request";
+                errorMessageHidden = false;
+
+                _taskLog.UpdateFinalReport("Bad Request", res.project, user);
+            }
+            if (result == "Fail")
+            {
+                buttonColor = Color.Error;
+                message = "Merge Insuccessful";
+
+                errorMessage = "Request Fail";
+                errorMessageHidden = false;
+
+                _taskLog.UpdateFinalReport("Fail", res.project, user);
+            }
+
+
+            StateHasChanged();
+            Console.WriteLine(result);
+
+            hasProcessStarted = false;
+            currentState = ProcessState.Done;
+
+            ReportService.CompleteProcessing("Merge Successful");
+
+            // EndTime = DateTime.UtcNow;
+
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            refreshTimer.Stop();
+            _taskLog.UpdateFinalReport("Fail", this.project!, user);
+
+            errorMessage = ex.Message;
+            errorMessageHidden = false;
+
+            throw;
+        }
+
+        try
+        {
+            // foreach (var projectEl in projectWrapperAPIList)
+            // {
+            //     var request = new ReportGenerationRequestDLL
+            //         {
+            //             project = projectEl.project,
+            //             templates = string.IsNullOrWhiteSpace(projectEl.template) ? new List<string>() : new List<string> { projectEl.template },
+            //             breakdowns = string.IsNullOrWhiteSpace(projectEl.breakdown) ? new List<string>() : new List<string> { projectEl.breakdown },
+            //             HistoricalMeanType = projectEl.HistoricalMeanType,
+            //             HistoricalMeanDescription = projectEl.HistoricalMeanDescription,
+            //             TaskId = Guid.NewGuid()
+            //         };
+
+            //     taskIdList.Add(request.TaskId);
+
+
+            //     var taskId = await fitToConceptService.GenerateReportUsingDLLAsync(request);
+
+            //      _ = PollStatusAsync(taskId);
+            //     StateHasChanged();
+            // }
+
+            // var result = await fitToConceptService.SendDLLMergeRequest(projectWrapperAPIList);
+
+            // if (result == "Successful")
+            // {
+            //     buttonColor = Color.Tertiary;
+            //     message = "Merge Successful";
+            // }
+            // if (result == "Bad Request")
+            // {
+            //     buttonColor = Color.Warning;
+            //     message = "Something went wrong";
+            // }
+            // if (result == "Fail")
+            // {
+            //     buttonColor = Color.Error;
+            //     message = "Merge Insuccessful";
+            // }
+
+            // StateHasChanged();
+            // Console.WriteLine(result);
+
+            // hasProcessStarted = false;
+            // currentState = ProcessState.Done;
+            // EndTime = DateTime.UtcNow;
+        }
+        catch (Exception ex)
+        {
+            refreshTimer.Stop();
+            throw new Exception(ex.Message);
+        }
+        refreshTimer.Stop();
+    }
+
+
+    // private async Task PollStatusAsync(Guid taskId)
+    // {
+    //     while (true)
+    //     {
+    //         //var response = await http.GetFromJsonAsync<ReportStatus>($"api/report/status/{taskId}");
+    //         var status = await fitToConceptService.GetReportStatusAsync(taskId);
+
+    //         var task = reportStatuses.FirstOrDefault(x => x.TaskId == taskId);
+    //         if (task != null) task.Status = status;
+
+    //         if (status == "Done" || status.StartsWith("Error")) break;
+    //         StateHasChanged();
+    //     }
+
+    //     StateHasChanged();
+    // }
+
+
+    // private async Task WaitUntilAllTasksComplete(List<Guid> taskIds)
+    // {
+    //     bool allDone = false;
+
+    //     while (!allDone)
+    //     {
+    //         allDone = true;
+
+    //         foreach (var taskId in taskIds)
+    //         {
+    //             var status = await fitToConceptService.GetReportStatusAsync(taskId);
+    //             var existing = reportStatuses.FirstOrDefault(x => x.TaskId == taskId);
+    //             if (existing != null) existing.Status = status;
+
+    //             if (!(status == "Done" || status.StartsWith("Processing") || status == "Fail"))
+    //             {
+    //                 allDone = false;
+    //             }
+    //         }
+
+    //         StateHasChanged(); // Refresh the UI table
+    //         await Task.Delay(10); // Wait a bit before next check
+    //     }
+    // }
 
 }

@@ -1,4 +1,95 @@
 
+
+#breakdownTextSize {
+    font-size: 11px !important;
+}
+
+#testnameTextSize {
+    font-size: 11px !important;
+}
+
+#attributeTextSize {
+    font-size: 9px !important;
+}
+
+.attributeTextClass {
+    margin-top: 1.2rem !important;
+}
+
+.attributeBox {
+    margin-top: 1.1rem !important;
+    height: 100px !important;
+}
+
+.attributeSelectUnselectBtn {
+    margin-top:1rem !important;
+}
+
+.fitToBrandBox {
+    height: 95px !important;
+}
+
+#fitToBrandAggTextSize {
+    font-size: 7px !important;
+    margin-top: 8px !important;
+    margin-bottom: 7px;
+}
+
+.pageBoxSize {
+    height: 270px !important;
+    width: 140px !important;
+    white-space:nowrap;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+.breakdownBoxSize {
+    height: 270px !important;
+    width: 130px !important;
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    text-align:center;
+}
+
+.testnameBoxSize {
+    height: 270px !important;
+    width: 130px !important;
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    text-align: center;
+}
+
+.containerBox {
+    height: 77dvh !important;
+}
+
+.testnameBtnBox {
+    margin-top: 1rem;
+}
+
+    .testnameBtnBox .pageTextClass {
+        margin-bottom: 1rem;
+    }
+
+    .testnameBtnBox .pagesTextSize {
+        font-size: 11px !important;
+    }
+
+
+    .testnameBtnBox .breakdownTextClass {
+        margin-bottom: 1rem;
+    }
+
+    .testnameBtnBox .testnameTextClass {
+        margin-bottom: 1rem;
+    }
+
+.pageSelectUnselectButton, .breakdownSelectUnselectButton, .testnameSelectUnselectButton {
+    margin-top:5.6rem;
+}
+
 #textSize {
     font-size: 9px !important;
 }
@@ -8,27 +99,27 @@
 }
 
 #textSizeSpecificHistMean {
-    font-size: 8px !important;
+    font-size: 7px !important;
 }
 
 #textSizeHist {
-    font-size: 8px !important;
+    font-size: 7px !important;
 }
 
 .selectBoxWidth {
-    width: 68.5% !important;
+    width: 62% !important;
 }
 
 .selectBoxWidthHistoricalDescription {
-    width: 68.5% !important;
+    width: 62% !important;
 }
 
 .selectBoxWidthSpecificHistMean {
-    width: 68.5% !important;
+    width: 62% !important;
 }
 
 #selectIntegerBoxWidth {
-    width: 68.5% !important;
+    width: 62% !important;
 }
 
 #integerBoxID {
@@ -42,12 +133,23 @@
 }
 
 #useSpecifiedHisMeanID {
-
+    height: 25px !important;
 }
 
 #checkboxSpecificHistMean {
     font-size: medium !important;
 }
+
+#selectBtnSizeId {
+    font-size: 12px !important;
+}
+
+.fitToBrandSelectUnselectBtn {
+    margin-top:5.6rem;
+}
+
+
+
 
 
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
