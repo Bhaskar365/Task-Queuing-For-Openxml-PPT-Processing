@@ -1,5 +1,14 @@
 
 
+.tableHeaderRow > th {
+    font-size: smaller !important;
+}
+
+
+.tableBodyRow > td {
+    font-size: smaller !important;
+}
+
 #breakdownTextSize {
     font-size: 11px !important;
 }
@@ -13,7 +22,7 @@
 }
 
 .attributeTextClass {
-    margin-top: 1.2rem !important;
+    margin-top: 1.25rem !important;
 }
 
 .attributeBox {
@@ -32,7 +41,7 @@
 #fitToBrandAggTextSize {
     font-size: 7px !important;
     margin-top: 8px !important;
-    margin-bottom: 7px;
+    margin-bottom: 13px !important;
 }
 
 .pageBoxSize {
@@ -118,6 +127,10 @@
     width: 62% !important;
 }
 
+.buttonText {
+    font-size:12px !important;
+}
+
 #selectIntegerBoxWidth {
     width: 62% !important;
 }
@@ -125,10 +138,11 @@
 #integerBoxID {
     line-height: 0px !important;
     height: 30px !important;
+    font-size: 11px !important;
 }
 
 #selectBoxID {
-    /*    line-height: 0px !important;*/
+    font-size:11px !important;
     height: 27px !important;
 }
 
@@ -141,7 +155,7 @@
 }
 
 #selectBtnSizeId {
-    font-size: 12px !important;
+    font-size: 9px !important;
 }
 
 .fitToBrandSelectUnselectBtn {
