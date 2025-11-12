@@ -36,7 +36,7 @@
 
             <div class="container text-center">
                 <div class="row">
-                    <div class="col-sm-4 p-2 border shadow">
+                    <div class="col-sm-4 p-2 shadow">
                         <div class="p-1">
                             <div class="row g-3 justify-content-between">
                                 <div class="col-auto">
@@ -196,8 +196,10 @@
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button class="btn btn-outline-secondary" disabled="@hasProcessStarted"
+                           @*  <button class="btn btn-outline-secondary" 
+                                    disabled="@hasProcessStarted"
                                     type="button" @onclick="ProcessDLL">
+
                                 @if (currentState == ProcessState.Generating)
                                 {
                                     <span>Generating...</span>
@@ -212,8 +214,34 @@
                                 {
                                     <span class="buttonText">Generate Power Point</span>
                                 }
+
+                            </button> *@
+
+                            <button class="@GetBtnStatusClass(currentState.ToString())"
+                                    disabled="@hasProcessStarted"
+                                    type="button" @onclick="ProcessDLL">
+
+                                @if (currentState == ProcessState.Generating)
+                                {
+                                    <span class="buttonText">Generating...</span>
+                                    <i class="fas fa-spinner fa-spin ms-1"></i>
+                                }
+                                else if (currentState == ProcessState.Done)
+                                {
+                                    <span class="buttonText">@message</span>
+                                    <i class="fas fa-check ms-1"></i>
+                                }
+                                else
+                                {
+                                    <span class="buttonText">Generate Power Point</span>
+                                }
+
                             </button>
 
+                           @*  @if(@isSuccessful)
+                            {
+                                <div class="alert alert-success" role="alert">@message</div>
+                            } *@
 
                             <div style="color:red;">@pagesErrorMessage</div>
                             <div style="color:red;">@breakdownErrorMessage</div>
@@ -347,7 +375,7 @@
         <div class="card-body">
             @if (currentTaskModel == null || currentTaskModel.Count == 0)
             {
-                <div class="text-center fw-medium alert alert-warning fs-6" role="alert">
+                <div class="text-center fw-medium alert alert-warning runningStartedText" role="alert">
                     No data yet. Wait for some time if generation started.....
                 </div>
             }
@@ -379,7 +407,7 @@
                                         <div class="flex row">
                                             <div class="d-flex align-items-center">
                                                 <span class="text-primary">@data.StatusMessage</span>
-                                                <div class="spinner-border ms-auto text-primary" role="status" aria-hidden="true"></div>
+                                                <div class="spinner-border ms-auto text-warning" role="status" aria-hidden="true"></div>
                                             </div>
                                         </div>
                                     }
@@ -387,19 +415,28 @@
                                     {
                                         <div class="flex row">
                                             <div class="d-flex align-items-center">
-                                                <span class="text-success bg-light">@data?.StatusMessage</span>
-                                                <div class="text-secondary" role="status" aria-hidden="true"></div>
+                                                <span class="text-info">@data?.StatusMessage</span>
                                             </div>
                                         </div>
                                         @* <span style="color:limegreen;">@data?.StatusMessage</span> *@
                                     }
                                     else if (@data?.StatusMessage == "Failed")
                                     {
-                                        <span style="color:red;">@data.StatusMessage</span>
+                                        <div class="flex row">
+                                            <div class="d-flex align-items-center">
+                                                <span class="text-danger">@data?.StatusMessage</span>
+                                            </div>
+                                        </div>
+                                        @* <span style="color:red;">@data.StatusMessage</span> *@
                                     }
                                     else if (@data?.StatusMessage == "Queued")
                                     {
-                                        <span style="color:orange;">@data?.StatusMessage</span>
+                                        <div class="flex row">
+                                            <div class="d-flex align-items-center">
+                                                <span class="text-warning">@data?.StatusMessage</span>
+                                            </div>
+                                        </div>
+                                        @* <span style="color:orange;">@data?.StatusMessage</span> *@
                                     }
                                     else
                                     {
@@ -434,6 +471,8 @@
 
     string errorMessage = "";
     bool errorMessageHidden = true;
+
+    bool isSuccessful = false;
 
     public Color SelectedColor { get; set; } = Color.Error;
 
@@ -577,6 +616,7 @@
     {
         try
         {
+           
             WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
             user = windowsIdentity.Name.Replace("BI\\", "").ToString();
 
@@ -610,11 +650,6 @@
                     }
 
                 }
-
-
-
-
-
             }
             else
             {
@@ -858,6 +893,17 @@
         };
     }
 
+    public string GetBtnStatusClass(string status)
+    {
+        return status switch
+        {
+            "Idle" => "btn btn-outline-secondary",
+            "Generating" => "btn btn-outline-dark text-warning bg-dark",
+            "Done" => "btn btn-success",
+            _ => "btn btn-outline-secondary"
+        };
+    }
+
     private async Task GetIndividualTasks(Guid currentTaskId)
     {
         currentTaskModel = await _taskLog.GetIndividualUserReport(currentTaskId);
@@ -1013,6 +1059,8 @@
             errorMessage = "";
             errorMessageHidden = true;
 
+
+
             ReportService.Reset();
 
             var selectedPages = chartPageList.Where(x => x.isChecked).Select(x => x.strPageName).ToList();
@@ -1092,6 +1140,7 @@
                 buttonColor = Color.Tertiary;
                 message = "Merge Successful";
                 _taskLog.UpdateFinalReport("Success", res.project, user);
+                isSuccessful = true;
             }
             if (result == "Bad Request")
             {

@@ -1,4 +1,7 @@
 
+.card-body > .runningStartedText {
+    font-size:13px !important;
+}
 
 .tableHeaderRow > th {
     font-size: smaller !important;
@@ -71,7 +74,7 @@
 }
 
 .containerBox {
-    height: 77dvh !important;
+    height: 78.3dvh !important;
 }
 
 .testnameBtnBox {
@@ -128,7 +131,7 @@
 }
 
 .buttonText {
-    font-size:12px !important;
+    font-size:11px !important;
 }
 
 #selectIntegerBoxWidth {
