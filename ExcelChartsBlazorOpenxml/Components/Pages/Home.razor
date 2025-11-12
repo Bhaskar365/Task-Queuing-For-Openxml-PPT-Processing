@@ -29,174 +29,182 @@
 
 @inject Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider AuthenticationStateProvider
 
+<style>
+    .panel * {
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+</style>
 
-<MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
-    <MudTabPanel Text="Power Point" Class="mudTabPanelFontSize">
-        <MudText>
 
-            <div class="container text-center">
-                <div class="row">
-                    <div class="col-sm-4 p-2 shadow">
-                        <div class="p-1">
-                            <div class="row g-3 justify-content-between">
-                                <div class="col-auto">
-                                    <label for="inputPassword6"
-                                           class="col-form-label text-wrap text-danger" id="textSize">Select Data Source</label>
-                                </div>
-                                <div class="col-auto selectBoxWidth">
-                                    <select class="form-select form-select-sm" id="selectBoxID" disabled>
-                                        <option selected>Excel Charts</option>
-                                    </select>
+<div class="panel">
+
+    <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+        <MudTabPanel Text="Power Point" Class="mudTabPanelFontSize">
+            <MudText>
+
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col-sm-4 p-2 shadow">
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label for="inputPassword6"
+                                               class="col-form-label text-wrap text-danger" id="textSize">Select Data Source</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <select class="form-select form-select-sm" id="selectBoxID" disabled>
+                                            <option selected>Excel Charts</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                        <div class="p-1">
-                            <div class="row g-3 justify-content-between">
-                                <div class="col-auto">
-                                    <label class="col-form-label text-wrap text-danger" id="textSize">Project Name</label>
-                                </div>
-                                <div class="col-auto selectBoxWidth">
-                                    <select class="form-select form-select-sm" id="selectBoxID"
-                                            value="@project" @onchange="OnProjectChangedBootstrap">
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap text-danger" id="textSize">Project Name</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <select class="form-select form-select-sm" id="selectBoxID"
+                                                value="@project" @onchange="OnProjectChangedBootstrap">
 
-                                        @foreach (var proj in projectList)
-                                        {
-                                            <option value="@proj">@proj</option>
-                                        }
+                                            @foreach (var proj in projectList)
+                                            {
+                                                <option value="@proj">@proj</option>
+                                            }
 
-                                    </select>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="p-1">
-                            <div class="row g-3 justify-content-between">
-                                <div class="col-auto">
-                                    <label class="col-form-label text-wrap" id="textSize">DSI Project</label>
-                                </div>
-                                <div class="col-auto selectBoxWidth">
-                                    <select class="form-select form-select-sm" id="selectBoxID">
-                                        <option selected>@LogoFolderTextValue</option>
-                                    </select>
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap" id="textSize">DSI Project</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <select class="form-select form-select-sm" id="selectBoxID">
+                                            <option selected>@LogoFolderTextValue</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
 
 
-                        <div class="p-1">
-                            <div class="row g-3 justify-content-between">
-                                <div class="col-auto">
-                                    <label class="col-form-label text-wrap" id="textSizeHist">Historical Mean Type</label>
-                                </div>
-                                <div class="col-auto selectBoxWidth">
-                                    <select class="form-select form-select-sm" id="selectBoxID" disabled>
-                                        <option selected></option>
-                                    </select>
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap" id="textSizeHist">Historical Mean Type</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <select class="form-select form-select-sm" id="selectBoxID" disabled>
+                                            <option selected></option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                        <div class="p-1">
-                            <div class="row g-3 justify-content-between">
-                                <div class="col-auto">
-                                    <label class="col-form-label text-wrap"
-                                           id="textSizeHist">Historical Mean Description</label>
-                                </div>
-                                <div class="col-auto selectBoxWidthHistoricalDescription">
-                                    <select class="form-select form-select-sm" id="selectBoxID" disabled>
-                                        <option selected></option>
-                                    </select>
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap"
+                                               id="textSizeHist">Historical Mean Description</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidthHistoricalDescription">
+                                        <select class="form-select form-select-sm" id="selectBoxID" disabled>
+                                            <option selected></option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="p-1">
-                            <div class="row g-3 justify-content-between">
-                                <div class="col-auto">
-                                    <label class="col-form-label text-wrap"
-                                           id="textSizeAssociations">Associations/Likeability %</label>
-                                </div>
-                                <div class="col-auto" id="selectIntegerBoxWidth">
-                                    <input type="number" class="form-control" id="integerBoxID" value="1.0" />
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap"
+                                               id="textSizeAssociations">Associations/Likeability %</label>
+                                    </div>
+                                    <div class="col-auto" id="selectIntegerBoxWidth">
+                                        <input type="number" class="form-control" id="integerBoxID" value="1.0" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="p-1">
-                            <div class="row g-3 justify-content-between">
-                                <div class="col-auto">
-                                    <label class="col-form-label text-wrap"
-                                           id="textSize">Attribute Evaluation Title</label>
-                                </div>
-                                <div class="col-auto selectBoxWidth">
-                                    <input type="text" class="form-control" id="selectBoxID" disabled>
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap"
+                                               id="textSize">Attribute Evaluation Title</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <input type="text" class="form-control" id="selectBoxID" disabled>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                        <div class="p-1">
-                            <div class="row g-3 justify-content-between">
-                                <div class="col-auto">
-                                    <label class="col-form-label text-wrap"
-                                           id="textSize">Fit To Category</label>
-                                </div>
-                                <div class="col-auto selectBoxWidth">
-                                    <select class="form-select form-select-sm" id="selectBoxID" disabled>
-                                        <option selected></option>
-                                    </select>
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap"
+                                               id="textSize">Fit To Category</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <select class="form-select form-select-sm" id="selectBoxID" disabled>
+                                            <option selected></option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="p-1">
-                            <div class="row g-3 justify-content-between">
-                                <div class="col-auto">
-                                    <label class="col-form-label text-wrap"
-                                           id="textSize">Logo Project Folder</label>
-                                </div>
-                                <div class="col-auto selectBoxWidth">
-                                    <input type="text" class="form-control" id="selectBoxID" value="@LogoFolderTextValue">
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap"
+                                               id="textSize">Logo Project Folder</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <input type="text" class="form-control" id="selectBoxID" value="@LogoFolderTextValue">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="p-1">
-                            <div class="row g-3 justify-content-between">
-                                <div class="col-auto">
-                                    <label class="col-form-label text-wrap"
-                                           id="textSize">PPT Final Template</label>
-                                </div>
-                                <div class="col-auto selectBoxWidth">
-                                    <select class="form-select form-select-sm" id="selectBoxID">
-                                        <option selected>MR-Rx Naming</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="p-1">
-                            <div class="row g-3 justify-content-between">
-                                <div class="col-auto">
-                                    <input class="form-check-input" id="checkboxSpecificHistMean" type="checkbox" checked>
-                                    <label class="col-form-label text-wrap"
-                                           id="textSizeSpecificHistMean">Use specific Hist. Mean</label>
-                                </div>
-                                <div class="col-auto selectBoxWidthSpecificHistMean">
-                                    <select class="form-select form-select-sm" id="useSpecifiedHisMeanID">
-                                        <option selected></option>
-                                    </select>
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <label class="col-form-label text-wrap"
+                                               id="textSize">PPT Final Template</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidth">
+                                        <select class="form-select form-select-sm" id="selectBoxID">
+                                            <option selected>MR-Rx Naming</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="d-grid gap-2">
-                           @*  <button class="btn btn-outline-secondary" 
+
+                            <div class="p-1">
+                                <div class="row g-3 justify-content-between">
+                                    <div class="col-auto">
+                                        <input class="form-check-input" id="checkboxSpecificHistMean" type="checkbox" checked>
+                                        <label class="col-form-label text-wrap"
+                                               id="textSizeSpecificHistMean">Use specific Hist. Mean</label>
+                                    </div>
+                                    <div class="col-auto selectBoxWidthSpecificHistMean">
+                                        <select class="form-select form-select-sm" id="useSpecifiedHisMeanID">
+                                            <option selected></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                @*  <button class="btn btn-outline-secondary" 
                                     disabled="@hasProcessStarted"
                                     type="button" @onclick="ProcessDLL">
 
@@ -217,245 +225,247 @@
 
                             </button> *@
 
-                            <button class="@GetBtnStatusClass(currentState.ToString())"
-                                    disabled="@hasProcessStarted"
-                                    type="button" @onclick="ProcessDLL">
+                                <button class="@GetBtnStatusClass(currentState.ToString())"
+                                        disabled="@hasProcessStarted"
+                                        type="button" @onclick="ProcessDLL">
 
-                                @if (currentState == ProcessState.Generating)
-                                {
-                                    <span class="buttonText">Generating...</span>
-                                    <i class="fas fa-spinner fa-spin ms-1"></i>
-                                }
-                                else if (currentState == ProcessState.Done)
-                                {
-                                    <span class="buttonText">@message</span>
-                                    <i class="fas fa-check ms-1"></i>
-                                }
-                                else
-                                {
-                                    <span class="buttonText">Generate Power Point</span>
-                                }
+                                    @if (currentState == ProcessState.Generating)
+                                    {
+                                        <span class="buttonText">Generating...</span>
+                                        <i class="fas fa-spinner fa-spin ms-1"></i>
+                                    }
+                                    else if (currentState == ProcessState.Done)
+                                    {
+                                        <span class="buttonText">@message</span>
+                                        <i class="fas fa-check ms-1"></i>
+                                    }
+                                    else
+                                    {
+                                        <span class="buttonText">Generate Power Point</span>
+                                    }
 
-                            </button>
+                                </button>
 
-                           @*  @if(@isSuccessful)
+                                @*  @if(@isSuccessful)
                             {
                                 <div class="alert alert-success" role="alert">@message</div>
                             } *@
 
-                            <div style="color:red;">@pagesErrorMessage</div>
-                            <div style="color:red;">@breakdownErrorMessage</div>
+                                <div style="color:red;">@pagesErrorMessage</div>
+                                <div style="color:red;">@breakdownErrorMessage</div>
 
+                            </div>
                         </div>
-                    </div>
 
 
 
-                    <div class="col-sm-8">
-                        <div class="container shadow">
-                            <div class="row containerBox">
-                                <div class="col testnameBtnBox">
-                                    <div class="pageTextClass pagesTextSize">Pages</div>
-                                    <div class="border container-sm w-100 pageBoxSize">
+                        <div class="col-sm-8">
+                            <div class="container shadow">
+                                <div class="row containerBox">
+                                    <div class="col testnameBtnBox">
+                                        <div class="pageTextClass pagesTextSize">Pages</div>
+                                        <div class="border container-sm w-100 pageBoxSize">
 
-                                        @foreach (var el in chartPageList)
-                                        {
-                                            <div class="form-check">
-                                                <input class="form-check-input"
-                                                       type="checkbox" id="@el.strPageName" @bind="@el.isChecked">
-                                                <label class="form-check-label pagesTextSize"
-                                                       for="@el.strPageName">@el.strPageName</label>
-                                            </div>
-                                        }
+                                            @foreach (var el in chartPageList)
+                                            {
+                                                <div class="form-check">
+                                                    <input class="form-check-input"
+                                                           type="checkbox" id="@el.strPageName" @bind="@el.isChecked">
+                                                    <label class="form-check-label pagesTextSize"
+                                                           for="@el.strPageName">@el.strPageName</label>
+                                                </div>
+                                            }
 
-                                    </div>
-                                    <button class="btn btn-outline-primary select pageSelectUnselectButton w-100"
-                                            id="selectBtnSizeId" @onclick="TogglePagesList">
-                                        Select/Unselect All
-                                    </button>
-
-                                </div>
-
-                                <div class="col testnameBtnBox">
-                                    <div id="breakdownTextSize" class="breakdownTextClass">Breakdowns</div>
-                                    <div class="border container-sm w-100 breakdownBoxSize">
-
-                                        @foreach (var el in lstBreakdown)
-                                        {
-                                            <div class="form-check">
-                                                <input class="form-check-input"
-                                                       type="checkbox" id="@el.strBreakdownName" @bind="@el.isChecked">
-                                                <label class="form-check-label pagesTextSize"
-                                                       id="breakdownTextSize" for="@el.strBreakdownName">@el.strBreakdownName</label>
-                                            </div>
-                                        }
-
-                                    </div>
-                                    <button class="btn btn-outline-primary breakdownSelectUnselectButton w-100"
-                                            id="selectBtnSizeId" @onclick="ToggleBreakdownList">
-                                        Select/Unselect All
-                                    </button>
-                                </div>
-
-                                <div class="col testnameBtnBox">
-                                    <div id="testnameTextSize" class="testnameTextClass">Test Names</div>
-                                    <div class="border container-sm w-100 testnameBoxSize">
-
-                                        @foreach (var el in lstTestnames)
-                                        {
-                                            <div class="form-check">
-                                                <input class="form-check-input"
-                                                       type="checkbox" id="@el.testNames" @bind="@el.isChecked">
-                                                <label class="form-check-label pagesTextSize"
-                                                       id="testnameTextSize" for="@el.testNames">@el.testNames</label>
-                                            </div>
-                                        }
-
-
-                                    </div>
-                                    <button class="btn btn-outline-primary testnameSelectUnselectButton w-100"
-                                            id="selectBtnSizeId" @onclick="ToggleTestnamesList">
-                                        Select/Unselect All
-                                    </button>
-                                </div>
-
-                                <div class="col attributeEvalClass">
-                                    <div id="attributeTextSize" class="attributeTextClass">Attribute Evaluation Aggregrate</div>
-                                    <div class="flex-column col">
-                                        <div class="border container-sm w-100 attributeBox">
                                         </div>
-                                        <button class="btn btn-outline-primary w-100 attributeSelectUnselectBtn" id="selectBtnSizeId">Select/Unselect All</button>
+                                        <button class="btn btn-outline-primary select pageSelectUnselectButton w-100"
+                                                id="selectBtnSizeId" @onclick="TogglePagesList">
+                                            Select/Unselect All
+                                        </button>
+
                                     </div>
 
+                                    <div class="col testnameBtnBox">
+                                        <div id="breakdownTextSize" class="breakdownTextClass">Breakdowns</div>
+                                        <div class="border container-sm w-100 breakdownBoxSize">
 
-                                    <div id="fitToBrandAggTextSize">Fit To Brand Personality Aggregrate</div>
-                                    <div class="border container-sm w-100 fitToBrandBox">
+                                            @foreach (var el in lstBreakdown)
+                                            {
+                                                <div class="form-check">
+                                                    <input class="form-check-input"
+                                                           type="checkbox" id="@el.strBreakdownName" @bind="@el.isChecked">
+                                                    <label class="form-check-label pagesTextSize"
+                                                           id="breakdownTextSize" for="@el.strBreakdownName">@el.strBreakdownName</label>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <button class="btn btn-outline-primary breakdownSelectUnselectButton w-100"
+                                                id="selectBtnSizeId" @onclick="ToggleBreakdownList">
+                                            Select/Unselect All
+                                        </button>
                                     </div>
-                                    <button class="btn btn-outline-primary w-100 fitToBrandSelectUnselectBtn" id="selectBtnSizeId">Select/Unselect All</button>
+
+                                    <div class="col testnameBtnBox">
+                                        <div id="testnameTextSize" class="testnameTextClass">Test Names</div>
+                                        <div class="border container-sm w-100 testnameBoxSize">
+
+                                            @foreach (var el in lstTestnames)
+                                            {
+                                                <div class="form-check">
+                                                    <input class="form-check-input"
+                                                           type="checkbox" id="@el.testNames" @bind="@el.isChecked">
+                                                    <label class="form-check-label pagesTextSize"
+                                                           id="testnameTextSize" for="@el.testNames">@el.testNames</label>
+                                                </div>
+                                            }
+
+
+                                        </div>
+                                        <button class="btn btn-outline-primary testnameSelectUnselectButton w-100"
+                                                id="selectBtnSizeId" @onclick="ToggleTestnamesList">
+                                            Select/Unselect All
+                                        </button>
+                                    </div>
+
+                                    <div class="col attributeEvalClass">
+                                        <div id="attributeTextSize" class="attributeTextClass">Attribute Evaluation Aggregrate</div>
+                                        <div class="flex-column col">
+                                            <div class="border container-sm w-100 attributeBox">
+                                            </div>
+                                            <button class="btn btn-outline-primary w-100 attributeSelectUnselectBtn" id="selectBtnSizeId">Select/Unselect All</button>
+                                        </div>
+
+
+                                        <div id="fitToBrandAggTextSize">Fit To Brand Personality Aggregrate</div>
+                                        <div class="border container-sm w-100 fitToBrandBox">
+                                        </div>
+                                        <button class="btn btn-outline-primary w-100 fitToBrandSelectUnselectBtn" id="selectBtnSizeId">Select/Unselect All</button>
+                                    </div>
+
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
 
-        </MudText>
-    </MudTabPanel>
+            </MudText>
+        </MudTabPanel>
 
-    <MudTabPanel Text="Brandex" BadgeIcon="@Icons.Material.Filled.Check" BadgeColor="Color.Success" Typo="Typo.h6" Class="mudTabPanelFontSize">
-        <MudText>Brandex</MudText>
-    </MudTabPanel>
+        <MudTabPanel Text="Brandex" BadgeIcon="@Icons.Material.Filled.Check" BadgeColor="Color.Success" Typo="Typo.h6" Class="mudTabPanelFontSize">
+            <MudText>Brandex</MudText>
+        </MudTabPanel>
 
-    <MudTabPanel Text="QTC" Typo="Typo.subtitle1" Class="mudTabPanelFontSize">
-        <MudText>QTC</MudText>
-    </MudTabPanel>
+        <MudTabPanel Text="QTC" Typo="Typo.subtitle1" Class="mudTabPanelFontSize">
+            <MudText>QTC</MudText>
+        </MudTabPanel>
 
-    <MudTabPanel Text="Reports" Typo="Typo.h6" Class="mudTabPanelFontSize">
-        <MudText>Reports</MudText>
-    </MudTabPanel>
-</MudTabs>
+        <MudTabPanel Text="Reports" Typo="Typo.h6" Class="mudTabPanelFontSize">
+            <MudText>Reports</MudText>
+        </MudTabPanel>
+    </MudTabs>
 
-@if (!errorMessageHidden)
-{
-    <div class="alert alert-danger" role="alert">@errorMessage</div>
-}
+    @if (!errorMessageHidden)
+    {
+        <div class="alert alert-danger" role="alert">@errorMessage</div>
+    }
 
-<br />
+    <br />
 
-<p class="d-inline-flex gap-1">
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        See Running Processes
-    </button>
-</p>
+    <p class="d-inline-flex gap-1">
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            See Running Processes
+        </button>
+    </p>
 
-<div class="collapse" id="collapseExample">
-    <div class="card">
-        <div class="card-body">
-            @if (currentTaskModel == null || currentTaskModel.Count == 0)
-            {
-                <div class="text-center fw-medium alert alert-warning runningStartedText" role="alert">
-                    No data yet. Wait for some time if generation started.....
-                </div>
-            }
-            else
-            {
-                <table class="table table-striped table-hover">
-                    <thead class="table-primary">
-                        <tr class="tableHeaderRow">
-                            <th scope="col">Subtask Id</th>
-                            <th scope="col">User</th>
-                            <th scope="col">Template</th>
-                            <th scope="col">Created On</th>
-                            <th scope="col">Completed On</th>
-                            <th scope="col">Remarks</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var data in currentTaskModel)
-                        {
-                            <tr scope="row" class="tableBodyRow">
-                                <td scope="row">@data.SubtaskId</td>
-                                <td scope="row">@_taskLog.GetUserNameFromIdSp(@data.UserID)</td>
-                                <td scope="row">@data.TemplateName</td>
-                                <td scope="row">@data.CreatedOn.ToString("MM/dd/yyyy H:mm:ss")</td>
-                                <td scope="row">@data.CompletedOn.ToString("MM/dd/yyyy H:mm:ss")</td>
-                                <td scope="row" class="bg-dark">
-                                    @if (@data?.StatusMessage == "In Process")
-                                    {
-                                        <div class="flex row">
-                                            <div class="d-flex align-items-center">
-                                                <span class="text-primary">@data.StatusMessage</span>
-                                                <div class="spinner-border ms-auto text-warning" role="status" aria-hidden="true"></div>
-                                            </div>
-                                        </div>
-                                    }
-                                    else if (@data?.StatusMessage == "Completed")
-                                    {
-                                        <div class="flex row">
-                                            <div class="d-flex align-items-center">
-                                                <span class="text-info">@data?.StatusMessage</span>
-                                            </div>
-                                        </div>
-                                        @* <span style="color:limegreen;">@data?.StatusMessage</span> *@
-                                    }
-                                    else if (@data?.StatusMessage == "Failed")
-                                    {
-                                        <div class="flex row">
-                                            <div class="d-flex align-items-center">
-                                                <span class="text-danger">@data?.StatusMessage</span>
-                                            </div>
-                                        </div>
-                                        @* <span style="color:red;">@data.StatusMessage</span> *@
-                                    }
-                                    else if (@data?.StatusMessage == "Queued")
-                                    {
-                                        <div class="flex row">
-                                            <div class="d-flex align-items-center">
-                                                <span class="text-warning">@data?.StatusMessage</span>
-                                            </div>
-                                        </div>
-                                        @* <span style="color:orange;">@data?.StatusMessage</span> *@
-                                    }
-                                    else
-                                    {
-                                        <span>@data?.StatusMessage</span>
-                                    }
-                                </td>
+    <div class="collapse" id="collapseExample">
+        <div class="card">
+            <div class="card-body">
+                @if (currentTaskModel == null || currentTaskModel.Count == 0)
+                {
+                    <div class="text-center fw-medium alert alert-warning runningStartedText" role="alert">
+                        No data yet. Wait for some time if generation started.....
+                    </div>
+                }
+                else
+                {
+                    <table class="table table-striped table-hover">
+                        <thead class="table-primary">
+                            <tr class="tableHeaderRow">
+                                <th scope="col">Subtask Id</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Template</th>
+                                <th scope="col">Created On</th>
+                                <th scope="col">Completed On</th>
+                                <th scope="col">Remarks</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var data in currentTaskModel)
+                            {
+                                <tr scope="row" class="tableBodyRow">
+                                    <td scope="row">@data.SubtaskId</td>
+                                    <td scope="row">@_taskLog.GetUserNameFromIdSp(@data.UserID)</td>
+                                    <td scope="row">@data.TemplateName</td>
+                                    <td scope="row">@data.CreatedOn.ToString("MM/dd/yyyy H:mm:ss")</td>
+                                    <td scope="row">@data.CompletedOn.ToString("MM/dd/yyyy H:mm:ss")</td>
+                                    <td scope="row" class="bg-dark">
+                                        @if (@data?.StatusMessage == "In Process")
+                                        {
+                                            <div class="flex row">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="text-primary">@data.StatusMessage</span>
+                                                    <div class="spinner-border ms-auto text-warning" role="status" aria-hidden="true"></div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else if (@data?.StatusMessage == "Completed")
+                                        {
+                                            <div class="flex row">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="text-info">@data?.StatusMessage</span>
+                                                </div>
+                                            </div>
+                                            @* <span style="color:limegreen;">@data?.StatusMessage</span> *@
+                                        }
+                                        else if (@data?.StatusMessage == "Failed")
+                                        {
+                                            <div class="flex row">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="text-danger">@data?.StatusMessage</span>
+                                                </div>
+                                            </div>
+                                            @* <span style="color:red;">@data.StatusMessage</span> *@
+                                        }
+                                        else if (@data?.StatusMessage == "Queued")
+                                        {
+                                            <div class="flex row">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="text-warning">@data?.StatusMessage</span>
+                                                </div>
+                                            </div>
+                                            @* <span style="color:orange;">@data?.StatusMessage</span> *@
+                                        }
+                                        else
+                                        {
+                                            <span>@data?.StatusMessage</span>
+                                        }
+                                    </td>
+                                </tr>
 
-                        }
+                            }
 
-                    </tbody>
-                </table>
-            }
+                        </tbody>
+                    </table>
+                }
+            </div>
         </div>
     </div>
+
+    <br />
+    <hr />
 </div>
 
-<br />
-<hr />
 
 @code {
 

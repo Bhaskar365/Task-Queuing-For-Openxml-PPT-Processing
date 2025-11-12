@@ -1,6 +1,6 @@
 
 .card-body > .runningStartedText {
-    font-size:13px !important;
+    font-size: 13px !important;
 }
 
 .tableHeaderRow > th {
@@ -34,7 +34,7 @@
 }
 
 .attributeSelectUnselectBtn {
-    margin-top:1rem !important;
+    margin-top: 1rem !important;
 }
 
 .fitToBrandBox {
@@ -61,7 +61,7 @@
     white-space: nowrap;
     overflow-x: scroll;
     overflow-y: scroll;
-    text-align:center;
+    text-align: center;
 }
 
 .testnameBoxSize {
@@ -99,7 +99,7 @@
     }
 
 .pageSelectUnselectButton, .breakdownSelectUnselectButton, .testnameSelectUnselectButton {
-    margin-top:5.6rem;
+    margin-top: 5.6rem;
 }
 
 #textSize {
@@ -131,7 +131,7 @@
 }
 
 .buttonText {
-    font-size:11px !important;
+    font-size: 11px !important;
 }
 
 #selectIntegerBoxWidth {
@@ -145,7 +145,7 @@
 }
 
 #selectBoxID {
-    font-size:11px !important;
+    font-size: 11px !important;
     height: 27px !important;
 }
 
@@ -162,12 +162,421 @@
 }
 
 .fitToBrandSelectUnselectBtn {
-    margin-top:5.6rem;
+    margin-top: 5.6rem;
+}
+
+@media screen and (max-width:1208px) {
+
+    #fitToBrandAggTextSize {
+        font-size: 6px !important;
+        margin-top: 11px !important;
+        margin-bottom: 13px !important;
+    }
+}
+
+@media screen and (max-width:1206px) {
+    #textSize {
+        font-size: 8px !important;
+    }
+}
+
+@media screen and (max-width:1192px) {
+    #attributeTextSize {
+        font-size: 6px !important;
+    }
+}
+
+@media screen and (max-width:1190px) {
+    .attributeBox {
+        margin-top: 1.2rem !important;
+        height: 100px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 8px !important;
+    }
+
+    #fitToBrandAggTextSize {
+        margin-top: 12px !important;
+    }
+}
+
+@media screen and (max-width:1186px) {
+    #fitToBrandAggTextSize {
+        margin-top: 14px !important;
+    }
+
+    #fitToBrandAggTextSize {
+        font-size: 5px !important;
+        margin-bottom: 13px !important;
+    }
+}
+
+@media screen and (max-width:1179px) {
+    #selectBtnSizeId {
+        font-size: 7px !important;
+    }
+}
+
+@media screen and (max-width:1172px) {
+    #attributeTextSize {
+        font-size: 5px !important;
+    }
+
+    .attributeBox {
+        margin-top: 1.3rem !important;
+        height: 101px !important;
+    }
+}
+
+@media screen and (max-width:1170px) {
+    .pageBoxSize {
+        max-width: 126px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 121px !important;
+    }
+
+    #fitToBrandAggTextSize {
+        font-size: 6px !important;
+    }
+
+    #attributeTextSize {
+        font-size: 7px !important;
+    }
+
+    .fitToBrandBox {
+        height: 90px !important;
+    }
+}
+
+@media screen and (max-width:1159px) {
+    .pageBoxSize {
+        max-width: 120px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 118px !important;
+    }
+
+    .selectBoxWidthSpecificHistMean {
+        width: 61% !important;
+    }
 }
 
 
+@media screen and (max-width:1144px) {
+    #testnameTextSize {
+        font-size: 10px !important;
+    }
+
+    .attributeBox {
+        margin-top: 1rem !important;
+        height: 105px !important;
+    }
+}
 
 
+@media screen and (max-width:1136px) {
+    .selectBoxWidthSpecificHistMean {
+        width: 60% !important;
+    }
+
+    .testnameBtnBox .pagesTextSize {
+        font-size: 10px !important;
+    }
+
+    #breakdownTextSize {
+        font-size: 10px !important;
+    }
+
+    #testnameTextSize {
+        font-size: 9px !important;
+    }
+}
+
+@media screen and (max-width:1134px) {
+    #selectIntegerBoxWidth {
+        width: 61.9% !important;
+    }
+}
+
+@media screen and (max-width:1132px) {
+    #selectIntegerBoxWidth {
+        width: 61.5% !important;
+    }
+
+    .fitToBrandBox {
+        height: 87px !important;
+    }
+}
+
+@media screen and (max-width:1128px) {
+    #testnameTextSize {
+        font-size: 8px !important;
+    }
+
+    .fitToBrandBox {
+        height: 85px !important;
+    }
+
+    .attributeBox {
+        margin-top: 0.85rem !important;
+        height: 108px !important;
+    }
+}
+
+@media screen and (max-width:1126px) {
+    #textSize {
+        font-size: 7px !important;
+    }
+}
+
+@media screen and (max-width:1124px) {
+    #selectIntegerBoxWidth {
+        width: 61.4% !important;
+    }
+}
+
+@media screen and (max-width:1122px) {
+    .pageBoxSize {
+        max-width: 118px !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 61.2% !important;
+    }
+
+    .selectBoxWidth {
+        width: 61% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 61% !important;
+    }
+
+    .attributeBox {
+        margin-top: 0.84rem !important;
+        height: 108px !important;
+    }
+}
+
+@media screen and (max-width:1120px) {
+
+    .pageBoxSize {
+        max-width: 117px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 117px !important;
+    }
+}
+
+@media screen and (max-width:1118px) {
+
+    #selectIntegerBoxWidth {
+        width: 61% !important;
+    }
+}
+
+@media screen and (max-width:1116px) {
+
+    #checkboxSpecificHistMean {
+        margin-top: 6px !important;
+    }
+
+    #textSizeSpecificHistMean {
+        font-size: 6px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 115px !important;
+    }
+}
+
+
+@media screen and (max-width:1114px) {
+    .pageBoxSize {
+        max-width: 113px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 115px !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 60.9% !important;
+    }
+}
+
+@media screen and (max-width:1112px) {
+    #selectIntegerBoxWidth {
+        width: 60% !important;
+    }
+}
+
+
+@media screen and (max-width:1108px) {
+    .pageBoxSize {
+        max-width: 111px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 113px !important;
+    }
+}
+
+@media screen and (max-width:1102px) {
+    .pageBoxSize {
+        max-width: 109px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 111px !important;
+    }
+}
+
+@media screen and (max-width:1098px) {
+    .selectBoxWidthHistoricalDescription {
+        width: 60% !important;
+    }
+
+    #textSizeHist {
+        font-size: 6px !important;
+    }
+}
+
+@media screen and (max-width:1096px) {
+
+    .pageBoxSize {
+        max-width: 107px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 109px !important;
+    }
+}
+
+@media screen and (max-width:1096px) {
+    .selectBoxWidth {
+        width: 60% !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 59.8% !important;
+    }
+}
+
+@media screen and (max-width:1090px) {
+    .pageBoxSize {
+        max-width: 105px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 107px !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 59.7% !important;
+    }
+}
+
+@media screen and (max-width:1088px) {
+
+    #selectIntegerBoxWidth {
+        width: 59.4% !important;
+    }
+
+    .selectBoxWidth {
+        width: 59.4% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 59.4% !important;
+    }
+}
+
+@media screen and (max-width:1085px) {
+
+    .pageBoxSize {
+        max-width: 103px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 105px !important;
+    }
+}
+
+@media screen and (max-width:1082px) {
+
+    #selectIntegerBoxWidth {
+        width: 59% !important;
+    }
+}
+
+
+@media screen and (max-width:1079px) {
+
+    .pageBoxSize {
+        max-width: 101px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 103px !important;
+    }
+}
+
+@media screen and (max-width:1076px) {
+
+    #selectIntegerBoxWidth {
+        width: 58.5% !important;
+    }
+
+    .selectBoxWidth {
+        width: 58.5% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 58.5% !important;
+    }
+
+    .selectBoxWidthSpecificHistMean {
+        width: 58.5% !important;
+    }
+
+    .pageBoxSize {
+        max-width: 100px !important;
+        font-size: small;
+    }
+
+    .breakdownBoxSize {
+        max-width: 103px !important;
+        font-size: small;
+    }
+
+    .testnameBoxSize {
+        font-size: small;
+    }
+}
+
+@media screen and (max-width:1070px) {
+
+}
+
+@media screen and (max-width:1067px) {
+
+    .pageBoxSize {
+        max-width: 97px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 101px !important;
+    }
+
+
+
+}
 
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
