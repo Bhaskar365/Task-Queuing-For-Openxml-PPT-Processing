@@ -53,6 +53,9 @@
     white-space: nowrap;
     overflow-x: scroll;
     overflow-y: scroll;
+    /*    display: flex;
+    flex-direction: column;
+    align-items: flex-start;*/
 }
 
 .breakdownBoxSize {
@@ -62,6 +65,9 @@
     overflow-x: scroll;
     overflow-y: scroll;
     text-align: center;
+    /*    display: flex;
+    align-items: flex-start;
+    flex-direction: column;*/
 }
 
 .testnameBoxSize {
@@ -71,6 +77,9 @@
     overflow-x: scroll;
     overflow-y: scroll;
     text-align: center;
+    /* display: flex;
+    align-items: flex-start;
+    flex-direction: column;*/
 }
 
 .containerBox {
@@ -562,10 +571,6 @@
 
 @media screen and (max-width:1070px) {
 
-}
-
-@media screen and (max-width:1067px) {
-
     .pageBoxSize {
         max-width: 97px !important;
     }
@@ -574,7 +579,478 @@
         max-width: 101px !important;
     }
 
+    .attributeBox {
+        margin-top: 0.89rem !important;
+        height: 108px !important;
+    }
+}
 
+@media screen and (max-width:1066px) {
+    #selectIntegerBoxWidth {
+        width: 58.2% !important;
+    }
+}
+
+@media screen and (max-width:1063px) {
+    .pageBoxSize {
+        max-width: 96px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 99px !important;
+    }
+}
+
+@media screen and (max-width:1062px) {
+    #selectIntegerBoxWidth {
+        width: 58% !important;
+    }
+}
+
+@media screen and (max-width:1058px) {
+    .selectBoxWidth {
+        width: 58% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 58% !important;
+    }
+
+    #textSizeAssociations {
+        font-size: 7px !important;
+    }
+
+    .selectBoxWidthSpecificHistMean {
+        width: 58% !important;
+    }
+
+    .pageBoxSize {
+        max-width: 94px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 97px !important;
+    }
+}
+
+@media screen and (max-width:1052px) {
+    #attributeTextSize {
+        font-size: 6px !important;
+    }
+}
+
+@media screen and (max-width:1052px) {
+    #fitToBrandAggTextSize {
+        font-size: 5px !important;
+    }
+
+    .fitToBrandBox {
+        height: 88px !important;
+    }
+}
+
+@media screen and (max-width:1024px) {
+
+    #attributeTextSize {
+        font-size: 5px !important;
+    }
+
+    .fitToBrandBox {
+        height: 89px !important;
+    }
+}
+
+@media screen and (max-width:1020px) {
+    #selectBtnSizeId {
+        font-size: 6px !important;
+    }
+
+    .fitToBrandBox {
+        height: 91px !important;
+    }
+}
+
+@media screen and (max-width:1018px) {
+    .fitToBrandBox {
+        height: 90px !important
+    }
+}
+
+@media screen and (max-width:1017px) {
+    .fitToBrandBox {
+        height: 84px !important
+    }
+}
+
+@media screen and (max-width:1013px) {
+    .selectBoxWidthSpecificHistMean {
+        width: 57% !important;
+    }
+}
+
+@media screen and (max-width:1009px) {
+    #selectBtnSizeId {
+        font-size: 5px !important;
+    }
+}
+
+@media screen and (max-width:1006px) {
+    .pageBoxSize {
+        max-width: 92px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 95px !important;
+    }
+}
+
+@media screen and (max-width:1000px) {
+    .pageBoxSize {
+        max-width: 90px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 93px !important;
+    }
+}
+
+@media screen and (max-width:997px) {
+    .selectBoxWidthSpecificHistMean {
+        width: 56% !important;
+    }
+
+    .selectBoxWidth {
+        width: 57% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 57% !important;
+    }
+
+    .fitToBrandBox {
+        height: 88px !important;
+    }
+}
+
+@media screen and (max-width:994px) {
+    .fitToBrandBox {
+        height: 80px !important;
+    }
+
+    .testnameBoxSize {
+        height: 273px !important;
+    }
+}
+
+@media screen and (max-width:985px) {
+    #textSizeAssociations {
+        font-size: 6px !important;
+    }
+
+    #textSize {
+        font-size: 6px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 4px !important;
+    }
+
+    .attributeBox {
+        margin-top: 0.6rem !important;
+        height: 114px !important;
+    }
+}
+
+@media screen and (max-width:982px) {
+    .selectBoxWidthSpecificHistMean {
+        width: 55% !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 5px !important;
+    }
+
+    .fitToBrandBox {
+        height: 67px !important;
+    }
+}
+
+@media screen and (max-width:977px) {
+
+    .fitToBrandBox {
+        height: 78px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 88px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 91px !important;
+    }
+
+    .testnameBtnBox .pagesTextSize {
+        font-size: 9px !important;
+    }
+
+    #breakdownTextSize {
+        font-size: 9px !important;
+    }
+
+    #testnameTextSize {
+        font-size: 7px !important;
+    }
+}
+
+@media screen and (max-width:970px) {
+
+    .fitToBrandBox {
+        height: 70px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 4px !important;
+    }
+
+    .fitToBrandBox {
+        height: 79.2px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 84px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 89px !important;
+    }
+}
+
+@media screen and (max-width:967px) {
+
+    .selectBoxWidthSpecificHistMean {
+        width: 54% !important;
+    }
+
+    .selectBoxWidth {
+        width: 56% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 56% !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 56% !important;
+    }
+}
+
+@media screen and (max-width:954px) {
+    #textSizeSpecificHistMean {
+        font-size: 5.5px !important;
+    }
+}
+
+@media screen and (max-width:951px) {
+    .attributeBox {
+        margin-top: 0.5rem !important;
+        height: 110px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 82px !important;
+    }
+
+    .fitToBrandBox {
+        height: 85.2px !important;
+    }
+}
+
+@media screen and (max-width:949px) {
+    .fitToBrandBox {
+        height: 85.2px !important;
+    }
+
+    .fitToBrandBox {
+        height: 75.2px !important;
+    }
+}
+
+@media screen and (max-width:942px) {
+    .pageBoxSize {
+        max-width: 80px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 87px !important;
+    }
+}
+
+@media screen and (max-width:935px) {
+    .pageBoxSize {
+        max-width: 78px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 85px !important;
+    }
+}
+
+@media screen and (max-width:933px) {
+    .selectBoxWidth {
+        width: 55% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 55% !important;
+    }
+}
+
+@media screen and (max-width:929px) {
+    .pageBoxSize {
+        max-width: 76px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 83px !important;
+    }
+}
+
+@media screen and (max-width:922px) {
+    .pageBoxSize {
+        font-size: x-small;
+        max-width: 74px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 81px !important;
+        font-size: x-small;
+    }
+
+    .testnameBoxSize {
+        font-size: x-small;
+    }
+
+    .selectBoxWidthSpecificHistMean {
+        width: 53% !important;
+    }
+
+    .selectBoxWidth {
+        width: 54% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 54% !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 54% !important;
+    }
+
+    #selectBoxID {
+        font-size: 10px !important;
+    }
+
+    #integerBoxID {
+        font-size: 10px !important;
+    }
+
+    .fitToBrandBox {
+        height: 85.2px !important;
+    }
+}
+
+@media screen and (max-width:917px) {
+
+    .fitToBrandBox {
+        height: 85.2px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 79px !important;
+    }
+}
+
+@media screen and (max-width:911px) {
+    .selectBoxWidthSpecificHistMean {
+        width: 52% !important;
+    }
+
+    .selectBoxWidth {
+        width: 53% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 53% !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 53% !important;
+    }
+}
+
+@media screen and (max-width:907px) {
+    .pageBoxSize {
+        max-width: 72px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 77px !important;
+    }
+
+    .testnameBoxSize {
+        font-size: 8px;
+    }
+}
+
+@media screen and (max-width:904px) {
+    .fitToBrandBox {
+        height: 73.2px !important;
+    }
+}
+
+@media screen and (max-width:899px) {
+    .selectBoxWidthSpecificHistMean {
+        width: 51% !important;
+    }
+
+    #selectBoxID {
+        font-size: 9px !important;
+    }
+
+    .selectBoxWidth {
+        width: 52% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 52% !important;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    #textSizeAssociations {
+        font-size: 5px !important;
+    }
+
+    #textSize {
+        font-size: 6px !important;
+    }
+
+    .selectBoxWidthSpecificHistMean {
+        width: 46% !important;
+    }
+
+    .selectBoxWidth {
+        width: 49% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 48% !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 50% !important;
+    }
 
 }
 
