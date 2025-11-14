@@ -917,8 +917,7 @@
 
 @media screen and (max-width:922px) {
     .pageBoxSize {
-        font-size: x-small;
-        max-width: 74px !important;
+        font-size: x-small !important;
     }
 
     .breakdownBoxSize {
@@ -975,8 +974,12 @@
         width: 52% !important;
     }
 
-    .selectBoxWidth {
-        width: 53% !important;
+   .pageBoxSize {
+        max-width: 72px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 72px !important;
     }
 
     .selectBoxWidthHistoricalDescription {
@@ -998,7 +1001,7 @@
     }
 
     .testnameBoxSize {
-        font-size: 8px;
+        font-size: 8px !important;
     }
 }
 
@@ -1026,33 +1029,147 @@
     }
 }
 
-@media screen and (max-width:768px) {
-
-    #textSizeAssociations {
-        font-size: 5px !important;
+@media screen and (max-width:897px) {
+    .pageBoxSize {
+        max-width: 66px !important;
     }
 
-    #textSize {
+    .breakdownBoxSize {
+        max-width: 74px !important;
+    }
+
+    #testnameTextSize {
         font-size: 6px !important;
     }
 
-    .selectBoxWidthSpecificHistMean {
-        width: 46% !important;
+    .fitToBrandBox {
+        height: 83.2px !important;
     }
+}
 
-    .selectBoxWidth {
-        width: 49% !important;
-    }
+@media screen and (max-width:769px) {
 
     .selectBoxWidthHistoricalDescription {
         width: 48% !important;
     }
 
     #selectIntegerBoxWidth {
-        width: 50% !important;
+        width: 48% !important;
     }
 
+    .selectBoxWidth {
+        width: 48% !important;
+    }
+
+    .selectBoxWidthSpecificHistMean {
+        width: 46% !important;
+    }
+
+    .attributeBox {
+        margin-top: 0.95rem !important;
+    }
+
+    .fitToBrandBox {
+        height: 92.2px !important;
+    }
 }
+
+@media screen and (max-width:768px) {
+    .text-center {
+        padding: 0px !important;
+        max-width: 720px !important;
+    }
+
+    .attributeBox {
+        margin-top: 0.5rem !important;
+    }
+
+    .fitToBrandBox {
+        height: 91.2px !important;
+    }
+}
+
+
+@media screen and (max-width:641px) {
+    .text-center {
+        width: 562px !IMPORTANT;
+    }
+    .pageBoxSize {
+        max-width: 64px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 74px !important;
+    }
+    .fitToBrandBox {
+        height: 83.2px !important;
+    }
+}
+
+@media screen and (max-width:639px) {
+    .pageBoxSize {
+        max-width: 61px !important;
+        font-size: 8px !important;
+    }
+    .breakdownBoxSize {
+        max-width: 68px !important;
+    }
+
+    .panelWidth {
+        max-width: 66% !important;
+    }
+}
+
+@media screen and (max-width:633px) {
+    .panelWidth {
+        max-width: 65% !important;
+    }
+}
+
+@media screen and (max-width:629px) {
+    .panelWidth {
+        max-width: 64% !important;
+    }
+}
+
+@media screen and (max-width:622px) {
+    .panelWidth {
+        max-width: 63% !important;
+    }
+
+    .pageBoxSize {
+        max-width: 59px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 63px !important;
+        font-size: 8px;
+    }
+}
+
+
+@media screen and (max-width:615px) {
+    .panelWidth {
+        max-width: 62% !important;
+    }
+    .text-center {
+        width: 553px !IMPORTANT;
+    }
+    .pageBoxSize {
+        max-width: 50px !important;
+    }
+}
+
+@media screen and (max-width:609px) {
+    .panelWidth > .container {
+        width: fit-content !important;
+    }
+}
+
+@media screen and (max-width:603px) {
+
+}
+
 
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
