@@ -974,7 +974,7 @@
         width: 52% !important;
     }
 
-   .pageBoxSize {
+    .pageBoxSize {
         max-width: 72px !important;
     }
 
@@ -1094,6 +1094,7 @@
     .text-center {
         width: 562px !IMPORTANT;
     }
+
     .pageBoxSize {
         max-width: 64px !important;
     }
@@ -1101,6 +1102,7 @@
     .breakdownBoxSize {
         max-width: 74px !important;
     }
+
     .fitToBrandBox {
         height: 83.2px !important;
     }
@@ -1111,6 +1113,7 @@
         max-width: 61px !important;
         font-size: 8px !important;
     }
+
     .breakdownBoxSize {
         max-width: 68px !important;
     }
@@ -1191,9 +1194,284 @@
 }
 
 @media screen and (max-width:598px) {
-    .text-center {
-        border:2px solid red !important;
+    .mainContainerBox {
+        display: block !important;
+        margin-left: 1px !important;
+        margin-right: 1px !important;
     }
+
+        .mainContainerBox > .panelFirstSide {
+            width: 93% !important;
+        }
+
+    .panelWidth > .container {
+        width: 503px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 114px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 98px !important;
+    }
+
+
+    .panelWidth {
+        padding: 0px !important;
+        margin-top: 15px !important;
+    }
+
+    .text-center {
+        width: 546px !IMPORTANT;
+    }
+
+
+    #attributeTextSize {
+        font-size: 6px !important;
+    }
+
+
+    #selectBtnSizeId {
+        font-size: 9px !important;
+    }
+
+    #testnameTextSize {
+        font-size: 8px !important;
+    }
+
+
+    .testnameBtnBox .pagesTextSize {
+        font-size: 11px !important;
+    }
+
+
+    #textSize {
+        font-size: 11px !important;
+    }
+
+    #textSizeHist {
+        font-size: 10px !important;
+    }
+
+
+    #textSizeAssociations {
+        font-size: 10px !important;
+    }
+
+
+    #selectBoxID {
+        font-size: 11px !important;
+    }
+
+
+    .selectBoxWidth {
+        width: 55% !important;
+    }
+
+
+    .selectBoxWidthHistoricalDescription {
+        width: 55% !important;
+    }
+
+    #integerBoxID {
+        font-size: 11px !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 55% !important;
+    }
+
+    #textSizeSpecificHistMean {
+        font-size: 9px !important;
+    }
+
+    .selectBoxWidthSpecificHistMean {
+        width: 55% !important;
+    }
+
+    .buttonText {
+        font-size: 12px !important;
+    }
+
+
+    .fitToBrandBox {
+        height: 92.2px !important;
+    }
+
+    #fitToBrandAggTextSize {
+        font-size: 6px !important;
+    }
+}
+
+@media screen and (max-width:580px) {
+    .mainContainerBox > .panelFirstSide {
+        width: 93% !important;
+    }
+
+    .text-center {
+        width: 534px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 497px !important;
+    }
+}
+
+@media screen and (max-width:570px) {
+    .text-center {
+        width: 526px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 485px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 8px !important;
+    }
+
+    .fitToBrandBox {
+        height: 83.2px !important;
+    }
+
+    .containerBox {
+        height: 49.3dvh !important;
+    }
+}
+
+@media screen and (max-width:562px) {
+    .text-center {
+        width: 520px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 481px !important;
+    }
+}
+
+@media screen and (max-width:556px) {
+    .text-center {
+        width: 498px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 473px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 7px !important;
+    }
+
+    .fitToBrandBox {
+        height: 84.2px !important;
+    }
+}
+
+@media screen and (max-width:550px) {
+    .panelWidth > .container {
+        width: 462px !important;
+    }
+
+    .containerBox {
+        height: 70.3dvh !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 6px !important;
+    }
+
+    .fitToBrandBox {
+        height: 77px !important;
+    }
+}
+
+
+@media screen and (max-width:538px) {
+    .text-center {
+        width: 491px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 454px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 5px !important;
+    }
+
+    .fitToBrandBox {
+        height: 78px !important;
+    }
+}
+ 
+@media screen and (max-width:531px) {
+    .text-center {
+        width: 486px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 450px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 4px !important;
+    }
+
+    .fitToBrandBox {
+        height: 80px !important;
+    }
+}
+
+@media screen and (max-width:523px) {
+    .text-center {
+        width: 477px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 443px !important;
+    }
+
+    #attributeTextSize {
+        font-size: 5px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 3px !important;
+    }
+
+    .fitToBrandBox {
+        height: 76px !important;
+    }
+}
+
+@media screen and (max-width:517px) {
+    .text-center {
+        width: 469px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 434px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 2px !important;
+    }
+
+    .fitToBrandBox {
+        height: 77px !important;
+    }
+}
+
+@media screen and (max-width:510px) {
+    .text-center {
+        width: 464px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 428px !important;
+    }
+
 }
 
 
