@@ -1130,6 +1130,10 @@
     .panelWidth {
         max-width: 64% !important;
     }
+
+    .fitToBrandBox {
+        height: 83.2px !important;
+    }
 }
 
 @media screen and (max-width:622px) {
@@ -1152,11 +1156,21 @@
     .panelWidth {
         max-width: 62% !important;
     }
+
     .text-center {
         width: 553px !IMPORTANT;
     }
+
     .pageBoxSize {
         max-width: 50px !important;
+    }
+
+    .fitToBrandBox {
+        height: 84.2px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 3.5px !important;
     }
 }
 
@@ -1164,10 +1178,22 @@
     .panelWidth > .container {
         width: fit-content !important;
     }
+
+    #selectBtnSizeId {
+        font-size: 3.3px !important;
+    }
 }
 
 @media screen and (max-width:603px) {
+    .panelWidth > .container {
+        width: 330px !important;
+    }
+}
 
+@media screen and (max-width:598px) {
+    .text-center {
+        border:2px solid red !important;
+    }
 }
 
 
