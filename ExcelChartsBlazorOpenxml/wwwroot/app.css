@@ -1,6 +1,7 @@
 
 .card-body > .runningStartedText {
     font-size: 13px !important;
+    width: 100% !IMPORTANT;
 }
 
 .tableHeaderRow > th {
@@ -2440,12 +2441,13 @@
 }
 
 @media screen and (max-width:295px) {
-    .text-center {
-        width: 235px !IMPORTANT;
+
+    .panelWidth > .container {
+        width: 215px !important;
     }
 
-    .selectBoxWidthHistoricalDescription {
-        width: 40% !important;
+    .text-center {
+        width: 235px !IMPORTANT;
     }
 
     #integerBoxID {
@@ -2453,27 +2455,31 @@
     }
 
     #selectIntegerBoxWidth {
-        width: 47% !important;
+        width: 44% !important;
+    }
+
+    #textSizeHist {
+        font-size: 7px !important;
     }
 
     .selectBoxWidth {
-        width: 47% !important;
+        width: 44% !important;
     }
 
     #selectBoxID {
         font-size: 9px !important;
     }
 
-    #textSize {
-        font-size: 9px !important;
-    }
-
-    #textSizeHist {
-        font-size: 8px !important;
+    .selectBoxWidthHistoricalDescription {
+        width: 44% !important;
     }
 
     .selectBoxWidthSpecificHistMean {
-        width: 48% !important;
+        width: 44% !important;
+    }
+
+    #textSize {
+        font-size: 9px !important;
     }
 
     .buttonText {
@@ -2491,6 +2497,110 @@
     #textSizeSpecificHistMean {
         font-size: 7px !important;
     }
+
+    .testnameBoxSize {
+        width: 88px !important;
+    }
+
+
+}
+
+@media screen and (max-width:290px) {
+
+    .runningBtn {
+        font-size: 11px;
+    }
+    .text-center {
+        width: 225px !IMPORTANT;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 43% !important;
+    }
+
+    .selectBoxWidth {
+        width: 43% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 43% !important;
+    }
+
+    .selectBoxWidthSpecificHistMean {
+        width: 43% !important;
+    }
+
+    .panelWidth > .container {
+        width: 205px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 181px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 183px !important;
+    }
+
+    .containerBox {
+        height: 300dvh !important;
+    }
+
+    .testnameBoxSize {
+        width: 100% !important;
+    }
+
+    .testnameBtnBox .pagesTextSize {
+        font-size: 11px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 9px !important;
+    }
+
+    #breakdownTextSize {
+        font-size: 10px !important;
+    }
+
+    #testnameTextSize {
+        font-size: 11px !important;
+    }
+
+    #attributeTextSize {
+        font-size: 9px !important;
+        margin-top: 9px !important;
+    }
+
+    #fitToBrandAggTextSize {
+        font-size: 9px !important;
+    }
+
+    .card-body > .runningStartedText {
+        font-size: 10px !important;
+        width: 100% !IMPORTANT;
+    }
+}
+
+@media screen and (max-width:280px) {
+
+    .text-center {
+        width: 215px !IMPORTANT;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 40% !important;
+    }
+
+    .selectBoxWidth {
+        width: 40% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 40% !important;
+    }
+
+
+
 }
 
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
