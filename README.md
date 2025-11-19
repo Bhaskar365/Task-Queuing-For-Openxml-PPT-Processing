@@ -3,6 +3,7 @@
 # Use of task queuing in processing openxml ppt files using Channels
 ##
 
+## Note - This code is a portion of the whole MR web app. For security reasons, only this part of the code is uploaded. Below is the screenshot of the full web application.
 
 ## Projects
 - `Version` - .NET 8
