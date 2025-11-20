@@ -706,13 +706,36 @@
 }
 
 @media screen and (max-width:1000px) {
-    .pageBoxSize {
-        max-width: 90px !important;
-    }
 
     .breakdownBoxSize {
         max-width: 93px !important;
     }
+
+    .containerBox {
+        height: 90.2dvh !important;
+    }
+
+    .selectBoxWidthSpecificHistMean {
+        width: 56.8% !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 7px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 83px !important;
+    }
+
+    #attributeTextSize {
+        font-size: 6px !important;
+    }
+
+    .attributeBox {
+        margin-top: 0.35rem !important;
+        height: 111px !important;
+    }
+
 }
 
 @media screen and (max-width:997px) {
@@ -731,6 +754,7 @@
     .fitToBrandBox {
         height: 88px !important;
     }
+
 }
 
 @media screen and (max-width:994px) {
@@ -743,9 +767,38 @@
     }
 }
 
+@media screen and (max-width:990px) {
+
+    #selectBtnSizeId {
+        font-size: 6px !important;
+    }
+    .attributeBox {
+        margin-top: 0.36rem !important;
+        height: 112px !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 57% !important;
+    }
+}
+
+@media screen and (max-width:987px) {
+    .fitToBrandBox {
+        height: 72px !important;
+    }
+}
+
 @media screen and (max-width:985px) {
     #textSizeAssociations {
         font-size: 6px !important;
+    }
+
+    .selectBoxWidthSpecificHistMean {
+        width: 55% !important;
+    }
+
+    .fitToBrandBox {
+        height: 77px !important;
     }
 
     #textSize {
@@ -762,7 +815,12 @@
     }
 }
 
-@media screen and (max-width:982px) {
+@media screen and (max-width:983px) {
+
+    .fitToBrandBox {
+        height: 76px !important;
+    }
+
     .selectBoxWidthSpecificHistMean {
         width: 55% !important;
     }
@@ -770,17 +828,9 @@
     #selectBtnSizeId {
         font-size: 5px !important;
     }
-
-    .fitToBrandBox {
-        height: 67px !important;
-    }
 }
 
 @media screen and (max-width:977px) {
-
-    .fitToBrandBox {
-        height: 78px !important;
-    }
 
     .pageBoxSize {
         max-width: 88px !important;
@@ -801,9 +851,50 @@
     #testnameTextSize {
         font-size: 7px !important;
     }
+
+    .attributeBox {
+        margin-top: 0.29rem !important;
+        height: 114px !important;
+    }
+
+    .fitToBrandBox {
+        height: 79px !important;
+    }
+}
+
+@media screen and (max-width:972px) {
+
+    .fitToBrandBox {
+        height: 80px !important;
+    }
+
+    .attributeBox {
+        margin-top: 0.3rem !important;
+        height: 114px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 87px !important;
+    }
 }
 
 @media screen and (max-width:970px) {
+
+    .selectBoxWidthSpecificHistMean {
+        width: 54% !important;
+    }
+
+    .selectBoxWidth {
+        width: 55% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 55% !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 55% !important;
+    }
 
     .fitToBrandBox {
         height: 70px !important;
@@ -845,16 +936,48 @@
     }
 }
 
+@media screen and (max-width:957px) {
+    .selectBoxWidthSpecificHistMean {
+        width: 53% !important;
+    }
+
+    .selectBoxWidth {
+        width: 53% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 53% !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 53% !important;
+    }
+
+    .pageBoxSize {
+        max-width: 76px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 6px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 82px !important;
+    }
+}
+
+
+
 @media screen and (max-width:954px) {
     #textSizeSpecificHistMean {
         font-size: 5.5px !important;
     }
 }
 
-@media screen and (max-width:951px) {
-    .attributeBox {
-        margin-top: 0.5rem !important;
-        height: 110px !important;
+@media screen and (max-width:952px) {
+
+    .breakdownBoxSize {
+        max-width: 76px !important;
     }
 
     .pageBoxSize {
@@ -863,6 +986,11 @@
 
     .fitToBrandBox {
         height: 85.2px !important;
+    }
+
+    .attributeBox {
+        height: 97px !important;
+        margin-top: 5px !important;
     }
 }
 
@@ -876,7 +1004,7 @@
     }
 }
 
-@media screen and (max-width:942px) {
+@media screen and (max-width:943px) {
     .pageBoxSize {
         max-width: 80px !important;
     }
@@ -884,47 +1012,48 @@
     .breakdownBoxSize {
         max-width: 87px !important;
     }
-}
 
-@media screen and (max-width:935px) {
     .pageBoxSize {
-        max-width: 78px !important;
-    }
-
-    .breakdownBoxSize {
-        max-width: 85px !important;
-    }
-}
-
-@media screen and (max-width:933px) {
-    .selectBoxWidth {
-        width: 55% !important;
-    }
-
-    .selectBoxWidthHistoricalDescription {
-        width: 55% !important;
-    }
-}
-
-@media screen and (max-width:929px) {
-    .pageBoxSize {
-        max-width: 76px !important;
-    }
-
-    .breakdownBoxSize {
-        max-width: 83px !important;
-    }
-}
-
-@media screen and (max-width:922px) {
-    .pageBoxSize {
-        font-size: x-small !important;
+        max-width: 72px !important;
     }
 
     .breakdownBoxSize {
         max-width: 81px !important;
-        font-size: x-small;
     }
+}
+
+@media screen and (max-width:935px) {
+    .pageBoxSize {
+        max-width: 68px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 80px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 5px !important;
+    }
+
+
+    .fitToBrandBox {
+        height: 96.2px !important;
+    }
+}
+
+
+@media screen and (max-width:926px) {
+    .breakdownBoxSize {
+        max-width: 76px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 68px !important;
+    }
+}
+
+
+@media screen and (max-width:922px) {
 
     .testnameBoxSize {
         font-size: x-small;
@@ -953,30 +1082,35 @@
     #integerBoxID {
         font-size: 10px !important;
     }
-
-    .fitToBrandBox {
-        height: 85.2px !important;
-    }
 }
 
-@media screen and (max-width:917px) {
+@media screen and (max-width:914px) {
 
-    .fitToBrandBox {
-        height: 85.2px !important;
-    }
-
-    .breakdownBoxSize {
-        max-width: 79px !important;
-    }
-}
-
-@media screen and (max-width:911px) {
     .selectBoxWidthSpecificHistMean {
         width: 52% !important;
     }
 
-    .pageBoxSize {
-        max-width: 72px !important;
+    .selectBoxWidth {
+        width: 52% !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 52% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 52% !important;
+    }
+}
+
+@media screen and (max-width:913px) {
+
+    .fitToBrandBox {
+        height: 89.2px !important;
+    }
+
+    .selectBoxWidthSpecificHistMean {
+        width: 52% !important;
     }
 
     .pageBoxSize {
@@ -992,23 +1126,47 @@
     }
 }
 
-@media screen and (max-width:907px) {
-    .pageBoxSize {
-        max-width: 72px !important;
-    }
-
+@media screen and (max-width:909px) {
     .breakdownBoxSize {
-        max-width: 77px !important;
-    }
-
-    .testnameBoxSize {
-        font-size: 8px !important;
+        max-width: 73px !important;
     }
 }
 
 @media screen and (max-width:904px) {
+    .pageBoxSize {
+        max-width: 68px !important;
+    }
+    .breakdownBoxSize {
+        max-width: 69px !important;
+    }
     .fitToBrandBox {
-        height: 73.2px !important;
+        height: 96.2px !important;
+    }
+}
+
+@media screen and (max-width:902px) {
+    .fitToBrandBox {
+        height: 88.2px !important;
+    }
+
+    .selectBoxWidthSpecificHistMean {
+        width: 51% !important;
+    }
+
+    .selectBoxWidth {
+        width: 51% !important;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 51% !important;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 51% !important;
+    }
+
+    .containerBox {
+        height: 91dvh !important;
     }
 }
 
@@ -1130,13 +1288,21 @@
     }
 }
 
-@media screen and (max-width:629px) {
-    .panelWidth {
-        max-width: 64% !important;
+@media screen and (max-width:630px) {
+    .breakdownBoxSize {
+        max-width: 60px !important;
+    }
+
+    #selectBtnSizeId {
+        font-size: 4px !important;
+    }
+
+    .attributeBox {
+        margin-top: 0.2rem !important;
     }
 
     .fitToBrandBox {
-        height: 83.2px !important;
+        height: 98px !important;
     }
 }
 
@@ -1152,6 +1318,10 @@
     .breakdownBoxSize {
         max-width: 63px !important;
         font-size: 8px;
+    }
+
+    .fitToBrandBox {
+        height: 91px !important;
     }
 }
 
@@ -1178,22 +1348,6 @@
     }
 }
 
-@media screen and (max-width:609px) {
-    .panelWidth > .container {
-        width: fit-content !important;
-    }
-
-    #selectBtnSizeId {
-        font-size: 3.3px !important;
-    }
-}
-
-@media screen and (max-width:603px) {
-    .panelWidth > .container {
-        width: 330px !important;
-    }
-}
-
 @media screen and (max-width:598px) {
     .mainContainerBox {
         display: block !important;
@@ -1217,6 +1371,13 @@
         max-width: 98px !important;
     }
 
+    .attributeBox {
+        margin-top: 1rem !important;
+    }
+
+    .fitToBrandBox {
+        height: 95.2px !important;
+    }
 
     .panelWidth {
         padding: 0px !important;
@@ -1295,11 +1456,6 @@
         font-size: 12px !important;
     }
 
-
-    .fitToBrandBox {
-        height: 92.2px !important;
-    }
-
     #fitToBrandAggTextSize {
         font-size: 6px !important;
     }
@@ -1324,20 +1480,20 @@
         width: 526px !IMPORTANT;
     }
 
+    .fitToBrandBox {
+        height: 88.2px !important;
+    }
+
     .panelWidth > .container {
         width: 485px !important;
     }
 
+    .containerBox {
+        height: 90.3dvh !important;
+    }
+
     #selectBtnSizeId {
         font-size: 8px !important;
-    }
-
-    .fitToBrandBox {
-        height: 83.2px !important;
-    }
-
-    .containerBox {
-        height: 49.3dvh !important;
     }
 }
 
@@ -1370,20 +1526,29 @@
 }
 
 @media screen and (max-width:550px) {
+
     .panelWidth > .container {
         width: 462px !important;
-    }
-
-    .containerBox {
-        height: 70.3dvh !important;
     }
 
     #selectBtnSizeId {
         font-size: 6px !important;
     }
 
+    .attributeBox {
+        margin-top: 0.4rem !important;
+    }
+
+    .pageBoxSize {
+        max-width: 113px !important;
+    }
+
+    .containerBox {
+        height: 90.3dvh !important;
+    }
+
     .fitToBrandBox {
-        height: 77px !important;
+        height: 92px !important;
     }
 }
 
@@ -1419,9 +1584,15 @@
         font-size: 4px !important;
     }
 
-    .fitToBrandBox {
-        height: 80px !important;
+    .pageBoxSize {
+        max-width: 108px !important;
     }
+
+    .fitToBrandBox {
+        height: 95px !important;
+    }
+
+
 }
 
 @media screen and (max-width:523px) {
@@ -1441,31 +1612,17 @@
         font-size: 3px !important;
     }
 
-    .fitToBrandBox {
-        height: 76px !important;
-    }
-}
-
-@media screen and (max-width:517px) {
-    .text-center {
-        width: 469px !IMPORTANT;
-    }
-
-    .panelWidth > .container {
-        width: 434px !important;
-    }
-
-    #selectBtnSizeId {
-        font-size: 2px !important;
+    .attributeBox {
+        margin-top: 0.59rem !important;
     }
 
     .fitToBrandBox {
-        height: 77px !important;
+        height: 87px !important;
     }
 }
 
 @media screen and (max-width:510px) {
-    .text-center {
+  /*  .text-center {
         width: 464px !IMPORTANT;
     }
 
@@ -1483,7 +1640,7 @@
 
     .fitToBrandBox {
         height: 80px !important;
-    }
+    }*/
 }
 
 @media screen and (max-width:505px) {
@@ -1531,7 +1688,7 @@
 }
 
 @media screen and (max-width:493px) {
-    .text-center {
+    /*.text-center {
         width: 445px !IMPORTANT;
     }
 
@@ -1541,7 +1698,7 @@
 
     .fitToBrandBox {
         height: 81px !important;
-    }
+    }*/
 }
 
 @media screen and (max-width:488px) {
