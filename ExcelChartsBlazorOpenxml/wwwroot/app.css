@@ -2023,7 +2023,7 @@
 
 @media screen and (max-width:365px) {
     .text-center {
-        width: 310px ! IMPORTANT;
+        width: 310px !IMPORTANT;
     }
 
     .selectBoxWidthHistoricalDescription {
@@ -2501,32 +2501,47 @@
     .testnameBoxSize {
         width: 88px !important;
     }
-
-
 }
 
 @media screen and (max-width:290px) {
 
+    .formTextSelect {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+        .formTextSelect > .formLabel {
+            margin: 0px !important;
+            margin-bottom: -12px !important;
+            margin-top: 8px !important;
+        }
+
+        .formTextSelect > .selectBoxWidth {
+            width: 100% !important;
+        }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 100% !IMPORTANT;
+    }
+
+    #selectIntegerBoxWidth {
+        width: 100% !IMPORTANT;
+    }
+
     .runningBtn {
         font-size: 11px;
     }
+
     .text-center {
         width: 225px !IMPORTANT;
     }
 
-    #selectIntegerBoxWidth {
-        width: 43% !important;
+    .selectBoxWidthSpecificHistMean {
+        width: 100% !important;
+        margin-bottom: 7px !important;
     }
 
     .selectBoxWidth {
-        width: 43% !important;
-    }
-
-    .selectBoxWidthHistoricalDescription {
-        width: 43% !important;
-    }
-
-    .selectBoxWidthSpecificHistMean {
         width: 43% !important;
     }
 
@@ -2582,25 +2597,84 @@
 }
 
 @media screen and (max-width:280px) {
-
     .text-center {
-        width: 215px !IMPORTANT;
+        width: 216px !IMPORTANT;
     }
 
-    #selectIntegerBoxWidth {
-        width: 40% !important;
+    .panelWidth > .container {
+        width: 200px !important;
+    }
+}
+
+@media screen and (max-width:270px) {
+    .text-center {
+        width: 205px !IMPORTANT;
     }
 
-    .selectBoxWidth {
-        width: 40% !important;
+    .panelWidth > .container {
+        width: 188px !important;
+    }
+}
+
+@media screen and (max-width:260px) {
+    .text-center {
+        width: 190px !IMPORTANT;
     }
 
-    .selectBoxWidthHistoricalDescription {
-        width: 40% !important;
+    .panelWidth > .container {
+        width: 175px !important;
+    }
+}
+
+@media screen and (max-width:250px) {
+    .text-center {
+        width: 180px !IMPORTANT;
     }
 
+    .panelWidth > .container {
+        width: 165px !important;
+    }
+}
+
+@media screen and (max-width:240px) {
+    .text-center {
+        width: 170px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 155px !important;
+    }
+}
 
 
+@media screen and (max-width:230px) {
+    .text-center {
+        width: 160px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 145px !important;
+    }
+}
+
+@media screen and (max-width:220px) {
+    .text-center {
+        width: 150px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 135px !important;
+    }
+}
+
+@media screen and (max-width:210px) {
+    .text-center {
+        width: 140px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 127px !important;
+    }
 }
 
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
