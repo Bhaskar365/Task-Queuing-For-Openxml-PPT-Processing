@@ -735,7 +735,6 @@
         margin-top: 0.35rem !important;
         height: 111px !important;
     }
-
 }
 
 @media screen and (max-width:997px) {
@@ -754,7 +753,6 @@
     .fitToBrandBox {
         height: 88px !important;
     }
-
 }
 
 @media screen and (max-width:994px) {
@@ -772,6 +770,7 @@
     #selectBtnSizeId {
         font-size: 6px !important;
     }
+
     .attributeBox {
         margin-top: 0.36rem !important;
         height: 112px !important;
@@ -1136,9 +1135,11 @@
     .pageBoxSize {
         max-width: 68px !important;
     }
+
     .breakdownBoxSize {
         max-width: 69px !important;
     }
+
     .fitToBrandBox {
         height: 96.2px !important;
     }
@@ -1591,14 +1592,9 @@
     .fitToBrandBox {
         height: 95px !important;
     }
-
-
 }
 
 @media screen and (max-width:523px) {
-    .text-center {
-        width: 477px !IMPORTANT;
-    }
 
     .panelWidth > .container {
         width: 443px !important;
@@ -1619,91 +1615,23 @@
     .fitToBrandBox {
         height: 87px !important;
     }
+
+
+    .text-center {
+        width: 467px !IMPORTANT;
+    }
 }
 
-@media screen and (max-width:510px) {
-  /*  .text-center {
-        width: 464px !IMPORTANT;
-    }
+
+
+@media screen and (max-width:519px) {
 
     .panelWidth > .container {
-        width: 428px !important;
+        width: 437px !important;
     }
 
-    #attributeTextSize {
-        font-size: 4px !important;
-    }
-
-    #fitToBrandAggTextSize {
+    #selectBtnSizeId {
         font-size: 5px !important;
-    }
-
-    .fitToBrandBox {
-        height: 80px !important;
-    }*/
-}
-
-@media screen and (max-width:505px) {
-    .text-center {
-        width: 459px !IMPORTANT;
-    }
-
-    .panelWidth > .container {
-        width: 426px !important;
-    }
-
-    .pageBoxSize {
-        max-width: 100px !important;
-    }
-
-    .breakdownBoxSize {
-        max-width: 94px !important;
-    }
-
-    #selectBtnSizeId {
-        font-size: 3px !important;
-    }
-
-    .fitToBrandBox {
-        height: 91px !important;
-    }
-}
-
-@media screen and (max-width:500px) {
-    .text-center {
-        width: 452px !IMPORTANT;
-    }
-
-    .panelWidth > .container {
-        width: 417px !important;
-    }
-
-    #selectBtnSizeId {
-        font-size: 2px !important;
-    }
-
-    .fitToBrandBox {
-        height: 85px !important;
-    }
-}
-
-@media screen and (max-width:493px) {
-    /*.text-center {
-        width: 445px !IMPORTANT;
-    }
-
-    .panelWidth > .container {
-        width: 410px !important;
-    }
-
-    .fitToBrandBox {
-        height: 81px !important;
-    }*/
-}
-
-@media screen and (max-width:488px) {
-    .text-center {
-        width: 441px !IMPORTANT;
     }
 
     .pageBoxSize {
@@ -1711,15 +1639,91 @@
     }
 
     .breakdownBoxSize {
-        max-width: 89px !important;
+        max-width: 92px !important;
+    }
+
+    #attributeTextSize {
+        font-size: 6px !important;
+    }
+
+    .attributeBox {
+        margin-top: 0.4rem !important;
     }
 
     .fitToBrandBox {
-        height: 84px !important;
+        height: 93px !important;
+    }
+}
+
+@media screen and (max-width:511px) {
+    .panelWidth > .container {
+        width: 427px !important;
     }
 
-    #selectBtnSizeId {
-        font-size: 3px !important;
+    .text-center {
+        width: 458px !IMPORTANT;
+    }
+
+    .breakdownBoxSize {
+        max-width: 86px !important;
+    }
+
+    .fitToBrandBox {
+        height: 93px !important;
+    }
+}
+
+@media screen and (max-width:500px) {
+
+    .panelWidth > .container {
+        width: 420px !important;
+    }
+
+    .mainContainerBox > .panelFirstSide {
+        width: 92% !important;
+    }
+
+    .fitToBrandBox {
+        height: 93px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 90px !important;
+    }
+}
+
+
+
+@media screen and (max-width:494px) {
+    .text-center {
+        width: 450px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 412px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 83px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 81px !important;
+    }
+}
+
+@media screen and (max-width:488px) {
+
+    .text-center {
+        width: 444px !IMPORTANT;
+    }
+
+    .panelWidth > .container {
+        width: 406px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 78px !important;
     }
 }
 
@@ -1737,7 +1741,7 @@
     }
 
     .breakdownBoxSize {
-        max-width: 83px !important;
+        max-width: 78px !important;
     }
 
     #breakdownTextSize {
@@ -1753,7 +1757,7 @@
     }
 
     .fitToBrandBox {
-        height: 94px !important;
+        height: 92px !important;
     }
 }
 
@@ -1764,6 +1768,10 @@
 
     .panelWidth > .container {
         width: 394px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 74px !important;
     }
 }
 
@@ -1777,7 +1785,11 @@
     }
 
     .fitToBrandBox {
-        height: 89px !important;
+        height: 92px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 68px !important;
     }
 }
 
@@ -1786,12 +1798,12 @@
         width: 413px !IMPORTANT;
     }
 
-    .panelWidth > .container {
-        width: 380px !important;
+    .pageBoxSize {
+        max-width: 68px !important;
     }
 
-    .pageBoxSize {
-        max-width: 75px !important;
+    .panelWidth > .container {
+        width: 380px !important;
     }
 
     .breakdownBoxSize {
@@ -1817,7 +1829,19 @@
     }
 
     #selectBtnSizeId {
-        font-size: 3px !important;
+        font-size: 4px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 74px !important;
+    }
+
+    .fitToBrandBox {
+        height: 93px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 60px !important;
     }
 }
 
@@ -1836,6 +1860,9 @@
 }
 
 @media screen and (max-width:445px) {
+
+
+
     .text-center {
         width: 393px !IMPORTANT;
     }
@@ -1844,20 +1871,8 @@
         width: 364px !important;
     }
 
-    .pageBoxSize {
-        max-width: 68px !important;
-    }
-
-    .breakdownBoxSize {
-        max-width: 73px !important;
-    }
-
     #attributeTextSize {
         font-size: 5px !important;
-    }
-
-    .fitToBrandBox {
-        height: 86px !important;
     }
 }
 
@@ -1896,8 +1911,9 @@
 }
 
 @media screen and (max-width:434px) {
+
     .text-center {
-        width: 382px !IMPORTANT;
+        width: 384px !IMPORTANT;
     }
 
     .panelWidth > .container {
@@ -1921,8 +1937,17 @@
     }
 
     .fitToBrandBox {
-        height: 78px !important;
+        height: 88px !important;
     }
+
+    .pageBoxSize {
+        max-width: 59px !important;
+    }
+
+    .breakdownBoxSize {
+        max-width: 63px !important;
+    }
+
 }
 
 @media screen and (max-width:428px) {
@@ -1935,7 +1960,15 @@
     }
 
     .fitToBrandBox {
-        height: 64px !important;
+        height: 86px !important;
+    }
+
+    .pageBoxSize {
+        max-width: 55px !important;
+    }
+
+    .attributeBox {
+        margin-top: 0.5rem !important;
     }
 }
 
@@ -1987,7 +2020,7 @@
     }
 
     .attributeBox {
-        margin-top: 1rem !important;
+        margin-top: 0.8rem !important;
     }
 
     #fitToBrandAggTextSize {
@@ -1995,7 +2028,7 @@
     }
 
     .fitToBrandBox {
-        height: 80px !important;
+        height: 96px !important;
     }
 }
 
