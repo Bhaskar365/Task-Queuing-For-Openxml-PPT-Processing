@@ -2237,7 +2237,7 @@
     }
 
     .fitToBrandBox {
-        height: 68px !important;
+        height: 85px !important;
     }
 }
 
@@ -2290,6 +2290,10 @@
 
     .pageBoxSize {
         max-width: 100px !important;
+    }
+
+    .fitToBrandBox {
+        height: 73px !important;
     }
 
     .selectBoxWidthSpecificHistMean {
@@ -2345,9 +2349,17 @@
         padding: 8px;
     }
 
+    .attributeBox {
+        margin-top: 0.85rem !important;
+    }
+
     .testnameBoxSize {
         width: 113px !important;
         padding: 10px;
+    }
+
+    .fitToBrandBox {
+        height: 84px !important;
     }
 }
 
@@ -2432,22 +2444,23 @@
     }
 
     .fitToBrandBox {
-        height: 83px !important;
+        height: 99px !important;
     }
 }
 
 
 @media screen and (max-width:335px) {
+
+    .fitToBrandBox {
+        height: 88.1px !important;
+    }
+
     .text-center {
         width: 275px !IMPORTANT;
     }
 
     .panelWidth > .container {
         width: 255px !important;
-    }
-
-    .fitToBrandBox {
-        height: 73.1px !important;
     }
 }
 
@@ -2514,6 +2527,11 @@
 }
 
 @media screen and (max-width:315px) {
+
+    .attributeBox {
+        margin-top: 0.25rem !important;
+    }
+
     .text-center {
         width: 255px !IMPORTANT;
     }
@@ -2539,7 +2557,7 @@
     }
 
     .fitToBrandBox {
-        height: 63.1px !important;
+        height: 88.1px !important;
     }
 
     #selectIntegerBoxWidth {
@@ -2566,6 +2584,11 @@
 }
 
 @media screen and (max-width:305px) {
+
+    .attributeBox {
+        margin-top: 0.99rem !important;
+    }
+
     .text-center {
         width: 245px !IMPORTANT;
     }
@@ -2604,7 +2627,7 @@
     }
 
     .fitToBrandBox {
-        height: 74.1px !important;
+        height: 88px !important;
     }
 }
 
