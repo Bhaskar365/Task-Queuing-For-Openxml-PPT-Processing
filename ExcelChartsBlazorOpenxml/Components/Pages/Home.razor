@@ -1,5 +1,7 @@
 ﻿@page "/bootstrapTest"
 
+@rendermode InteractiveServer
+
 @implements IDisposable;
 
 @using ExcelChartsBlazorOpenxml.Services
@@ -25,20 +27,26 @@
 @inject IFitToConceptService fitToConceptService;
 @inject HttpClient httpClient
 
-@rendermode InteractiveServer
+@inject IJSRuntime js;
 
 @inject Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider AuthenticationStateProvider
 
 <style>
-    .panel * {
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    .panelBox * {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    .panelBox i[class*="fa-"] {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900;
     }
 </style>
 
 
-<div class="panel">
+<div class="panelBox">
 
     <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+
         <MudTabPanel Text="Power Point" Class="mudTabPanelFontSize">
 
             <div class="container text-center">
@@ -48,7 +56,7 @@
                             <div class="row g-3 justify-content-between formTextSelect">
                                 <div class="col-auto formLabel">
                                     <label for="inputPassword6"
-                                           class="col-form-label text-wrap text-danger" id="textSize">Select Data Source</label>
+                                    class="col-form-label text-wrap text-danger" id="textSize">Select Data Source</label>
                                 </div>
                                 <div class="col-auto selectBoxWidth">
                                     <select class="form-select form-select-sm" id="selectBoxID" disabled>
@@ -66,7 +74,7 @@
                                 </div>
                                 <div class="col-auto selectBoxWidth">
                                     <select class="form-select form-select-sm" id="selectBoxID"
-                                            value="@project" @onchange="OnProjectChangedBootstrap">
+                                    value="@project" @onchange="OnProjectChangedBootstrap">
 
                                         @foreach (var proj in projectList)
                                         {
@@ -111,7 +119,7 @@
                             <div class="row g-3 justify-content-between formTextSelect">
                                 <div class="col-auto formLabel">
                                     <label class="col-form-label text-wrap"
-                                           id="textSizeHist">Historical Mean Description</label>
+                                    id="textSizeHist">Historical Mean Description</label>
                                 </div>
                                 <div class="col-auto selectBoxWidthHistoricalDescription">
                                     <select class="form-select form-select-sm" id="selectBoxID" disabled>
@@ -125,7 +133,7 @@
                             <div class="row g-3 justify-content-between formTextSelect">
                                 <div class="col-auto formLabel">
                                     <label class="col-form-label text-wrap"
-                                           id="textSizeAssociations">Associations/Likeability %</label>
+                                    id="textSizeAssociations">Associations/Likeability %</label>
                                 </div>
                                 <div class="col-auto" id="selectIntegerBoxWidth">
                                     <input type="number" class="form-control" id="integerBoxID" value="1.0" />
@@ -137,7 +145,7 @@
                             <div class="row g-3 justify-content-between formTextSelect">
                                 <div class="col-auto formLabel">
                                     <label class="col-form-label text-wrap"
-                                           id="textSize">Attribute Evaluation Title</label>
+                                    id="textSize">Attribute Evaluation Title</label>
                                 </div>
                                 <div class="col-auto selectBoxWidth">
                                     <input type="text" class="form-control" id="selectBoxID" disabled>
@@ -150,7 +158,7 @@
                             <div class="row g-3 justify-content-between formTextSelect">
                                 <div class="col-auto formLabel">
                                     <label class="col-form-label text-wrap"
-                                           id="textSize">Fit To Category</label>
+                                    id="textSize">Fit To Category</label>
                                 </div>
                                 <div class="col-auto selectBoxWidth">
                                     <select class="form-select form-select-sm" id="selectBoxID" disabled>
@@ -164,7 +172,7 @@
                             <div class="row g-3 justify-content-between formTextSelect">
                                 <div class="col-auto formLabel">
                                     <label class="col-form-label text-wrap"
-                                           id="textSize">Logo Project Folder</label>
+                                    id="textSize">Logo Project Folder</label>
                                 </div>
                                 <div class="col-auto selectBoxWidth">
                                     <input type="text" class="form-control" id="selectBoxID" value="@LogoFolderTextValue">
@@ -176,7 +184,7 @@
                             <div class="row g-3 justify-content-between formTextSelect">
                                 <div class="col-auto formLabel">
                                     <label class="col-form-label text-wrap"
-                                           id="textSize">PPT Final Template</label>
+                                    id="textSize">PPT Final Template</label>
                                 </div>
                                 <div class="col-auto selectBoxWidth">
                                     <select class="form-select form-select-sm" id="selectBoxID">
@@ -192,7 +200,7 @@
                                 <div class="col-auto formLabel">
                                     <input class="form-check-input" id="checkboxSpecificHistMean" type="checkbox" checked>
                                     <label class="col-form-label text-wrap"
-                                           id="textSizeSpecificHistMean">Use specific Hist. Mean</label>
+                                    id="textSizeSpecificHistMean">Use specific Hist. Mean</label>
                                 </div>
                                 <div class="col-auto selectBoxWidthSpecificHistMean">
                                     <select class="form-select form-select-sm" id="useSpecifiedHisMeanID">
@@ -224,9 +232,11 @@
 
                             </button> *@
 
+
+
                             <button class="@GetBtnStatusClass(currentState.ToString())"
-                                    disabled="@hasProcessStarted"
-                                    type="button" @onclick="ProcessDLL">
+                            disabled="@hasProcessStarted"
+                            type="button" @onclick="ProcessDLL">
 
                                 @if (currentState == ProcessState.Generating)
                                 {
@@ -269,15 +279,15 @@
                                         {
                                             <div class="form-check">
                                                 <input class="form-check-input"
-                                                       type="checkbox" id="@el.strPageName" @bind="@el.isChecked">
+                                                type="checkbox" id="@el.strPageName" @bind="@el.isChecked">
                                                 <label class="form-check-label pagesTextSize"
-                                                       for="@el.strPageName">@el.strPageName</label>
+                                                for="@el.strPageName">@el.strPageName</label>
                                             </div>
                                         }
 
                                     </div>
                                     <button class="btn btn-outline-primary select pageSelectUnselectButton w-100"
-                                            id="selectBtnSizeId" @onclick="TogglePagesList">
+                                    id="selectBtnSizeId" @onclick="TogglePagesList">
                                         Select/Unselect All
                                     </button>
 
@@ -291,15 +301,15 @@
                                         {
                                             <div class="form-check">
                                                 <input class="form-check-input"
-                                                       type="checkbox" id="@el.strBreakdownName" @bind="@el.isChecked">
+                                                type="checkbox" id="@el.strBreakdownName" @bind="@el.isChecked">
                                                 <label class="form-check-label pagesTextSize"
-                                                       id="breakdownTextSize" for="@el.strBreakdownName">@el.strBreakdownName</label>
+                                                id="breakdownTextSize" for="@el.strBreakdownName">@el.strBreakdownName</label>
                                             </div>
                                         }
 
                                     </div>
                                     <button class="btn btn-outline-primary breakdownSelectUnselectButton w-100"
-                                            id="selectBtnSizeId" @onclick="ToggleBreakdownList">
+                                    id="selectBtnSizeId" @onclick="ToggleBreakdownList">
                                         Select/Unselect All
                                     </button>
                                 </div>
@@ -312,16 +322,16 @@
                                         {
                                             <div class="form-check">
                                                 <input class="form-check-input"
-                                                       type="checkbox" id="@el.testNames" @bind="@el.isChecked">
+                                                type="checkbox" id="@el.testNames" @bind="@el.isChecked">
                                                 <label class="form-check-label pagesTextSize"
-                                                       id="testnameTextSize" for="@el.testNames">@el.testNames</label>
+                                                id="testnameTextSize" for="@el.testNames">@el.testNames</label>
                                             </div>
                                         }
 
 
                                     </div>
                                     <button class="btn btn-outline-primary testnameSelectUnselectButton w-100"
-                                            id="selectBtnSizeId" @onclick="ToggleTestnamesList">
+                                    id="selectBtnSizeId" @onclick="ToggleTestnamesList">
                                         Select/Unselect All
                                     </button>
                                 </div>
@@ -363,6 +373,12 @@
         </MudTabPanel>
     </MudTabs>
 
+
+    @if (isSuccessful)
+    {
+        <p>ssdlk</p>
+    }
+
     @if (!errorMessageHidden)
     {
         <div class="alert alert-danger" role="alert">@errorMessage</div>
@@ -378,7 +394,7 @@
 
     <div class="collapse" id="collapseExample">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body cardTable">
                 @if (currentTaskModel == null || currentTaskModel.Count == 0)
                 {
                     <div class="text-center fw-medium alert alert-warning runningStartedText" role="alert">

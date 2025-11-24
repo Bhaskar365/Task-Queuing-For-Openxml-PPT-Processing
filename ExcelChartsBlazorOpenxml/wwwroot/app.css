@@ -4,6 +4,7 @@
     width: 100% !IMPORTANT;
 }
 
+
 .tableHeaderRow > th {
     font-size: smaller !important;
 }
@@ -1568,7 +1569,7 @@
     }
 
     .fitToBrandBox {
-        height: 78px !important;
+        height: 85px !important
     }
 }
 
@@ -1727,6 +1728,13 @@
     }
 }
 
+@media screen and (max-width:492px) {
+    .cardTable {
+        font-size: 9px !important;
+        width:100% !important;
+    }
+}
+
 @media screen and (max-width:482px) {
     .text-center {
         width: 432px !IMPORTANT;
@@ -1817,6 +1825,12 @@
     #selectBtnSizeId {
         font-size: 4px !important;
     }
+
+    .cardTable {
+        font-size: 8px !important;
+        width: 100% !important;
+    }
+
 }
 
 @media screen and (max-width:458px) {
@@ -1855,13 +1869,15 @@
     }
 
     .fitToBrandBox {
-        height: 76px !important;
+        height: 93px !important;
     }
 }
 
 @media screen and (max-width:445px) {
 
-
+    .fitToBrandBox {
+        height: 81px !important;
+    }
 
     .text-center {
         width: 393px !IMPORTANT;
@@ -2114,6 +2130,10 @@
     .pageBoxSize {
         max-width: 120px !important;
     }
+
+    #textSizeHist {
+        font-size: 9px !important;
+    }
 }
 
 
@@ -2170,6 +2190,10 @@
 
     .text-center {
         width: 320px !IMPORTANT;
+    }
+
+    .selectBoxWidthHistoricalDescription {
+        width: 52.5% !important;
     }
 
     .panelWidth > .container {
@@ -2566,6 +2590,20 @@
 }
 
 @media screen and (max-width:310px) {
+
+    .cardTable {
+        font-size: 6px !important;
+        width: 100% !important;
+    }
+
+    #textSizeHist {
+        font-size: 8px !important;
+    }
+
+    #textSizeAssociations {
+        font-size: 8px !important;
+    }
+
     .text-center {
         width: 250px !IMPORTANT;
     }
@@ -2654,6 +2692,10 @@
 }
 
 @media screen and (max-width:295px) {
+
+    .cardTable {
+        font-size: 5px !important;
+    }
 
     .panelWidth > .container {
         width: 215px !important;
