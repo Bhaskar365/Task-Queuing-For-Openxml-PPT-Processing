@@ -25,4 +25,12 @@
 <img width="1539" height="821" alt="image" src="https://github.com/user-attachments/assets/21966f0b-e53e-4736-af4a-1a4739ddfd07" />
 
 
-<img width="1617" height="787" alt="image" src="https://github.com/user-attachments/assets/45926e50-a2cc-4044-b41e-734507cd64c1" />
+<img width="1617" height="787" alt="image" src="https://github.com/user-attachments/assets/45926e50-a2cc-4044-b41e-734507cd64c1" /><br/>
+
+
+### Older Mudblazor UI above replaced with Bootstrap UI<br/>
+
+
+<img width="1869" height="889" alt="image" src="https://github.com/user-attachments/assets/7b2dfcc2-61da-4116-a49b-e0a99f48b70c" />
+
+
